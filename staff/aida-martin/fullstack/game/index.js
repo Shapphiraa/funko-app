@@ -1,4 +1,4 @@
-console.log('GAME v0')
+console.log('GAME v0.1')
 
 const STEP = 5, LAPSE = 200
 
@@ -23,7 +23,7 @@ class Car {
   }
 }
 
-let pos = 0, time = 0
+let time = 0
 
 const taxi = new Car('🚖')
 const thief = new Car('🚘')
@@ -79,7 +79,7 @@ const interval = setInterval(() => {
     //readFile = lee
     //appendFile = añade al final de lo que hay
     //readFileSync = lee de forma síncrona
-    // readWriteAppendFile = lee, escribe y añade
+    // readWriteAppendFile = lee, escribe y añade (no lo encontré ¿?)
 
   fs.writeFile('result.txt', result, function (err) {
 
