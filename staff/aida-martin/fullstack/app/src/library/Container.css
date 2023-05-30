@@ -1,0 +1,23 @@
+.Container {
+    background: var(--white);
+    width: 14rem;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    margin: auto;
+    border-radius: 0.75rem;
+    box-shadow: 2px 2px 7px 2px rgba(0, 0, 0, 0.25);
+  }
+  
+  .Container > .title, .Container h2 {
+    text-align: center;
+  }
+
+  /* Modificador en caso de ser necesario:
+
+  .Container--row {
+    flex-direction: row;
+  }
+
+  Se utilizaría el type en Container.jsx así: ${type? `Container--${type}` : ''} (y pasado el type por props)

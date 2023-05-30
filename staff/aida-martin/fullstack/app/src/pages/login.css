@@ -1,0 +1,13 @@
+  .register-answer {
+    margin-top: 2.5rem;
+    margin-bottom: -0.625rem;
+    font-weight: 400;
+    font-size: 0.625rem;
+    text-align: center;
+  }
+
+  .forgot-password-link {
+    font-size: 0.625rem;
+    margin-top: -0.625rem;
+    text-align: end;
+  }
