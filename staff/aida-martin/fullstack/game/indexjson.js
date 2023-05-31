@@ -15,7 +15,7 @@ class Car {
   }
 
   status() {
-    return (`${this.icon}, pos = ${this.pos}, time = ${this.time} \n`)
+    return (`${this.icon}, pos = ${this.pos}, time = ${this.time}`)
   }
 
   render() {
@@ -29,16 +29,25 @@ const taxi = new Car('🚖')
 const thief = new Car('🚘')
 const police = new Car('🚔')
 
-let result = ''
-let contain
+let result = {
+  last: [],
+  previous: [],
+}
 
 const fs = require('fs');
+fs.readFile('result.json', function (err, data) {
+  if (err) return;
 
-fs.readFile('result.txt', 'utf-8', function (err, data) {
+  try {
+    const lastResult = JSON.parse(data);
 
-  if (err) return
-
-    if (data) contain = data
+    if (lastResult)  {
+      result.previous = lastResult.previous;
+      result.previous.splice(0, 0, lastResult.last)
+    }
+  } catch (e) {
+    // El json no es válido.
+  }
   })
 
 const interval = setInterval(() => {
@@ -66,10 +75,9 @@ const interval = setInterval(() => {
   if (taxi.pos >= 100 && thief.pos >= 100 && police.pos >= 100) {
     clearInterval(interval)
 
-    result += taxi.status()
-    result += thief.status()
-    result += police.status()
-    if (contain != undefined) result += `\n${contain}`
+    result.last.push(taxi.status())
+    result.last.push(thief.status())
+    result.last.push(police.status())
 
     //writeFile = sobreescribe (este se utilizó en clase)
     //readFile = lee
@@ -77,7 +85,7 @@ const interval = setInterval(() => {
     //readFileSync = lee de forma síncrona
     // readWriteAppendFile = lee, escribe y añade (no lo encontré ¿?)
 
-  fs.writeFile('result.txt', result, function (err) {
+  fs.writeFile('result.json', JSON.stringify(result), function (err) {
 
   if (err) {
 
