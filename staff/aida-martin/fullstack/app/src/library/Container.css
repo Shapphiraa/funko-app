@@ -13,11 +13,3 @@
   .Container > .title, .Container h2 {
     text-align: center;
   }
-
-  /* Modificador en caso de ser necesario:
-
-  .Container--row {
-    flex-direction: row;
-  }
-
-  Se utilizaría el type en Container.jsx así: ${type? `Container--${type}` : ''} (y pasado el type por props)
