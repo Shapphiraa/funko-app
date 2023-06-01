@@ -1,0 +1,18 @@
+[
+  {
+    "id": "user-1",
+    "name": "Aida Martín",
+    "email": "aidamg93@gmail.com",
+    "password": "123123123",
+    "avatar": "https://cdn-icons-png.flaticon.com/512/219/219989.png",
+    "saves": []
+  },
+  {
+    "id": "user-2",
+    "name": "Roger García",
+    "email": "rogeliogplol@gmail.com",
+    "password": "123123123",
+    "avatar": null,
+    "saves": []
+  }
+]

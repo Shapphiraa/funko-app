@@ -34,9 +34,9 @@ export default function retrievePosts (userId, callback) {
             name: _user.name.split(' ')[0],
             avatar: _user.avatar
           }
-
-          callback(null, posts.toReversed()) // TODO toSorted (para que se ordenen por fecha)
         })
+
+        callback(null, posts.toReversed()) // TODO toSorted (para que se ordenen por fecha)
       })
     })
   })

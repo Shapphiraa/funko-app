@@ -23,7 +23,7 @@ export default function retrieveSavedPosts (userId, callback) {
 
     loadPosts(posts => {
       loadUsers(users => {
-        posts = posts.filter(post => post.visibility === 'public' || user.id === post.author)
+        posts = posts.filter(post => (post.visibility === 'public' || user.id === post.author) && user.saves?.includes(post.id))
 
         posts.forEach(post => {
           post.saves = user.saves.includes(post.id)
@@ -37,7 +37,7 @@ export default function retrieveSavedPosts (userId, callback) {
           }
         })
 
-        callback(null, posts.filter((post) => user.saves?.includes(post.id)).toReversed()) // TODO toSorted (para que se ordenen por fecha)
+        callback(null, posts.toReversed()) // TODO toSorted (para que se ordenen por fecha)
       })
     })
   })
