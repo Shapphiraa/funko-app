@@ -25,7 +25,7 @@ describe('registerUser', () => {
               expect(user.id).to.be.a('string')
               expect(user.name).to.equal(name)
               expect(user.email).to.equal(email)
-              expect(user.password).to.equal(password && repeatPassword)
+              expect(user.password).to.equal(password)
               expect(user.avatar).to.be.null
               expect(user.saves).to.have.lengthOf(0)
 
@@ -34,9 +34,11 @@ describe('registerUser', () => {
       })
   })
 
+  //ENTORNO DE PRUEBA EN EL QUE DEBERÍA FALLAR (USUARIO YA REGISTRADO):
+
   it('should fail on existing user', done => {
       const name = `name-${Math.random()}`
-      const email = `e-${Math.random()}@mail.com`
+      const email = `e-${Math.random()}@gmail.com`
       const password = `password-${Math.random()}`
       const repeatPassword = password
 
@@ -48,16 +50,29 @@ describe('registerUser', () => {
 
           registerUser(name, email, password, repeatPassword, error => {
               expect(error).to.be.instanceOf(Error)
-              expect(error.message).to.equal(`user with email ${email} already exists`)
+              expect(error.message).to.equal('You are already registered! Please login! 😅')
 
               done()
           })
       })
   })
+  
+   //ENTORNO DE PRUEBA EN EL QUE DEBERÍA FALLAR (CONTRASEÑAS NO COINCIDEN):
 
+  it('should fail on password and repeatPassword does not match', done => {
+    const name = `name-${Math.random()}`
+    const email = `e-${Math.random()}@gmail.com`
+    const password = `password-${Math.random()}`
+    const repeatPassword = `repeatPassword-${Math.random()}`
 
+        registerUser(name, email, password, repeatPassword, error => {
+            expect(error).to.be.instanceOf(Error)
+            expect(error.message).to.equal('Passwords does not match 😢')
 
-  after(done => writeFile('./data/users.json', '[]', 'utf8', error => done(error)))
+            done()
+        })
 })
 
-
+  //LIMPIAR LA BASE DE DATOS DESPUÉS:
+  after(done => writeFile('./data/users.json', '[]', 'utf8', error => done(error)))
+})

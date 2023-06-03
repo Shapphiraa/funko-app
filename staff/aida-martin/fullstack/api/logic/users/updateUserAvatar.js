@@ -1,9 +1,12 @@
+const { validators: { validateId, validateUrl, validateCallback } } = require('com')
 const { readFile, writeFile } = require('fs')
 
 module.exports = function updateUserAvatar (userId, url, callback) {
-  //validators
+  validateId(userId, 'User ID')
+  validateUrl(url, 'Avatar url')
+  validateCallback(callback)
 
-  readFile('../data/users.json', 'utf-8', (error, json) => {
+  readFile('./data/users.json', 'utf-8', (error, json) => {
     if (error) {
       callback(error)
 
@@ -24,7 +27,7 @@ module.exports = function updateUserAvatar (userId, url, callback) {
 
     json = JSON.stringify(users)
 
-    writeFile('../data/users.json', json, 'utf-8', error => {
+    writeFile('./data/users.json', json, 'utf-8', error => {
       if (error) {
         callback(error)
 

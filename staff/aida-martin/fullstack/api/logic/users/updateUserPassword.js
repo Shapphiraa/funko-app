@@ -1,23 +1,26 @@
+const { validators: { validateId, validatePassword, validateCallback } } = require('com')
 const { readFile, writeFile } = require('fs')
 
 module.exports = function updateUserPassword (userId, password, newPassword, newPasswordConfirm, callback) {
-  //validators
+  validateId(userId, 'User ID')
+  validatePassword(password)
+  validatePassword(newPassword, 'New password')
+  validatePassword(password)
+  validateCallback(callback)
 
-  if (newPassword !== newPasswordConfirm) { throw new Error('New passwords do not match 😥') }
+  if (newPassword !== newPasswordConfirm) { 
+    callback(new Error('New passwords do not match 😥'))
+  
+    return
+  }
 
   if (newPassword === password) {
-    throw new Error('Your new password matches the current one 😥')
+    callback(new Error('Your new password matches the current one 😥'))
+
+    return
   }
 
-  if (!newPasswordConfirm.length) {
-    throw new Error('You have not confirm your new password 😥')
-  }
-
-  if (newPassword.length < 8) {
-    throw new Error('Your password does not have 8 characters 😥')
-  }
-
-  readFile('../data/users.json', 'utf-8', (error, json) => {
+  readFile('./data/users.json', 'utf-8', (error, json) => {
     if (error) {
       callback(error)
 
@@ -44,7 +47,7 @@ module.exports = function updateUserPassword (userId, password, newPassword, new
 
     json = JSON.stringify(users)
 
-    writeFile('../data/users.json', json, 'utf-8', error => {
+    writeFile('./data/users.json', json, 'utf-8', error => {
       if (error) {
         callback(error)
 

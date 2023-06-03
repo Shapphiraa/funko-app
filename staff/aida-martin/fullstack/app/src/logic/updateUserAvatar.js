@@ -15,7 +15,7 @@ export default function updateAvatar (userId, url, callback) {
 
   findUserById(userId, user => {
     if (!user) {
-      callback(new Error('User not found 😥', { cause: 'userError' }))
+      callback(new Error('User not found 😥'))
 
       return
     }
