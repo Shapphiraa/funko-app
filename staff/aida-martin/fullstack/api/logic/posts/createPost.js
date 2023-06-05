@@ -1,9 +1,13 @@
+const { validators: { validateId, validateText, validateUrl, validateCallback } } = require('com')
 const { readFile, writeFile } = require('fs')
 
 module.exports = function createPost (userId, image, text, callback) {
-  //validators
+  validateId(userId, 'User ID')
+  validateUrl(image, 'Image URL')
+  validateText(text)
+  validateCallback(callback)
 
-  readFile('../data/users.json', 'utf-8', function (error, json) {
+  readFile('./data/users.json', 'utf-8', function (error, json) {
     if (error) {
       callback(error)
 
@@ -20,7 +24,7 @@ module.exports = function createPost (userId, image, text, callback) {
       return
     }
 
-    readFile('../data/posts.json', 'utf-8', function (error, json) {
+    readFile('./data/posts.json', 'utf-8', function (error, json) {
       if (error) {
         callback(error)
 
@@ -49,9 +53,9 @@ module.exports = function createPost (userId, image, text, callback) {
   
         posts.push(post)
 
-        json = JSON.stringify(posts)
+        json = JSON.stringify(posts, null, 4)
 
-        writeFile('../data/posts.json', json, 'utf-8', error => {
+        writeFile('./data/posts.json', json, 'utf-8', error => {
           if (error) {
             callback(error)
     
