@@ -1,5 +1,7 @@
-import { validateEmail, validatePassword, validateCallback } from './helpers/validators'
+import { validators } from 'com'
 import { findUserByEmail } from '../data'
+
+const { validateEmail, validatePassword, validateCallback } = validators
 
 /**
  * Authenticates a user by email and password

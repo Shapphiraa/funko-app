@@ -41,6 +41,8 @@ export default function Posts ({ user, mySavedPosts = false, onEditPost, onSellP
         })
       }
     } catch (error) {
+      unfreeze()
+
       alert(error.message, 'warn')
     }
   }

@@ -1,10 +1,12 @@
-import {
+import { validators } from 'com'
+import { loadUsers, saveUsers, findUserByEmail } from '../data'
+
+const {
   validateName,
   validateEmail,
   validatePassword,
   validateCallback
-} from './helpers/validators'
-import { loadUsers, saveUsers, findUserByEmail } from '../data'
+} = validators
 
 /**
  * Registers a new user with their name, email and password. Updates database

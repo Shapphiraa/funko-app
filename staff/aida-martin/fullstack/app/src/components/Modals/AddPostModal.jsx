@@ -30,6 +30,8 @@ export default function AddPostModal ({ onPostCreated, onCancel }) {
         onPostCreated()
       })
     } catch (error) {
+      unfreeze()
+
       alert(error.message, 'warn')
     }
   }

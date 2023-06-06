@@ -31,6 +31,8 @@ export default function SellPostModal ({ postId, onPostForSale, onCancel }) {
         onPostForSale()
       })
     } catch (error) {
+      unfreeze()
+
       alert(error.message, 'warn')
     }
   }
@@ -57,6 +59,8 @@ export default function SellPostModal ({ postId, onPostForSale, onCancel }) {
         setPost(post)
       })
     } catch (error) {
+      unfreeze()
+
       alert(error.message, 'warn')
     }
   }, [postId])

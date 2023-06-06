@@ -1,5 +1,7 @@
-import { validateId, validateCallback } from './helpers/validators'
+import { validators } from 'com'
 import { findUserById } from '../data'
+
+const { validateId, validateCallback } = validators
 
 /**
  * Retrieves the current user

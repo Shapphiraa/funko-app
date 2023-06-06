@@ -119,6 +119,8 @@ export default function Home ({ onLogOut }) {
         setUser(user)
       })
     } catch (error) {
+      unfreeze()
+
       alert(error.message, 'warn')
     }
   }

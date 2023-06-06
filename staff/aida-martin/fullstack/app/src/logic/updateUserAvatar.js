@@ -1,5 +1,7 @@
-import { validateId, validateUrl, validateCallback } from './helpers/validators'
+import { validators } from 'com'
 import { saveUser, findUserById } from '../data'
+
+const { validateId, validateUrl, validateCallback } = validators
 
 /**
  * Updates user's avatar in database

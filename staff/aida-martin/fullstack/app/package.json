@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@rollup/plugin-commonjs": "^25.0.0",
+    "com": "file:../com",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

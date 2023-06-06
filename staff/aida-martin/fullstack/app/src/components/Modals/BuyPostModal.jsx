@@ -27,6 +27,8 @@ export default function BuyPostModal ({ postId, onPostBought, onCancel }) {
         onPostBought()
       })
     } catch (error) {
+      unfreeze()
+
       alert(error.message, 'warn')
     }
   }
@@ -51,6 +53,8 @@ export default function BuyPostModal ({ postId, onPostBought, onCancel }) {
         setPost(post)
       })
     } catch (error) {
+      unfreeze()
+
       alert(error.message, 'warn')
     }
   }, [postId])

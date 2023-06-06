@@ -1,5 +1,7 @@
-import { validateId, validateUrl, validateText, validateCallback } from './helpers/validators'
+import { validators } from 'com'
 import { loadPosts, savePosts, findUserById } from '../data'
+
+const { validateId, validateUrl, validateText, validateCallback } = validators
 
 /**
  * Creates a new post, creates an ID for it and saves it in database

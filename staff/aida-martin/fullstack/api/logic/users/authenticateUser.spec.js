@@ -16,20 +16,22 @@ describe('authenticateUser', () => {
         authenticateUser(email, password, error => {
             expect(error).to.be.null
 
-            const users = JSON.parse(json)
+            //Esto no hace falta tampoco porque no tengo que validar si el usuario existe...
+            // const users = JSON.parse(json)
 
-            const user = users.find(user => user.email === email)
+            // const user = users.find(user => user.email === email)
 
             expect(user).to.exist
-            expect(user.email).to.equal(email)
-            expect(user.password).to.equal(password)
+            // expect(user.email).to.equal(email)
+            // expect(user.password).to.equal(password)
+            // No son necesarios, pero si tengo que meter el id!!!
 
             done()
         })
       })
   })
 
-  //ENTORNO DE PRUEBA EN EL QUE DEBERÍA FALLAR (USUARIO YA REGISTRADO):
+  //ENTORNO DE PRUEBA EN EL QUE DEBERÍA FALLAR (USUARIO NO EXISTE):
 
   it('should fail on not existing user', done => {
       const email = `e-${Math.random()}@gmail.com`

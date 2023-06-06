@@ -32,6 +32,8 @@ export default function EditPostModal ({ postId, onPostEdited, onCancel }) {
         onPostEdited()
       })
     } catch (error) {
+      unfreeze()
+
       alert(error.message, 'warn')
     }
   }
@@ -58,6 +60,8 @@ export default function EditPostModal ({ postId, onPostEdited, onCancel }) {
         setPost(post)
       })
     } catch (error) {
+      unfreeze()
+
       alert(error.message, 'warn')
     }
   }, [postId])

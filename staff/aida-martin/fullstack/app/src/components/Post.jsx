@@ -28,6 +28,8 @@ export default function Post ({ post, onEditPost, onLiked, onSaved, onDeletePost
         onLiked()
       })
     } catch (error) {
+      unfreeze()
+
       alert(error.message, 'warn')
     }
   }
@@ -48,6 +50,8 @@ export default function Post ({ post, onEditPost, onLiked, onSaved, onDeletePost
         onSaved()
       })
     } catch (error) {
+      unfreeze()
+
       alert(error.message, 'warn')
     }
   }
@@ -71,6 +75,8 @@ export default function Post ({ post, onEditPost, onLiked, onSaved, onDeletePost
         onDeletePost()
       })
     } catch (error) {
+      unfreeze()
+
       alert(error.message, 'warn')
     }
   }
@@ -92,6 +98,8 @@ export default function Post ({ post, onEditPost, onLiked, onSaved, onDeletePost
         onPrivatizePost()
       })
     } catch (error) {
+      unfreeze()
+
       alert(error.message, 'warn')
     }
   }

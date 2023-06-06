@@ -38,6 +38,8 @@ export default function Register ({ onLoginClick, onUserRegisteredIn }) {
       })
       // este error es síncrono (de los validadores)
     } catch (error) {
+      unfreeze()
+
       alert(error.message, 'warn')
     }
   }

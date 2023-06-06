@@ -1,5 +1,7 @@
-import { validateId, validatePassword, validateCallback } from './helpers/validators'
+import { validators } from 'com'
 import { saveUser, findUserById } from '../data'
+
+const { validateId, validatePassword, validateCallback } = validators
 
 /**
  * Updates user's password in database

@@ -1,5 +1,7 @@
-import { validateId, validateCallback } from './helpers/validators'
+import { validators } from 'com'
 import { loadPosts, loadUsers, findUserById } from '../data'
+
+const { validateId, validateCallback } = validators
 
 /**
  * Retrieves user's saved posts of the user from the database

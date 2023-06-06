@@ -1,5 +1,7 @@
-import { validateId, validateCallback } from './helpers/validators'
+import { validators } from 'com'
 import { saveUser, findPostById, findUserById } from '../data'
+
+const { validateId, validateCallback } = validators
 
 /**
  * Adds or removes post's saves. Update user in database

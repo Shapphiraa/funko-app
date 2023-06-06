@@ -29,6 +29,8 @@ export default function Profile ({ onUpdateUserAvatar, onUpdateUserPassword }) {
         onUpdateUserAvatar()
       })
     } catch (error) {
+      unfreeze()
+
       alert(error.message, 'warn')
     }
   }
@@ -55,6 +57,8 @@ export default function Profile ({ onUpdateUserAvatar, onUpdateUserPassword }) {
         onUpdateUserPassword()
       })
     } catch (error) {
+      unfreeze()
+
       alert(error.message, 'warn')
     }
   }
