@@ -9,7 +9,7 @@ describe('retrieveUser', () => {
 
     id = `user-${Math.random()}`
     name = `name-${Math.random()}`
-    avatar = null
+    avatar = 'hello'
 
     writeFile('./data/users.json', '[]', 'utf8', error => done(error))
   })
@@ -26,7 +26,8 @@ describe('retrieveUser', () => {
 
             expect(user).to.exist
             expect(user.name).to.equal(name.split(' ')[0])
-            expect(user.avatar).to.be.oneOf([null, user.avatar])
+            // expect(user.avatar).to.be.oneOf([null, avatar]) FAIL (cambiado por la línea de abajo, no sé en qué estaba pensando jaja)
+            expect(user.avatar).to.equal(avatar)
 
             done()
         })
