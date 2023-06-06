@@ -3,9 +3,16 @@ const { readFile, writeFile } = require('fs')
 const retrievePost = require('./retrievePost')
 
 describe('retrievePost', () => {
-  it('should succeed on retrieve post', done => {
-    const userId = `id-${Math.random()}`
+  let userId, postId
 
+  beforeEach(done => {
+  userId = `id-${Math.random()}`
+  postId = `post-${Math.random()}`
+
+  writeFile('./data/users.json', '[]', 'utf8', error => done(error))
+  })
+
+  it('should succeed on retrieve post', done => {
     const users = [{ id: userId }]
     const usersJson = JSON.stringify(users)
 
@@ -19,10 +26,7 @@ describe('retrievePost', () => {
 
         const user = users.find(user => user.id === userId )
 
-        const postId = `post-${Math.random()}`
-        const author = user.id
-
-        const posts = [{ id: postId, author }]
+        const posts = [{ id: postId, author: userId }]
         const postsJson = JSON.stringify(posts)
    
         writeFile('./data/posts.json', postsJson, 'utf8', error => {
@@ -42,13 +46,9 @@ describe('retrievePost', () => {
         })
       })
     })
-  })
 
   it('should fail on not existing user', done => {
-    const fakeId = `id-${Math.random()}`
-    const fakePostId = `post-${Math.random()}`
-
-     retrievePost(fakeId, fakePostId, (error, post) => {
+     retrievePost(`id-${Math.random()}`, `post-${Math.random()}`, (error, post) => {
         expect(error).to.be.instanceOf(Error)
         expect(error.message).to.equal('User not found! 😥')
 
@@ -57,8 +57,6 @@ describe('retrievePost', () => {
       })
 
       it('should fail on not existing post', done => {
-        const userId = `id-${Math.random()}`
-
         const users = [{ id: userId }]
         const usersJson = JSON.stringify(users)
     
@@ -86,3 +84,4 @@ describe('retrievePost', () => {
           })
         })
       })
+    })

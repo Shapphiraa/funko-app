@@ -3,11 +3,18 @@ const { writeFile } = require('fs')
 const retrieveUser = require('./retrieveUser')
 
 describe('retrieveUser', () => {
-  it('should succeed on retrieve user', done => {
-      const id = `user-${Math.random()}`
-      const name = `name-${Math.random()}`
-      const avatar = null
+  let id, name, avatar
 
+  beforeEach(done => {
+
+    id = `user-${Math.random()}`
+    name = `name-${Math.random()}`
+    avatar = null
+
+    writeFile('./data/users.json', '[]', 'utf8', error => done(error))
+  })
+
+  it('should succeed on retrieve user', done => {
       const users = [{ id, name, avatar }]
       const json = JSON.stringify(users)
 
@@ -27,8 +34,6 @@ describe('retrieveUser', () => {
     })
 
     it('should fail on not existing user', done => {
-      const id = `user-${Math.random()}`
-
         retrieveUser(id, (error, user) => {
             expect(error).to.be.instanceOf(Error)
 

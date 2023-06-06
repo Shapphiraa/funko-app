@@ -3,11 +3,18 @@ const { readFile, writeFile } = require('fs')
 const updateUserAvatar = require('./updateUserAvatar')
 
 describe('updateUserAvatar', () => {
-  it('should succeed on update user avatar', done => {
-    const id = `user-${Math.random()}`
-    const avatar = null
-    const url = 'https://cdn-icons-png.flaticon.com/512/219/219989.png'
+  let id, avatar, url
 
+  beforeEach(done => {
+
+    id = `user-${Math.random()}`
+    avatar = null
+    url = `url-${Math.random()}`
+
+    writeFile('./data/users.json', '[]', 'utf8', error => done(error))
+  })
+
+  it('should succeed on update user avatar', done => {
     const users = [{ id, avatar }]
     const json = JSON.stringify(users)
 
@@ -34,10 +41,6 @@ describe('updateUserAvatar', () => {
   })
 
   it('should fail on not existing user', done => {
-    const id = `user-${Math.random()}`
-    const avatar = null
-    const url = 'https://cdn-icons-png.flaticon.com/512/219/219989.png'
-
       updateUserAvatar(id, url, error => {
           expect(error).to.be.instanceOf(Error)
           expect(error.message).to.equal('User not found! 😥')

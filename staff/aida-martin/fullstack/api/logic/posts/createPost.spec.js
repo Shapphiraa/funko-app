@@ -3,12 +3,18 @@ const { readFile, writeFile } = require('fs')
 const createPost = require('./createPost')
 
 describe('createPost', () => {
-  beforeEach(done => writeFile('./data/posts.json', '[]', 'utf8', error => done(error)))
+  let id, email, image, text
+  
+  beforeEach(done => {
+    id = `id-${Math.random()}`
+    email = `e-${Math.random()}@gmail.com`
+    image = `url-${Math.random()}`
+    text = `text-${Math.random()}`
+    
+    writeFile('./data/posts.json', '[]', 'utf8', error => done(error))
+  })
 
   it('should succeed on create new post', done => {
-    const id = `id-${Math.random()}`
-    const email = `e-${Math.random()}@gmail.com`
-
     const users = [{ id, email }]
     const json = JSON.stringify(users)
 
@@ -21,9 +27,6 @@ describe('createPost', () => {
         const users = JSON.parse(json)
 
         const user = users.find(user => user.email === email)
-
-       const image = `url-${Math.random()}`
-       const text = `text-${Math.random()}`
 
         createPost(user.id, image, text, error => {
          expect(error).to.be.null
@@ -51,15 +54,9 @@ describe('createPost', () => {
         })
       })
     })
-  })
 
   it('should fail on not existing user', done => {
-    const image = `url-${Math.random()}`
-    const text = `text-${Math.random()}`
-    const fakeId = `id-${Math.random()}`
-
-
-     createPost(fakeId, image, text, error => {
+     createPost(`id-${Math.random()}`, image, text, error => {
         expect(error).to.be.instanceOf(Error)
         expect(error.message).to.equal('User not found! 😥')
 
@@ -68,3 +65,4 @@ describe('createPost', () => {
 
           after(done => writeFile('./data/posts.json', '[]', 'utf8', error => done(error)))
       })
+    })

@@ -3,30 +3,30 @@ const { readFile, writeFile } = require('fs')
 const retrievePosts = require('./retrievePosts')
 
 describe('retrievePosts', () => {
+  let userId, name1, avatar1, userId2, name2, avatar2, postId1, postId2, postId3
+
+  beforeEach(done => {
+    userId = `id-${Math.random()}`
+    name1 = `name-${Math.random()}`
+    avatar1 = `avatar-${Math.random()}`
+    userId2 = `id-${Math.random()}`
+    name2 = `name-${Math.random()}`
+    avatar2 = `avatar-${Math.random()}`
+    postId1 = `post-${Math.random()}`
+    postId2 = `post-${Math.random()}`
+    postId3 =`post-${Math.random()}`
+
+    writeFile('./data/posts.json', '[]', 'utf8', error => done(error))
+  })
+
   it('should succeed on retrieve posts (of current user and publics)', done => {
-    const userId = `id-${Math.random()}`
-    const name1 = `name-${Math.random()}`
-    const avatar1 = `avatar-${Math.random()}`
-
-    const userId2 = `id-${Math.random()}`
-    const name2 = `name-${Math.random()}`
-    const avatar2 = `avatar-${Math.random()}`
-
-    const postId1 = `post-${Math.random()}`
-    const author1 = userId
-
-    const postId2 = `post-${Math.random()}`
-    const author2 = userId2
-
-    const postId3 =`post-${Math.random()}`
-
     const users = [{ id: userId, name: name1, avatar: avatar1, saves: [postId2] }, { id: userId2, name: name2, avatar: avatar2, saves: []}]
     const usersJson = JSON.stringify(users)
 
-    const posts = [{ id: postId1, author: author1, visibility: 'private' }, { id: postId2, author: author2, visibility: 'public' }, { id: postId3, author: author2, visibility: 'private' }]
+    const posts = [{ id: postId1, author: userId, visibility: 'private' }, { id: postId2, author: userId2, visibility: 'public' }, { id: postId3, author: userId2, visibility: 'private' }]
     const postsJson = JSON.stringify(posts)
 
-    writeFile('./data/users.json', usersJson, 'utf8', error => {
+    writeFile('./data/users.json', usersJson, 'utf8', error =>  {
       expect(error).to.be.null
 
       readFile('./data/users.json', 'utf8', (error, json) => {
@@ -52,17 +52,13 @@ describe('retrievePosts', () => {
 
             done()
           })
-
+        })
           })
         })
       })
-    })
-  })
 
   it('should fail on not existing user', done => {
-    const fakeId = `id-${Math.random()}`
-
-     retrievePosts(fakeId, (error, posts) => {
+     retrievePosts(`id-${Math.random()}`, (error, posts) => {
         expect(error).to.be.instanceOf(Error)
 
         expect(posts).to.be.undefined
@@ -71,3 +67,4 @@ describe('retrievePosts', () => {
               done()
           })
       })
+    })

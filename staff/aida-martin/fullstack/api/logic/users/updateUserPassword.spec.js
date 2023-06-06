@@ -3,12 +3,19 @@ const { readFile, writeFile } = require('fs')
 const updateUserPassword = require('./updateUserPassword')
 
 describe('updateUserAvatar', () => {
-  it('should succeed on update user avatar', done => {
-    const id = `user-${Math.random()}`
-    const password = `password-${Math.random()}`
-    const newPassword = `newPassword-${Math.random()}`
-    const newPasswordConfirm = newPassword
+  let id, password, newPassword, newPasswordConfirm
 
+  beforeEach(done => {
+
+    id = `user-${Math.random()}`
+    password = `password-${Math.random()}`
+    newPassword = `newPassword-${Math.random()}`
+    newPasswordConfirm = newPassword
+
+    writeFile('./data/users.json', '[]', 'utf8', error => done(error))
+  })
+
+  it('should succeed on update user avatar', done => {
     const users = [{ id, password }]
     const json = JSON.stringify(users)
 
@@ -35,11 +42,6 @@ describe('updateUserAvatar', () => {
   })
 
   it('should fail on not existing user', done => {
-    const id = `user-${Math.random()}`
-    const password = `password-${Math.random()}`
-    const newPassword = `newPassword-${Math.random()}`
-    const newPasswordConfirm = newPassword
-
       updateUserPassword(id, password, newPassword, newPasswordConfirm, error => {
           expect(error).to.be.instanceOf(Error)
           expect(error.message).to.equal('User not found! 😥')
@@ -49,19 +51,13 @@ describe('updateUserAvatar', () => {
     })
 
     it('should fail on wrong password', done => {
-      const id = `user-${Math.random()}`
-      const password = `password-${Math.random()}`
-      const newPassword = `newPassword-${Math.random()}`
-      const newPasswordConfirm = newPassword
-      const wrongPassword = `wrongPassword-${Math.random()}`
-  
       const users = [{ id, password }]
       const json = JSON.stringify(users)
   
       writeFile('./data/users.json', json, 'utf8', error => {
         expect(error).to.be.null
   
-        updateUserPassword(id, wrongPassword, newPassword, newPasswordConfirm, error => {
+        updateUserPassword(id, `wrongPassword-${Math.random()}`, newPassword, newPasswordConfirm, error => {
           expect(error).to.be.instanceOf(Error)
           expect(error.message).to.equal('Wrong password 😥')
 
@@ -71,12 +67,7 @@ describe('updateUserAvatar', () => {
   })
 
   it('should fail on not match new passwords', done => {
-    const id = `user-${Math.random()}`
-    const password = `password-${Math.random()}`
-    const newPassword = `newPassword-${Math.random()}`
-    const newPasswordConfirm = 'fail'
-
-      updateUserPassword(id, password, newPassword, newPasswordConfirm, error => {
+      updateUserPassword(id, password, newPassword, 'fail', error => {
           expect(error).to.be.instanceOf(Error)
           expect(error.message).to.equal('New passwords do not match 😥')
 
@@ -84,13 +75,8 @@ describe('updateUserAvatar', () => {
         })
     })
 
-    it('should fail to match the new password with the current one', done => {
-      const id = `user-${Math.random()}`
-      const password = `password-${Math.random()}`
-      const newPassword = password
-      const newPasswordConfirm = newPassword
-  
-        updateUserPassword(id, password, newPassword, newPasswordConfirm, error => {
+    it('should fail to match the new password with the current one', done => {  
+        updateUserPassword(id, password, password, password, error => {
             expect(error).to.be.instanceOf(Error)
             expect(error.message).to.equal('Your new password matches the current one 😥')
   
