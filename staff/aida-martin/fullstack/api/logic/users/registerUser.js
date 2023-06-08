@@ -13,7 +13,7 @@ module.exports = function registerUser (name, email, password, repeatPassword, c
     return
   }
 
-  readFile('./data/users.json', 'utf-8', (error, json) => {
+  readFile(`${process.env.DB_PATH}/users.json`,  (error, json) => {
     if (error) {
       callback(error)
 
@@ -51,7 +51,7 @@ module.exports = function registerUser (name, email, password, repeatPassword, c
     
     json = JSON.stringify(users, null, 4)
 
-    writeFile('./data/users.json', json, 'utf-8', error => {
+    writeFile(`${process.env.DB_PATH}/users.json`, json,  error => {
       if (error) {
         callback(error)
 

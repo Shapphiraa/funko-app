@@ -8,7 +8,7 @@ module.exports = function updatePost (userId, postId, image, text, callback) {
   validateText(text, 'Text')
   validateCallback(callback)
 
-  readFile('./data/users.json', 'utf-8', (error, json) => {
+  readFile(`${process.env.DB_PATH}/users.json`,  (error, json) => {
     if (error) {
       callback(error)
 
@@ -25,7 +25,7 @@ module.exports = function updatePost (userId, postId, image, text, callback) {
       return
     }
 
-    readFile('./data/posts.json', 'utf-8', (error, json) => {
+    readFile('./data/posts.json',  (error, json) => {
       if (error) {
         callback(error)
 
@@ -47,7 +47,7 @@ module.exports = function updatePost (userId, postId, image, text, callback) {
 
       json = JSON.stringify(posts)
 
-    writeFile('./data/posts.json', json, 'utf-8', error => {
+    writeFile('./data/posts.json', json,  error => {
       if (error) {
         callback(error)
 

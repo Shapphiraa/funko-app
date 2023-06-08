@@ -14,7 +14,7 @@ module.exports = function deletePost (userId, postId, callback) {
   validateId(postId, 'Post ID')
   validateCallback(callback)
 
-  readFile('./data/users.json', 'utf-8', (error, json) => {
+  readFile(`${process.env.DB_PATH}/users.json`,  (error, json) => {
     if (error) {
       callback(error)
 
@@ -31,7 +31,7 @@ module.exports = function deletePost (userId, postId, callback) {
       return
     }
 
-    readFile('./data/posts.json', 'utf-8', (error, json) => {
+    readFile('./data/posts.json',  (error, json) => {
       if (error) {
         callback(error)
 
@@ -64,7 +64,7 @@ module.exports = function deletePost (userId, postId, callback) {
 
       usersJson = JSON.stringify(users)
 
-      writeFile('./data/posts.json', postsJson, 'utf-8', error => {
+      writeFile('./data/posts.json', postsJson,  error => {
         if (error) {
           callback(error)
   
@@ -74,7 +74,7 @@ module.exports = function deletePost (userId, postId, callback) {
         callback(null)
       })
 
-      writeFile('./data/users.json', usersJson, 'utf-8', error => {
+      writeFile(`${process.env.DB_PATH}/users.json`, usersJson,  error => {
         if (error) {
           callback(error)
   

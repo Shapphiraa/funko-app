@@ -5,7 +5,7 @@ module.exports = function retrieveSavedPosts (userId, callback) {
   validateId(userId, 'User ID')
   validateCallback(callback)
 
-  readFile('./data/users.json', 'utf-8', (error, json) => {
+  readFile(`${process.env.DB_PATH}/users.json`,  (error, json) => {
     if (error) {
       callback(error)
 
@@ -22,7 +22,7 @@ module.exports = function retrieveSavedPosts (userId, callback) {
       return
     }
 
-    readFile('./data/posts.json', 'utf-8', (error, json) => {
+    readFile('./data/posts.json',  (error, json) => {
       if (error) {
         callback(error)
 
@@ -45,7 +45,7 @@ module.exports = function retrieveSavedPosts (userId, callback) {
           }
       })
       //toReversed no funciona en esta versión de Node
-      callback(null, posts/*.toReversed()*/)
+      callback(null, posts.reverse())
     })
   })
 }

@@ -5,7 +5,7 @@ module.exports = function retrieveUser (userId, callback) {
   validateId(userId, 'User ID')
   validateCallback(callback)
 
-  readFile('./data/users.json', 'utf-8', (error, json) => {
+  readFile(`${process.env.DB_PATH}/users.json`,  (error, json) => {
     if (error) {
       callback(error)
 
@@ -14,7 +14,7 @@ module.exports = function retrieveUser (userId, callback) {
 
     const users = JSON.parse(json)
 
-    let user = users.find(user => user.id === userId)
+    const user = users.find(user => user.id === userId)
 
     if (!user) {
       callback(new Error('User not found! 😥'))
@@ -22,17 +22,12 @@ module.exports = function retrieveUser (userId, callback) {
       return
     }
 
-    const _user = {
-      name: user.name.split(' ')[0],
-      avatar: user.avatar
-    }
+    const { name, avatar } = user
 
-    const avatar = user.avatar
+    const nameUser = name.split(' ')[0]
 
-    if (user.avatar) {
-      _user.avatar = avatar
-    }
+    const user2 = { name: nameUser, avatar }
 
-    callback(null, _user)
+    callback(null, user2)
 })
 }

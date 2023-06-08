@@ -1,5 +1,4 @@
 import { validators } from 'com'
-import { loadUsers, saveUsers, findUserByEmail } from '../data'
 
 const {
   validateName,
@@ -8,57 +7,40 @@ const {
   validateCallback
 } = validators
 
-/**
- * Registers a new user with their name, email and password. Updates database
- *
- * @param {string} name The user's name
- * @param {string} email The user's email
- * @param {string} password The user's password
- * @param {string} repeatPassword The user's password
- */
-
 export default function registerUser (name, email, password, repeatPassword, callback) {
   validateName(name)
   validateEmail(email)
   validatePassword(password)
   validateCallback(callback)
 
-  if (password !== repeatPassword) {
-    throw new Error('Passwords do not match 😢', {
-      cause: 'userError'
-    })
-  }
+  // eslint-disable-next-line no-undef
+  const xhr = new XMLHttpRequest()
 
-  findUserByEmail(email, foundUser => {
-    if (foundUser) {
-      callback(new Error('You are already registered! Please login! 😅', {
-        cause: 'userError'
-      }))
+  xhr.onload = () => {
+    const { status } = xhr
+
+    if (status !== 201) {
+      const { response: json } = xhr
+      const { error } = JSON.parse(json)
+
+      callback(new Error(error))
 
       return
     }
 
-    let id = 'user-1'
+    callback(null)
+  }
 
-    loadUsers(users => {
-      const lastUser = users[users.length - 1]
+  xhr.onerror = () => {
+    callback(new Error('Connection error'))
+  }
 
-      if (lastUser) {
-        id = 'user-' + (parseInt(lastUser.id.slice(5)) + 1)
-      }
+  xhr.open('POST', `${import.meta.env.VITE_API_URL}/users`)
 
-      const user = {
-        id,
-        name,
-        email,
-        password,
-        saves: []
-      }
+  xhr.setRequestHeader('Content-Type', 'application/json')
 
-      users.push(user)
+  const user = { name, email, password, repeatPassword }
+  const json = JSON.stringify(user)
 
-      // el null de que "no ha habido error"
-      saveUsers(users, () => callback(null))
-    })
-  })
+  xhr.send(json)
 }

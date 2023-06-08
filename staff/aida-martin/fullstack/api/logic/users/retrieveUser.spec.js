@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const { expect } = require('chai')
 const { writeFile } = require('fs')
 const retrieveUser = require('./retrieveUser')
@@ -11,14 +13,14 @@ describe('retrieveUser', () => {
     name = `name-${Math.random()}`
     avatar = 'hello'
 
-    writeFile('./data/users.json', '[]', 'utf8', error => done(error))
+    writeFile(`${process.env.DB_PATH}/users.json`, '[]', 'utf8', error => done(error))
   })
 
   it('should succeed on retrieve user', done => {
       const users = [{ id, name, avatar }]
       const json = JSON.stringify(users)
 
-      writeFile('./data/users.json', json, 'utf8', error => {
+      writeFile(`${process.env.DB_PATH}/users.json`, json, 'utf8', error => {
         expect(error).to.be.null
 
         retrieveUser(id, (error, user) => {
@@ -45,5 +47,5 @@ describe('retrieveUser', () => {
           })
       })
 
-      after(done => writeFile('./data/users.json', '[]', 'utf8', error => done(error)))
+      after(done => writeFile(`${process.env.DB_PATH}/users.json`, '[]', 'utf8', error => done(error)))
   })

@@ -1,5 +1,4 @@
 import { validators } from 'com'
-import { findUserById } from '../data'
 
 const { validateId, validateCallback } = validators
 
@@ -15,24 +14,32 @@ export default function retrieveUser (userId, callback) {
   validateId(userId, 'User ID')
   validateCallback(callback)
 
-  findUserById(userId, user => {
-    if (!user) {
-      callback(new Error('User not found 😥', { cause: 'userError' }))
+  // eslint-disable-next-line no-undef
+  const xhr = new XMLHttpRequest()
+
+  xhr.onload = () => {
+    const { status } = xhr
+
+    if (status !== 200) {
+      const { response: json } = xhr
+      const { error } = JSON.parse(json)
+
+      callback(new Error(error))
 
       return
     }
 
-    const _user = {
-      name: user.name.split(' ')[0],
-      avatar: user.avatar
-    }
+    const { response: json } = xhr
+    const user = JSON.parse(json)
 
-    const avatar = user.avatar
+    callback(null, user)
+  }
 
-    if (user.avatar) {
-      _user.avatar = avatar
-    }
+  xhr.onerror = () => {
+    callback(new Error('Connection error'))
+  }
 
-    callback(null, _user)
-  })
+  xhr.open('GET', `${import.meta.env.VITE_API_URL}/users/${userId}`)
+
+  xhr.send()
 }

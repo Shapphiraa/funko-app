@@ -1,16 +1,48 @@
 [
     {
         "id": "user-1",
-        "name": "Pepe Grillo",
-        "email": "pepe@grillo.com",
+        "name": "Pepa Grillo",
+        "email": "pepa@grillo.com",
+        "password": "123123123",
+        "avatar": "https://cdn-icons-png.flaticon.com/512/219/219989.png",
+        "saves": []
+    },
+    {
+        "id": "user-2",
+        "name": "aida",
+        "email": "aidamg93@gmail.com",
         "password": "123123123",
         "avatar": null,
         "saves": []
     },
     {
-        "id": "user-2",
-        "name": "Pepa Grillo",
-        "email": "pepa@grillo.com",
+        "id": "user-3",
+        "name": "roger",
+        "email": "rogeliogplol@gmail.com",
+        "password": "123123123",
+        "avatar": null,
+        "saves": []
+    },
+    {
+        "id": "user-4",
+        "name": "Prueba",
+        "email": "prueba@gmail.com",
+        "password": "123123123",
+        "avatar": null,
+        "saves": []
+    },
+    {
+        "id": "user-5",
+        "name": "Pepi Grillo",
+        "email": "pepi@grillo.com",
+        "password": "123123123",
+        "avatar": null,
+        "saves": []
+    },
+    {
+        "id": "user-6",
+        "name": "Hi",
+        "email": "hi@gmail.com",
         "password": "123123123",
         "avatar": null,
         "saves": []

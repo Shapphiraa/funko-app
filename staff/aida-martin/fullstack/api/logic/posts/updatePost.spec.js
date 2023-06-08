@@ -20,10 +20,10 @@ describe('updatePost', () => {
     const users = [{ id: userId }]
     const usersJson = JSON.stringify(users)
 
-    writeFile('./data/users.json', usersJson, 'utf8', error => {
+    writeFile(`${process.env.DB_PATH}/users.json`, usersJson, 'utf8', error => {
       expect(error).to.be.null
 
-      readFile('./data/users.json', 'utf8', (error, json) => {
+      readFile(`${process.env.DB_PATH}/users.json`, 'utf8', (error, json) => {
         expect(error).to.be.null
 
         const users = JSON.parse(json)
@@ -75,10 +75,10 @@ describe('updatePost', () => {
         const users = [{ id: userId }]
         const usersJson = JSON.stringify(users)
     
-        writeFile('./data/users.json', usersJson, 'utf8', error => {
+        writeFile(`${process.env.DB_PATH}/users.json`, usersJson, 'utf8', error => {
           expect(error).to.be.null
     
-          readFile('./data/users.json', 'utf8', (error, json) => {
+          readFile(`${process.env.DB_PATH}/users.json`, 'utf8', (error, json) => {
             expect(error).to.be.null
     
             const users = JSON.parse(json)

@@ -1,38 +1,43 @@
 import { validators } from 'com'
-import { findUserByEmail } from '../data'
 
 const { validateEmail, validatePassword, validateCallback } = validators
-
-/**
- * Authenticates a user by email and password
- *
- * @param {string} email The user's email
- * @param {string} password The user's password
- *
- * @returns {string} The user's id
- */
 
 export default function authenticateUser (email, password, callback) {
   validateEmail(email)
   validatePassword(password)
   validateCallback(callback)
 
-  findUserByEmail(email, user => {
-    if (!user) {
-      callback(new Error('User not found 😥',
-        { cause: 'userError' }))
+  // eslint-disable-next-line no-undef
+  const xhr = new XMLHttpRequest()
+
+  xhr.onload = () => {
+    const { status } = xhr
+
+    if (status !== 200) {
+      const { response: json } = xhr
+      const { error } = JSON.parse(json)
+
+      callback(new Error(error))
 
       return
     }
 
-    if (user.password !== password) {
-      callback(new Error('Wrong password 😥',
-        { cause: 'userError' }))
+    const { response: json } = xhr
+    const { userId } = JSON.parse(json)
 
-      return
-    }
+    callback(null, userId)
+  }
 
-    // el user.id que se mandaba por return ahora por callback
-    callback(null, user.id)
-  })
+  xhr.onerror = () => {
+    callback(new Error('Connection error'))
+  }
+
+  xhr.open('POST', `${import.meta.env.VITE_API_URL}/users/auth`)
+
+  xhr.setRequestHeader('Content-Type', 'application/json')
+
+  const user = { email, password }
+  const json = JSON.stringify(user)
+
+  xhr.send(json)
 }

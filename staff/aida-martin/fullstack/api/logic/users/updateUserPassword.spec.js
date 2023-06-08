@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const { expect } = require('chai')
 const { readFile, writeFile } = require('fs')
 const updateUserPassword = require('./updateUserPassword')
@@ -12,20 +14,20 @@ describe('updateUserAvatar', () => {
     newPassword = `newPassword-${Math.random()}`
     newPasswordConfirm = newPassword
 
-    writeFile('./data/users.json', '[]', 'utf8', error => done(error))
+    writeFile(`${process.env.DB_PATH}/users.json`, '[]', 'utf8', error => done(error))
   })
 
   it('should succeed on update user avatar', done => {
     const users = [{ id, password }]
     const json = JSON.stringify(users)
 
-    writeFile('./data/users.json', json, 'utf8', error => {
+    writeFile(`${process.env.DB_PATH}/users.json`, json, 'utf8', error => {
       expect(error).to.be.null
 
       updateUserPassword(id, password, newPassword, newPasswordConfirm, error => {
           expect(error).to.be.null
 
-        readFile('./data/users.json', 'utf8', (error, json) => {
+        readFile(`${process.env.DB_PATH}/users.json`, 'utf8', (error, json) => {
           expect(error).to.be.null
 
           const users = JSON.parse(json)
@@ -54,7 +56,7 @@ describe('updateUserAvatar', () => {
       const users = [{ id, password }]
       const json = JSON.stringify(users)
   
-      writeFile('./data/users.json', json, 'utf8', error => {
+      writeFile(`${process.env.DB_PATH}/users.json`, json, 'utf8', error => {
         expect(error).to.be.null
   
         updateUserPassword(id, `wrongPassword-${Math.random()}`, newPassword, newPasswordConfirm, error => {

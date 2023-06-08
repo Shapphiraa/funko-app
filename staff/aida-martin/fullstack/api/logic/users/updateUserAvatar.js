@@ -6,7 +6,7 @@ module.exports = function updateUserAvatar (userId, url, callback) {
   validateUrl(url, 'Avatar url')
   validateCallback(callback)
 
-  readFile('./data/users.json', 'utf-8', (error, json) => {
+  readFile(`${process.env.DB_PATH}/users.json`, (error, json) => {
     if (error) {
       callback(error)
 
@@ -27,7 +27,7 @@ module.exports = function updateUserAvatar (userId, url, callback) {
 
     json = JSON.stringify(users)
 
-    writeFile('./data/users.json', json, 'utf-8', error => {
+    writeFile(`${process.env.DB_PATH}/users.json`, json, error => {
       if (error) {
         callback(error)
 

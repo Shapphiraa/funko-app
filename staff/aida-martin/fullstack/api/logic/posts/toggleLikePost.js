@@ -12,7 +12,7 @@ export default function toggleLikePost (userId, postId, callback) {
   validateId(postId, 'Post ID')
   validateCallback(callback)
 
-  readFile('./data/users.json', 'utf-8', (error, json) => {
+  readFile(`${process.env.DB_PATH}/users.json`,  (error, json) => {
     if (error) {
       callback(error)
 
@@ -29,7 +29,7 @@ export default function toggleLikePost (userId, postId, callback) {
       return
     }
 
-    readFile('./data/posts.json', 'utf-8', (error, json) => {
+    readFile('./data/posts.json',  (error, json) => {
       if (error) {
         callback(error)
 
@@ -56,7 +56,7 @@ export default function toggleLikePost (userId, postId, callback) {
 
       json = JSON.stringify(posts)
 
-      writeFile('./data/posts.json', json, 'utf-8', error => {
+      writeFile('./data/posts.json', json,  error => {
         if (error) {
           callback(error)
   

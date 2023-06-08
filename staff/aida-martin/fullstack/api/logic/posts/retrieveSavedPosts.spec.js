@@ -26,10 +26,10 @@ describe('retrieveSavedPosts', () => {
     const posts = [{ id: postId1, author: userId, visibility: 'private' }, { id: postId2, author: userId2, visibility: 'public' }, { id: postId3, author: userId2, visibility: 'private' }]
     const postsJson = JSON.stringify(posts)
 
-    writeFile('./data/users.json', usersJson, 'utf8', error => {
+    writeFile(`${process.env.DB_PATH}/users.json`, usersJson, 'utf8', error => {
       expect(error).to.be.null
 
-      readFile('./data/users.json', 'utf8', (error, json) => {
+      readFile(`${process.env.DB_PATH}/users.json`, 'utf8', (error, json) => {
         expect(error).to.be.null
 
         const users = JSON.parse(json)

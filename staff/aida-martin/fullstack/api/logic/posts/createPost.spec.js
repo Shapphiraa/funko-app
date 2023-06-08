@@ -18,10 +18,10 @@ describe('createPost', () => {
     const users = [{ id, email }]
     const json = JSON.stringify(users)
 
-    writeFile('./data/users.json', json, 'utf8', error => {
+    writeFile(`${process.env.DB_PATH}/users.json`, json, 'utf8', error => {
       expect(error).to.be.null
 
-      readFile('./data/users.json', 'utf8', (error, json) => {
+      readFile(`${process.env.DB_PATH}/users.json`, 'utf8', (error, json) => {
         expect(error).to.be.null
 
         const users = JSON.parse(json)

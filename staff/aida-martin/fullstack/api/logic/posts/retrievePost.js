@@ -6,7 +6,7 @@ module.exports = function retrievePost (userId, postId, callback) {
   validateId(postId, 'Post ID')
   validateCallback(callback)
 
-  readFile('./data/users.json', 'utf-8', (error, json) => {
+  readFile(`${process.env.DB_PATH}/users.json`,  (error, json) => {
     if (error) {
       callback(error)
 
@@ -23,7 +23,7 @@ module.exports = function retrievePost (userId, postId, callback) {
       return
     }
 
-    readFile('./data/posts.json', 'utf-8', (error, json) => {
+    readFile('./data/posts.json',  (error, json) => {
       if (error) {
         callback(error)
 

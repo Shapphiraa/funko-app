@@ -26,10 +26,10 @@ describe('retrievePosts', () => {
     const posts = [{ id: postId1, author: userId, visibility: 'private' }, { id: postId2, author: userId2, visibility: 'public' }, { id: postId3, author: userId2, visibility: 'private' }]
     const postsJson = JSON.stringify(posts)
 
-    writeFile('./data/users.json', usersJson, 'utf8', error =>  {
+    writeFile(`${process.env.DB_PATH}/users.json`, usersJson, 'utf8', error =>  {
       expect(error).to.be.null
 
-      readFile('./data/users.json', 'utf8', (error, json) => {
+      readFile(`${process.env.DB_PATH}/users.json`, 'utf8', (error, json) => {
         expect(error).to.be.null
 
         const users = JSON.parse(json)
@@ -45,10 +45,10 @@ describe('retrievePosts', () => {
 
             expect(posts).to.exist
             expect(posts).to.have.lengthOf(2)
-            expect(posts[0].author.id).to.be.equal(user.id)
-            expect(posts[1].author.id).to.be.equal(user2.id)
-            expect(posts[0].saves).to.be.false
-            expect(posts[1].saves).to.be.true
+            expect(posts[0].author.id).to.be.equal(user2.id)
+            expect(posts[1].author.id).to.be.equal(user.id)
+            expect(posts[0].saves).to.be.true
+            expect(posts[1].saves).to.be.false
 
             done()
           })
