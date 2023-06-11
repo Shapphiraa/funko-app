@@ -1,1 +1,11 @@
-[]
+[
+  {
+    "id": "post-1",
+    "author": "user-1",
+    "image": "https://picsum.photos/1500?random=1",
+    "text": "Hi 🧡",
+    "date": "2023-06-11T11:52:10.633Z",
+    "likes": [],
+    "visibility": "public"
+  }
+]

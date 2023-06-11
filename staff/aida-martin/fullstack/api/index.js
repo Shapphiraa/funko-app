@@ -1,7 +1,7 @@
 require('dotenv').config()
 
 const express = require('express')
-const { registerUser, authenticateUser, retrieveUser, updateUserAvatar } = require('./logic')
+const { registerUser, authenticateUser, retrieveUser, updateUserAvatar, updateUserPassword, createPost, retrievePost, retrievePosts, retrieveSavedPosts, deletePost } = require('./logic')
 
 const api = express()
 
@@ -107,7 +107,7 @@ api.get('/users/:userId', (req, res) => {
     }
   })
 
-api.patch('/users/:userId', (req, res) => {
+api.patch('/users/:userId/avatar', (req, res) => {
   let json = ''
 
   req.on('data', chunk => {
@@ -118,6 +118,9 @@ api.patch('/users/:userId', (req, res) => {
     try {
       const { userId } = req.params
       const { avatar } = JSON.parse(json)
+
+      //Esto es igual:
+      //const { userId, avatar } = JSON.parse(json)
 
       updateUserAvatar(userId, avatar, (error) => {
         if (error) {
@@ -133,6 +136,145 @@ api.patch('/users/:userId', (req, res) => {
       res.status(400).json({ error: error.message})
     }
   })
+})
+
+api.patch('/users/:userId/password', (req, res) => {
+  let json = ''
+
+  req.on('data', chunk => {
+    json += chunk
+  })
+
+  req.on('end', () => {
+    try {
+      const { userId } = req.params
+      const { password, newPassword, newPasswordConfirm } = JSON.parse(json)
+
+      //Esto es igual:
+      //const { userId, password, newPassword, newPasswordConfirm } = JSON.parse(json)
+
+      updateUserPassword(userId, password, newPassword, newPasswordConfirm, (error) => {
+        if (error) {
+        res.status(400).json({ error: error.message })
+        
+        return
+        }
+        
+        res.status(204).send()
+      })
+
+    } catch(error) {
+      res.status(400).json({ error: error.message})
+    }
+  })
+})
+
+api.post('/posts', (req, res) => {
+  let json = ''
+
+  req.on('data', chunk => {
+    json += chunk
+  })
+
+  req.on('end', () => {
+    const { userId, image, text } = JSON.parse(json)
+
+    try {
+
+      createPost(userId, image, text, error => {
+        if (error) {
+        res.status(400).json({ error: error.message})
+        
+        return
+        }
+        
+        res.status(201).send()
+      })
+
+    } catch(error) {
+      res.status(400).json({ error: error.message})
+    }
+  })
+})
+
+api.get('/posts/:postId/users/:userId', (req, res) => {
+
+  try {
+    const { postId, userId } = req.params
+
+    retrievePost(userId, postId, (error, user) => {
+      if (error) {
+      res.status(400).json({ error: error.message })
+      
+      return
+      }
+      
+      res.json(user)
+    })
+
+  } catch(error) {
+    res.status(400).json({ error: error.message})
+  }
+})
+
+api.get('/posts/users/:userId', (req, res) => {
+
+  try {
+    const { userId } = req.params
+
+    retrievePosts(userId, (error, user) => {
+      if (error) {
+      res.status(400).json({ error: error.message })
+      
+      return
+      }
+      
+      res.json(user)
+    })
+
+  } catch(error) {
+    res.status(400).json({ error: error.message})
+  }
+})
+
+api.get('/posts/users/:userId/saved', (req, res) => {
+
+  try {
+    const { userId } = req.params
+
+    retrieveSavedPosts(userId, (error, user) => {
+      if (error) {
+      res.status(400).json({ error: error.message })
+      
+      return
+      }
+      
+      res.json(user)
+    })
+
+  } catch(error) {
+    res.status(400).json({ error: error.message})
+  }
+})
+
+api.delete('/posts/:postId/users/:userId', (req, res) => {
+
+  try {
+    const { postId, userId } = req.params
+
+    deletePost(userId, postId, (error, user) => {
+      if (error) {
+      res.status(400).json({ error: error.message })
+      
+      return
+      }
+      
+      res.json(user)
+    })
+
+  } catch(error) {
+    res.status(400).json({ error: error.message})
+  }
 })
 
 api.listen(process.env.PORT, () => console.log(`server running in port ${process.env.PORT}`))

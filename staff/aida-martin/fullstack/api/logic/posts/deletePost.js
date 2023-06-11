@@ -1,4 +1,4 @@
-const { validateId, validateCallback } = require('com')
+const { validators: { validateId, validateCallback } } = require('com')
 const { readFile, writeFile } = require('fs')
 
 

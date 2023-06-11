@@ -17,7 +17,7 @@ describe('updateUserAvatar', () => {
     writeFile(`${process.env.DB_PATH}/users.json`, '[]', 'utf8', error => done(error))
   })
 
-  it('should succeed on update user avatar', done => {
+  it('should succeed on update user password', done => {
     const users = [{ id, password }]
     const json = JSON.stringify(users)
 
