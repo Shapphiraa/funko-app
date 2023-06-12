@@ -9,10 +9,10 @@ module.exports = {
   retrievePosts: require('./posts/retrievePosts'),
   retrieveSavedPosts: require('./posts/retrieveSavedPosts'),
   deletePost: require('./posts/deletePost'),
-  updatePost: require('./posts/updatePost')
-  // privatizePost: require('./posts/privatizePost'),
-  // toggleLikePost: require('./posts/toggleLikePost'),
-  // toggleSavePost: require('./posts/toggleSavePost'),
-  // buyPost: require('./posts/buyPost'),
-  // sellPost: require('./posts/sellPost')
+  updatePost: require('./posts/updatePost'),
+  togglePrivatizePost: require('./posts/togglePrivatizePost'),
+  toggleLikePost: require('./posts/toggleLikePost'),
+  toggleSavePost: require('./posts/toggleSavePost'),
+  buyPost: require('./posts/buyPost'),
+  sellPost: require('./posts/sellPost')
 }

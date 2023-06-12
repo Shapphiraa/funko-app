@@ -1,5 +1,4 @@
 import { validators } from 'com'
-import { savePost, findUserById, findPostById } from '../data'
 
 const { validateId, validateUrl, validateText, validateCallback } = validators
 
@@ -19,29 +18,34 @@ export default function updatePost (userId, postId, image, text, callback) {
   validateText(text, 'Text')
   validateCallback(callback)
 
-  findUserById(userId, user => {
-    if (!user) {
-      callback(new Error('User not found 😥', { cause: 'userError' }))
+  // eslint-disable-next-line no-undef
+  const xhr = new XMLHttpRequest()
+
+  xhr.onload = () => {
+    const { status } = xhr
+
+    if (status !== 204) {
+      const { response: json } = xhr
+      const { error } = JSON.parse(json)
+
+      callback(new Error(error))
 
       return
     }
 
-    findPostById(postId, post => {
-      if (!post) {
-        callback(new Error('User not found 😥', { cause: 'userError' }))
+    callback(null)
+  }
 
-        return
-      }
+  xhr.onerror = () => {
+    callback(new Error('Connection error'))
+  }
 
-      if (post.author !== userId) {
-        callback(new Error('Post not found 😥', { cause: 'userError' }))
+  xhr.open('PATCH', `${import.meta.env.VITE_API_URL}/posts/${postId}`)
 
-        return
-      }
-      post.image = image
-      post.text = text
+  xhr.setRequestHeader('Content-Type', 'application/json')
 
-      savePost(post, () => callback(null))
-    })
-  })
+  const data = { userId, image, text }
+  const json = JSON.stringify(data)
+
+  xhr.send(json)
 }

@@ -1,5 +1,4 @@
 import { validators } from 'com'
-import { savePost, findPostById, findUserById } from '../data'
 
 const { validateId, validateCallback } = validators
 
@@ -15,29 +14,34 @@ export default function toggleLikePost (userId, postId, callback) {
   validateId(postId, 'Post ID')
   validateCallback(callback)
 
-  findUserById(userId, user => {
-    if (!user) {
-      callback(new Error('User not found 😥'))
+  // eslint-disable-next-line no-undef
+  const xhr = new XMLHttpRequest()
+
+  xhr.onload = () => {
+    const { status } = xhr
+
+    if (status !== 204) {
+      const { response: json } = xhr
+      const { error } = JSON.parse(json)
+
+      callback(new Error(error))
 
       return
     }
 
-    findPostById(postId, post => {
-      if (!post) {
-        callback(new Error('Post not found 😥'))
+    callback(null)
+  }
 
-        return
-      }
+  xhr.onerror = () => {
+    callback(new Error('Connection error'))
+  }
 
-      const index = post.likes.indexOf(userId)
+  xhr.open('PATCH', `${import.meta.env.VITE_API_URL}/posts/${postId}/likes`)
 
-      if (index < 0) {
-        post.likes.push(userId)
-      } else {
-        post.likes.splice(index, 1)
-      }
+  xhr.setRequestHeader('Content-Type', 'application/json')
 
-      savePost(post, () => callback(null))
-    })
-  })
+  const data = { userId }
+  const json = JSON.stringify(data)
+
+  xhr.send(json)
 }

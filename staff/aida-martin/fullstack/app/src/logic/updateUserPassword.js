@@ -1,6 +1,4 @@
 import { validators } from 'com'
-import { saveUser, findUserById } from '../data'
-
 const { validateId, validatePassword, validateCallback } = validators
 
 /**
@@ -22,41 +20,37 @@ export default function changePassword (
   validateId(userId, 'User ID')
   validatePassword(password)
   validatePassword(newPassword, 'New password')
-  validatePassword(password)
+  validatePassword(newPasswordConfirm)
   validateCallback(callback)
 
-  if (newPassword !== newPasswordConfirm) { throw new Error('New passwords do not match 😥', { cause: 'userError' }) }
-  if (newPassword === password) {
-    throw new Error('Your new password matches the current one 😥', {
-      cause: 'userError'
-    })
-  }
-  if (!newPasswordConfirm.length) {
-    throw new Error('You have not confirm your new password 😥', {
-      cause: 'userError'
-    })
-  }
-  if (newPassword.length < 8) {
-    throw new Error('Your password does not have 8 characters 😥', {
-      cause: 'userError'
-    })
-  }
+  // eslint-disable-next-line no-undef
+  const xhr = new XMLHttpRequest()
 
-  findUserById(userId, user => {
-    if (!user) {
-      callback(new Error('User not found 😥', { cause: 'userError' }))
+  xhr.onload = () => {
+    const { status } = xhr
+
+    if (status !== 204) {
+      const { response: json } = xhr
+      const { error } = JSON.parse(json)
+
+      callback(new Error(error))
 
       return
     }
 
-    if (password !== user.password) {
-      callback(new Error('Wrong password 😥', { cause: 'userError' }))
+    callback(null)
+  }
 
-      return
-    }
+  xhr.onerror = () => {
+    callback(new Error('Connection error'))
+  }
 
-    user.password = newPassword
+  xhr.open('PATCH', `${import.meta.env.VITE_API_URL}/users/${userId}/password`)
 
-    saveUser(user, () => callback(null))
-  })
+  xhr.setRequestHeader('Content-Type', 'application/json')
+
+  const data = { password, newPassword, newPasswordConfirm }
+  const json = JSON.stringify(data)
+
+  xhr.send(json)
 }

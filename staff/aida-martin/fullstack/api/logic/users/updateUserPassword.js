@@ -5,7 +5,6 @@ module.exports = function updateUserPassword (userId, password, newPassword, new
   validateId(userId, 'User ID')
   validatePassword(password)
   validatePassword(newPassword, 'New password')
-  validatePassword(password)
   validateCallback(callback)
 
   if (newPassword !== newPasswordConfirm) { 

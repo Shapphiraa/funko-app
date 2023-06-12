@@ -45,7 +45,7 @@ module.exports = function updatePost (userId, postId, image, text, callback) {
       post.image = image
       post.text = text
 
-      json = JSON.stringify(posts)
+      json = JSON.stringify(posts, null, 4)
 
     writeFile('./data/posts.json', json,  error => {
       if (error) {

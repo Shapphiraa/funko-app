@@ -1,7 +1,7 @@
 require('dotenv').config()
 
 const express = require('express')
-const { registerUser, authenticateUser, retrieveUser, updateUserAvatar, updateUserPassword, createPost, retrievePost, retrievePosts, retrieveSavedPosts, deletePost } = require('./logic')
+const { registerUser, authenticateUser, retrieveUser, updateUserAvatar, updateUserPassword, createPost, retrievePost, retrievePosts, retrieveSavedPosts, deletePost, updatePost, togglePrivatizePost, toggleLikePost, toggleSavePost, buyPost, sellPost } = require('./logic')
 
 const api = express()
 
@@ -202,14 +202,14 @@ api.get('/posts/:postId/users/:userId', (req, res) => {
   try {
     const { postId, userId } = req.params
 
-    retrievePost(userId, postId, (error, user) => {
+    retrievePost(userId, postId, (error, post) => {
       if (error) {
       res.status(400).json({ error: error.message })
       
       return
       }
       
-      res.json(user)
+      res.json(post)
     })
 
   } catch(error) {
@@ -222,14 +222,14 @@ api.get('/posts/users/:userId', (req, res) => {
   try {
     const { userId } = req.params
 
-    retrievePosts(userId, (error, user) => {
+    retrievePosts(userId, (error, posts) => {
       if (error) {
       res.status(400).json({ error: error.message })
       
       return
       }
       
-      res.json(user)
+      res.json(posts)
     })
 
   } catch(error) {
@@ -242,14 +242,14 @@ api.get('/posts/users/:userId/saved', (req, res) => {
   try {
     const { userId } = req.params
 
-    retrieveSavedPosts(userId, (error, user) => {
+    retrieveSavedPosts(userId, (error, savedPosts) => {
       if (error) {
       res.status(400).json({ error: error.message })
       
       return
       }
       
-      res.json(user)
+      res.json(savedPosts)
     })
 
   } catch(error) {
@@ -258,23 +258,190 @@ api.get('/posts/users/:userId/saved', (req, res) => {
 })
 
 api.delete('/posts/:postId/users/:userId', (req, res) => {
-
   try {
-    const { postId, userId } = req.params
+    const { userId, postId } = req.params
 
-    deletePost(userId, postId, (error, user) => {
+    deletePost(userId, postId, (error) => {
       if (error) {
       res.status(400).json({ error: error.message })
       
       return
       }
       
-      res.json(user)
+      res.status(200).send()
     })
 
   } catch(error) {
     res.status(400).json({ error: error.message})
   }
+})
+
+api.patch('/posts/:postId', (req, res) => {
+  let json = ''
+
+  req.on('data', chunk => {
+    json += chunk
+  })
+
+  req.on('end', () => {
+    try {
+      const { postId } = req.params
+      const { userId, image, text } = JSON.parse(json)
+
+      updatePost(userId, postId, image, text, (error) => {
+        if (error) {
+        res.status(400).json({ error: error.message })
+        
+        return
+        }
+        
+        res.status(204).send()
+      })
+
+    } catch(error) {
+      res.status(400).json({ error: error.message})
+    }
+  })
+})
+
+api.patch('/posts/:postId/visibility', (req, res) => {
+  let json = ''
+
+  req.on('data', chunk => {
+    json += chunk
+  })
+
+  req.on('end', () => {
+    try {
+      const { postId } = req.params
+      const { userId } = JSON.parse(json)
+
+      togglePrivatizePost(userId, postId, (error) => {
+        if (error) {
+        res.status(400).json({ error: error.message })
+        
+        return
+        }
+        
+        res.status(204).send()
+      })
+
+    } catch(error) {
+      res.status(400).json({ error: error.message})
+    }
+  })
+})
+
+api.patch('/posts/:postId/likes', (req, res) => {
+  let json = ''
+
+  req.on('data', chunk => {
+    json += chunk
+  })
+
+  req.on('end', () => {
+    try {
+      const { postId } = req.params
+      const { userId } = JSON.parse(json)
+
+      toggleLikePost(userId, postId, (error) => {
+        if (error) {
+        res.status(400).json({ error: error.message })
+        
+        return
+        }
+        
+        res.status(204).send()
+      })
+
+    } catch(error) {
+      res.status(400).json({ error: error.message})
+    }
+  })
+})
+
+api.patch('/posts/:postId/saves', (req, res) => {
+  let json = ''
+
+  req.on('data', chunk => {
+    json += chunk
+  })
+
+  req.on('end', () => {
+    try {
+      const { postId } = req.params
+      const { userId } = JSON.parse(json)
+
+      toggleSavePost(userId, postId, (error) => {
+        if (error) {
+        res.status(400).json({ error: error.message })
+        
+        return
+        }
+        
+        res.status(204).send()
+      })
+
+    } catch(error) {
+      res.status(400).json({ error: error.message})
+    }
+  })
+})
+
+api.patch('/posts/:postId/buy', (req, res) => {
+  let json = ''
+
+  req.on('data', chunk => {
+    json += chunk
+  })
+
+  req.on('end', () => {
+    try {
+      const { postId } = req.params
+      const { userId } = JSON.parse(json)
+
+      buyPost(userId, postId, (error) => {
+        if (error) {
+        res.status(400).json({ error: error.message })
+        
+        return
+        }
+        
+        res.status(204).send()
+      })
+
+    } catch(error) {
+      res.status(400).json({ error: error.message})
+    }
+  })
+})
+
+api.patch('/posts/:postId/sale', (req, res) => {
+  let json = ''
+
+  req.on('data', chunk => {
+    json += chunk
+  })
+
+  req.on('end', () => {
+    try {
+      const { postId } = req.params
+      const { userId, price } = JSON.parse(json)
+
+      sellPost(userId, postId, price, (error) => {
+        if (error) {
+        res.status(400).json({ error: error.message })
+        
+        return
+        }
+        
+        res.status(204).send()
+      })
+
+    } catch(error) {
+      res.status(400).json({ error: error.message})
+    }
+  })
 })
 
 api.listen(process.env.PORT, () => console.log(`server running in port ${process.env.PORT}`))

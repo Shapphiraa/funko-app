@@ -2,15 +2,7 @@ import { validators } from 'com'
 
 const { validateId, validateCallback } = validators
 
-/**
- * Retrieves a post from the database
- *
- * @param {string} userId The user's ID
- *
- * @returns {object} A post
- */
-
-export default function retrievePost (userId, postId, callback) {
+export default function togglePrivatizePost (userId, postId, callback) {
   validateId(userId, 'User ID')
   validateId(postId, 'Post ID')
   validateCallback(callback)
@@ -21,7 +13,7 @@ export default function retrievePost (userId, postId, callback) {
   xhr.onload = () => {
     const { status } = xhr
 
-    if (status !== 200) {
+    if (status !== 204) {
       const { response: json } = xhr
       const { error } = JSON.parse(json)
 
@@ -30,17 +22,19 @@ export default function retrievePost (userId, postId, callback) {
       return
     }
 
-    const { response: json } = xhr
-    const post = JSON.parse(json)
-
-    callback(null, post)
+    callback(null)
   }
 
   xhr.onerror = () => {
     callback(new Error('Connection error'))
   }
 
-  xhr.open('GET', `${import.meta.env.VITE_API_URL}/users/${userId}`)
+  xhr.open('PATCH', `${import.meta.env.VITE_API_URL}/posts/${postId}/visibility`)
 
-  xhr.send()
+  xhr.setRequestHeader('Content-Type', 'application/json')
+
+  const data = { userId }
+  const json = JSON.stringify(data)
+
+  xhr.send(json)
 }

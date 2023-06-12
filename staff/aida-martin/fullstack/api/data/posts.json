@@ -1,11 +1,48 @@
 [
-  {
-    "id": "post-1",
-    "author": "user-1",
-    "image": "https://picsum.photos/1500?random=1",
-    "text": "Hi 🧡",
-    "date": "2023-06-11T11:52:10.633Z",
-    "likes": [],
-    "visibility": "public"
-  }
+    {
+        "id": "post-1",
+        "author": "user-2",
+        "image": "https://picsum.photos/1500?random=2",
+        "text": "Hello 💜",
+        "date": "2023-06-11T11:52:10.633Z",
+        "likes": [
+            "user-1"
+        ],
+        "visibility": "public",
+        "price": 0
+    },
+    {
+        "id": "post-2",
+        "author": "user-2",
+        "image": "https://picsum.photos/1500?random=3",
+        "text": "Hello 💙",
+        "date": "2023-06-12T13:04:26.775Z",
+        "likes": [],
+        "visibility": "private",
+        "price": 0
+    },
+    {
+        "id": "post-3",
+        "author": "user-2",
+        "image": "https://picsum.photos/1500?random=4",
+        "text": "Hello 💙",
+        "date": "2023-06-12T14:55:11.348Z",
+        "likes": [
+            "user-2"
+        ],
+        "visibility": "public",
+        "price": 20
+    },
+    {
+        "id": "post-4",
+        "author": "user-7",
+        "image": "https://picsum.photos/1500?random=5",
+        "text": "Hi 💛",
+        "date": "2023-06-12T16:34:21.721Z",
+        "likes": [
+            "user-2"
+        ],
+        "visibility": "public",
+        "price": "15"
+    }
 ]

@@ -1,5 +1,4 @@
 import { validators } from 'com'
-import { findUserById, loadPosts, loadUsers } from '../data'
 
 const { validateId, validateCallback } = validators
 /**
@@ -14,31 +13,32 @@ export default function retrievePosts (userId, callback) {
   validateId(userId, 'User ID')
   validateCallback(callback)
 
-  findUserById(userId, user => {
-    if (!user) {
-      callback(new Error(`User with ID ${userId} not found`))
+  // eslint-disable-next-line no-undef
+  const xhr = new XMLHttpRequest()
+
+  xhr.onload = () => {
+    const { status } = xhr
+
+    if (status !== 200) {
+      const { response: json } = xhr
+      const { error } = JSON.parse(json)
+
+      callback(new Error(error))
 
       return
     }
 
-    loadPosts(posts => {
-      loadUsers(users => {
-        posts = posts.filter(post => post.visibility === 'public' || user.id === post.author)
+    const { response: json } = xhr
+    const posts = JSON.parse(json)
 
-        posts.forEach(post => {
-          post.saves = user.saves.includes(post.id)
+    callback(null, posts)
+  }
 
-          const _user = users.find(user => user.id === post.author)
+  xhr.onerror = () => {
+    callback(new Error('Connection error'))
+  }
 
-          post.author = {
-            id: _user.id,
-            name: _user.name.split(' ')[0],
-            avatar: _user.avatar
-          }
-        })
+  xhr.open('GET', `${import.meta.env.VITE_API_URL}/posts/users/${userId}`)
 
-        callback(null, posts.toReversed()) // TODO toSorted (para que se ordenen por fecha)
-      })
-    })
-  })
+  xhr.send()
 }

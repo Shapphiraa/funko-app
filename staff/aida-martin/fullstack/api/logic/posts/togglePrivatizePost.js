@@ -1,6 +1,7 @@
 const { validators: { validateId, validateCallback } } = require('com')
+const { readFile, writeFile } = require('fs')
 
-export default function togglePrivatizePost (userId, postId, callback) {
+module.exports = function togglePrivatizePost (userId, postId, callback) {
   validateId(userId, 'User ID')
   validateId(postId, 'Post ID')
   validateCallback(callback)
@@ -45,7 +46,7 @@ export default function togglePrivatizePost (userId, postId, callback) {
         post.visibility = 'public'
       }
 
-      json = JSON.stringify(posts)
+      json = JSON.stringify(posts, null, 4)
 
       writeFile('./data/posts.json', json,  error => {
         if (error) {

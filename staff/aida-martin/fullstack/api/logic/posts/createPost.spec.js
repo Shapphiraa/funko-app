@@ -46,6 +46,7 @@ describe('createPost', () => {
             expect(post.date).to.be.a('string')
             expect(post.likes).to.have.lengthOf(0)
             expect(post.visibility).to.equal('public')
+            expect(post.price).to.equal(0)
 
             done()
           })

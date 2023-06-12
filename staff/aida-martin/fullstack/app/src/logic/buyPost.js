@@ -1,5 +1,4 @@
 import { validators } from 'com'
-import { findUserById, findPostById, savePost } from '../data'
 
 const { validateId, validateCallback } = validators
 
@@ -8,24 +7,34 @@ export default function buyPost (userId, postId, callback) {
   validateId(postId, 'Post ID')
   validateCallback(callback)
 
-  findUserById(userId, user => {
-    if (!user) {
-      callback(new Error('User not found 😥', { cause: 'userError' }))
+  // eslint-disable-next-line no-undef
+  const xhr = new XMLHttpRequest()
+
+  xhr.onload = () => {
+    const { status } = xhr
+
+    if (status !== 204) {
+      const { response: json } = xhr
+      const { error } = JSON.parse(json)
+
+      callback(new Error(error))
 
       return
     }
 
-    findPostById(postId, post => {
-      if (!post) {
-        callback(new Error('Post not found 😥', { cause: 'userError' }))
+    callback(null)
+  }
 
-        return
-      }
+  xhr.onerror = () => {
+    callback(new Error('Connection error'))
+  }
 
-      post.author = userId
-      post.price = 0
+  xhr.open('PATCH', `${import.meta.env.VITE_API_URL}/posts/${postId}/buy`)
 
-      savePost(post, () => callback(null))
-    })
-  })
+  xhr.setRequestHeader('Content-Type', 'application/json')
+
+  const data = { userId }
+  const json = JSON.stringify(data)
+
+  xhr.send(json)
 }

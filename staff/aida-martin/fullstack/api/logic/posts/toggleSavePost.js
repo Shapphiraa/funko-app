@@ -1,4 +1,5 @@
 const { validators: { validateId, validateCallback } } = require('com')
+const { readFile, writeFile } = require('fs')
 
 /**
  * Adds or removes post's saves. Update user in database
@@ -7,7 +8,7 @@ const { validators: { validateId, validateCallback } } = require('com')
  * @param {string} postId The post's ID
  */
 
-export default function toggleSavePost (userId, postId, callback) {
+module.exports = function toggleSavePost (userId, postId, callback) {
   validateId(userId, 'User ID')
   validateId(postId, 'Post ID')
   validateCallback(callback)
@@ -54,7 +55,7 @@ export default function toggleSavePost (userId, postId, callback) {
         user.saves.splice(index, 1)
       }
 
-      json = JSON.stringify(users)
+      json = JSON.stringify(users, null, 4)
 
       writeFile(`${process.env.DB_PATH}/users.json`, json,  error => {
         if (error) {

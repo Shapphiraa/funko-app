@@ -1,6 +1,7 @@
 const { validators: { validateId, validateCallback } } = require('com')
+const { readFile, writeFile } = require('fs')
 
-export default function buyPost (userId, postId, callback) {
+module.exports = function buyPost (userId, postId, callback) {
   validateId(userId, 'User ID')
   validateId(postId, 'Post ID')
   validateCallback(callback)
@@ -42,7 +43,7 @@ export default function buyPost (userId, postId, callback) {
       post.author = userId
       post.price = 0
 
-      json = JSON.stringify(posts)
+      json = JSON.stringify(posts, null, 4)
 
       writeFile('./data/posts.json', json,  error => {
         if (error) {

@@ -6,7 +6,7 @@ import formatLikes from '../logic/helpers/utils'
 import toggleLikePost from '../logic/toggleLikePost'
 import toggleSavePost from '../logic/toggleSavePost'
 import deletePost from '../logic/deletePost'
-import togglePrivatizePost from '../logic/privatizePost'
+import togglePrivatizePost from '../logic/togglePrivatizePost'
 import Context from '../Context'
 
 export default function Post ({ post, onEditPost, onLiked, onSaved, onDeletePost, onPrivatizePost, onSellPost, onBuyPost }) {

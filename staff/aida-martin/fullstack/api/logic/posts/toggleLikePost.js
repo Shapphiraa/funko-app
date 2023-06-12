@@ -1,4 +1,5 @@
 const { validators: { validateId, validateCallback } } = require('com')
+const { readFile, writeFile } = require('fs')
 
 /**
  * Adds or removes post's likes. Update post in database
@@ -7,7 +8,7 @@ const { validators: { validateId, validateCallback } } = require('com')
  * @param {string} postId The post's ID
  */
 
-export default function toggleLikePost (userId, postId, callback) {
+module.exports = function toggleLikePost (userId, postId, callback) {
   validateId(userId, 'User ID')
   validateId(postId, 'Post ID')
   validateCallback(callback)
@@ -54,7 +55,7 @@ export default function toggleLikePost (userId, postId, callback) {
         post.likes.splice(index, 1)
       }
 
-      json = JSON.stringify(posts)
+      json = JSON.stringify(posts, null, 4)
 
       writeFile('./data/posts.json', json,  error => {
         if (error) {

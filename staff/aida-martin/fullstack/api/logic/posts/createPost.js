@@ -48,7 +48,8 @@ module.exports = function createPost (userId, image, text, callback) {
           text,
           date: new Date(),
           likes: [],
-          visibility: 'public'
+          visibility: 'public',
+          price: 0
         }
   
         posts.push(post)

@@ -58,11 +58,11 @@ module.exports = function deletePost (userId, postId, callback) {
 
       posts.splice(index, 1)
 
-      postsJson = JSON.stringify(posts)
+      postsJson = JSON.stringify(posts, null, 4)
 
       users.forEach((user) => user.saves?.splice((user.saves.findIndex((save) => save === post.id), 1)))
 
-      usersJson = JSON.stringify(users)
+      usersJson = JSON.stringify(users, null, 4)
 
       writeFile('./data/posts.json', postsJson,  error => {
         if (error) {
