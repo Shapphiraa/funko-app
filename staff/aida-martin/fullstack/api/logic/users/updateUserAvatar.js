@@ -25,7 +25,7 @@ module.exports = function updateUserAvatar (userId, url, callback) {
 
     user.avatar = url
 
-    json = JSON.stringify(users)
+    json = JSON.stringify(users, null, 4)
 
     writeFile(`${process.env.DB_PATH}/users.json`, json, error => {
       if (error) {
