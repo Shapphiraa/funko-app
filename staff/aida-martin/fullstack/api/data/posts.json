@@ -64,5 +64,15 @@
         "likes": [],
         "visibility": "public",
         "price": "15"
+    },
+    {
+        "id": "post-13",
+        "author": "user-2",
+        "image": "https://picsum.photos/1500?random=4",
+        "text": "Hi 🧡",
+        "date": "2023-06-13T17:28:52.555Z",
+        "likes": [],
+        "visibility": "public",
+        "price": 0
     }
 ]
