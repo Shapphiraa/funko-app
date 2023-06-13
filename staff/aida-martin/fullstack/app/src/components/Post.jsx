@@ -134,7 +134,7 @@ export default function Post ({ post, onEditPost, onLiked, onSaved, onDeletePost
         >bookmark
         </span>
       </div>
-      <time className='post-date'>{post.date}</time>
+      <time className='post-date'>{new Date(post.date).toLocaleString('en-GB')}</time>
       <p className='post-text'>{post.text}</p>
       {
         post.author.id === context.userId &&

@@ -44,7 +44,7 @@ module.exports = function retrievePosts (userId, callback) {
             avatar: _user.avatar
           }
 
-          post.date = new Date(post.date).toLocaleString('en-GB')
+          // post.date = new Date(post.date).toLocaleString('en-GB')
       })
       //toReversed no funciona en esta versión de Node
       callback(null, posts.reverse())
