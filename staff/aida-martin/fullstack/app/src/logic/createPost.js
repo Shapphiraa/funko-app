@@ -40,8 +40,9 @@ export default function createPost (userId, image, text, callback) {
   xhr.open('POST', `${import.meta.env.VITE_API_URL}/posts`)
 
   xhr.setRequestHeader('Content-Type', 'application/json')
+  xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
 
-  const post = { userId, image, text }
+  const post = { image, text }
   const json = JSON.stringify(post)
 
   xhr.send(json)

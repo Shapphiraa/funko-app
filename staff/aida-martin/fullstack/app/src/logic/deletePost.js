@@ -36,7 +36,9 @@ export default function deletePost (userId, postId, callback) {
     callback(new Error('Connection error'))
   }
 
-  xhr.open('DELETE', `${import.meta.env.VITE_API_URL}/posts/${postId}/users/${userId}`)
+  xhr.open('DELETE', `${import.meta.env.VITE_API_URL}/posts/${postId}`)
+
+  xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
 
   xhr.send()
 }

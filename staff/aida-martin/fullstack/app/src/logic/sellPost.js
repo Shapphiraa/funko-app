@@ -32,8 +32,9 @@ export default function buyPost (userId, postId, price, callback) {
   xhr.open('PATCH', `${import.meta.env.VITE_API_URL}/posts/${postId}/sale`)
 
   xhr.setRequestHeader('Content-Type', 'application/json')
+  xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
 
-  const data = { userId, price }
+  const data = { price }
   const json = JSON.stringify(data)
 
   xhr.send(json)
