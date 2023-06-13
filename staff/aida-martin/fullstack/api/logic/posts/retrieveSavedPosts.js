@@ -43,6 +43,8 @@ module.exports = function retrieveSavedPosts (userId, callback) {
             name: _user.name.split(' ')[0],
             avatar: _user.avatar
           }
+
+          post.date = new Date(post.date).toLocaleString('en-GB')
       })
       //toReversed no funciona en esta versión de Node
       callback(null, posts.reverse())
