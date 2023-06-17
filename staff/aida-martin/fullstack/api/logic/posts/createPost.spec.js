@@ -1,37 +1,35 @@
+require('dotenv').config()
+
 const { expect } = require('chai')
-const { readFile, writeFile } = require('fs')
+const { readFile } = require('fs')
 const createPost = require('./createPost')
+const { cleanUp, populate, generate } = require('../helpers/tests')
 
 describe('createPost', () => {
-  let id, email, image, text
+  let user, image, text
   
   beforeEach(done => {
-    id = `id-${Math.random()}`
-    email = `e-${Math.random()}@gmail.com`
-    image = `url-${Math.random()}`
+    user = generate.user()
+    image = `image-${Math.random()}`
     text = `text-${Math.random()}`
-    
-    writeFile('./data/posts.json', '[]', 'utf8', error => done(error))
-  })
+
+    cleanUp(done)
+    })
 
   it('should succeed on create new post', done => {
-    const users = [{ id, email }]
-    const json = JSON.stringify(users)
+    const users = [user]
 
-    writeFile(`${process.env.DB_PATH}/users.json`, json, 'utf8', error => {
-      expect(error).to.be.null
+    populate(users, [], error => {
+      if (error) {
+          done(error)
 
-      readFile(`${process.env.DB_PATH}/users.json`, 'utf8', (error, json) => {
-        expect(error).to.be.null
-
-        const users = JSON.parse(json)
-
-        const user = users.find(user => user.email === email)
+          return
+      }
 
         createPost(user.id, image, text, error => {
          expect(error).to.be.null
 
-         readFile('./data/posts.json', 'utf8', (error, json) => {
+         readFile(`${process.env.DB_PATH}/posts.json`, 'utf8', (error, json) => {
             expect(error).to.be.null
 
             const posts = JSON.parse(json)
@@ -54,16 +52,56 @@ describe('createPost', () => {
           })
         })
       })
-    })
 
   it('should fail on not existing user', done => {
-     createPost(`id-${Math.random()}`, image, text, error => {
+     createPost(user.id, image, text, error => {
         expect(error).to.be.instanceOf(Error)
         expect(error.message).to.equal('User not found! 😥')
 
               done()
           })
-
-          after(done => writeFile('./data/posts.json', '[]', 'utf8', error => done(error)))
       })
+
+  it('fails on non-string id', () => {
+      expect(() => createPost(undefined, image, text, () => { })).to.throw(Error, 'User ID is not a string 😥')
+      expect(() => createPost(1, image, text, () => { })).to.throw(Error, 'User ID is not a string 😥')
+      expect(() => createPost(true, image, text,() => { })).to.throw(Error, 'User ID is not a string 😥')
+      expect(() => createPost({}, image, text,() => { })).to.throw(Error, 'User ID is not a string 😥')
+      expect(() => createPost([], image, text,() => { })).to.throw(Error, 'User ID is not a string 😥')
+  })
+    
+  it('fails on empty id', () => {
+     expect(() => createPost('', image, text, () => { })).to.throw(Error, 'User ID is empty 😥')
+ })
+
+  it('fails on non-string url image', () => {
+    expect(() => createPost(user.id, undefined, text, () => { })).to.throw(Error, 'Image URL is not a string 😥')
+    expect(() => createPost(user.id, 1, text, () => { })).to.throw(Error, 'Image URL is not a string 😥')
+    expect(() => createPost(user.id, true, text, () => { })).to.throw(Error, 'Image URL is not a string 😥')
+    expect(() => createPost(user.id, {}, text, () => { })).to.throw(Error, 'Image URL is not a string 😥')
+    expect(() => createPost(user.id, [], text, () => { })).to.throw(Error, 'Image URL is not a string 😥')
+})
+    
+    it('fails on empty url image', () => {
+        expect(() => createPost(user.id, '', text, () => { })).to.throw(Error, 'Image URL is empty 😥')
+    })
+
+    it('fails on non-string text', () => {
+      expect(() => createPost(user.id, image, undefined,() => { })).to.throw(Error, 'Text is not a string 😥')
+      expect(() => createPost(user.id, image, 1, () => { })).to.throw(Error, 'Text is not a string 😥')
+      expect(() => createPost(user.id, image, true, () => { })).to.throw(Error, 'Text is not a string 😥')
+      expect(() => createPost(user.id, image, {}, () => { })).to.throw(Error, 'Text is not a string 😥')
+      expect(() => createPost(user.id, image, [], () => { })).to.throw(Error, 'Text is not a string 😥')
+  })
+  
+  it('fails on empty text', () => {
+      expect(() => createPost(user.id, image, '', () => { })).to.throw(Error, 'Text is empty 😥')
+  })
+
+  it('fails on non-function callback', () => {
+    expect(() => createPost(user.id, image, text, 'callback')).to.throw(Error, 'Callback is not a function 😥')
+    expect(() => createPost(user.id, image, text)).to.throw(Error, 'Callback is not a function 😥')
+  })
+
+      after(cleanUp)
     })

@@ -1,87 +1,100 @@
+require('dotenv').config()
+
 const { expect } = require('chai')
-const { readFile, writeFile } = require('fs')
 const retrievePost = require('./retrievePost')
+const { cleanUp, populate, generate } = require('../helpers/tests')
 
 describe('retrievePost', () => {
-  let userId, postId
-
+  let user, post
+  
   beforeEach(done => {
-  userId = `id-${Math.random()}`
-  postId = `post-${Math.random()}`
+    user = generate.user()
+    post = generate.post(user.id)
 
-  writeFile(`${process.env.DB_PATH}/users.json`, '[]', 'utf8', error => done(error))
-  })
+    cleanUp(done)
+    })
 
   it('should succeed on retrieve post', done => {
-    const users = [{ id: userId }]
-    const usersJson = JSON.stringify(users)
+    const users = [user]
+    const posts = [post]
 
-    writeFile(`${process.env.DB_PATH}/users.json`, usersJson, 'utf8', error => {
-      expect(error).to.be.null
+    populate(users, posts, error => {
+      if (error) {
+          done(error)
 
-      readFile(`${process.env.DB_PATH}/users.json`, 'utf8', (error, json) => {
-        expect(error).to.be.null
-
-        const users = JSON.parse(json)
-
-        const user = users.find(user => user.id === userId )
-
-        const posts = [{ id: postId, author: userId }]
-        const postsJson = JSON.stringify(posts)
+          return
+      }
    
-        writeFile('./data/posts.json', postsJson, 'utf8', error => {
-         expect(error).to.be.null
-   
-          retrievePost(user.id, postId, (error, post) => {
-            expect(error).to.be.null
+        retrievePost(user.id, post.id, (error, _post) => {
+          expect(error).to.be.null
 
-            expect(post).to.exist
-            expect(post.id).to.be.equal(postId)
-            expect(post.author).to.be.equal(user.id)
-
-            done()
-          })
-
-          })
+          expect(_post).to.exist
+          expect(_post.id).to.be.equal(post.id)
+          expect(_post.author).to.be.equal(post.author)
+          done()
         })
       })
     })
 
-  it('should fail on not existing user', done => {
-     retrievePost(`id-${Math.random()}`, `post-${Math.random()}`, (error, post) => {
+  it('should fail on non-existing user', done => {
+     retrievePost(user.id, post.id, (error, _post) => {
         expect(error).to.be.instanceOf(Error)
+
+        expect(_post).to.be.undefined
         expect(error.message).to.equal('User not found! 😥')
 
-              done()
+          done()
           })
       })
 
-      it('should fail on not existing post', done => {
-        const users = [{ id: userId }]
-        const usersJson = JSON.stringify(users)
+      it('should fail on non-existing post', done => {
+        const users = [user]
     
-        writeFile(`${process.env.DB_PATH}/users.json`, usersJson, 'utf8', error => {
-          expect(error).to.be.null
+        populate(users, [], error => {
+          if (error) {
+              done(error)
     
-          readFile(`${process.env.DB_PATH}/users.json`, 'utf8', (error, json) => {
-            expect(error).to.be.null
+              return
+          }
     
-            const users = JSON.parse(json)
-    
-            const user = users.find(user => user.id === userId )
-        
-  
-            const fakePostId = `post-${Math.random()}`
-    
-          retrievePost(user.id, fakePostId, (error, post) => {
+          retrievePost(user.id, post.id, (error, _post) => {
             expect(error).to.be.instanceOf(Error)
 
-            expect(post).to.be.undefined
+            expect(_post).to.be.undefined
             expect(error.message).to.equal('Post not found! 😥')
     
-                  done()
+              done()
               })
           })
         })
+
+        it('fails on non-string user id', () => {
+          expect(() => retrievePost(undefined, post.id, () => { })).to.throw(Error, 'User ID is not a string 😥')
+          expect(() => retrievePost(1, post.id,)).to.throw(Error, 'User ID is not a string 😥')
+          expect(() => retrievePost(true, post.id,)).to.throw(Error, 'User ID is not a string 😥')
+          expect(() => retrievePost({}, post.id,)).to.throw(Error, 'User ID is not a string 😥')
+          expect(() => retrievePost([], post.id,)).to.throw(Error, 'User ID is not a string 😥')
       })
-    })
+        
+      it('fails on empty user id', () => {
+         expect(() => retrievePost('', post.id,)).to.throw(Error, 'User ID is empty 😥')
+     })
+
+     it('fails on non-string post id', () => {
+      expect(() => retrievePost(user.id, undefined,  () => { })).to.throw(Error, 'Post ID is not a string 😥')
+      expect(() => retrievePost(user.id, 1, () => { })).to.throw(Error, 'Post ID is not a string 😥')
+      expect(() => retrievePost(user.id, true, () => { })).to.throw(Error, 'Post ID is not a string 😥')
+      expect(() => retrievePost(user.id, {}, () => { })).to.throw(Error, 'Post ID is not a string 😥')
+      expect(() => retrievePost(user.id, [], () => { })).to.throw(Error, 'Post ID is not a string 😥')
+  })
+    
+  it('fails on empty post id', () => {
+     expect(() => retrievePost(post.id,'', () => { })).to.throw(Error, 'Post ID is empty 😥')
+  })
+ 
+ it('fails on non-function callback', () => {
+  expect(() => retrievePost(user.id, post.id, 'callback')).to.throw(Error, 'Callback is not a function 😥')
+  expect(() => retrievePost(user.id, post.id)).to.throw(Error, 'Callback is not a function 😥')
+  })
+        after(cleanUp)
+      })

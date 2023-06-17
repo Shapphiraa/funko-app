@@ -23,7 +23,7 @@ module.exports = function retrievePost (userId, postId, callback) {
       return
     }
 
-    readFile('./data/posts.json',  (error, json) => {
+    readFile(`${process.env.DB_PATH}/posts.json`, (error, json) => {
       if (error) {
         callback(error)
 

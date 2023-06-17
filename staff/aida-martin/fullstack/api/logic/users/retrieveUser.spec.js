@@ -1,35 +1,57 @@
 require('dotenv').config()
 
 const { expect } = require('chai')
-const { writeFile } = require('fs')
 const retrieveUser = require('./retrieveUser')
+const { cleanUp, populate, generate } = require('../helpers/tests')
 
 describe('retrieveUser', () => {
-  let id, name, avatar
+  let user
 
-  beforeEach(done => {
+    beforeEach(done => {
+      user = generate.user()
+  
+      cleanUp(done)
+      })
 
-    id = `user-${Math.random()}`
-    name = `name-${Math.random()}`
-    avatar = 'hello'
+  it('should succeed on retrieve user (existing user and correct id)', done => {
+      const users = [user]
 
-    writeFile(`${process.env.DB_PATH}/users.json`, '[]', 'utf8', error => done(error))
-  })
+      populate(users, [], error => {
+        if (error) {
+            done(error)
 
-  it('should succeed on retrieve user', done => {
-      const users = [{ id, name, avatar }]
-      const json = JSON.stringify(users)
+            return
+        }
 
-      writeFile(`${process.env.DB_PATH}/users.json`, json, 'utf8', error => {
-        expect(error).to.be.null
-
-        retrieveUser(id, (error, user) => {
+        retrieveUser(user.id, (error, _user) => {
             expect(error).to.be.null
 
-            expect(user).to.exist
-            expect(user.name).to.equal(name.split(' ')[0])
-            // expect(user.avatar).to.be.oneOf([null, avatar]) FAIL (cambiado por la línea de abajo, no sé en qué estaba pensando jaja)
-            expect(user.avatar).to.equal(avatar)
+            expect(_user).to.exist
+            expect(_user.name).to.equal(user.name.split(' ')[0])
+            expect(_user.avatar).to.equal(user.avatar)
+
+            done()
+        })
+      })
+    })
+
+    it('should fail on existing user and incorrect id', done => {
+      const users = [user]
+
+      populate(users, [], error => {
+        if (error) {
+            done(error)
+
+            return
+        }
+
+        user.id += '-wrong'
+
+        retrieveUser(user.id, (error, user) => {
+          expect(error).to.be.instanceOf(Error)
+
+          expect(error.message).to.equal('User not found! 😥')
+          expect(user).to.be.undefined
 
             done()
         })
@@ -37,7 +59,7 @@ describe('retrieveUser', () => {
     })
 
     it('should fail on not existing user', done => {
-        retrieveUser(id, (error, user) => {
+        retrieveUser(user.id, (error, user) => {
             expect(error).to.be.instanceOf(Error)
 
             expect(user).to.be.undefined
@@ -47,5 +69,22 @@ describe('retrieveUser', () => {
           })
       })
 
-      after(done => writeFile(`${process.env.DB_PATH}/users.json`, '[]', 'utf8', error => done(error)))
+    it('fails on non-string id', () => {
+      expect(() => retrieveUser(undefined, () => { })).to.throw(Error, 'User ID is not a string 😥')
+      expect(() => retrieveUser(1, () => { })).to.throw(Error, 'User ID is not a string 😥')
+      expect(() => retrieveUser(true, () => { })).to.throw(Error, 'User ID is not a string 😥')
+      expect(() => retrieveUser({}, () => { })).to.throw(Error, 'User ID is not a string 😥')
+      expect(() => retrieveUser([], () => { })).to.throw(Error, 'User ID is not a string 😥')
   })
+  
+  it('fails on empty id', () => {
+      expect(() => retrieveUser('', () => { })).to.throw(Error, 'User ID is empty 😥')
+  })
+
+    it('fails on non-function callback', () => {
+      expect(() => retrieveUser(user.id, 'callback')).to.throw(Error, 'Callback is not a function 😥')
+      expect(() => retrieveUser(user.id)).to.throw(Error, 'Callback is not a function 😥')
+  })
+
+      after(cleanUp)
+    })

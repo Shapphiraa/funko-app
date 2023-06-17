@@ -8,15 +8,11 @@ module.exports = function updateUserPassword (userId, password, newPassword, new
   validateCallback(callback)
 
   if (newPassword !== newPasswordConfirm) { 
-    callback(new Error('New passwords do not match 😥'))
-  
-    return
+    throw(new Error('New passwords do not match 😥'))
   }
 
   if (newPassword === password) {
-    callback(new Error('Your new password matches the current one 😥'))
-
-    return
+    throw(new Error('Your new password matches the current one 😥'))
   }
 
   readFile(`${process.env.DB_PATH}/users.json`,  (error, json) => {

@@ -16,7 +16,7 @@ describe('retrieveSavedPosts', () => {
     postId2 = `post-${Math.random()}`
     postId3 =`post-${Math.random()}`
 
-    writeFile('./data/posts.json', '[]', 'utf8', error => done(error))
+    writeFile(`${process.env.DB_PATH}/posts.json`, '[]', 'utf8', error => done(error))
   })
 
   it('should succeed on retrieve saved posts of current user', done => {
@@ -36,7 +36,7 @@ describe('retrieveSavedPosts', () => {
 
         const user = users.find(user => user.id === userId )
 
-        writeFile('./data/posts.json', postsJson, 'utf8', error => {
+        writeFile(`${process.env.DB_PATH}/posts.json`, postsJson, 'utf8', error => {
           expect(error).to.be.null
    
           retrieveSavedPosts(user.id, (error, posts) => {

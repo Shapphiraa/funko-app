@@ -24,7 +24,7 @@ module.exports = function createPost (userId, image, text, callback) {
       return
     }
 
-    readFile('./data/posts.json',  function (error, json) {
+    readFile(`${process.env.DB_PATH}/posts.json`,  function (error, json) {
       if (error) {
         callback(error)
 
@@ -56,7 +56,7 @@ module.exports = function createPost (userId, image, text, callback) {
 
         json = JSON.stringify(posts, null, 4)
 
-        writeFile('./data/posts.json', json,  error => {
+        writeFile(`${process.env.DB_PATH}/posts.json`, json,  error => {
           if (error) {
             callback(error)
     

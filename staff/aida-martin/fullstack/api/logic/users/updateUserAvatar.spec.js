@@ -3,37 +3,33 @@ require('dotenv').config()
 const { expect } = require('chai')
 const { readFile, writeFile } = require('fs')
 const updateUserAvatar = require('./updateUserAvatar')
+const { cleanUp, populate, generate } = require('../helpers/tests')
 
 describe('updateUserAvatar', () => {
-  let id, avatar, url
+  let user, url
 
   beforeEach(done => {
+    user = generate.user()
+    url = `avatar-${Math.random()}`
 
-    id = `user-${Math.random()}`
-    avatar = null
-    url = `url-${Math.random()}`
-
-    writeFile(`${process.env.DB_PATH}/users.json`, '[]', 'utf8', error => done(error))
-  })
+    cleanUp(done)
+    })
 
   it('should succeed on update user avatar', done => {
-    const users = [{ id, avatar }]
-    const json = JSON.stringify(users)
+    const users = [user]
 
-    writeFile(`${process.env.DB_PATH}/users.json`, json, 'utf8', error => {
-      expect(error).to.be.null
+    populate(users, [], error => {
+      if (error) {
+          done(error)
 
-      updateUserAvatar(id, url, error => {
+          return
+      }
+
+      updateUserAvatar(user.id, url, error => {
           expect(error).to.be.null
 
         readFile(`${process.env.DB_PATH}/users.json`, 'utf8', (error, json) => {
           expect(error).to.be.null
-
-          // const users = JSON.parse(json)
-
-          // const user = users.find(user => user.id === id)
-
-          //No necesitamos comprobar el usuario. Y destructuramos:
 
           const [{avatar}] = JSON.parse(json)
 
@@ -45,12 +41,43 @@ describe('updateUserAvatar', () => {
     })
   })
 
-  it('should fail on not existing user', done => {
-      updateUserAvatar(id, url, error => {
+  it('should fail on non-existing user', done => {
+      updateUserAvatar(user.id, url, error => {
           expect(error).to.be.instanceOf(Error)
           expect(error.message).to.equal('User not found! 😥')
 
             done()
         })
     })
+
+    it('fails on non-string id', () => {
+      expect(() => updateUserAvatar(undefined, url, () => { })).to.throw(Error, 'User ID is not a string 😥')
+      expect(() => updateUserAvatar(1, url, () => { })).to.throw(Error, 'User ID is not a string 😥')
+      expect(() => updateUserAvatar(true, url, () => { })).to.throw(Error, 'User ID is not a string 😥')
+      expect(() => updateUserAvatar({}, url, () => { })).to.throw(Error, 'User ID is not a string 😥')
+      expect(() => updateUserAvatar([], url, () => { })).to.throw(Error, 'User ID is not a string 😥')
+  })
+  
+  it('fails on empty id', () => {
+      expect(() => updateUserAvatar('', url, () => { })).to.throw(Error, 'User ID is empty 😥')
+  })
+
+  it('fails on non-string url', () => {
+    expect(() => updateUserAvatar(user.id, undefined, () => { })).to.throw(Error, 'Avatar url is not a string 😥')
+    expect(() => updateUserAvatar(user.id, 1, () => { })).to.throw(Error, 'Avatar url is not a string 😥')
+    expect(() => updateUserAvatar(user.id, true, () => { })).to.throw(Error, 'Avatar url is not a string 😥')
+    expect(() => updateUserAvatar(user.id, {}, () => { })).to.throw(Error, 'Avatar url is not a string 😥')
+    expect(() => updateUserAvatar(user.id, [], () => { })).to.throw(Error, 'Avatar url is not a string 😥')
+})
+
+it('fails on empty url', () => {
+    expect(() => updateUserAvatar(user.id, '', () => { })).to.throw(Error, 'Avatar url is empty 😥')
+})
+
+it('fails on non-function callback', () => {
+  expect(() => updateUserAvatar(user.id, url, 'callback')).to.throw(Error, 'Callback is not a function 😥')
+  expect(() => updateUserAvatar(user.id, url)).to.throw(Error, 'Callback is not a function 😥')
+})
+
+    after(cleanUp)
 })

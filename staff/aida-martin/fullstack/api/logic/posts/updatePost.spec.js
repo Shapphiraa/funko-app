@@ -13,7 +13,7 @@ describe('updatePost', () => {
     image2 = `url-${Math.random()}`
     text2 = `text-${Math.random()}`
     
-    writeFile('./data/posts.json', '[]', 'utf8', error => done(error))
+    writeFile(`${process.env.DB_PATH}/posts.json`, '[]', 'utf8', error => done(error))
   })
 
   it('should succeed on update post', done => {
@@ -36,13 +36,13 @@ describe('updatePost', () => {
 
         const post = posts.find(post => post.id === postId )
    
-        writeFile('./data/posts.json', postsJson, 'utf8', error => {
+        writeFile(`${process.env.DB_PATH}/posts.json`, postsJson, 'utf8', error => {
          expect(error).to.be.null
 
         updatePost(user.id, post.id, image2, text2, error => {
          expect(error).to.be.null
 
-         readFile('./data/posts.json', 'utf8', (error, json) => {
+         readFile(`${process.env.DB_PATH}/posts.json`, 'utf8', (error, json) => {
             expect(error).to.be.null
 
             const posts = JSON.parse(json)

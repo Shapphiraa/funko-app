@@ -23,7 +23,7 @@ module.exports = function togglePrivatizePost (userId, postId, callback) {
       return
     }
 
-    readFile('./data/posts.json',  (error, json) => {
+    readFile(`${process.env.DB_PATH}/posts.json`,  (error, json) => {
       if (error) {
         callback(error)
 
@@ -48,7 +48,7 @@ module.exports = function togglePrivatizePost (userId, postId, callback) {
 
       json = JSON.stringify(posts, null, 4)
 
-      writeFile('./data/posts.json', json,  error => {
+      writeFile(`${process.env.DB_PATH}/posts.json`, json,  error => {
         if (error) {
           callback(error)
   
