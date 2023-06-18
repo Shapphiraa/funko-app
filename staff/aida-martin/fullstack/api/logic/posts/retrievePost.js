@@ -1,12 +1,14 @@
-const { validators: { validateId, validateCallback } } = require('com')
+const {
+  validators: { validateId, validateCallback },
+} = require('com')
 const { readFile } = require('fs')
 
-module.exports = function retrievePost (userId, postId, callback) {
+module.exports = function retrievePost(userId, postId, callback) {
   validateId(userId, 'User ID')
   validateId(postId, 'Post ID')
   validateCallback(callback)
 
-  readFile(`${process.env.DB_PATH}/users.json`,  (error, json) => {
+  readFile(`${process.env.DB_PATH}/users.json`, (error, json) => {
     if (error) {
       callback(error)
 
@@ -15,7 +17,7 @@ module.exports = function retrievePost (userId, postId, callback) {
 
     const users = JSON.parse(json)
 
-    let user = users.find(user => user.id === userId)
+    let user = users.find((user) => user.id === userId)
 
     if (!user) {
       callback(new Error('User not found! 😥'))
@@ -32,7 +34,7 @@ module.exports = function retrievePost (userId, postId, callback) {
 
       const posts = JSON.parse(json)
 
-      let post = posts.find(post => post.id === postId)
+      let post = posts.find((post) => post.id === postId)
 
       if (!post) {
         callback(new Error('Post not found! 😥'))

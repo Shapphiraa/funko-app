@@ -1,67 +1,131 @@
+require('dotenv').config()
+
 const { expect } = require('chai')
-const { readFile, writeFile } = require('fs')
 const retrieveSavedPosts = require('./retrieveSavedPosts')
+const { cleanUp, populate, generate } = require('../helpers/tests')
 
 describe('retrieveSavedPosts', () => {
-  let userId, name1, avatar1, userId2, name2, avatar2, postId1, postId2, postId3
+  beforeEach(cleanUp)
 
-  beforeEach(done => {
-    userId = `id-${Math.random()}`
-    name1 = `name-${Math.random()}`
-    avatar1 = `avatar-${Math.random()}`
-    userId2 = `id-${Math.random()}`
-    name2 = `name-${Math.random()}`
-    avatar2 = `avatar-${Math.random()}`
-    postId1 = `post-${Math.random()}`
-    postId2 = `post-${Math.random()}`
-    postId3 =`post-${Math.random()}`
+  describe('on existing users and posts', () => {
+    const users = new Array(5),
+      posts = []
 
-    writeFile(`${process.env.DB_PATH}/posts.json`, '[]', 'utf8', error => done(error))
-  })
+    beforeEach((done) => {
+      for (let i = 0; i < users.length; i++) {
+        const user = generate.user()
 
-  it('should succeed on retrieve saved posts of current user', done => {
-    const users = [{ id: userId, name: name1, avatar: avatar1, saves: [postId2, postId3] }, { id: userId2, name: name2, avatar: avatar2, saves: []}]
-    const usersJson = JSON.stringify(users)
+        users[i] = user
 
-    const posts = [{ id: postId1, author: userId, visibility: 'private' }, { id: postId2, author: userId2, visibility: 'public' }, { id: postId3, author: userId2, visibility: 'private' }]
-    const postsJson = JSON.stringify(posts)
+        for (let j = 0; j < 1; j++) {
+          const post = generate.post(user.id)
 
-    writeFile(`${process.env.DB_PATH}/users.json`, usersJson, 'utf8', error => {
-      expect(error).to.be.null
+          posts.push(post)
+        }
+      }
 
-      readFile(`${process.env.DB_PATH}/users.json`, 'utf8', (error, json) => {
+      populate(users, posts, done)
+    })
+
+    it('should succeed on retrieve saved posts', (done) => {
+      const user = users[0]
+
+      user.saves.push('post-1', 'post-2')
+
+      const publicPosts = posts.filter(
+        (post) =>
+          (post.visibility === 'public' || user.id === post.author) &&
+          user.saves?.includes(post.id)
+      )
+
+      publicPosts.forEach((post) => {
+        post.saves = user.saves.includes(post.id)
+
+        const _user = users.find((user) => user.id === post.author)
+
+        post.author = {
+          id: _user.id,
+          name: _user.name.split(' ')[0],
+          avatar: _user.avatar,
+        }
+
+        post.date = post.date.toISOString()
+      })
+
+      retrieveSavedPosts(user.id, (error, savedPosts) => {
         expect(error).to.be.null
 
-        const users = JSON.parse(json)
+        expect(savedPosts).to.deep.equal(publicPosts.reverse())
 
-        const user = users.find(user => user.id === userId )
-
-        writeFile(`${process.env.DB_PATH}/posts.json`, postsJson, 'utf8', error => {
-          expect(error).to.be.null
-   
-          retrieveSavedPosts(user.id, (error, posts) => {
-            expect(error).to.be.null
-
-            expect(posts).to.exist
-            expect(posts).to.have.lengthOf(1)
-            expect(posts[0].id).to.be.equal(user.saves[0])
-
-            done()
-          })
-
-        })
+        done()
       })
+    })
+
+    it('should fail on wrong id', (done) => {
+      retrieveSavedPosts('wrongId', (error, savedPosts) => {
+        expect(error).to.be.instanceOf(Error)
+
+        expect(savedPosts).to.be.undefined
+        expect(error.message).to.equal('User not found! 😥')
+
+        done()
+      })
+    })
+
+    it('fails on non-string user id', () => {
+      expect(() => retrieveSavedPosts(undefined, () => {})).to.throw(
+        Error,
+        'User ID is not a string 😥'
+      )
+      expect(() => retrieveSavedPosts(1)).to.throw(
+        Error,
+        'User ID is not a string 😥'
+      )
+      expect(() => retrieveSavedPosts(true)).to.throw(
+        Error,
+        'User ID is not a string 😥'
+      )
+      expect(() => retrieveSavedPosts({})).to.throw(
+        Error,
+        'User ID is not a string 😥'
+      )
+      expect(() => retrieveSavedPosts([])).to.throw(
+        Error,
+        'User ID is not a string 😥'
+      )
+    })
+
+    it('fails on empty user id', () => {
+      expect(() => retrieveSavedPosts('')).to.throw(
+        Error,
+        'User ID is empty 😥'
+      )
+    })
+
+    it('fails on non-function callback', () => {
+      const user = users[0]
+
+      expect(() => retrieveSavedPosts(user.id, 'callback')).to.throw(
+        Error,
+        'Callback is not a function 😥'
+      )
+      expect(() => retrieveSavedPosts(user.id)).to.throw(
+        Error,
+        'Callback is not a function 😥'
+      )
     })
   })
 
-  it('should fail on not existing user', done => {
-     retrieveSavedPosts(`id-${Math.random()}`, (error, posts) => {
-        expect(error).to.be.instanceOf(Error)
+  it('should fail on non-existing user', (done) => {
+    retrieveSavedPosts(`wrongId`, (error, savedPosts) => {
+      expect(error).to.be.instanceOf(Error)
 
-        expect(posts).to.be.undefined
-        expect(error.message).to.equal('User not found! 😥')
+      expect(savedPosts).to.be.undefined
+      expect(error.message).to.equal('User not found! 😥')
 
-              done()
-      })
+      done()
+    })
   })
+
+  after(cleanUp)
 })

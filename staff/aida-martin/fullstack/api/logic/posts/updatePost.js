@@ -1,14 +1,16 @@
-const { validators: { validateId, validateCallback, validateUrl, validateText } } = require('com')
+const {
+  validators: { validateId, validateCallback, validateUrl, validateText },
+} = require('com')
 const { readFile, writeFile } = require('fs')
 
-module.exports = function updatePost (userId, postId, image, text, callback) {
+module.exports = function updatePost(userId, postId, image, text, callback) {
   validateId(userId, 'User ID')
   validateId(postId, 'Post ID')
   validateUrl(image, 'Image URL')
   validateText(text, 'Text')
   validateCallback(callback)
 
-  readFile(`${process.env.DB_PATH}/users.json`,  (error, json) => {
+  readFile(`${process.env.DB_PATH}/users.json`, (error, json) => {
     if (error) {
       callback(error)
 
@@ -17,7 +19,7 @@ module.exports = function updatePost (userId, postId, image, text, callback) {
 
     const users = JSON.parse(json)
 
-    let user = users.find(user => user.id === userId)
+    let user = users.find((user) => user.id === userId)
 
     if (!user) {
       callback(new Error('User not found! 😥'))
@@ -25,7 +27,7 @@ module.exports = function updatePost (userId, postId, image, text, callback) {
       return
     }
 
-    readFile(`${process.env.DB_PATH}/posts.json`,  (error, json) => {
+    readFile(`${process.env.DB_PATH}/posts.json`, (error, json) => {
       if (error) {
         callback(error)
 
@@ -34,7 +36,7 @@ module.exports = function updatePost (userId, postId, image, text, callback) {
 
       const posts = JSON.parse(json)
 
-      let post = posts.find(post => post.id === postId)
+      let post = posts.find((post) => post.id === postId)
 
       if (!post) {
         callback(new Error('Post not found! 😥'))
@@ -47,15 +49,15 @@ module.exports = function updatePost (userId, postId, image, text, callback) {
 
       json = JSON.stringify(posts, null, 4)
 
-    writeFile(`${process.env.DB_PATH}/posts.json`, json,  error => {
-      if (error) {
-        callback(error)
+      writeFile(`${process.env.DB_PATH}/posts.json`, json, (error) => {
+        if (error) {
+          callback(error)
 
-        return
-      }
+          return
+        }
 
-      callback(null)
+        callback(null)
+      })
     })
   })
-})
 }

@@ -1,7 +1,20 @@
-const { validators: { validateName, validateEmail, validatePassword, validateCallback } } = require('com')
+const {
+  validators: {
+    validateName,
+    validateEmail,
+    validatePassword,
+    validateCallback,
+  },
+} = require('com')
 const { readFile, writeFile } = require('fs')
 
-module.exports = function registerUser (name, email, password, repeatPassword, callback) {
+module.exports = function registerUser(
+  name,
+  email,
+  password,
+  repeatPassword,
+  callback
+) {
   validateName(name)
   validateEmail(email)
   validatePassword(password)
@@ -13,7 +26,7 @@ module.exports = function registerUser (name, email, password, repeatPassword, c
     return
   }
 
-  readFile(`${process.env.DB_PATH}/users.json`,  (error, json) => {
+  readFile(`${process.env.DB_PATH}/users.json`, (error, json) => {
     if (error) {
       callback(error)
 
@@ -22,7 +35,7 @@ module.exports = function registerUser (name, email, password, repeatPassword, c
 
     const users = JSON.parse(json)
 
-    let user = users.find(user => user.email === email)
+    let user = users.find((user) => user.email === email)
 
     if (user) {
       callback(new Error('You are already registered! Please login! 😅'))
@@ -44,14 +57,14 @@ module.exports = function registerUser (name, email, password, repeatPassword, c
       email,
       password,
       avatar: null,
-      saves: []
+      saves: [],
     }
 
     users.push(user)
-    
+
     json = JSON.stringify(users, null, 4)
 
-    writeFile(`${process.env.DB_PATH}/users.json`, json,  error => {
+    writeFile(`${process.env.DB_PATH}/users.json`, json, (error) => {
       if (error) {
         callback(error)
 

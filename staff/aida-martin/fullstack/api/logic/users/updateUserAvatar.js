@@ -1,7 +1,9 @@
-const { validators: { validateId, validateUrl, validateCallback } } = require('com')
+const {
+  validators: { validateId, validateUrl, validateCallback },
+} = require('com')
 const { readFile, writeFile } = require('fs')
 
-module.exports = function updateUserAvatar (userId, url, callback) {
+module.exports = function updateUserAvatar(userId, url, callback) {
   validateId(userId, 'User ID')
   validateUrl(url, 'Avatar url')
   validateCallback(callback)
@@ -15,7 +17,7 @@ module.exports = function updateUserAvatar (userId, url, callback) {
 
     const users = JSON.parse(json)
 
-    let user = users.find(user => user.id === userId)
+    let user = users.find((user) => user.id === userId)
 
     if (!user) {
       callback(new Error('User not found! 😥'))
@@ -27,7 +29,7 @@ module.exports = function updateUserAvatar (userId, url, callback) {
 
     json = JSON.stringify(users, null, 4)
 
-    writeFile(`${process.env.DB_PATH}/users.json`, json, error => {
+    writeFile(`${process.env.DB_PATH}/users.json`, json, (error) => {
       if (error) {
         callback(error)
 

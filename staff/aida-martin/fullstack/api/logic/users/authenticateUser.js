@@ -1,12 +1,14 @@
-const { validators: { validateEmail, validatePassword, validateCallback } } = require('com')
+const {
+  validators: { validateEmail, validatePassword, validateCallback },
+} = require('com')
 const { readFile } = require('fs')
 
-module.exports = function authenticateUser (email, password, callback) {
+module.exports = function authenticateUser(email, password, callback) {
   validateEmail(email)
   validatePassword(password)
   validateCallback(callback)
 
-  readFile(`${process.env.DB_PATH}/users.json`,  (error, json) => {
+  readFile(`${process.env.DB_PATH}/users.json`, (error, json) => {
     if (error) {
       callback(error)
 
@@ -15,7 +17,7 @@ module.exports = function authenticateUser (email, password, callback) {
 
     const users = JSON.parse(json)
 
-    let user = users.find(user => user.email === email)
+    let user = users.find((user) => user.email === email)
 
     if (!user) {
       callback(new Error('User not found! 😥'))
@@ -30,5 +32,5 @@ module.exports = function authenticateUser (email, password, callback) {
     }
 
     callback(null, user.id)
-})
+  })
 }

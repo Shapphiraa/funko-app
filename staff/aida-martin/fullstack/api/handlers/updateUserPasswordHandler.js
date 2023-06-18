@@ -7,17 +7,22 @@ module.exports = (req, res) => {
 
     const { password, newPassword, newPasswordConfirm } = req.body
 
-    updateUserPassword(userId, password, newPassword, newPasswordConfirm, (error) => {
-      if (error) {
-      res.status(400).json({ error: error.message })
-      
-      return
-      }
-      
-      res.status(204).send()
-    })
+    updateUserPassword(
+      userId,
+      password,
+      newPassword,
+      newPasswordConfirm,
+      (error) => {
+        if (error) {
+          res.status(400).json({ error: error.message })
 
-  } catch(error) {
-    res.status(400).json({ error: error.message})
+          return
+        }
+
+        res.status(204).send()
+      }
+    )
+  } catch (error) {
+    res.status(400).json({ error: error.message })
   }
 }

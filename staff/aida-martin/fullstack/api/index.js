@@ -4,7 +4,25 @@ const express = require('express')
 
 const { cors, jsonBodyParser } = require('./utils')
 
-const { helloApiHandler, registerUserHandler, authenticateUserHandler, retrieveUserHandler, updateUserAvatarHandler, updateUserPasswordHandler, createPostHandler, retrievePostHandler, retrievePostsHandler, retrieveSavedPostsHandler, deletePostHandler, updatePostHandler, togglePrivatizePostHandler, toggleLikePostHandler, toggleSavePostHandler, buyPostHandler, sellPostHandler } = require('./handlers')
+const {
+  helloApiHandler,
+  registerUserHandler,
+  authenticateUserHandler,
+  retrieveUserHandler,
+  updateUserAvatarHandler,
+  updateUserPasswordHandler,
+  createPostHandler,
+  retrievePostHandler,
+  retrievePostsHandler,
+  retrieveSavedPostsHandler,
+  deletePostHandler,
+  updatePostHandler,
+  togglePrivatizePostHandler,
+  toggleLikePostHandler,
+  toggleSavePostHandler,
+  buyPostHandler,
+  sellPostHandler,
+} = require('./handlers')
 
 const api = express()
 
@@ -30,7 +48,9 @@ api.patch('/posts/:postId/saves', toggleSavePostHandler)
 api.patch('/posts/:postId/buy', buyPostHandler)
 api.patch('/posts/:postId/sale', jsonBodyParser, sellPostHandler)
 
-api.listen(process.env.PORT, () => console.log(`server running in port ${process.env.PORT}`))
+api.listen(process.env.PORT, () =>
+  console.log(`server running in port ${process.env.PORT}`)
+)
 //escuchamos el puerto (server) que le enviamos desde .env
 
 //en consola "npm run start" (node .) para arrancarlo o "npm run watch" (--watch node .) (con este se va actualizando solo cuando guardamos y no hay que tirar y montar el servidor todo el rato) y vamos en el navegador a la ruta localhost:4321 (4321 porque es el que hemos configurado en el .env)

@@ -4,15 +4,21 @@
  * @param {string} email The email to validate
  */
 
-function validateEmail (email) {
-  if (typeof email !== 'string') { throw new Error('Email is not a string 😥', { cause: 'userError' }) }
-  if (!email.trim().length) { throw new Error('Email is empty 😥', { cause: 'userError' }) }
+function validateEmail(email) {
+  if (typeof email !== "string") {
+    throw new Error("Email is not a string 😥", { cause: "userError" });
+  }
+  if (!email.trim().length) {
+    throw new Error("Email is empty 😥", { cause: "userError" });
+  }
 
   const validEmail = /([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})/i.test(
     email
-  )
+  );
 
-  if (!validEmail) { throw new Error('Email is not valid 😥', { cause: 'userError' }) }
+  if (!validEmail) {
+    throw new Error("Email is not valid 😥", { cause: "userError" });
+  }
 }
 
 /**
@@ -22,13 +28,17 @@ function validateEmail (email) {
  * @param {string} explain The word to specity the errors
  */
 
-function validatePassword (password, explain = 'Password') {
-  if (typeof password !== 'string') { throw new Error(`${explain} is not a string 😥`, { cause: 'userError' }) }
-  if (!password.trim().length) { throw new Error(`${explain} is empty 😥`, { cause: 'userError' }) }
+function validatePassword(password, explain = "Password") {
+  if (typeof password !== "string") {
+    throw new Error(`${explain} is not a string 😥`, { cause: "userError" });
+  }
+  if (!password.trim().length) {
+    throw new Error(`${explain} is empty 😥`, { cause: "userError" });
+  }
   if (password.length < 8) {
     throw new Error(`${explain} does not have 8 characters 😥`, {
-      cause: 'userError'
-    })
+      cause: "userError",
+    });
   }
 }
 
@@ -38,9 +48,13 @@ function validatePassword (password, explain = 'Password') {
  * @param {string} name The name to validate
  */
 
-function validateName (name) {
-  if (typeof name !== 'string') { throw new Error('Name is not a string 😥', { cause: 'userError' }) }
-  if (!name.trim().length) { throw new Error('Name is empty 😥', { cause: 'userError' }) }
+function validateName(name) {
+  if (typeof name !== "string") {
+    throw new Error("Name is not a string 😥", { cause: "userError" });
+  }
+  if (!name.trim().length) {
+    throw new Error("Name is empty 😥", { cause: "userError" });
+  }
 }
 
 /**
@@ -50,9 +64,13 @@ function validateName (name) {
  * @param {string} explain The word to specity the errors
  */
 
-function validateUrl (url, explain = 'Url') {
-  if (typeof url !== 'string') { throw new Error(`${explain} is not a string 😥`, { cause: 'userError' }) }
-  if (!url.trim().length) { throw new Error(`${explain} is empty 😥`, { cause: 'userError' }) }
+function validateUrl(url, explain = "Url") {
+  if (typeof url !== "string") {
+    throw new Error(`${explain} is not a string 😥`, { cause: "userError" });
+  }
+  if (!url.trim().length) {
+    throw new Error(`${explain} is empty 😥`, { cause: "userError" });
+  }
 }
 
 /**
@@ -62,9 +80,13 @@ function validateUrl (url, explain = 'Url') {
  * @param {string} explain The word to specity the errors
  */
 
-function validateId (id, explain = 'User ID') {
-  if (typeof id !== 'string') { throw new Error(`${explain} is not a string 😥`, { cause: 'userError' }) }
-  if (!id.trim().length) { throw new Error(`${explain} is empty 😥`, { cause: 'userError' }) }
+function validateId(id, explain = "User ID") {
+  if (typeof id !== "string") {
+    throw new Error(`${explain} is not a string 😥`, { cause: "userError" });
+  }
+  if (!id.trim().length) {
+    throw new Error(`${explain} is empty 😥`, { cause: "userError" });
+  }
 }
 
 /**
@@ -74,13 +96,27 @@ function validateId (id, explain = 'User ID') {
  * @param {string} explain The word to specity the errors
  */
 
-function validateText (text, explain = 'Text') {
-  if (typeof text !== 'string') { throw new Error(`${explain} is not a string 😥`, { cause: 'userError' }) }
-  if (!text.trim().length) { throw new Error(`${explain} is empty 😥`, { cause: 'userError' }) }
+function validateText(text, explain = "Text") {
+  if (typeof text !== "string") {
+    throw new Error(`${explain} is not a string 😥`, { cause: "userError" });
+  }
+  if (!text.trim().length) {
+    throw new Error(`${explain} is empty 😥`, { cause: "userError" });
+  }
 }
 
-function validateCallback (callback, explain = 'Callback') {
-  if (typeof callback !== 'function') { throw new Error(`${explain} is not a function 😥`) }
+function validateCallback(callback, explain = "Callback") {
+  if (typeof callback !== "function") {
+    throw new Error(`${explain} is not a function 😥`);
+  }
 }
 
-module.exports = { validateEmail, validatePassword, validateName, validateUrl, validateId, validateText, validateCallback }
+module.exports = {
+  validateEmail,
+  validatePassword,
+  validateName,
+  validateUrl,
+  validateId,
+  validateText,
+  validateCallback,
+};

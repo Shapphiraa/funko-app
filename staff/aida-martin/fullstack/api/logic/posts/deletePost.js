@@ -1,6 +1,7 @@
-const { validators: { validateId, validateCallback } } = require('com')
+const {
+  validators: { validateId, validateCallback },
+} = require('com')
 const { readFile, writeFile } = require('fs')
-
 
 /**
  * Deletes a post and all its data, updates data in the database (users, posts)
@@ -9,12 +10,12 @@ const { readFile, writeFile } = require('fs')
  * @param {string} postId The post's ID
  */
 
-module.exports = function deletePost (userId, postId, callback) {
+module.exports = function deletePost(userId, postId, callback) {
   validateId(userId, 'User ID')
   validateId(postId, 'Post ID')
   validateCallback(callback)
 
-  readFile(`${process.env.DB_PATH}/users.json`,  (error, json) => {
+  readFile(`${process.env.DB_PATH}/users.json`, (error, json) => {
     if (error) {
       callback(error)
 
@@ -23,7 +24,7 @@ module.exports = function deletePost (userId, postId, callback) {
 
     const users = JSON.parse(json)
 
-    let user = users.find(user => user.id === userId)
+    const user = users.find((user) => user.id === userId)
 
     if (!user) {
       callback(new Error('User not found! 😥'))
@@ -31,7 +32,7 @@ module.exports = function deletePost (userId, postId, callback) {
       return
     }
 
-    readFile(`${process.env.DB_PATH}/posts.json`,  (error, json) => {
+    readFile(`${process.env.DB_PATH}/posts.json`, (error, json) => {
       if (error) {
         callback(error)
 
@@ -40,7 +41,7 @@ module.exports = function deletePost (userId, postId, callback) {
 
       const posts = JSON.parse(json)
 
-      let post = posts.find(post => post.id === postId)
+      const post = posts.find((post) => post.id === postId)
 
       if (!post) {
         callback(new Error('Post not found! 😥'))
@@ -49,7 +50,12 @@ module.exports = function deletePost (userId, postId, callback) {
       }
 
       if (post.author !== userId) {
-        callback(new Error(`Post with ID ${post.id} does not belong to user with ID ${user.id} 😥`, { cause: 'userError' }))
+        callback(
+          new Error(
+            `Post with ID ${post.id} does not belong to user with ID ${user.id} 😥`,
+            { cause: 'userError' }
+          )
+        )
 
         return
       }
@@ -60,30 +66,25 @@ module.exports = function deletePost (userId, postId, callback) {
 
       postsJson = JSON.stringify(posts, null, 4)
 
-      users.forEach((user) => user.saves?.splice((user.saves.findIndex((save) => save === post.id), 1)))
+      users.forEach((user) =>
+        user.saves?.splice(
+          (user.saves.findIndex((save) => save === post.id), 1)
+        )
+      )
 
       usersJson = JSON.stringify(users, null, 4)
 
-      writeFile(`${process.env.DB_PATH}/posts.json`, postsJson,  error => {
+      writeFile(`${process.env.DB_PATH}/users.json`, usersJson, (error) => {
         if (error) {
           callback(error)
-  
+
           return
         }
-  
-        callback(null)
-      })
 
-      writeFile(`${process.env.DB_PATH}/users.json`, usersJson,  error => {
-        if (error) {
+        writeFile(`${process.env.DB_PATH}/posts.json`, postsJson, (error) =>
           callback(error)
-  
-          return
-        }
-  
-        callback(null)
-      })
-
+        )
       })
     })
-  }
+  })
+}

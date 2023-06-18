@@ -1,11 +1,13 @@
-const { validators: { validateId, validateCallback } } = require('com')
+const {
+  validators: { validateId, validateCallback },
+} = require('com')
 const { readFile } = require('fs')
 
-module.exports = function retrievePosts (userId, callback) {
+module.exports = function retrievePosts(userId, callback) {
   validateId(userId, 'User ID')
   validateCallback(callback)
 
-  readFile(`${process.env.DB_PATH}/users.json`,  (error, json) => {
+  readFile(`${process.env.DB_PATH}/users.json`, (error, json) => {
     if (error) {
       callback(error)
 
@@ -14,7 +16,7 @@ module.exports = function retrievePosts (userId, callback) {
 
     const users = JSON.parse(json)
 
-    let user = users.find(user => user.id === userId)
+    let user = users.find((user) => user.id === userId)
 
     if (!user) {
       callback(new Error('User not found! 😥'))
@@ -22,7 +24,7 @@ module.exports = function retrievePosts (userId, callback) {
       return
     }
 
-    readFile(`${process.env.DB_PATH}/posts.json`,  (error, json) => {
+    readFile(`${process.env.DB_PATH}/posts.json`, (error, json) => {
       if (error) {
         callback(error)
 
@@ -31,20 +33,22 @@ module.exports = function retrievePosts (userId, callback) {
 
       let posts = JSON.parse(json)
 
-      posts = posts.filter(post => post.visibility === 'public' || user.id === post.author)
+      posts = posts.filter(
+        (post) => post.visibility === 'public' || user.id === post.author
+      )
 
-        posts.forEach(post => {
-          post.saves = user.saves.includes(post.id)
+      posts.forEach((post) => {
+        post.saves = user.saves.includes(post.id)
 
-          const _user = users.find(user => user.id === post.author)
+        const _user = users.find((user) => user.id === post.author)
 
-          post.author = {
-            id: _user.id,
-            name: _user.name.split(' ')[0],
-            avatar: _user.avatar
-          }
+        post.author = {
+          id: _user.id,
+          name: _user.name.split(' ')[0],
+          avatar: _user.avatar,
+        }
 
-          // post.date = new Date(post.date).toLocaleString('en-GB')
+        // post.date = new Date(post.date).toLocaleString('en-GB')
       })
       //toReversed no funciona en esta versión de Node
       callback(null, posts.reverse())

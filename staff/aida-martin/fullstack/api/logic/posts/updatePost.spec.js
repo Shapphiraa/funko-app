@@ -1,99 +1,205 @@
+require('dotenv').config()
+
 const { expect } = require('chai')
-const { readFile, writeFile } = require('fs')
+const { readFile } = require('fs')
 const updatePost = require('./updatePost')
+const { cleanUp, populate, generate } = require('../helpers/tests')
 
 describe('updatePost', () => {
-  let userId, postId, image, text, image2, text2
-  
-  beforeEach(done => {
-    userId = `id-${Math.random()}`
-    postId = `post-${Math.random()}`
-    image = `url-${Math.random()}`
-    text = `text-${Math.random()}`
-    image2 = `url-${Math.random()}`
+  let user, post, image2, text2
+
+  beforeEach((done) => {
+    user = generate.user()
+    post = generate.post(user.id)
+    image2 = `image-${Math.random()}`
     text2 = `text-${Math.random()}`
-    
-    writeFile(`${process.env.DB_PATH}/posts.json`, '[]', 'utf8', error => done(error))
+
+    cleanUp(done)
   })
 
-  it('should succeed on update post', done => {
-    const users = [{ id: userId }]
-    const usersJson = JSON.stringify(users)
+  it('should succeed on update post', (done) => {
+    const users = [user]
+    const posts = [post]
 
-    writeFile(`${process.env.DB_PATH}/users.json`, usersJson, 'utf8', error => {
-      expect(error).to.be.null
+    populate(users, posts, (error) => {
+      if (error) {
+        done(error)
 
-      readFile(`${process.env.DB_PATH}/users.json`, 'utf8', (error, json) => {
+        return
+      }
+
+      updatePost(user.id, post.id, image2, text2, (error) => {
         expect(error).to.be.null
 
-        const users = JSON.parse(json)
+        readFile(`${process.env.DB_PATH}/posts.json`, 'utf8', (error, json) => {
+          expect(error).to.be.null
 
-        const user = users.find(user => user.id === userId )
+          const [{ image, text }] = JSON.parse(json)
 
-        const posts = [{ id: postId, author: userId, image: image, text: text }]
+          expect(image).to.equal(image2)
+          expect(text).to.equal(text2)
 
-        const postsJson = JSON.stringify(posts)
-
-        const post = posts.find(post => post.id === postId )
-   
-        writeFile(`${process.env.DB_PATH}/posts.json`, postsJson, 'utf8', error => {
-         expect(error).to.be.null
-
-        updatePost(user.id, post.id, image2, text2, error => {
-         expect(error).to.be.null
-
-         readFile(`${process.env.DB_PATH}/posts.json`, 'utf8', (error, json) => {
-            expect(error).to.be.null
-
-            const posts = JSON.parse(json)
-
-            const post = posts.find(post => post.author === user.id)
-
-            expect(post).to.exist
-            expect(post.image).to.equal(image2)
-            expect(post.text).to.equal(text2)
-
-            done()
-          })
-
-          })
+          done()
         })
       })
     })
   })
 
-  it('should fail on not existing user', done => {
-     updatePost(`id-${Math.random()}`, `post-${Math.random()}`, image2, text2, (error, post) => {
+  it('should fail on not existing user', (done) => {
+    updatePost(user.id, post.id, image2, text2, (error) => {
+      expect(error).to.be.instanceOf(Error)
+      expect(error.message).to.equal('User not found! 😥')
+
+      done()
+    })
+  })
+
+  it('should fail on not existing post', (done) => {
+    const users = [user]
+
+    populate(users, [], (error) => {
+      if (error) {
+        done(error)
+
+        return
+      }
+
+      updatePost(user.id, post.id, image2, text2, (error, post) => {
         expect(error).to.be.instanceOf(Error)
-        expect(error.message).to.equal('User not found! 😥')
-  
-              done()
-          })
-      })
 
-      it('should fail on not existing post', done => {
-        const users = [{ id: userId }]
-        const usersJson = JSON.stringify(users)
-    
-        writeFile(`${process.env.DB_PATH}/users.json`, usersJson, 'utf8', error => {
-          expect(error).to.be.null
-    
-          readFile(`${process.env.DB_PATH}/users.json`, 'utf8', (error, json) => {
-            expect(error).to.be.null
-    
-            const users = JSON.parse(json)
-    
-            const user = users.find(user => user.id === userId )
+        expect(post).to.be.undefined
+        expect(error.message).to.equal('Post not found! 😥')
 
-          updatePost(user.id, `post-${Math.random()}`, image2, text2, (error, post) => {
-            expect(error).to.be.instanceOf(Error)
-
-            expect(post).to.be.undefined
-            expect(error.message).to.equal('Post not found! 😥')
-    
-                  done()
-              })
-          })
-        })
+        done()
       })
     })
+  })
+
+  it('fails on non-string user id', () => {
+    expect(() =>
+      updatePost(undefined, post.id, image2, text2, () => {})
+    ).to.throw(Error, 'User ID is not a string 😥')
+    expect(() => updatePost(1, post.id, image2, text2, () => {})).to.throw(
+      Error,
+      'User ID is not a string 😥'
+    )
+    expect(() => updatePost(true, post.id, image2, text2, () => {})).to.throw(
+      Error,
+      'User ID is not a string 😥'
+    )
+    expect(() => updatePost({}, post.id, image2, text2, () => {})).to.throw(
+      Error,
+      'User ID is not a string 😥'
+    )
+    expect(() => updatePost([], post.id, image2, text2, () => {})).to.throw(
+      Error,
+      'User ID is not a string 😥'
+    )
+  })
+
+  it('fails on empty user id', () => {
+    expect(() => updatePost('', post.id, image2, text2, () => {})).to.throw(
+      Error,
+      'User ID is empty 😥'
+    )
+  })
+
+  it('fails on non-string post id', () => {
+    expect(() =>
+      updatePost(user.id, undefined, image2, text2, () => {})
+    ).to.throw(Error, 'Post ID is not a string 😥')
+    expect(() => updatePost(user.id, 1, image2, text2, () => {})).to.throw(
+      Error,
+      'Post ID is not a string 😥'
+    )
+    expect(() => updatePost(user.id, true, image2, text2, () => {})).to.throw(
+      Error,
+      'Post ID is not a string 😥'
+    )
+    expect(() => updatePost(user.id, {}, image2, text2, () => {})).to.throw(
+      Error,
+      'Post ID is not a string 😥'
+    )
+    expect(() => updatePost(user.id, [], image2, text2, () => {})).to.throw(
+      Error,
+      'Post ID is not a string 😥'
+    )
+  })
+
+  it('fails on empty post id', () => {
+    expect(() => updatePost(user.id, '', image2, text2, () => {})).to.throw(
+      Error,
+      'Post ID is empty 😥'
+    )
+  })
+
+  it('fails on non-string image url', () => {
+    expect(() =>
+      updatePost(user.id, post.id, undefined, text2, () => {})
+    ).to.throw(Error, 'Image URL is not a string 😥')
+    expect(() => updatePost(user.id, post.id, 1, text2, () => {})).to.throw(
+      Error,
+      'Image URL is not a string 😥'
+    )
+    expect(() => updatePost(user.id, post.id, true, text2, () => {})).to.throw(
+      Error,
+      'Image URL is not a string 😥'
+    )
+    expect(() => updatePost(user.id, post.id, {}, text2, () => {})).to.throw(
+      Error,
+      'Image URL is not a string 😥'
+    )
+    expect(() => updatePost(user.id, post.id, [], text2, () => {})).to.throw(
+      Error,
+      'Image URL is not a string 😥'
+    )
+  })
+
+  it('fails on empty image url', () => {
+    expect(() => updatePost(user.id, post.id, '', text2, () => {})).to.throw(
+      Error,
+      'Image URL is empty 😥'
+    )
+  })
+
+  it('fails on non-string text', () => {
+    expect(() =>
+      updatePost(user.id, post.id, image2, undefined, () => {})
+    ).to.throw(Error, 'Text is not a string 😥')
+    expect(() => updatePost(user.id, post.id, image2, 1, () => {})).to.throw(
+      Error,
+      'Text is not a string 😥'
+    )
+    expect(() => updatePost(user.id, post.id, image2, true, () => {})).to.throw(
+      Error,
+      'Text is not a string 😥'
+    )
+    expect(() => updatePost(user.id, post.id, image2, {}, () => {})).to.throw(
+      Error,
+      'Text is not a string 😥'
+    )
+    expect(() => updatePost(user.id, post.id, image2, [], () => {})).to.throw(
+      Error,
+      'Text is not a string 😥'
+    )
+  })
+
+  it('fails on empty text', () => {
+    expect(() => updatePost(user.id, post.id, image2, '', () => {})).to.throw(
+      Error,
+      'Text is empty 😥'
+    )
+  })
+
+  it('fails on non-function callback', () => {
+    expect(() =>
+      updatePost(user.id, post.id, image2, text2, 'callback')
+    ).to.throw(Error, 'Callback is not a function 😥')
+    expect(() => updatePost(user.id, post.id, image2, text2)).to.throw(
+      Error,
+      'Callback is not a function 😥'
+    )
+  })
+
+  after(cleanUp)
+})

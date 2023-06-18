@@ -7,15 +7,14 @@ module.exports = (req, res) => {
 
     retrieveUser(userId, (error, user) => {
       if (error) {
-      res.status(400).json({ error: error.message })
-      
-      return
+        res.status(400).json({ error: error.message })
+
+        return
       }
-      
+
       res.json(user)
     })
-
-  } catch(error) {
-    res.status(400).json({ error: error.message})
+  } catch (error) {
+    res.status(400).json({ error: error.message })
   }
 }

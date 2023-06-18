@@ -1,4 +1,4 @@
-module.exports = { 
+module.exports = {
   helloApiHandler: require('./helloApiHandler'),
   registerUserHandler: require('./registerUserHandler'),
   authenticateUserHandler: require('./authenticateUserHandler'),
@@ -15,5 +15,5 @@ module.exports = {
   toggleLikePostHandler: require('./toggleLikePostHandler'),
   toggleSavePostHandler: require('./toggleSavePostHandler'),
   buyPostHandler: require('./buyPostHandler'),
-  sellPostHandler: require('./sellPostHandler')
+  sellPostHandler: require('./sellPostHandler'),
 }

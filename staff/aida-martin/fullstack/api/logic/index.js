@@ -14,5 +14,5 @@ module.exports = {
   toggleLikePost: require('./posts/toggleLikePost'),
   toggleSavePost: require('./posts/toggleSavePost'),
   buyPost: require('./posts/buyPost'),
-  sellPost: require('./posts/sellPost')
+  sellPost: require('./posts/sellPost'),
 }

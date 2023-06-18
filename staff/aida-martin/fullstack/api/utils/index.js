@@ -1,1 +1,4 @@
-module.exports = { cors: require('./cors'), jsonBodyParser: require('./jsonBodyParser') }
+module.exports = {
+  cors: require('./cors'),
+  jsonBodyParser: require('./jsonBodyParser'),
+}

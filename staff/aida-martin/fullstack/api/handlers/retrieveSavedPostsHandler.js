@@ -7,15 +7,14 @@ module.exports = (req, res) => {
 
     retrieveSavedPosts(userId, (error, savedPosts) => {
       if (error) {
-      res.status(400).json({ error: error.message })
-      
-      return
+        res.status(400).json({ error: error.message })
+
+        return
       }
-      
+
       res.json(savedPosts)
     })
-
-  } catch(error) {
-    res.status(400).json({ error: error.message})
+  } catch (error) {
+    res.status(400).json({ error: error.message })
   }
 }
