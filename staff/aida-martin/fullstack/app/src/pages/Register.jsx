@@ -1,19 +1,18 @@
 import './Register.css'
-import { useContext } from 'react'
+import { useAppContext } from '../hooks'
 import registerUser from '../logic/registerUser'
-import Context from '../Context'
 import Container from '../library/Container'
 
-export default function Register ({ onLoginClick, onUserRegisteredIn }) {
-  const { alert, freeze, unfreeze } = useContext(Context)
+export default function Register({ onLoginClick, onUserRegisteredIn }) {
+  const { alert, freeze, unfreeze } = useAppContext()
 
-  const handleLoginClick = event => {
+  const handleLoginClick = (event) => {
     event.preventDefault()
 
     onLoginClick()
   }
 
-  const handleRegister = event => {
+  const handleRegister = (event) => {
     event.preventDefault()
 
     const name = event.target.name.value
@@ -24,7 +23,7 @@ export default function Register ({ onLoginClick, onUserRegisteredIn }) {
     try {
       freeze()
 
-      registerUser(name, email, password, repeatPassword, error => {
+      registerUser(name, email, password, repeatPassword, (error) => {
         unfreeze()
 
         // este error es asíncrono (del callback)
@@ -45,35 +44,38 @@ export default function Register ({ onLoginClick, onUserRegisteredIn }) {
   }
 
   return (
-    <Container tag='section'>
-      <h1 className='title'>CREATE ACCOUNT</h1>
+    <Container tag="section">
+      <h1 className="title">CREATE ACCOUNT</h1>
 
-      <form className='form' onSubmit={handleRegister}>
-        <input className='input' type='text' name='name' placeholder='Name' />
+      <form className="form" onSubmit={handleRegister}>
+        <input className="input" type="text" name="name" placeholder="Name" />
 
-        <input className='input' type='text' name='email' placeholder='Email' />
+        <input className="input" type="text" name="email" placeholder="Email" />
 
         <input
-          className='input'
-          type='password'
-          name='password'
-          placeholder='Password'
+          className="input"
+          type="password"
+          name="password"
+          placeholder="Password"
         />
 
         <input
-          className='input'
-          type='password'
-          name='repeatpassword'
-          placeholder='Repeat password'
+          className="input"
+          type="password"
+          name="repeatpassword"
+          placeholder="Repeat password"
         />
 
-        <p className='register-error error off' />
+        <p className="register-error error off" />
 
-        <button className='button register-button'>SIGN UP</button>
+        <button className="button register-button">SIGN UP</button>
       </form>
 
-      <p className='login-answer'>
-        Have already an account? <a href='#' onClick={handleLoginClick} className='login-link link'>Login here</a>
+      <p className="login-answer">
+        Have already an account?{' '}
+        <a href="#" onClick={handleLoginClick} className="login-link link">
+          Login here
+        </a>
       </p>
     </Container>
   )

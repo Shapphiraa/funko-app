@@ -1,5 +1,6 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect } from 'react'
 import './Home.css'
+import { useAppContext } from '../hooks'
 import { context, openModal, hideModal, setTheme, getTheme } from '../ui'
 import retrieveUser from '../logic/retrieveUser'
 import { DEFAULT_AVATAR_URL } from '../constants'
@@ -9,10 +10,9 @@ import EditPostModal from '../components/modals/EditPostModal'
 import SellPostModal from '../components/modals/SellPostModal'
 import BuyPostModal from '../components/modals/BuyPostModal'
 import Profile from '../components/Profile'
-import Context from '../Context'
 
-export default function Home ({ onLogOut }) {
-  const { alert, freeze, unfreeze } = useContext(Context)
+export default function Home({ onLogOut }) {
+  const { alert, freeze, unfreeze } = useAppContext()
 
   const [view, setView] = useState('posts')
   const [modal, setModal] = useState(null)
@@ -126,53 +126,52 @@ export default function Home ({ onLogOut }) {
   }
 
   return (
-    <section className='home'>
-      <header className='home-header'>
-        <h1 className='home-title' onClick={handleGoToPosts}>
+    <section className="home">
+      <header className="home-header">
+        <h1 className="home-title" onClick={handleGoToPosts}>
           HOME
         </h1>
 
-        <nav className='home-header-nav'>
-          {user &&
+        <nav className="home-header-nav">
+          {user && (
             <>
               <img
-                className='avatar home-header-avatar'
+                className="avatar home-header-avatar"
                 src={user.avatar ? user.avatar : DEFAULT_AVATAR_URL}
-                alt=''
+                alt=""
               />
-              <a href='' className='profile-link' onClick={handleGoToProfile}>
+              <a href="" className="profile-link" onClick={handleGoToProfile}>
                 {user.name}
               </a>
 
-              <button className='button logout-button' onClick={handleLogOut}>
+              <button className="button logout-button" onClick={handleLogOut}>
                 LOG OUT
               </button>
-            </>}
+            </>
+          )}
         </nav>
       </header>
 
       {view !== 'profile' && (
-        <div className='button-new-post-container'>
+        <div className="button-new-post-container">
           <button
-            className='button reverse-color icon-button toggle-theme-button'
+            className="button reverse-color icon-button toggle-theme-button"
             onClick={handleSwitchMode}
           >
-            {dark
-              ? (
-                <span className='material-symbols-outlined theme'>dark_mode</span>
-                )
-              : (
-                <span className='material-symbols-outlined theme'>sunny</span>
-                )}
+            {dark ? (
+              <span className="material-symbols-outlined theme">dark_mode</span>
+            ) : (
+              <span className="material-symbols-outlined theme">sunny</span>
+            )}
           </button>
           <button
-            className='button reverse-color icon-button saved-posts-button'
+            className="button reverse-color icon-button saved-posts-button"
             onClick={handleGoToSavedPosts}
           >
-            <span className='material-symbols-outlined favs'>pages</span>
+            <span className="material-symbols-outlined favs">pages</span>
           </button>
           <button
-            className='button reverse-color new-post-button'
+            className="button reverse-color new-post-button"
             onClick={handleOpenAddPost}
           >
             NEW POST
@@ -180,8 +179,7 @@ export default function Home ({ onLogOut }) {
         </div>
       )}
 
-      <main className='main-container'>
-
+      <main className="main-container">
         {view === 'posts' && user && (
           <Posts
             currentUser={user}

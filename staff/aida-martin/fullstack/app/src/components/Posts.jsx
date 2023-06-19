@@ -1,13 +1,20 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect } from 'react'
 import './Posts.css'
 import Post from './Post'
 import retrievePosts from '../logic/retrievePosts'
 import retrieveSavedPosts from '../logic/retrieveSavedPosts'
 import { context } from '../ui'
-import Context from '../Context'
+import { useAppContext } from '../hooks'
 
-export default function Posts ({ user, mySavedPosts = false, onEditPost, onSellPost, onBuyPost, lastPostsUpdate }) {
-  const { alert, freeze, unfreeze } = useContext(Context)
+export default function Posts({
+  user,
+  mySavedPosts = false,
+  onEditPost,
+  onSellPost,
+  onBuyPost,
+  lastPostsUpdate,
+}) {
+  const { alert, freeze, unfreeze } = useAppContext()
 
   const [posts, setPosts] = useState()
 
@@ -48,12 +55,28 @@ export default function Posts ({ user, mySavedPosts = false, onEditPost, onSellP
   }
 
   useEffect(() => {
-    if (lastPostsUpdate) { handleRefreshPosts() }
+    if (lastPostsUpdate) {
+      handleRefreshPosts()
+    }
   }, [lastPostsUpdate])
 
   return (
-    <section className='posts-list'>
-      {posts && posts.map(post => <Post user={user} post={post} onEditPost={onEditPost} onSellPost={onSellPost} onBuyPost={onBuyPost} onLiked={handleRefreshPosts} onSaved={handleRefreshPosts} onDeletePost={handleRefreshPosts} onPrivatizePost={handleRefreshPosts} key={post.id} />)}
+    <section className="posts-list">
+      {posts &&
+        posts.map((post) => (
+          <Post
+            user={user}
+            post={post}
+            onEditPost={onEditPost}
+            onSellPost={onSellPost}
+            onBuyPost={onBuyPost}
+            onLiked={handleRefreshPosts}
+            onSaved={handleRefreshPosts}
+            onDeletePost={handleRefreshPosts}
+            onPrivatizePost={handleRefreshPosts}
+            key={post.id}
+          />
+        ))}
     </section>
   )
 }

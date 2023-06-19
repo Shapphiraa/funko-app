@@ -1,18 +1,18 @@
 import './BuyPostModal.css'
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect } from 'react'
+import { useAppContext } from '../../hooks'
 import buyPost from '../../logic/buyPost'
 import retrievePost from '../../logic/retrievePost'
 import { context } from '../../ui'
-import Context from '../../Context'
 import Modal from '../../library/Modal'
 import Container from '../../library/Container'
 
-export default function BuyPostModal ({ postId, onPostBought, onCancel }) {
-  const { alert, freeze, unfreeze } = useContext(Context)
+export default function BuyPostModal({ postId, onPostBought, onCancel }) {
+  const { alert, freeze, unfreeze } = useAppContext()
 
   const [post, setPost] = useState(null)
 
-  function handleBuyPost () {
+  function handleBuyPost() {
     try {
       freeze()
 
@@ -33,7 +33,7 @@ export default function BuyPostModal ({ postId, onPostBought, onCancel }) {
     }
   }
 
-  function handleCancel () {
+  function handleCancel() {
     onCancel()
   }
 
@@ -61,20 +61,27 @@ export default function BuyPostModal ({ postId, onPostBought, onCancel }) {
 
   return (
     <>
-      {post &&
-        <Modal tag='section'>
-          <Container tag='form' className='buy-post-form form'>
+      {post && (
+        <Modal tag="section">
+          <Container tag="form" className="buy-post-form form">
             <h2>BUY POST</h2>
 
-            <p className='text-buy-post'>Are you sure to buy this post?
-            </p>
-            <p className='text-buy-post'>Price: {`${post.price}€`}
-            </p>
+            <p className="text-buy-post">Are you sure to buy this post?</p>
+            <p className="text-buy-post">Price: {`${post.price}€`}</p>
 
-            <button className='button' type='button' onClick={handleBuyPost}>BUY</button>
-            <button className='button cancel' type='button' onClick={handleCancel}>CANCEL</button>
+            <button className="button" type="button" onClick={handleBuyPost}>
+              BUY
+            </button>
+            <button
+              className="button cancel"
+              type="button"
+              onClick={handleCancel}
+            >
+              CANCEL
+            </button>
           </Container>
-        </Modal>}
+        </Modal>
+      )}
     </>
   )
 }

@@ -4,10 +4,12 @@ import Login from './pages/Login'
 import Home from './pages/Home'
 import { context, setTheme, getTheme } from './ui'
 import Alert from './components/modals/Alert'
-import Context from './Context'
+import AppContext from './AppContext'
 import Loader from './library/Loader'
 
-export default function App () {
+const { Provider } = AppContext
+
+export default function App() {
   const [view, setView] = useState(context.userId ? 'home' : 'login')
   const [feedback, setFeedback] = useState(null)
   const [loader, setLoader] = useState(false)
@@ -38,15 +40,28 @@ export default function App () {
 
   // Con el Context.Provider podemos utilizar lo que pongamos de forma general en los demás componentes sin pasar por props
   return (
-    <Context.Provider value={{ alert, freeze, unfreeze }}>
-      {view === 'login' &&
-        <Login onRegisterClick={handleGoToRegister} onUserLoggedIn={handleGoToHome} />}
-      {view === 'register' &&
-        <Register onLoginClick={handleGoToLogin} onUserRegisteredIn={handleGoToLogin} />}
-      {view === 'home' &&
-        <Home onLogOut={handleGoToLogin} />}
-      {feedback && <Alert message={feedback.message} level={feedback.level} onAccept={handleAcceptAlert} />}
+    <Provider value={{ alert, freeze, unfreeze }}>
+      {view === 'login' && (
+        <Login
+          onRegisterClick={handleGoToRegister}
+          onUserLoggedIn={handleGoToHome}
+        />
+      )}
+      {view === 'register' && (
+        <Register
+          onLoginClick={handleGoToLogin}
+          onUserRegisteredIn={handleGoToLogin}
+        />
+      )}
+      {view === 'home' && <Home onLogOut={handleGoToLogin} />}
+      {feedback && (
+        <Alert
+          message={feedback.message}
+          level={feedback.level}
+          onAccept={handleAcceptAlert}
+        />
+      )}
       {loader && <Loader />}
-    </Context.Provider>
+    </Provider>
   )
 }

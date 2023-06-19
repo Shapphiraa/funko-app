@@ -1,20 +1,19 @@
 import './Login.css'
-import { useContext } from 'react'
-import Context from '../Context'
+import { useAppContext } from '../hooks'
 import { context } from '../ui'
 import authenticateUser from '../logic/authenticateUser'
 import Container from '../library/Container'
 
-export default function Login ({ onRegisterClick, onUserLoggedIn }) {
-  const { alert, freeze, unfreeze } = useContext(Context)
+export default function Login({ onRegisterClick, onUserLoggedIn }) {
+  const { alert, freeze, unfreeze } = useAppContext()
 
-  const handleRegisterClick = event => {
+  const handleRegisterClick = (event) => {
     event.preventDefault()
 
     onRegisterClick()
   }
 
-  const handleLogin = event => {
+  const handleLogin = (event) => {
     event.preventDefault()
 
     const email = event.target.email.value
@@ -45,28 +44,42 @@ export default function Login ({ onRegisterClick, onUserLoggedIn }) {
   }
 
   return (
-    <Container tag='section'>
-      <h1 className='title'>WELCOME!</h1>
+    <Container tag="section">
+      <h1 className="title">WELCOME!</h1>
 
-      <form className='form' onSubmit={handleLogin}>
-        <input className='input' type='email' name='email' placeholder='Email' />
-
+      <form className="form" onSubmit={handleLogin}>
         <input
-          className='input'
-          type='password'
-          name='password'
-          placeholder='Password'
+          className="input"
+          type="email"
+          name="email"
+          placeholder="Email"
         />
 
-        <a href='#' className='forgot-password-link link'>Forgot password?</a>
+        <input
+          className="input"
+          type="password"
+          name="password"
+          placeholder="Password"
+        />
 
-        <p className='login-error error off' />
+        <a href="#" className="forgot-password-link link">
+          Forgot password?
+        </a>
 
-        <button className='button login-button'>LOG IN</button>
+        <p className="login-error error off" />
+
+        <button className="button login-button">LOG IN</button>
       </form>
 
-      <p className='register-answer'>
-        Not a member? <a href='#' onClick={handleRegisterClick} className='register-link link'>Sign up here</a>
+      <p className="register-answer">
+        Not a member?{' '}
+        <a
+          href="#"
+          onClick={handleRegisterClick}
+          className="register-link link"
+        >
+          Sign up here
+        </a>
       </p>
     </Container>
   )
