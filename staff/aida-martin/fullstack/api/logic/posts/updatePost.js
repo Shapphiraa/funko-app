@@ -44,6 +44,17 @@ module.exports = function updatePost(userId, postId, image, text, callback) {
         return
       }
 
+      if (post.author !== userId) {
+        callback(
+          new Error(
+            `Post with ID ${post.id} does not belong to user with ID ${user.id} 😥`,
+            { cause: 'userError' }
+          )
+        )
+
+        return
+      }
+
       post.image = image
       post.text = text
 

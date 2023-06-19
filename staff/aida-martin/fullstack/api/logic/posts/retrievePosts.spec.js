@@ -37,7 +37,7 @@ describe('retrievePosts', () => {
       publicPosts.forEach((post) => {
         post.saves = user.saves.includes(post.id)
 
-        const _user = users.find((user) => user.id === post.author)
+        const _user = users.find((_user) => _user.id === post.author)
 
         post.author = {
           id: _user.id,

@@ -62,8 +62,8 @@
         "text": "Hello 💙",
         "date": "2023-06-13T14:27:46.442Z",
         "likes": [],
-        "visibility": "public",
-        "price": "15"
+        "visibility": "private",
+        "price": "0"
     },
     {
         "id": "post-13",
@@ -71,8 +71,10 @@
         "image": "https://picsum.photos/1500?random=4",
         "text": "Hi 🧡",
         "date": "2023-06-13T17:28:52.555Z",
-        "likes": [],
+        "likes": [
+            "user-2"
+        ],
         "visibility": "public",
-        "price": 0
+        "price": "10"
     }
 ]

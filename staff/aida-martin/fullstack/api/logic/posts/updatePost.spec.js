@@ -6,10 +6,11 @@ const updatePost = require('./updatePost')
 const { cleanUp, populate, generate } = require('../helpers/tests')
 
 describe('updatePost', () => {
-  let user, post, image2, text2
+  let user, user2, post, image2, text2
 
   beforeEach((done) => {
     user = generate.user()
+    user2 = generate.user()
     post = generate.post(user.id)
     image2 = `image-${Math.random()}`
     text2 = `text-${Math.random()}`
@@ -69,6 +70,29 @@ describe('updatePost', () => {
 
         expect(post).to.be.undefined
         expect(error.message).to.equal('Post not found! 😥')
+
+        done()
+      })
+    })
+  })
+
+  it('should fail on non-matching post author and user', (done) => {
+    const users = [user2]
+    const posts = [post]
+
+    populate(users, posts, (error) => {
+      if (error) {
+        done(error)
+
+        return
+      }
+
+      updatePost(user2.id, post.id, image2, text2, (error) => {
+        expect(error).to.be.instanceOf(Error)
+
+        expect(error.message).to.equal(
+          `Post with ID ${post.id} does not belong to user with ID ${user2.id} 😥`
+        )
 
         done()
       })

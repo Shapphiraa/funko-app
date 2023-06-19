@@ -6,10 +6,12 @@ const createPost = require('./createPost')
 const { cleanUp, populate, generate } = require('../helpers/tests')
 
 describe('createPost', () => {
-  let user, image, text
+  let user, user2, image, text, post
 
   beforeEach((done) => {
     user = generate.user()
+    user2 = generate.user()
+    post = generate.post(user2.id)
     image = `image-${Math.random()}`
     text = `text-${Math.random()}`
 
@@ -19,7 +21,10 @@ describe('createPost', () => {
   it('should succeed on create new post', (done) => {
     const users = [user]
 
-    populate(users, [], (error) => {
+    post.id = 'post-1'
+    const posts = [post]
+
+    populate(users, posts, (error) => {
       if (error) {
         done(error)
 
@@ -34,17 +39,26 @@ describe('createPost', () => {
 
           const posts = JSON.parse(json)
 
-          const post = posts.find((post) => post.author === user.id)
+          const _post = posts.find((_post) => _post.author === user.id)
 
-          expect(post).to.exist
-          expect(post.id).to.be.a('string')
-          expect(post.author).to.equal(user.id)
-          expect(post.image).to.equal(image)
-          expect(post.text).to.equal(text)
-          expect(post.date).to.be.a('string')
-          expect(post.likes).to.have.lengthOf(0)
-          expect(post.visibility).to.equal('public')
-          expect(post.price).to.equal(0)
+          expect(_post).to.exist
+          expect(_post.id).to.be.a('string')
+
+          const lastPost = posts[posts.length - 1]
+
+          if (lastPost) {
+            expect(_post.id).to.equal(`post-${parseInt(lastPost.id.slice(5))}`)
+          } else {
+            expect(_post.id).to.equal('post-1')
+          }
+
+          expect(_post.author).to.equal(user.id)
+          expect(_post.image).to.equal(image)
+          expect(_post.text).to.equal(text)
+          expect(_post.date).to.be.a('string')
+          expect(_post.likes).to.have.lengthOf(0)
+          expect(_post.visibility).to.equal('public')
+          expect(_post.price).to.equal(0)
 
           done()
         })
