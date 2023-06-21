@@ -2,7 +2,7 @@ import { validators } from 'com'
 
 const { validateId, validateCallback } = validators
 
-export default function buyPost (userId, postId, callback) {
+export default function buyPost(userId, postId, callback) {
   validateId(userId, 'User ID')
   validateId(postId, 'Post ID')
   validateCallback(callback)
@@ -31,7 +31,6 @@ export default function buyPost (userId, postId, callback) {
 
   xhr.open('PATCH', `${import.meta.env.VITE_API_URL}/posts/${postId}/buy`)
 
-  xhr.setRequestHeader('Content-Type', 'application/json')
   xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
 
   xhr.send()

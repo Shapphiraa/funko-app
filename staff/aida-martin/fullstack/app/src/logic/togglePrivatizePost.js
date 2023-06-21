@@ -2,7 +2,7 @@ import { validators } from 'com'
 
 const { validateId, validateCallback } = validators
 
-export default function togglePrivatizePost (userId, postId, callback) {
+export default function togglePrivatizePost(userId, postId, callback) {
   validateId(userId, 'User ID')
   validateId(postId, 'Post ID')
   validateCallback(callback)
@@ -29,9 +29,11 @@ export default function togglePrivatizePost (userId, postId, callback) {
     callback(new Error('Connection error'))
   }
 
-  xhr.open('PATCH', `${import.meta.env.VITE_API_URL}/posts/${postId}/visibility`)
+  xhr.open(
+    'PATCH',
+    `${import.meta.env.VITE_API_URL}/posts/${postId}/visibility`
+  )
 
-  xhr.setRequestHeader('Content-Type', 'application/json')
   xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
 
   xhr.send()

@@ -9,7 +9,7 @@ const { validateId, validateCallback } = validators
  * @param {string} postId The post's ID
  */
 
-export default function toggleSavePost (userId, postId, callback) {
+export default function toggleSavePost(userId, postId, callback) {
   validateId(userId, 'User ID')
   validateId(postId, 'Post ID')
   validateCallback(callback)
@@ -38,7 +38,6 @@ export default function toggleSavePost (userId, postId, callback) {
 
   xhr.open('PATCH', `${import.meta.env.VITE_API_URL}/posts/${postId}/saves`)
 
-  xhr.setRequestHeader('Content-Type', 'application/json')
   xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
 
   xhr.send()

@@ -9,7 +9,7 @@ const { validateId, validateCallback } = validators
  * @param {string} postId The post's ID
  */
 
-export default function deletePost (userId, postId, callback) {
+export default function deletePost(userId, postId, callback) {
   validateId(userId, 'User ID')
   validateId(postId, 'Post ID')
   validateCallback(callback)
