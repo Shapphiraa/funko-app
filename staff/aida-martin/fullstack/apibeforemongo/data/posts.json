@@ -1,0 +1,80 @@
+[
+    {
+        "id": "post-1",
+        "author": "user-5",
+        "image": "https://picsum.photos/1500?random=2",
+        "text": "Hello 🧡",
+        "date": "2023-06-11T11:52:10.633Z",
+        "likes": [],
+        "visibility": "private",
+        "price": 10
+    },
+    {
+        "id": "post-2",
+        "author": "user-2",
+        "image": "https://picsum.photos/1500?random=6",
+        "text": "Hello 💙",
+        "date": "2023-06-12T13:04:26.775Z",
+        "likes": [],
+        "visibility": "private",
+        "price": 0
+    },
+    {
+        "id": "post-3",
+        "author": "user-2",
+        "image": "https://picsum.photos/1500?random=4",
+        "text": "Hello 💙",
+        "date": "2023-06-12T14:55:11.348Z",
+        "likes": [
+            "user-2"
+        ],
+        "visibility": "public",
+        "price": 20
+    },
+    {
+        "id": "post-4",
+        "author": "user-7",
+        "image": "https://picsum.photos/1500?random=5",
+        "text": "Hi 💛",
+        "date": "2023-06-12T16:34:21.721Z",
+        "likes": [
+            "user-2"
+        ],
+        "visibility": "public",
+        "price": "15"
+    },
+    {
+        "id": "post-11",
+        "author": "user-8",
+        "image": "https://picsum.photos/1500?random=3",
+        "text": "Hi 🐍",
+        "date": "2023-06-13T11:13:23.875Z",
+        "likes": [
+            "user-7"
+        ],
+        "visibility": "public",
+        "price": 0
+    },
+    {
+        "id": "post-12",
+        "author": "user-2",
+        "image": "https://picsum.photos/1500?random=2",
+        "text": "Hello 💙",
+        "date": "2023-06-13T14:27:46.442Z",
+        "likes": [],
+        "visibility": "private",
+        "price": "0"
+    },
+    {
+        "id": "post-13",
+        "author": "user-2",
+        "image": "https://picsum.photos/1500?random=4",
+        "text": "Hi 🧡",
+        "date": "2023-06-13T17:28:52.555Z",
+        "likes": [
+            "user-2"
+        ],
+        "visibility": "public",
+        "price": "10"
+    }
+]

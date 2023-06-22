@@ -1,77 +1,22 @@
 const {
-  validators: {
-    validateName,
-    validateEmail,
-    validatePassword,
-    validateCallback,
-  },
+  validators: { validateName, validateEmail, validatePassword },
 } = require('com')
-const { readFile, writeFile } = require('fs')
 
-module.exports = function registerUser(
-  name,
-  email,
-  password,
-  repeatPassword,
-  callback
-) {
+const context = require('../context')
+
+module.exports = function registerUser(name, email, password, repeatPassword) {
   validateName(name)
   validateEmail(email)
   validatePassword(password)
-  validateCallback(callback)
 
-  if (password !== repeatPassword) {
-    callback(new Error('Passwords does not match 😢'))
+  const { users } = context
 
-    return
-  }
+  if (password !== repeatPassword)
+    throw new Error('Passwords does not match 😢')
 
-  readFile(`${process.env.DB_PATH}/users.json`, (error, json) => {
-    if (error) {
-      callback(error)
+  return users.findOne({ email }).then((user) => {
+    if (user) throw new Error('You are already registered! Please login! 😅')
 
-      return
-    }
-
-    const users = JSON.parse(json)
-
-    let user = users.find((user) => user.email === email)
-
-    if (user) {
-      callback(new Error('You are already registered! Please login! 😅'))
-
-      return
-    }
-
-    let id = 'user-1'
-
-    const lastUser = users[users.length - 1]
-
-    if (lastUser) {
-      id = `user-${parseInt(lastUser.id.slice(5)) + 1}`
-    }
-
-    user = {
-      id,
-      name,
-      email,
-      password,
-      avatar: null,
-      saves: [],
-    }
-
-    users.push(user)
-
-    json = JSON.stringify(users, null, 4)
-
-    writeFile(`${process.env.DB_PATH}/users.json`, json, (error) => {
-      if (error) {
-        callback(error)
-
-        return
-      }
-
-      callback(null)
-    })
+    return users.insertOne({ name, email, password, avatar: null, saves: [] })
   })
 }
