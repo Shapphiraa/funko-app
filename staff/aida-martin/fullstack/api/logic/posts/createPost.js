@@ -16,7 +16,7 @@ module.exports = function createPost(userId, image, text) {
     if (!user) throw new Error('User not found! 😥')
 
     return posts.insertOne({
-      author: userId,
+      author: user._id,
       image,
       text,
       date: new Date(),

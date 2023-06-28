@@ -17,35 +17,32 @@ module.exports = function retrieveSavedPosts(userId) {
 
     savedPostsIds = savedPostsIds?.map((id) => new ObjectId(id))
 
-    return users
-      .find()
-      .toArray()
-      .then((users) => {
-        return posts
-          .find({
-            $and: [
-              { _id: { $in: [savedPostsIds] } },
-              { $or: [{ visibility: 'public' }, { author: userId }] },
-            ],
-          })
-          .toArray()
-          .then((savedPosts) => {
-            savedPosts.forEach((post) => {
-              post.saves = user.saves?.includes(post._id.toString())
+    return Promise.all([
+      users.find().toArray(),
+      posts
+        .find({
+          $and: [
+            { _id: { $in: [savedPostsIds] } },
+            { $or: [{ visibility: 'public' }, { author: userId }] },
+          ],
+        })
+        .toArray(),
+    ]).then(([users, savedPosts]) => {
+      savedPosts.forEach((post) => {
+        post.save = user.saves?.some((save) => save.toString() === post.id)
 
-              const _user = users.find(
-                (user) => user._id.toString() === post.author.toString()
-              )
+        const _user = users.find(
+          (user) => user._id.toString() === post.author.toString()
+        )
 
-              post.author = {
-                id: _user._id.toString(),
-                name: _user.name.split(' ')[0],
-                avatar: _user.avatar,
-              }
-            })
-
-            return savedPosts.reverse()
-          })
+        post.author = {
+          id: _user._id.toString(),
+          name: _user.name.split(' ')[0],
+          avatar: _user.avatar,
+        }
       })
+
+      return savedPosts.reverse()
+    })
   })
 }

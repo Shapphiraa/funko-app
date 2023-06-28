@@ -11,13 +11,17 @@ module.exports = function retrievePost(userId, postId) {
 
   const { users, posts } = context
 
-  return users.findOne({ _id: new ObjectId(userId) }).then((user) => {
+  return Promise.all([
+    users.findOne({ _id: new ObjectId(userId) }),
+    posts.findOne({ _id: new ObjectId(postId) }),
+  ]).then(([user, post]) => {
     if (!user) throw new Error('User not found! 😥')
 
-    return posts.findOne({ _id: new ObjectId(postId) }).then((post) => {
-      if (!post) throw new Error('Post not found! 😥')
+    if (!post) throw new Error('Post not found! 😥')
 
-      return post
-    })
+    const index = post.likes.map((id) => id.toString()).indexOf(userId)
+
+    console.log(post)
+    return post
   })
 }

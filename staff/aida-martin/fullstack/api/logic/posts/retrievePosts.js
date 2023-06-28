@@ -10,33 +10,35 @@ module.exports = function retrievePosts(userId) {
 
   const { users, posts } = context
 
-  return users.findOne({ _id: new ObjectId(userId) }).then((user) => {
-    if (!user) throw new Error('User not found! 😥')
+  return Promise.all([
+    users.find().toArray(),
+    posts
+      .find({ $or: [{ visibility: 'public' }, { author: userId }] })
+      .toArray(),
+  ]).then(([users, posts]) => {
+    const user = users.find((user) => user._id.toString() === userId)
 
-    return users
-      .find()
-      .toArray()
-      .then((users) => {
-        return posts
-          .find({ $or: [{ visibility: 'public' }, { author: userId }] })
-          .toArray()
-          .then((posts) => {
-            posts.forEach((post) => {
-              post.saves = user.saves?.includes(post._id.toString())
+    if (!user) throw new Error(`user with id ${userId} not found`)
 
-              const _user = users.find(
-                (user) => user._id.toString() === post.author.toString()
-              )
+    posts.forEach((post) => {
+      post.id = post._id.toString()
+      delete post._id
 
-              post.author = {
-                id: _user._id.toString(),
-                name: _user.name.split(' ')[0],
-                avatar: _user.avatar,
-              }
-            })
+      post.save = user.saves?.some((save) => save.toString() === post.id)
 
-            return posts.reverse()
-          })
-      })
+      console.log(post.saves)
+
+      const _user = users.find(
+        (user) => user._id.toString() === post.author.toString()
+      )
+
+      post.author = {
+        id: _user._id.toString(),
+        name: _user.name.split(' ')[0],
+        avatar: _user.avatar,
+      }
+    })
+
+    return posts.reverse()
   })
 }

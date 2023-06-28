@@ -1,61 +1,33 @@
 const {
-  validators: { validateId, validateCallback },
+  validators: { validateId },
 } = require('com')
-const { readFile, writeFile } = require('fs')
 
-module.exports = function buyPost(userId, postId, callback) {
+const context = require('../context')
+const { ObjectId } = require('mongodb')
+
+module.exports = function buyPost(userId, postId) {
   validateId(userId, 'User ID')
   validateId(postId, 'Post ID')
-  validateCallback(callback)
 
-  readFile(`${process.env.DB_PATH}/users.json`, (error, json) => {
-    if (error) {
-      callback(error)
+  const { users, posts } = context
 
-      return
+  return Promise.all([
+    users.findOne({ _id: new ObjectId(userId) }),
+    posts.findOne({ _id: new ObjectId(postId) }),
+  ]).then(([user, post]) => {
+    if (!user) throw new Error('User not found! 😥')
+
+    if (!post) throw new Error('Post not found! 😥')
+
+    if (post.author.toString() === userId) {
+      throw new Error(
+        `Post with ID ${post._id.toString()} already belong to user with ID ${userId} 😥`
+      )
     }
 
-    const users = JSON.parse(json)
-
-    let user = users.find((user) => user.id === userId)
-
-    if (!user) {
-      callback(new Error('User not found! 😥'))
-
-      return
-    }
-
-    readFile(`${process.env.DB_PATH}/posts.json`, (error, json) => {
-      if (error) {
-        callback(error)
-
-        return
-      }
-
-      const posts = JSON.parse(json)
-
-      let post = posts.find((post) => post.id === postId)
-
-      if (!post) {
-        callback(new Error('Post not found! 😥'))
-
-        return
-      }
-
-      post.author = userId
-      post.price = 0
-
-      json = JSON.stringify(posts, null, 4)
-
-      writeFile(`${process.env.DB_PATH}/posts.json`, json, (error) => {
-        if (error) {
-          callback(error)
-
-          return
-        }
-
-        callback(null)
-      })
-    })
+    return posts.updateOne(
+      { _id: new ObjectId(postId) },
+      { $set: { price: 0, author: new ObjectId(userId) } }
+    )
   })
 }

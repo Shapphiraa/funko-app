@@ -14,15 +14,9 @@ module.exports = (req, res) => {
     const { postId } = req.params
     const { price } = req.body
 
-    sellPost(userId, postId, price, (error) => {
-      if (error) {
-        res.status(400).json({ error: error.message })
-
-        return
-      }
-
-      res.status(204).send()
-    })
+    sellPost(userId, postId, price)
+      .then(() => res.status(201).send())
+      .catch((error) => res.status(400).json({ error: error.message }))
   } catch (error) {
     res.status(400).json({ error: error.message })
   }

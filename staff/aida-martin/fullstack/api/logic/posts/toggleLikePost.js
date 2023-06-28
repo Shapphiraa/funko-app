@@ -11,30 +11,31 @@ module.exports = function toggleLikePost(userId, postId) {
 
   const { users, posts } = context
 
-  return users.findOne({ _id: new ObjectId(userId) }).then((user) => {
+  return Promise.all([
+    users.findOne({ _id: new ObjectId(userId) }),
+    posts.findOne({ _id: new ObjectId(postId) }),
+  ]).then(([user, post]) => {
     if (!user) throw new Error('User not found! 😥')
 
-    return posts.findOne({ _id: new ObjectId(postId) }).then((post) => {
-      if (!post) throw new Error('Post not found! 😥')
+    if (!post) throw new Error('Post not found! 😥')
 
-      const index = post.likes.indexOf(userId)
+    const index = post.likes.map((id) => id.toString()).indexOf(userId)
 
-      if (index < 0) {
-        return posts.updateOne(
-          { _id: new ObjectId(postId) },
-          { $push: { likes: userId } }
-        )
-      } else {
-        post.likes.splice(
-          post.likes.findIndex((like) => like === userId),
-          1
-        )
+    if (index < 0) {
+      return posts.updateOne(
+        { _id: new ObjectId(postId) },
+        { $push: { likes: new ObjectId(userId) } }
+      )
+    } else {
+      post.likes.splice(
+        post.likes.findIndex((like) => like === new ObjectId(userId)),
+        1
+      )
 
-        return posts.updateOne(
-          { _id: new ObjectId(postId) },
-          { $set: { likes: post.likes } }
-        )
-      }
-    })
+      return posts.updateOne(
+        { _id: new ObjectId(postId) },
+        { $set: { likes: post.likes } }
+      )
+    }
   })
 }

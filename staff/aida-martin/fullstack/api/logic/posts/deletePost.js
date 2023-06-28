@@ -11,29 +11,31 @@ module.exports = function deletePost(userId, postId) {
 
   const { users, posts } = context
 
-  return users.findOne({ _id: new ObjectId(userId) }).then((user) => {
+  return Promise.all([
+    users.findOne({ _id: new ObjectId(userId) }),
+    posts.findOne({ _id: new ObjectId(postId) }),
+  ]).then(([user, post]) => {
     if (!user) throw new Error('User not found! 😥')
 
-    return posts.findOne({ _id: new ObjectId(postId) }).then((post) => {
-      if (!post) throw new Error('Post not found! 😥')
+    if (!post) throw new Error('Post not found! 😥')
 
-      if (post.author.toString() !== userId) {
-        throw new Error(
-          `Post with ID ${post._id.toString()} does not belong to user with ID ${userId} 😥`
-        )
-      }
+    if (post.author.toString() !== userId) {
+      throw new Error(
+        `Post with ID ${post._id.toString()} does not belong to user with ID ${userId} 😥`
+      )
+    }
 
-      return users
-        .find()
-        .toArray()
-        .then((users) => {
-          users.forEach((user) =>
-            user.saves?.splice(
-              (user.saves.findIndex((save) => save === postId), 1)
-            )
+    return users
+      .find()
+      .toArray()
+      .then((users) => {
+        users.forEach((user) =>
+          user.saves?.splice(
+            (user.saves.findIndex((save) => save === postId), 1)
           )
-          return posts.deleteOne({ _id: new ObjectId(postId) })
-        })
-    })
+        )
+
+        return posts.deleteOne({ _id: new ObjectId(postId) })
+      })
   })
 }
