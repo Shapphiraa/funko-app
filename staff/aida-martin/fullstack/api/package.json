@@ -23,6 +23,7 @@
     "com": "file:../com",
     "dotenv": "^16.1.4",
     "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
     "mongodb": "^5.6.0"
   }
 }

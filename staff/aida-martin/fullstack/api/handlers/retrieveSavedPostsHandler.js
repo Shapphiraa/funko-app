@@ -1,19 +1,19 @@
 const { retrieveSavedPosts } = require('../logic')
-const { extractUserId } = require('../helpers')
+const { extractToken } = require('../helpers')
+
+const jwt = require('jsonwebtoken')
 
 module.exports = (req, res) => {
   try {
-    const userId = extractUserId(req)
+    const token = extractToken(req)
 
-    retrieveSavedPosts(userId, (error, savedPosts) => {
-      if (error) {
-        res.status(400).json({ error: error.message })
+    const payload = jwt.verify(token, process.env.SECRET)
 
-        return
-      }
+    const { sub: userId } = payload
 
-      res.json(savedPosts)
-    })
+    retrieveSavedPosts(userId)
+      .then((savedPosts) => res.json(savedPosts))
+      .catch((error) => res.status(400).json({ error: error.message }))
   } catch (error) {
     res.status(400).json({ error: error.message })
   }

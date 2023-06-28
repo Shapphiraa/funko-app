@@ -11,9 +11,12 @@ module.exports = function updateUserAvatar(userId, url) {
 
   const { users } = context
 
-  return users
-    .findOneAndUpdate({ _id: new ObjectId(userId) }, { $set: { avatar: url } })
-    .then((user) => {
-      if (!user) throw new Error('User not found! 😥')
-    })
+  return users.findOne({ _id: new ObjectId(userId) }).then((user) => {
+    if (!user) throw new Error('User not found! 😥')
+
+    return users.updateOne(
+      { _id: new ObjectId(userId) },
+      { $set: { avatar: url } }
+    )
+  })
 }

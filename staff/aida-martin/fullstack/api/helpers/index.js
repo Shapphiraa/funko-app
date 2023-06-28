@@ -1,1 +1,1 @@
-module.exports = { extractUserId: require('./extractUserId') }
+module.exports = { extractToken: require('./extractToken') }
