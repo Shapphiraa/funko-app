@@ -1,17 +1,9 @@
 import { validators } from 'com'
 
-const { validateId, validateCallback } = validators
+const { validateId, validateToken, validateCallback } = validators
 
-/**
- * Retrieves a post from the database
- *
- * @param {string} userId The user's ID
- *
- * @returns {object} A post
- */
-
-export default function retrievePost (userId, postId, callback) {
-  validateId(userId, 'User ID')
+export default function retrievePost(token, postId, callback) {
+  validateToken(token)
   validateId(postId, 'Post ID')
   validateCallback(callback)
 
@@ -42,7 +34,7 @@ export default function retrievePost (userId, postId, callback) {
 
   xhr.open('GET', `${import.meta.env.VITE_API_URL}/posts/${postId}`)
 
-  xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
+  xhr.setRequestHeader('Authorization', `Bearer ${token}`)
 
   xhr.send()
 }

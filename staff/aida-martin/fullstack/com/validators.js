@@ -1,3 +1,5 @@
+const { ContentError } = require("./errors");
+
 /**
  * Validates the email
  *
@@ -6,10 +8,10 @@
 
 function validateEmail(email) {
   if (typeof email !== "string") {
-    throw new Error("Email is not a string 😥", { cause: "userError" });
+    throw new TypeError("Email is not a string 😥", { cause: "userError" });
   }
   if (!email.trim().length) {
-    throw new Error("Email is empty 😥", { cause: "userError" });
+    throw new ContentError("Email is empty 😥", { cause: "userError" });
   }
 
   const validEmail = /([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})/i.test(
@@ -17,7 +19,7 @@ function validateEmail(email) {
   );
 
   if (!validEmail) {
-    throw new Error("Email is not valid 😥", { cause: "userError" });
+    throw new ContentError("Email is not valid 😥", { cause: "userError" });
   }
 }
 
@@ -30,13 +32,15 @@ function validateEmail(email) {
 
 function validatePassword(password, explain = "Password") {
   if (typeof password !== "string") {
-    throw new Error(`${explain} is not a string 😥`, { cause: "userError" });
+    throw new TypeError(`${explain} is not a string 😥`, {
+      cause: "userError",
+    });
   }
   if (!password.trim().length) {
-    throw new Error(`${explain} is empty 😥`, { cause: "userError" });
+    throw new ContentError(`${explain} is empty 😥`, { cause: "userError" });
   }
   if (password.length < 8) {
-    throw new Error(`${explain} does not have 8 characters 😥`, {
+    throw new ContentError(`${explain} does not have 8 characters 😥`, {
       cause: "userError",
     });
   }
@@ -50,10 +54,10 @@ function validatePassword(password, explain = "Password") {
 
 function validateName(name) {
   if (typeof name !== "string") {
-    throw new Error("Name is not a string 😥", { cause: "userError" });
+    throw new TypeError("Name is not a string 😥", { cause: "userError" });
   }
   if (!name.trim().length) {
-    throw new Error("Name is empty 😥", { cause: "userError" });
+    throw new ContentError("Name is empty 😥", { cause: "userError" });
   }
 }
 
@@ -66,10 +70,12 @@ function validateName(name) {
 
 function validateUrl(url, explain = "Url") {
   if (typeof url !== "string") {
-    throw new Error(`${explain} is not a string 😥`, { cause: "userError" });
+    throw new TypeError(`${explain} is not a string 😥`, {
+      cause: "userError",
+    });
   }
   if (!url.trim().length) {
-    throw new Error(`${explain} is empty 😥`, { cause: "userError" });
+    throw new ContentError(`${explain} is empty 😥`, { cause: "userError" });
   }
 }
 
@@ -82,10 +88,12 @@ function validateUrl(url, explain = "Url") {
 
 function validateId(id, explain = "User ID") {
   if (typeof id !== "string") {
-    throw new Error(`${explain} is not a string 😥`, { cause: "userError" });
+    throw new TypeError(`${explain} is not a string 😥`, {
+      cause: "userError",
+    });
   }
   if (!id.trim().length) {
-    throw new Error(`${explain} is empty 😥`, { cause: "userError" });
+    throw new ContentError(`${explain} is empty 😥`, { cause: "userError" });
   }
 }
 
@@ -98,17 +106,26 @@ function validateId(id, explain = "User ID") {
 
 function validateText(text, explain = "Text") {
   if (typeof text !== "string") {
-    throw new Error(`${explain} is not a string 😥`, { cause: "userError" });
+    throw new TypeError(`${explain} is not a string 😥`, {
+      cause: "userError",
+    });
   }
   if (!text.trim().length) {
-    throw new Error(`${explain} is empty 😥`, { cause: "userError" });
+    throw new ContentError(`${explain} is empty 😥`, { cause: "userError" });
   }
 }
 
 function validateCallback(callback, explain = "Callback") {
   if (typeof callback !== "function") {
-    throw new Error(`${explain} is not a function 😥`);
+    throw new TypeError(`${explain} is not a function 😥`);
   }
+}
+
+function validateToken(token, explain = "Token") {
+  if (typeof token !== "string")
+    throw new TypeError(`${explain} is not a string 😥`);
+  if (token.split(".").length !== 3)
+    throw new ContentError(`${explain} is not valid 😥`);
 }
 
 module.exports = {
@@ -119,4 +136,5 @@ module.exports = {
   validateId,
   validateText,
   validateCallback,
+  validateToken,
 };

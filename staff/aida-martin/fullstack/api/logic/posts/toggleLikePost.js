@@ -19,7 +19,7 @@ module.exports = function toggleLikePost(userId, postId) {
 
     if (!post) throw new Error('Post not found! 😥')
 
-    const index = post.likes.map((id) => id.toString()).indexOf(userId)
+    const index = post.likes.findIndex((id) => id.toString() === userId)
 
     if (index < 0) {
       return posts.updateOne(
@@ -27,10 +27,7 @@ module.exports = function toggleLikePost(userId, postId) {
         { $push: { likes: new ObjectId(userId) } }
       )
     } else {
-      post.likes.splice(
-        post.likes.findIndex((like) => like === new ObjectId(userId)),
-        1
-      )
+      post.likes.splice(index, 1)
 
       return posts.updateOne(
         { _id: new ObjectId(postId) },

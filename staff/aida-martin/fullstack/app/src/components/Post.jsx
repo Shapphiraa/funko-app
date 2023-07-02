@@ -8,6 +8,9 @@ import toggleLikePost from '../logic/toggleLikePost'
 import toggleSavePost from '../logic/toggleSavePost'
 import deletePost from '../logic/deletePost'
 import togglePrivatizePost from '../logic/togglePrivatizePost'
+import { utils } from 'com'
+
+const { extractSubFromToken } = utils
 
 export default function Post({
   post,
@@ -29,7 +32,7 @@ export default function Post({
     try {
       freeze()
 
-      toggleLikePost(context.userId, post.id, (error) => {
+      toggleLikePost(context.token, post.id, (error) => {
         unfreeze()
         if (error) {
           alert(error.message, 'error')
@@ -49,7 +52,7 @@ export default function Post({
     try {
       freeze()
 
-      toggleSavePost(context.userId, post.id, (error) => {
+      toggleSavePost(context.token, post.id, (error) => {
         unfreeze()
 
         if (error) {
@@ -96,7 +99,7 @@ export default function Post({
     try {
       freeze()
 
-      togglePrivatizePost(context.userId, post.id, (error) => {
+      togglePrivatizePost(context.token, post.id, (error) => {
         unfreeze()
 
         if (error) {
@@ -123,6 +126,8 @@ export default function Post({
     onBuyPost(post.id)
   }
 
+  const userId = extractSubFromToken(context.token)
+
   return (
     <article data-id={post.id}>
       <div className="user-container-post">
@@ -131,7 +136,7 @@ export default function Post({
           src={post.author.avatar ? post.author.avatar : DEFAULT_AVATAR_URL}
         />
         <p className="post-user">{post.author.name}</p>
-        {post.author.id === context.userId && (
+        {post.author.id === userId && (
           <span
             className="material-symbols-outlined private"
             onClick={handlePrivatizePost}
@@ -146,9 +151,7 @@ export default function Post({
       <div className="likes-saves-container">
         <span
           className={`material-symbols-outlined likes ${
-            post.likes && post.likes.includes(context.userId)
-              ? 'fill'
-              : 'unfill'
+            post.likes && post.likes.includes(userId) ? 'fill' : 'unfill'
           }`}
           onClick={handleLikePost}
         >
@@ -168,7 +171,7 @@ export default function Post({
         {new Date(post.date).toLocaleString('en-GB')}
       </time>
       <p className="post-text">{post.text}</p>
-      {post.author.id === context.userId && (
+      {post.author.id === userId && (
         <div className="utils-container-post">
           <button
             className="button reverse-color icon-button edit-post-button"
@@ -191,7 +194,7 @@ export default function Post({
         </div>
       )}
 
-      {post.author.id !== context.userId && post.price !== 0 && (
+      {post.author.id !== userId && post.price !== 0 && (
         <div className="utils-container-post">
           <button
             className="button reverse-color buy-post-button"

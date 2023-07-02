@@ -20,7 +20,7 @@ export default function SellPostModal({ postId, onPostForSale, onCancel }) {
     try {
       freeze()
 
-      sellPost(context.userId, postId, price, (error) => {
+      sellPost(context.token, postId, price, (error) => {
         unfreeze()
 
         if (error) {
@@ -47,7 +47,7 @@ export default function SellPostModal({ postId, onPostForSale, onCancel }) {
     try {
       freeze()
 
-      retrievePost(context.userId, postId, (error, post) => {
+      retrievePost(context.token, postId, (error, post) => {
         unfreeze()
 
         if (error) {

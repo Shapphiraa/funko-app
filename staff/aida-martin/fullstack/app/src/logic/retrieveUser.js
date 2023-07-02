@@ -1,6 +1,6 @@
 import { validators } from 'com'
 
-const { validateId, validateCallback } = validators
+const { validateToken, validateCallback } = validators
 
 /**
  * Retrieves the current user
@@ -10,8 +10,8 @@ const { validateId, validateCallback } = validators
  * @returns {object} The current user
  */
 
-export default function retrieveUser (userId, callback) {
-  validateId(userId, 'User ID')
+export default function retrieveUser(token, callback) {
+  validateToken(token)
   validateCallback(callback)
 
   // eslint-disable-next-line no-undef
@@ -41,7 +41,7 @@ export default function retrieveUser (userId, callback) {
 
   xhr.open('GET', `${import.meta.env.VITE_API_URL}/users`)
 
-  xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
+  xhr.setRequestHeader('Authorization', `Bearer ${token}`)
 
   xhr.send()
 }

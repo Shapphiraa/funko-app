@@ -24,12 +24,12 @@ export default function authenticateUser(email, password, callback) {
 
     const { response: json } = xhr
 
-    const userId = JSON.parse(json)
+    const token = JSON.parse(json)
 
     // Antes de Mongodb lo hacíamos así: (ahora ya nos devuelve el userId directamente como string y no hay que destructurar)
     // const { userId } = JSON.parse(json);
 
-    callback(null, userId)
+    callback(null, token)
   }
 
   xhr.onerror = () => {

@@ -25,7 +25,7 @@ export default function Posts({
     freeze()
     try {
       if (!mySavedPosts) {
-        retrievePosts(context.userId, (error, posts) => {
+        retrievePosts(context.token, (error, posts) => {
           unfreeze()
           if (error) {
             alert(error.message, 'error')
@@ -36,7 +36,7 @@ export default function Posts({
           setPosts(posts)
         })
       } else {
-        retrieveSavedPosts(context.userId, (error, savedPosts) => {
+        retrieveSavedPosts(context.token, (error, savedPosts) => {
           unfreeze()
           if (error) {
             alert(error.message, 'error')

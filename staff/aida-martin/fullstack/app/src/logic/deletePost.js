@@ -1,16 +1,9 @@
 import { validators } from 'com'
 
-const { validateId, validateCallback } = validators
+const { validateId, validateToken, validateCallback } = validators
 
-/**
- * Deletes a post and all its data, updates data in the database (users, posts)
- *
- * @param {string} userId The user's ID
- * @param {string} postId The post's ID
- */
-
-export default function deletePost(userId, postId, callback) {
-  validateId(userId, 'User ID')
+export default function deletePost(token, postId, callback) {
+  validateToken(token)
   validateId(postId, 'Post ID')
   validateCallback(callback)
 
@@ -38,7 +31,7 @@ export default function deletePost(userId, postId, callback) {
 
   xhr.open('DELETE', `${import.meta.env.VITE_API_URL}/posts/${postId}`)
 
-  xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
+  xhr.setRequestHeader('Authorization', `Bearer ${token}`)
 
   xhr.send()
 }

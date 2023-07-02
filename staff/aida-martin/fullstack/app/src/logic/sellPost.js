@@ -1,9 +1,9 @@
 import { validators } from 'com'
 
-const { validateId, validateCallback } = validators
+const { validateId, validateToken, validateCallback } = validators
 
-export default function buyPost (userId, postId, price, callback) {
-  validateId(userId, 'User ID')
+export default function buyPost(token, postId, price, callback) {
+  validateToken(token)
   validateId(postId, 'Post ID')
   validateCallback(callback)
 
@@ -32,7 +32,7 @@ export default function buyPost (userId, postId, price, callback) {
   xhr.open('PATCH', `${import.meta.env.VITE_API_URL}/posts/${postId}/sale`)
 
   xhr.setRequestHeader('Content-Type', 'application/json')
-  xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
+  xhr.setRequestHeader('Authorization', `Bearer ${token}`)
 
   const data = { price }
   const json = JSON.stringify(data)

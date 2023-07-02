@@ -1,16 +1,9 @@
 import { validators } from 'com'
 
-const { validateId, validateCallback } = validators
+const { validateId, validateToken, validateCallback } = validators
 
-/**
- * Adds or removes post's saves. Update user in database
- *
- * @param {string} userId The user's ID
- * @param {string} postId The post's ID
- */
-
-export default function toggleSavePost(userId, postId, callback) {
-  validateId(userId, 'User ID')
+export default function toggleSavePost(token, postId, callback) {
+  validateToken(token)
   validateId(postId, 'Post ID')
   validateCallback(callback)
 
@@ -38,7 +31,7 @@ export default function toggleSavePost(userId, postId, callback) {
 
   xhr.open('PATCH', `${import.meta.env.VITE_API_URL}/posts/${postId}/saves`)
 
-  xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
+  xhr.setRequestHeader('Authorization', `Bearer ${token}`)
 
   xhr.send()
 }

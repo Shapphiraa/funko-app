@@ -1,23 +1,14 @@
 import { validators } from 'com'
-const { validateId, validatePassword, validateCallback } = validators
+const { validateToken, validatePassword, validateCallback } = validators
 
-/**
- * Updates user's password in database
- *
- * @param {string} userId The user's ID
- * @param {string} password The user's current password
- * @param {string} newPassword The user's new password
- * @param {string} newPasswordConfirm The user's new password
- */
-
-export default function changePassword (
-  userId,
+export default function changePassword(
+  token,
   password,
   newPassword,
   newPasswordConfirm,
   callback
 ) {
-  validateId(userId, 'User ID')
+  validateToken(token)
   validatePassword(password)
   validatePassword(newPassword, 'New password')
   validatePassword(newPasswordConfirm)
@@ -48,7 +39,7 @@ export default function changePassword (
   xhr.open('PATCH', `${import.meta.env.VITE_API_URL}/users/password`)
 
   xhr.setRequestHeader('Content-Type', 'application/json')
-  xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
+  xhr.setRequestHeader('Authorization', `Bearer ${token}`)
 
   const data = { password, newPassword, newPasswordConfirm }
   const json = JSON.stringify(data)

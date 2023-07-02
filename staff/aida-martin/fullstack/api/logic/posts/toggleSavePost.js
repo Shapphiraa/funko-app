@@ -19,7 +19,7 @@ module.exports = function toggleSavePost(userId, postId) {
 
     if (!post) throw new Error('Post not found! 😥')
 
-    const index = user.saves.map((id) => id.toString()).indexOf(postId)
+    const index = user.saves.findIndex((id) => id.toString() === postId)
 
     if (index < 0) {
       return users.updateOne(
@@ -27,10 +27,7 @@ module.exports = function toggleSavePost(userId, postId) {
         { $push: { saves: new ObjectId(postId) } }
       )
     } else {
-      user.saves.splice(
-        user.saves.findIndex((save) => save === new ObjectId(postId)),
-        1
-      )
+      user.saves.splice(index, 1)
 
       return users.updateOne(
         { _id: new ObjectId(userId) },

@@ -15,7 +15,7 @@ module.exports = (req, res) => {
     const { image, text } = req.body
 
     updatePost(userId, postId, image, text)
-      .then(() => res.status(201).send())
+      .then(() => res.status(204).send())
       .catch((error) => res.status(400).json({ error: error.message }))
   } catch (error) {
     res.status(400).json({ error: error.message })

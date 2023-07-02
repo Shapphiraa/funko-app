@@ -1,9 +1,9 @@
 import { validators } from 'com'
 
-const { validateId, validateCallback } = validators
+const { validateId, validateToken, validateCallback } = validators
 
-export default function togglePrivatizePost(userId, postId, callback) {
-  validateId(userId, 'User ID')
+export default function togglePrivatizePost(token, postId, callback) {
+  validateToken(token)
   validateId(postId, 'Post ID')
   validateCallback(callback)
 
@@ -34,7 +34,7 @@ export default function togglePrivatizePost(userId, postId, callback) {
     `${import.meta.env.VITE_API_URL}/posts/${postId}/visibility`
   )
 
-  xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
+  xhr.setRequestHeader('Authorization', `Bearer ${token}`)
 
   xhr.send()
 }

@@ -1,15 +1,8 @@
 import { validators } from 'com'
-const { validateId, validateUrl, validateCallback } = validators
+const { validateToken, validateUrl, validateCallback } = validators
 
-/**
- * Updates user's avatar in database
- *
- * @param {string} userId The user's ID
- * @param {string} url The user's avatar
- */
-
-export default function updateAvatar (userId, url, callback) {
-  validateId(userId, 'User ID')
+export default function updateAvatar(token, url, callback) {
+  validateToken(token)
   validateUrl(url, 'Avatar url')
   validateCallback(callback)
 
@@ -38,7 +31,7 @@ export default function updateAvatar (userId, url, callback) {
   xhr.open('PATCH', `${import.meta.env.VITE_API_URL}/users/avatar`)
 
   xhr.setRequestHeader('Content-Type', 'application/json')
-  xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
+  xhr.setRequestHeader('Authorization', `Bearer ${token}`)
 
   const data = { avatar: url }
   const json = JSON.stringify(data)

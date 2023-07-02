@@ -16,7 +16,7 @@ export default function BuyPostModal({ postId, onPostBought, onCancel }) {
     try {
       freeze()
 
-      buyPost(context.userId, postId, (error) => {
+      buyPost(context.token, postId, (error) => {
         unfreeze()
 
         if (error) {
@@ -41,7 +41,7 @@ export default function BuyPostModal({ postId, onPostBought, onCancel }) {
     try {
       freeze()
 
-      retrievePost(context.userId, postId, (error, post) => {
+      retrievePost(context.token, postId, (error, post) => {
         unfreeze()
 
         if (error) {

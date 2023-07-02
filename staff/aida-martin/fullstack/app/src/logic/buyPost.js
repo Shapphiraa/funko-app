@@ -1,9 +1,9 @@
 import { validators } from 'com'
 
-const { validateId, validateCallback } = validators
+const { validateToken, validateId, validateCallback } = validators
 
-export default function buyPost(userId, postId, callback) {
-  validateId(userId, 'User ID')
+export default function buyPost(token, postId, callback) {
+  validateToken(token)
   validateId(postId, 'Post ID')
   validateCallback(callback)
 
@@ -31,7 +31,7 @@ export default function buyPost(userId, postId, callback) {
 
   xhr.open('PATCH', `${import.meta.env.VITE_API_URL}/posts/${postId}/buy`)
 
-  xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
+  xhr.setRequestHeader('Authorization', `Bearer ${token}`)
 
   xhr.send()
 }

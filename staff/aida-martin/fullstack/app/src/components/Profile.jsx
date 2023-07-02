@@ -16,7 +16,7 @@ export default function Profile({ onUpdateUserAvatar, onUpdateUserPassword }) {
     try {
       freeze()
 
-      updateAvatar(context.userId, avatar, (error) => {
+      updateAvatar(context.token, avatar, (error) => {
         unfreeze()
 
         if (error) {
@@ -45,7 +45,7 @@ export default function Profile({ onUpdateUserAvatar, onUpdateUserPassword }) {
       freeze()
 
       changePassword(
-        context.userId,
+        context.token,
         password,
         newPassword,
         newPasswordConfirm,

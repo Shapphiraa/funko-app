@@ -17,7 +17,7 @@ export default function AddPostModal({ onPostCreated, onCancel }) {
     try {
       freeze()
 
-      createPost(context.userId, image, text, (error) => {
+      createPost(context.token, image, text, (error) => {
         unfreeze()
 
         if (error) {

@@ -1,18 +1,9 @@
 import { validators } from 'com'
 
-const { validateId, validateCallback } = validators
+const { validateToken, validateCallback } = validators
 
-/**
- * Retrieves user's saved posts of the user from the database
- *
- * @param {string} userId The user's ID
- * @param {boolean} mySavedPosts If it refers to the saved posts or not
- *
- * @returns {string array} Array of user's saved posts
- */
-
-export default function retrieveSavedPosts (userId, callback) {
-  validateId(userId, 'User ID')
+export default function retrieveSavedPosts(token, callback) {
+  validateToken(token)
   validateCallback(callback)
 
   // eslint-disable-next-line no-undef
@@ -42,7 +33,7 @@ export default function retrieveSavedPosts (userId, callback) {
 
   xhr.open('GET', `${import.meta.env.VITE_API_URL}/posts/saved`)
 
-  xhr.setRequestHeader('Authorization', `Bearer ${userId}`)
+  xhr.setRequestHeader('Authorization', `Bearer ${token}`)
 
   xhr.send()
 }

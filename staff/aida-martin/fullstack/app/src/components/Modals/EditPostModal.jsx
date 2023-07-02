@@ -21,7 +21,7 @@ export default function EditPostModal({ postId, onPostEdited, onCancel }) {
     try {
       freeze()
 
-      updatePost(context.userId, postId, image, text, (error) => {
+      updatePost(context.token, postId, image, text, (error) => {
         unfreeze()
 
         if (error) {
@@ -48,7 +48,7 @@ export default function EditPostModal({ postId, onPostEdited, onCancel }) {
     try {
       freeze()
 
-      retrievePost(context.userId, postId, (error, post) => {
+      retrievePost(context.token, postId, (error, post) => {
         unfreeze()
 
         if (error) {

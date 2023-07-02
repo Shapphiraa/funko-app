@@ -22,7 +22,7 @@ export default function Login({ onRegisterClick, onUserLoggedIn }) {
     try {
       freeze()
 
-      authenticateUser(email, password, (error, userId) => {
+      authenticateUser(email, password, (error, token) => {
         unfreeze()
 
         if (error) {
@@ -31,7 +31,7 @@ export default function Login({ onRegisterClick, onUserLoggedIn }) {
           return
         }
 
-        context.userId = userId
+        context.token = token
 
         onUserLoggedIn()
       })

@@ -108,7 +108,7 @@ export default function Home({ onLogOut }) {
     try {
       freeze()
 
-      retrieveUser(context.userId, (error, user) => {
+      retrieveUser(context.token, (error, user) => {
         unfreeze()
 
         if (error) {
