@@ -1,46 +1,68 @@
 import { validators } from 'com'
 
-const {
-  validateName,
-  validateEmail,
-  validatePassword,
-  validateCallback
-} = validators
+const { validateName, validateEmail, validatePassword, validateCallback } =
+  validators
 
-export default function registerUser (name, email, password, repeatPassword, callback) {
+export default function registerUser(
+  name,
+  email,
+  password,
+  repeatPassword,
+  callback
+) {
   validateName(name)
   validateEmail(email)
   validatePassword(password)
-  validateCallback(callback)
 
-  // eslint-disable-next-line no-undef
-  const xhr = new XMLHttpRequest()
+  //Contemplamos opción con callback y con fetch
+  if (callback) {
+    validateCallback(callback)
 
-  xhr.onload = () => {
-    const { status } = xhr
+    // eslint-disable-next-line no-undef
+    const xhr = new XMLHttpRequest()
 
-    if (status !== 201) {
-      const { response: json } = xhr
-      const { error } = JSON.parse(json)
+    xhr.onload = () => {
+      const { status } = xhr
 
-      callback(new Error(error))
+      if (status !== 201) {
+        const { response: json } = xhr
+        const { error } = JSON.parse(json)
 
-      return
+        callback(new Error(error))
+
+        return
+      }
+
+      callback(null)
     }
 
-    callback(null)
+    xhr.onerror = () => {
+      callback(new Error('Connection error'))
+    }
+
+    xhr.open('POST', `${import.meta.env.VITE_API_URL}/users`)
+
+    xhr.setRequestHeader('Content-Type', 'application/json')
+
+    const user = { name, email, password, repeatPassword }
+    const json = JSON.stringify(user)
+
+    xhr.send(json)
+
+    return
   }
 
-  xhr.onerror = () => {
-    callback(new Error('Connection error'))
-  }
-
-  xhr.open('POST', `${import.meta.env.VITE_API_URL}/users`)
-
-  xhr.setRequestHeader('Content-Type', 'application/json')
-
-  const user = { name, email, password, repeatPassword }
-  const json = JSON.stringify(user)
-
-  xhr.send(json)
+  return fetch(`${import.meta.env.VITE_API_URL}/users`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ name, email, password, repeatPassword }),
+  }).then((res) => {
+    if (res.status !== 201) {
+      return res.json().then(({ error: message }) => {
+        throw new Error(message)
+      })
+    }
+  })
 }

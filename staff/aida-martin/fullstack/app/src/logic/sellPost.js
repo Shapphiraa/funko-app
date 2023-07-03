@@ -5,37 +5,56 @@ const { validateId, validateToken, validateCallback } = validators
 export default function buyPost(token, postId, price, callback) {
   validateToken(token)
   validateId(postId, 'Post ID')
-  validateCallback(callback)
 
-  // eslint-disable-next-line no-undef
-  const xhr = new XMLHttpRequest()
+  if (callback) {
+    validateCallback(callback)
 
-  xhr.onload = () => {
-    const { status } = xhr
+    // eslint-disable-next-line no-undef
+    const xhr = new XMLHttpRequest()
 
-    if (status !== 204) {
-      const { response: json } = xhr
-      const { error } = JSON.parse(json)
+    xhr.onload = () => {
+      const { status } = xhr
 
-      callback(new Error(error))
+      if (status !== 204) {
+        const { response: json } = xhr
+        const { error } = JSON.parse(json)
 
-      return
+        callback(new Error(error))
+
+        return
+      }
+
+      callback(null)
     }
 
-    callback(null)
+    xhr.onerror = () => {
+      callback(new Error('Connection error'))
+    }
+
+    xhr.open('PATCH', `${import.meta.env.VITE_API_URL}/posts/${postId}/sale`)
+
+    xhr.setRequestHeader('Content-Type', 'application/json')
+    xhr.setRequestHeader('Authorization', `Bearer ${token}`)
+
+    const data = { price }
+    const json = JSON.stringify(data)
+
+    xhr.send(json)
+
+    return
   }
 
-  xhr.onerror = () => {
-    callback(new Error('Connection error'))
-  }
-
-  xhr.open('PATCH', `${import.meta.env.VITE_API_URL}/posts/${postId}/sale`)
-
-  xhr.setRequestHeader('Content-Type', 'application/json')
-  xhr.setRequestHeader('Authorization', `Bearer ${token}`)
-
-  const data = { price }
-  const json = JSON.stringify(data)
-
-  xhr.send(json)
+  return fetch(`${import.meta.env.VITE_API_URL}/posts/${postId}/sale`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ price }),
+  }).then((res) => {
+    if (res.status !== 204)
+      return res.json().then(({ error: message }) => {
+        throw new Error(message)
+      })
+  })
 }

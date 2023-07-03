@@ -20,16 +20,17 @@ export default function SellPostModal({ postId, onPostForSale, onCancel }) {
     try {
       freeze()
 
-      sellPost(context.token, postId, price, (error) => {
-        unfreeze()
+      sellPost(context.token, postId, price)
+        .then(() => {
+          unfreeze()
 
-        if (error) {
+          onPostForSale()
+        })
+        .catch((error) => {
+          unfreeze()
+
           alert(error.message, 'error')
-
-          return
-        }
-        onPostForSale()
-      })
+        })
     } catch (error) {
       unfreeze()
 
@@ -47,17 +48,17 @@ export default function SellPostModal({ postId, onPostForSale, onCancel }) {
     try {
       freeze()
 
-      retrievePost(context.token, postId, (error, post) => {
-        unfreeze()
+      retrievePost(context.token, postId)
+        .then((post) => {
+          unfreeze()
 
-        if (error) {
+          setPost(post)
+        })
+        .catch((error) => {
+          unfreeze()
+
           alert(error.message, 'error')
-
-          return
-        }
-
-        setPost(post)
-      })
+        })
     } catch (error) {
       unfreeze()
 

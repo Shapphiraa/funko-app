@@ -22,24 +22,23 @@ export default function Login({ onRegisterClick, onUserLoggedIn }) {
     try {
       freeze()
 
-      authenticateUser(email, password, (error, token) => {
-        unfreeze()
+      authenticateUser(email, password)
+        .then((token) => {
+          unfreeze()
 
-        if (error) {
+          context.token = token
+
+          onUserLoggedIn()
+        })
+        .catch((error) => {
+          unfreeze()
+
           alert(error.message, 'error')
-
-          return
-        }
-
-        context.token = token
-
-        onUserLoggedIn()
-      })
+        })
     } catch (error) {
       unfreeze()
 
       alert(error.message, 'warn')
-      // errorShow(registerError, error);
     }
   }
 

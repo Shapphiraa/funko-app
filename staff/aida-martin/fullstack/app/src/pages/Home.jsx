@@ -108,16 +108,17 @@ export default function Home({ onLogOut }) {
     try {
       freeze()
 
-      retrieveUser(context.token, (error, user) => {
-        unfreeze()
+      retrieveUser(context.token)
+        .then((user) => {
+          unfreeze()
 
-        if (error) {
+          setUser(user)
+        })
+        .catch((error) => {
+          unfreeze()
+
           alert(error.message, 'error')
-
-          return
-        }
-        setUser(user)
-      })
+        })
     } catch (error) {
       unfreeze()
 

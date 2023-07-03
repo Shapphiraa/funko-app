@@ -5,33 +5,51 @@ const { validateId, validateToken, validateCallback } = validators
 export default function deletePost(token, postId, callback) {
   validateToken(token)
   validateId(postId, 'Post ID')
-  validateCallback(callback)
 
-  // eslint-disable-next-line no-undef
-  const xhr = new XMLHttpRequest()
+  if (callback) {
+    validateCallback(callback)
 
-  xhr.onload = () => {
-    const { status } = xhr
+    // eslint-disable-next-line no-undef
+    const xhr = new XMLHttpRequest()
 
-    if (status !== 200) {
-      const { response: json } = xhr
-      const { error } = JSON.parse(json)
+    xhr.onload = () => {
+      const { status } = xhr
 
-      callback(new Error(error))
+      if (status !== 200) {
+        const { response: json } = xhr
+        const { error } = JSON.parse(json)
 
-      return
+        callback(new Error(error))
+
+        return
+      }
+
+      callback(null)
     }
 
-    callback(null)
+    xhr.onerror = () => {
+      callback(new Error('Connection error'))
+    }
+
+    xhr.open('DELETE', `${import.meta.env.VITE_API_URL}/posts/${postId}`)
+
+    xhr.setRequestHeader('Authorization', `Bearer ${token}`)
+
+    xhr.send()
+
+    return
   }
 
-  xhr.onerror = () => {
-    callback(new Error('Connection error'))
-  }
-
-  xhr.open('DELETE', `${import.meta.env.VITE_API_URL}/posts/${postId}`)
-
-  xhr.setRequestHeader('Authorization', `Bearer ${token}`)
-
-  xhr.send()
+  return fetch(`${import.meta.env.VITE_API_URL}/posts/${postId}`, {
+    method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }).then((res) => {
+    if (res.status !== 200) {
+      return res.json().then(({ error: message }) => {
+        throw new Error(message)
+      })
+    }
+  })
 }

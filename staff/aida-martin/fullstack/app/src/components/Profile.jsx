@@ -16,17 +16,17 @@ export default function Profile({ onUpdateUserAvatar, onUpdateUserPassword }) {
     try {
       freeze()
 
-      updateAvatar(context.token, avatar, (error) => {
-        unfreeze()
+      updateAvatar(context.token, avatar)
+        .then(() => {
+          unfreeze()
 
-        if (error) {
+          onUpdateUserAvatar()
+        })
+        .catch((error) => {
+          unfreeze()
+
           alert(error.message, 'error')
-
-          return
-        }
-
-        onUpdateUserAvatar()
-      })
+        })
     } catch (error) {
       unfreeze()
 
@@ -44,23 +44,17 @@ export default function Profile({ onUpdateUserAvatar, onUpdateUserPassword }) {
     try {
       freeze()
 
-      changePassword(
-        context.token,
-        password,
-        newPassword,
-        newPasswordConfirm,
-        (error) => {
+      changePassword(context.token, password, newPassword, newPasswordConfirm)
+        .then(() => {
           unfreeze()
 
-          if (error) {
-            alert(error.message, 'error')
-
-            return
-          }
-
           onUpdateUserPassword()
-        }
-      )
+        })
+        .catch((error) => {
+          unfreeze()
+
+          alert(error.message, 'error')
+        })
     } catch (error) {
       unfreeze()
 

@@ -13,7 +13,9 @@ module.exports = function retrievePosts(userId) {
   return Promise.all([
     users.find().toArray(),
     posts
-      .find({ $or: [{ visibility: 'public' }, { author: userId }] })
+      .find({
+        $or: [{ visibility: 'public' }, { author: new ObjectId(userId) }],
+      })
       .toArray(),
   ]).then(([users, posts]) => {
     const user = users.find((user) => user._id.toString() === userId)
@@ -25,8 +27,6 @@ module.exports = function retrievePosts(userId) {
       delete post._id
 
       post.save = user.saves?.some((save) => save.toString() === post.id)
-
-      console.log(post.saves)
 
       const _user = users.find(
         (user) => user._id.toString() === post.author.toString()

@@ -21,16 +21,17 @@ export default function EditPostModal({ postId, onPostEdited, onCancel }) {
     try {
       freeze()
 
-      updatePost(context.token, postId, image, text, (error) => {
-        unfreeze()
+      updatePost(context.token, postId, image, text)
+        .then(() => {
+          unfreeze()
 
-        if (error) {
+          onPostEdited()
+        })
+        .catch((error) => {
+          unfreeze()
+
           alert(error.message, 'error')
-
-          return
-        }
-        onPostEdited()
-      })
+        })
     } catch (error) {
       unfreeze()
 
@@ -48,17 +49,17 @@ export default function EditPostModal({ postId, onPostEdited, onCancel }) {
     try {
       freeze()
 
-      retrievePost(context.token, postId, (error, post) => {
-        unfreeze()
+      retrievePost(context.token, postId)
+        .then((post) => {
+          unfreeze()
 
-        if (error) {
+          setPost(post)
+        })
+        .catch((error) => {
+          unfreeze()
+
           alert(error.message, 'error')
-
-          return
-        }
-
-        setPost(post)
-      })
+        })
     } catch (error) {
       unfreeze()
 

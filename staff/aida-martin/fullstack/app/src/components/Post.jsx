@@ -32,15 +32,17 @@ export default function Post({
     try {
       freeze()
 
-      toggleLikePost(context.token, post.id, (error) => {
-        unfreeze()
-        if (error) {
-          alert(error.message, 'error')
+      toggleLikePost(context.token, post.id)
+        .then(() => {
+          unfreeze()
 
-          return
-        }
-        onLiked()
-      })
+          onLiked()
+        })
+        .catch((error) => {
+          unfreeze()
+
+          alert(error.message, 'error')
+        })
     } catch (error) {
       unfreeze()
 
@@ -52,17 +54,17 @@ export default function Post({
     try {
       freeze()
 
-      toggleSavePost(context.token, post.id, (error) => {
-        unfreeze()
+      toggleSavePost(context.token, post.id)
+        .then(() => {
+          unfreeze()
 
-        if (error) {
+          onSaved()
+        })
+        .catch((error) => {
+          unfreeze()
+
           alert(error.message, 'error')
-
-          return
-        }
-
-        onSaved()
-      })
+        })
     } catch (error) {
       unfreeze()
 
@@ -78,16 +80,17 @@ export default function Post({
     try {
       freeze()
 
-      deletePost(context.userId, post.id, (error) => {
-        unfreeze()
+      deletePost(context.token, post.id)
+        .then(() => {
+          unfreeze()
 
-        if (error) {
+          onDeletePost()
+        })
+        .catch((error) => {
+          unfreeze()
+
           alert(error.message, 'error')
-
-          return
-        }
-        onDeletePost()
-      })
+        })
     } catch (error) {
       unfreeze()
 
@@ -99,18 +102,19 @@ export default function Post({
     try {
       freeze()
 
-      togglePrivatizePost(context.token, post.id, (error) => {
-        unfreeze()
+      togglePrivatizePost(context.token, post.id)
+        .then(() => {
+          unfreeze()
 
-        if (error) {
+          setPrivateIcon(privateIcon === 'lock' ? 'lock_open' : 'lock')
+
+          onPrivatizePost()
+        })
+        .catch((error) => {
+          unfreeze()
+
           alert(error.message, 'error')
-
-          return
-        }
-
-        setPrivateIcon(privateIcon === 'lock' ? 'lock_open' : 'lock')
-        onPrivatizePost()
-      })
+        })
     } catch (error) {
       unfreeze()
 

@@ -23,19 +23,17 @@ export default function Register({ onLoginClick, onUserRegisteredIn }) {
     try {
       freeze()
 
-      registerUser(name, email, password, repeatPassword, (error) => {
-        unfreeze()
+      registerUser(name, email, password, repeatPassword)
+        .then(() => {
+          unfreeze()
 
-        // este error es asíncrono (del callback)
-        if (error) {
+          onUserRegisteredIn()
+        })
+        .catch((error) => {
+          unfreeze()
+
           alert(error.message, 'error')
-
-          return
-        }
-
-        onUserRegisteredIn()
-      })
-      // este error es síncrono (de los validadores)
+        })
     } catch (error) {
       unfreeze()
 

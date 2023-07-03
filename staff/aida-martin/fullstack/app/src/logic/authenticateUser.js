@@ -5,43 +5,63 @@ const { validateEmail, validatePassword, validateCallback } = validators
 export default function authenticateUser(email, password, callback) {
   validateEmail(email)
   validatePassword(password)
-  validateCallback(callback)
 
-  // eslint-disable-next-line no-undef
-  const xhr = new XMLHttpRequest()
+  if (callback) {
+    validateCallback(callback)
 
-  xhr.onload = () => {
-    const { status } = xhr
+    // eslint-disable-next-line no-undef
+    const xhr = new XMLHttpRequest()
 
-    if (status !== 200) {
+    xhr.onload = () => {
+      const { status } = xhr
+
+      if (status !== 200) {
+        const { response: json } = xhr
+        const { error } = JSON.parse(json)
+
+        callback(new Error(error))
+
+        return
+      }
+
       const { response: json } = xhr
-      const { error } = JSON.parse(json)
 
-      callback(new Error(error))
+      const token = JSON.parse(json)
 
-      return
+      // Antes de Mongodb lo hacíamos así: (ahora ya nos devuelve el userId directamente como string y no hay que destructurar)
+      // const { userId } = JSON.parse(json);
+
+      callback(null, token)
     }
 
-    const { response: json } = xhr
+    xhr.onerror = () => {
+      callback(new Error('Connection error'))
+    }
 
-    const token = JSON.parse(json)
+    xhr.open('POST', `${import.meta.env.VITE_API_URL}/users/auth`)
 
-    // Antes de Mongodb lo hacíamos así: (ahora ya nos devuelve el userId directamente como string y no hay que destructurar)
-    // const { userId } = JSON.parse(json);
+    xhr.setRequestHeader('Content-Type', 'application/json')
 
-    callback(null, token)
+    const user = { email, password }
+    const json = JSON.stringify(user)
+
+    xhr.send(json)
+
+    return
   }
 
-  xhr.onerror = () => {
-    callback(new Error('Connection error'))
-  }
+  return fetch(`${import.meta.env.VITE_API_URL}/users/auth`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ email, password }),
+  }).then((res) => {
+    if (res.status !== 200)
+      return res.json().then(({ error: message }) => {
+        throw new Error(message)
+      })
 
-  xhr.open('POST', `${import.meta.env.VITE_API_URL}/users/auth`)
-
-  xhr.setRequestHeader('Content-Type', 'application/json')
-
-  const user = { email, password }
-  const json = JSON.stringify(user)
-
-  xhr.send(json)
+    return res.json()
+  })
 }

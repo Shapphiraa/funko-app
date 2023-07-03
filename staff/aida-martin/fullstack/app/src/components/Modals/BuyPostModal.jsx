@@ -16,16 +16,17 @@ export default function BuyPostModal({ postId, onPostBought, onCancel }) {
     try {
       freeze()
 
-      buyPost(context.token, postId, (error) => {
-        unfreeze()
+      buyPost(context.token, postId)
+        .then(() => {
+          unfreeze()
 
-        if (error) {
-          alert(error.message, 'error')
+          onPostBought()
+        })
+        .catch((error) => {
+          unfreeze()
 
-          return
-        }
-        onPostBought()
-      })
+          alert(error.messsage, 'error')
+        })
     } catch (error) {
       unfreeze()
 
@@ -41,17 +42,17 @@ export default function BuyPostModal({ postId, onPostBought, onCancel }) {
     try {
       freeze()
 
-      retrievePost(context.token, postId, (error, post) => {
-        unfreeze()
+      retrievePost(context.token, postId)
+        .then((post) => {
+          unfreeze()
 
-        if (error) {
+          setPost(post)
+        })
+        .catch((error) => {
+          unfreeze()
+
           alert(error.message, 'error')
-
-          return
-        }
-
-        setPost(post)
-      })
+        })
     } catch (error) {
       unfreeze()
 

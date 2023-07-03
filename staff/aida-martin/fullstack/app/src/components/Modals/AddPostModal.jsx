@@ -17,17 +17,17 @@ export default function AddPostModal({ onPostCreated, onCancel }) {
     try {
       freeze()
 
-      createPost(context.token, image, text, (error) => {
-        unfreeze()
+      createPost(context.token, image, text)
+        .then(() => {
+          unfreeze()
 
-        if (error) {
+          onPostCreated()
+        })
+        .catch((error) => {
+          unfreeze()
+
           alert(error.message, 'error')
-
-          return
-        }
-
-        onPostCreated()
-      })
+        })
     } catch (error) {
       unfreeze()
 

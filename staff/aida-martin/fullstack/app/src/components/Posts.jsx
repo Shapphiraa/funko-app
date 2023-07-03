@@ -25,27 +25,29 @@ export default function Posts({
     freeze()
     try {
       if (!mySavedPosts) {
-        retrievePosts(context.token, (error, posts) => {
-          unfreeze()
-          if (error) {
+        retrievePosts(context.token)
+          .then((posts) => {
+            unfreeze()
+
+            setPosts(posts)
+          })
+          .catch((error) => {
+            unfreeze()
+
             alert(error.message, 'error')
-
-            return
-          }
-
-          setPosts(posts)
-        })
+          })
       } else {
-        retrieveSavedPosts(context.token, (error, savedPosts) => {
-          unfreeze()
-          if (error) {
+        retrieveSavedPosts(context.token)
+          .then((savedPosts) => {
+            unfreeze()
+
+            setPosts(savedPosts)
+          })
+          .catch((error) => {
+            unfreeze()
+
             alert(error.message, 'error')
-
-            return
-          }
-
-          setPosts(savedPosts)
-        })
+          })
       }
     } catch (error) {
       unfreeze()

@@ -23,7 +23,9 @@ module.exports = function retrieveSavedPosts(userId) {
         .find({
           $and: [
             { _id: { $in: [savedPostsIds] } },
-            { $or: [{ visibility: 'public' }, { author: userId }] },
+            {
+              $or: [{ visibility: 'public' }, { author: new ObjectId(userId) }],
+            },
           ],
         })
         .toArray(),
