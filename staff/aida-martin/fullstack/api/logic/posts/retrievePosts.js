@@ -26,7 +26,7 @@ module.exports = function retrievePosts(userId) {
       post.id = post._id.toString()
       delete post._id
 
-      post.save = user.saves?.some((save) => save.toString() === post.id)
+      post.saves = user.saves.some((save) => save.toString() === post.id)
 
       const _user = users.find(
         (user) => user._id.toString() === post.author.toString()

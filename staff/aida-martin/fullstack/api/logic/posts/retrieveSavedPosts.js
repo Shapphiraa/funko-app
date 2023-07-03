@@ -15,14 +15,12 @@ module.exports = function retrieveSavedPosts(userId) {
 
     savedPostsIds = user.saves
 
-    savedPostsIds = savedPostsIds?.map((id) => new ObjectId(id))
-
     return Promise.all([
       users.find().toArray(),
       posts
         .find({
           $and: [
-            { _id: { $in: [savedPostsIds] } },
+            { _id: { $in: savedPostsIds } },
             {
               $or: [{ visibility: 'public' }, { author: new ObjectId(userId) }],
             },
@@ -31,7 +29,7 @@ module.exports = function retrieveSavedPosts(userId) {
         .toArray(),
     ]).then(([users, savedPosts]) => {
       savedPosts.forEach((post) => {
-        post.save = user.saves?.some((save) => save.toString() === post.id)
+        post.saves = user.saves.some((save) => save.toString() === post.id)
 
         const _user = users.find(
           (user) => user._id.toString() === post.author.toString()
