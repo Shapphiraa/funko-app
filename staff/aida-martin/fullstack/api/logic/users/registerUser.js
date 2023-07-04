@@ -1,9 +1,9 @@
 const {
   validators: { validateName, validateEmail, validatePassword },
+  errors: { DuplicityError },
 } = require('com')
 
 const context = require('../context')
-const { DuplicityError } = require('com/errors')
 
 module.exports = function registerUser(name, email, password, repeatPassword) {
   validateName(name)
@@ -18,6 +18,7 @@ module.exports = function registerUser(name, email, password, repeatPassword) {
   return users
     .insertOne({ name, email, password, avatar: null, saves: [] })
     .catch((error) => {
+      //Con esto convertimos ese error de Mongo (el índice-index que habíamos creado) a un error nuestro
       if (error.message.includes('E11000'))
         throw new DuplicityError('You are already registered! Please login! 😅')
     })

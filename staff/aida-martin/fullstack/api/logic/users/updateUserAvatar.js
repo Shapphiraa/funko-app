@@ -1,5 +1,6 @@
 const {
   validators: { validateId, validateUrl },
+  errors: { ExistenceError },
 } = require('com')
 
 const context = require('../context')
@@ -12,7 +13,7 @@ module.exports = function updateUserAvatar(userId, url) {
   const { users } = context
 
   return users.findOne({ _id: new ObjectId(userId) }).then((user) => {
-    if (!user) throw new Error('User not found! 😥')
+    if (!user) throw new ExistenceError('User not found! 😥')
 
     return users.updateOne(
       { _id: new ObjectId(userId) },

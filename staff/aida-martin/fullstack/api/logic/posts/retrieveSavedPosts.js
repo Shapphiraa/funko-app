@@ -1,5 +1,6 @@
 const {
-  validators: { validateId, validateCallback },
+  validators: { validateId },
+  errors: { ExistenceError },
 } = require('com')
 
 const context = require('../context')
@@ -11,7 +12,7 @@ module.exports = function retrieveSavedPosts(userId) {
   const { users, posts } = context
 
   return users.findOne({ _id: new ObjectId(userId) }).then((user) => {
-    if (!user) throw new Error('User not found! 😥')
+    if (!user) throw new ExistenceError('User not found! 😥')
 
     savedPostsIds = user.saves
 

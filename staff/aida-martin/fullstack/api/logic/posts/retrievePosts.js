@@ -1,5 +1,6 @@
 const {
-  validators: { validateId, validateCallback },
+  validators: { validateId },
+  errors: { ExistenceError },
 } = require('com')
 
 const context = require('../context')
@@ -20,7 +21,7 @@ module.exports = function retrievePosts(userId) {
   ]).then(([users, posts]) => {
     const user = users.find((user) => user._id.toString() === userId)
 
-    if (!user) throw new Error(`user with id ${userId} not found`)
+    if (!user) throw new ExistenceError(`user with id ${userId} not found`)
 
     posts.forEach((post) => {
       post.id = post._id.toString()

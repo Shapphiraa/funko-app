@@ -1,4 +1,5 @@
 const { ContentError } = require("./errors");
+const EMAIL_REGEX = /([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})/i;
 
 /**
  * Validates the email
@@ -14,11 +15,7 @@ function validateEmail(email) {
     throw new ContentError("Email is empty 😥", { cause: "userError" });
   }
 
-  const validEmail = /([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})/i.test(
-    email
-  );
-
-  if (!validEmail) {
+  if (!EMAIL_REGEX.test(email)) {
     throw new ContentError("Email is not valid 😥", { cause: "userError" });
   }
 }
@@ -40,7 +37,7 @@ function validatePassword(password, explain = "Password") {
     throw new ContentError(`${explain} is empty 😥`, { cause: "userError" });
   }
   if (password.length < 8) {
-    throw new ContentError(`${explain} does not have 8 characters 😥`, {
+    throw new RangeError(`${explain} does not have 8 characters 😥`, {
       cause: "userError",
     });
   }
