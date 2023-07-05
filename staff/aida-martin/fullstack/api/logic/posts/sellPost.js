@@ -3,18 +3,15 @@ const {
   errors: { ExistenceError, PropertyError },
 } = require('com')
 
-const context = require('../context')
-const { ObjectId } = require('mongodb')
+const { User, Post } = require('../../data/models')
 
 module.exports = function buyPost(userId, postId, price) {
   validateId(userId, 'User ID')
   validateId(postId, 'Post ID')
 
-  const { users, posts } = context
-
   return Promise.all([
-    users.findOne({ _id: new ObjectId(userId) }),
-    posts.findOne({ _id: new ObjectId(postId) }),
+    User.findOne({ _id: userId }),
+    Post.findOne({ _id: postId }),
   ]).then(([user, post]) => {
     if (!user) throw new ExistenceError('User not found! 😥')
 
@@ -26,9 +23,6 @@ module.exports = function buyPost(userId, postId, price) {
       )
     }
 
-    return posts.updateOne(
-      { _id: new ObjectId(postId) },
-      { $set: { price: price } }
-    )
+    return Post.updateOne({ _id: postId }, { $set: { price: price } })
   })
 }

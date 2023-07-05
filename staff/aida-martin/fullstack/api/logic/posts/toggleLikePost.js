@@ -3,18 +3,15 @@ const {
   errors: { ExistenceError },
 } = require('com')
 
-const context = require('../context')
-const { ObjectId } = require('mongodb')
+const { User, Post } = require('../../data/models')
 
 module.exports = function toggleLikePost(userId, postId) {
   validateId(userId, 'User ID')
   validateId(postId, 'Post ID')
 
-  const { users, posts } = context
-
   return Promise.all([
-    users.findOne({ _id: new ObjectId(userId) }),
-    posts.findOne({ _id: new ObjectId(postId) }),
+    User.findOne({ _id: userId }),
+    Post.findOne({ _id: postId }),
   ]).then(([user, post]) => {
     if (!user) throw new ExistenceError('User not found! 😥')
 
@@ -23,17 +20,11 @@ module.exports = function toggleLikePost(userId, postId) {
     const index = post.likes.findIndex((id) => id.toString() === userId)
 
     if (index < 0) {
-      return posts.updateOne(
-        { _id: new ObjectId(postId) },
-        { $push: { likes: new ObjectId(userId) } }
-      )
+      return Post.updateOne({ _id: postId }, { $push: { likes: userId } })
     } else {
       post.likes.splice(index, 1)
 
-      return posts.updateOne(
-        { _id: new ObjectId(postId) },
-        { $set: { likes: post.likes } }
-      )
+      return Post.updateOne({ _id: postId }, { $set: { likes: post.likes } })
     }
   })
 }

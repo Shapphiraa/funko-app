@@ -24,25 +24,13 @@ const {
   sellPostHandler,
 } = require('./handlers')
 
-const mongodb = require('mongodb')
-
-const { MongoClient } = mongodb
-const context = require('./logic/context')
-
-//en la ruta se pondría localhost en vez de 127.0.0.1 (pero no funciona)
-const client = new MongoClient(process.env.MONGODB_URL)
+const mongoose = require('mongoose')
 
 //promises:
-client
-  .connect()
+mongoose
+  .connect(process.env.MONGODB_URL)
   //el then encadena otra promesa a la anterior, hasta que la anterior no termina, el then no se procesa
-  .then((connection) => {
-    const db = connection.db()
-
-    //cargamos los manejadores y los guardamos en contexto para usarlos en las lógicas
-    context.users = db.collection('users')
-    context.posts = db.collection('posts')
-
+  .then(() => {
     const api = express()
 
     api.use(cors)

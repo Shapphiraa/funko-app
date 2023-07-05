@@ -6,5 +6,5 @@ module.exports = handleErrors((req, res) => {
 
   const { postId } = req.params
 
-  return deletePost(userId, postId).then((post) => res.json(post))
+  return deletePost(userId, postId).then((post) => res.status(204).json(post))
 })

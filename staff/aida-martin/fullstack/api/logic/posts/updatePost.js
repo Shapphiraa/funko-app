@@ -3,8 +3,7 @@ const {
   errors: { ExistenceError, PropertyError },
 } = require('com')
 
-const context = require('../context')
-const { ObjectId } = require('mongodb')
+const { User, Post } = require('../../data/models')
 
 module.exports = function updatePost(userId, postId, image, text) {
   validateId(userId, 'User ID')
@@ -12,11 +11,9 @@ module.exports = function updatePost(userId, postId, image, text) {
   validateUrl(image, 'Image URL')
   validateText(text, 'Text')
 
-  const { users, posts } = context
-
   return Promise.all([
-    users.findOne({ _id: new ObjectId(userId) }),
-    posts.findOne({ _id: new ObjectId(postId) }),
+    User.findOne({ _id: userId }),
+    Post.findOne({ _id: postId }),
   ]).then(([user, post]) => {
     if (!user) throw new ExistenceError('User not found! 😥')
 
@@ -28,8 +25,8 @@ module.exports = function updatePost(userId, postId, image, text) {
       )
     }
 
-    return posts.updateOne(
-      { _id: new ObjectId(postId) },
+    return Post.updateOne(
+      { _id: postId },
       { $set: { image: image, text: text } }
     )
   })

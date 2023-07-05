@@ -3,38 +3,35 @@ const {
   errors: { ExistenceError },
 } = require('com')
 
-const context = require('../context')
-const { ObjectId } = require('mongodb')
+const {
+  Schema: {
+    Types: { ObjectId },
+  },
+} = require('mongoose')
+
+const { User, Post } = require('../../data/models')
 
 module.exports = function retrievePosts(userId) {
   validateId(userId, 'User ID')
 
-  const { users, posts } = context
-
   return Promise.all([
-    users.find().toArray(),
-    posts
-      .find({
-        $or: [{ visibility: 'public' }, { author: new ObjectId(userId) }],
-      })
-      .toArray(),
+    User.find(),
+    Post.find({
+      $or: [{ visibility: 'public' }, { author: userId }],
+    }),
   ]).then(([users, posts]) => {
-    const user = users.find((user) => user._id.toString() === userId)
+    const user = users.find((user) => user.id === userId)
 
     if (!user) throw new ExistenceError(`user with id ${userId} not found`)
 
     posts.forEach((post) => {
-      post.id = post._id.toString()
-      delete post._id
-
       post.saves = user.saves.some((save) => save.toString() === post.id)
 
-      const _user = users.find(
-        (user) => user._id.toString() === post.author.toString()
-      )
+      const _user = users.find((user) => user.id === post.author.toString())
 
+      //No funciona con Mongoose, pendiente de arreglar
       post.author = {
-        id: _user._id.toString(),
+        id: _user.id,
         name: _user.name.split(' ')[0],
         avatar: _user.avatar,
       }

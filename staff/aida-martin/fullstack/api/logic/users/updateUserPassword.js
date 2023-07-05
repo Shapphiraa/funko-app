@@ -3,8 +3,7 @@ const {
   errors: { ContentError, ExistenceError },
 } = require('com')
 
-const context = require('../context')
-const { ObjectId } = require('mongodb')
+const { User } = require('../../data/models')
 
 module.exports = function updateUserPassword(
   userId,
@@ -22,16 +21,11 @@ module.exports = function updateUserPassword(
   if (newPassword === password)
     throw new ContentError('Your new password matches the current one 😥')
 
-  const { users } = context
-
-  return users.findOne({ _id: new ObjectId(userId) }).then((user) => {
+  return User.findOne({ _id: userId }).then((user) => {
     if (!user) throw new ExistenceError('User not found! 😥')
 
     if (user.password !== password) throw new AuthError('Wrong password! 😢')
 
-    return users.updateOne(
-      { _id: new ObjectId(userId) },
-      { $set: { password: newPassword } }
-    )
+    return User.updateOne({ _id: userId }, { $set: { password: newPassword } })
   })
 }
