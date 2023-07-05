@@ -26,14 +26,13 @@ module.exports = function deletePost(userId, postId) {
 
       return User.find({ saves: postId }).then((users) => {
         const usersUpdated = users.map((user) => {
-          return User.updateOne(
-            { _id: user.id },
-            {
-              $pullAll: {
-                saves: [postId],
-              },
-            }
+          const index = user.saves.findIndex(
+            (save) => save.toString() === postId
           )
+
+          if (index > -1) user.saves.splice(index, 1)
+
+          return user.save()
         })
 
         return Promise.all([...usersUpdated, Post.deleteOne({ _id: postId })])
