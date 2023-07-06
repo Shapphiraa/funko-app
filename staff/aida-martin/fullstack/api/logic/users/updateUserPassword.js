@@ -21,11 +21,17 @@ module.exports = function updateUserPassword(
   if (newPassword === password)
     throw new ContentError('Your new password matches the current one 😥')
 
-  return User.findOne({ _id: userId }).then((user) => {
-    if (!user) throw new ExistenceError('User not found! 😥')
+  return User.findById(userId)
+    .then((user) => {
+      if (!user) throw new ExistenceError('User not found! 😥')
 
-    if (user.password !== password) throw new AuthError('Wrong password! 😢')
+      if (user.password !== password) throw new AuthError('Wrong password! 😢')
 
-    return User.updateOne({ _id: userId }, { $set: { password: newPassword } })
-  })
+      return User.updateOne(
+        { _id: userId },
+        { $set: { password: newPassword } }
+      )
+    })
+
+    .then(() => {})
 }

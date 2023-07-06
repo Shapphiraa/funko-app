@@ -8,38 +8,36 @@ const { User, Post } = require('../../data/models')
 module.exports = function retrieveSavedPosts(userId) {
   validateId(userId, 'User ID')
 
-  return User.findOne({ _id: userId }).then((user) => {
-    if (!user) throw new ExistenceError('User not found! 😥')
+  return User.findById(userId)
+    .lean()
+    .then((user) => {
+      if (!user) throw new ExistenceError(`user with id ${userId} not found`)
 
-    const savedPostsIds = user.saves
-
-    return Promise.all([
-      User.find(),
-      Post.find({
+      return Post.find({
         $and: [
-          { _id: { $in: savedPostsIds } },
-          {
-            $or: [{ visibility: 'public' }, { author: userId }],
-          },
+          { _id: { $in: user.saves } },
+          { $or: [{ visibility: 'public' }, { author: userId }] },
         ],
-      }),
-    ]).then(([users, savedPosts]) => {
-      savedPosts.forEach((post) => {
-        post.saves = user.saves?.some((save) => save.toString() === post.id)
-
-        const _user = users.find(
-          (user) => user._id.toString() === post.author.toString()
-        )
-
-        //No funciona con Mongoose, pendiente de arreglar
-        post.author = {
-          id: _user.id,
-          name: _user.name.split(' ')[0],
-          avatar: _user.avatar,
-        }
       })
+        .sort('-date')
+        .populate('author', '-email -password -saves -__v')
+        .lean()
+        .then((savedPosts) => {
+          savedPosts.forEach((post) => {
+            post.author.name = post.author.name.split(' ')[0]
 
-      return savedPosts.reverse()
+            post.id = post._id.toString()
+            delete post._id
+
+            post.saves = user.saves.some((save) => save.toString() === post.id)
+
+            if (post.author._id) {
+              post.author.id = post.author._id.toString()
+              delete post.author._id
+            }
+          })
+
+          return savedPosts
+        })
     })
-  })
 }

@@ -9,9 +9,12 @@ module.exports = function updateUserAvatar(userId, url) {
   validateId(userId, 'User ID')
   validateUrl(url, 'Avatar url')
 
-  return User.findOne({ _id: userId }).then((user) => {
-    if (!user) throw new ExistenceError('User not found! 😥')
+  return User.findById(userId)
+    .then((user) => {
+      if (!user) throw new ExistenceError('User not found! 😥')
 
-    return User.updateOne({ _id: userId }, { $set: { avatar: url } })
-  })
+      return User.updateOne({ _id: userId }, { $set: { avatar: url } })
+    })
+
+    .then(() => {})
 }

@@ -46,7 +46,7 @@ export default function deletePost(token, postId, callback) {
       Authorization: `Bearer ${token}`,
     },
   }).then((res) => {
-    if (res.status !== 200) {
+    if (res.status !== 204) {
       return res.json().then(({ error: message }) => {
         throw new Error(message)
       })

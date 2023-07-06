@@ -9,10 +9,7 @@ module.exports = function deletePost(userId, postId) {
   validateId(userId, 'User ID')
   validateId(postId, 'Post ID')
 
-  return Promise.all([
-    User.findOne({ _id: userId }),
-    Post.findOne({ _id: postId }),
-  ])
+  return Promise.all([User.findById(userId), Post.findById(postId)])
     .then(([user, post]) => {
       if (!user) throw new ExistenceError('User not found! 😥')
 

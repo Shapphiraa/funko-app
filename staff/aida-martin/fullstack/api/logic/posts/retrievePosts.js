@@ -14,29 +14,33 @@ const { User, Post } = require('../../data/models')
 module.exports = function retrievePosts(userId) {
   validateId(userId, 'User ID')
 
-  return Promise.all([
-    User.find(),
-    Post.find({
-      $or: [{ visibility: 'public' }, { author: userId }],
-    }),
-  ]).then(([users, posts]) => {
-    const user = users.find((user) => user.id === userId)
+  return User.findById(userId)
+    .lean()
+    .then((user) => {
+      if (!user) throw new ExistenceError(`user with id ${userId} not found`)
 
-    if (!user) throw new ExistenceError(`user with id ${userId} not found`)
+      return Post.find({
+        $or: [{ visibility: 'public' }, { author: userId }],
+      })
+        .sort('-date')
+        .populate('author', '-email -password -saves -__v')
+        .lean()
+        .then((posts) => {
+          posts.forEach((post) => {
+            post.author.name = post.author.name.split(' ')[0]
 
-    posts.forEach((post) => {
-      post.saves = user.saves.some((save) => save.toString() === post.id)
+            post.id = post._id.toString()
+            delete post._id
 
-      const _user = users.find((user) => user.id === post.author.toString())
+            post.saves = user.saves.some((save) => save.toString() === post.id)
 
-      //No funciona con Mongoose, pendiente de arreglar
-      post.author = {
-        id: _user.id,
-        name: _user.name.split(' ')[0],
-        avatar: _user.avatar,
-      }
+            if (post.author._id) {
+              post.author.id = post.author._id.toString()
+              delete post.author._id
+            }
+          })
+
+          return posts
+        })
     })
-
-    return posts.reverse()
-  })
 }
