@@ -16,13 +16,10 @@ module.exports = function createPost(userId, image, text) {
         if (!user) throw new ExistenceError('User not found! 😥')
 
         return Post.create({
-          author: user.id,
+          author: userId,
           image,
           text,
-          date: new Date(),
-          likes: [],
-          visibility: 'public',
-          price: 0,
+          //los demás datos no hacen falta, ya vienen definidos por el Schema
         })
       })
       //no debemos devolver nada afuera (que no se exponga)

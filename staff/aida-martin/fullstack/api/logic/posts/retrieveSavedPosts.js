@@ -13,12 +13,15 @@ module.exports = function retrieveSavedPosts(userId) {
     .then((user) => {
       if (!user) throw new ExistenceError(`user with id ${userId} not found`)
 
-      return Post.find({
-        $and: [
-          { _id: { $in: user.saves } },
-          { $or: [{ visibility: 'public' }, { author: userId }] },
-        ],
-      })
+      return Post.find(
+        {
+          $and: [
+            { _id: { $in: user.saves } },
+            { $or: [{ visibility: 'public' }, { author: userId }] },
+          ],
+        },
+        '-__v'
+      )
         .sort('-date')
         .populate('author', '-email -password -saves -__v')
         .lean()

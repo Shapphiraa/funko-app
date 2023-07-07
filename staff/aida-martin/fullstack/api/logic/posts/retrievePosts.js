@@ -14,33 +14,34 @@ const { User, Post } = require('../../data/models')
 module.exports = function retrievePosts(userId) {
   validateId(userId, 'User ID')
 
-  return User.findById(userId)
-    .lean()
-    .then((user) => {
-      if (!user) throw new ExistenceError(`user with id ${userId} not found`)
-
-      return Post.find({
+  return Promise.all([
+    User.findById(userId).lean(),
+    Post.find(
+      {
         $or: [{ visibility: 'public' }, { author: userId }],
-      })
-        .sort('-date')
-        .populate('author', '-email -password -saves -__v')
-        .lean()
-        .then((posts) => {
-          posts.forEach((post) => {
-            post.author.name = post.author.name.split(' ')[0]
+      },
+      '-__v'
+    )
+      .sort('-date')
+      .populate('author', '-email -password -saves -__v')
+      .lean(),
+  ]).then(([user, posts]) => {
+    if (!user) throw new ExistenceError(`user with id ${userId} not found`)
 
-            post.id = post._id.toString()
-            delete post._id
+    posts.forEach((post) => {
+      post.author.name = post.author.name.split(' ')[0]
 
-            post.saves = user.saves.some((save) => save.toString() === post.id)
+      post.id = post._id.toString()
+      delete post._id
 
-            if (post.author._id) {
-              post.author.id = post.author._id.toString()
-              delete post.author._id
-            }
-          })
+      post.saves = user.saves.some((save) => save.toString() === post.id)
 
-          return posts
-        })
+      if (post.author._id) {
+        post.author.id = post.author._id.toString()
+        delete post.author._id
+      }
     })
+
+    return posts
+  })
 }
