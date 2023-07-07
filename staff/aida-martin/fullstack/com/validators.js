@@ -81,7 +81,10 @@ function validateUrl(url, explain = "Url") {
  *
  * @param {string} id The ID to validate
  * @param {string} explain The word to specity the errors
+ *
  */
+
+const HEX_DICTIONARY = "0123456789abcdef";
 
 function validateId(id, explain = "User ID") {
   if (typeof id !== "string") {
@@ -89,8 +92,17 @@ function validateId(id, explain = "User ID") {
       cause: "userError",
     });
   }
-  if (!id.trim().length) {
-    throw new ContentError(`${explain} is empty 😥`, { cause: "userError" });
+  if (id.trim().length !== 24) {
+    throw new ContentError(`${explain} does not have 24 characters 😥`, {
+      cause: "userError",
+    });
+  }
+
+  for (let i = 0; i < id.length; i++) {
+    const char = id[i];
+
+    if (!HEX_DICTIONARY.includes(char))
+      throw new ContentError(`${explain} is not hexadecimal 😥`);
   }
 }
 
