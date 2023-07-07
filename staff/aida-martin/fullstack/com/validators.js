@@ -1,5 +1,6 @@
 const { ContentError } = require("./errors");
 const EMAIL_REGEX = /([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})/i;
+const HEX_DICTIONARY = "0123456789abcdef";
 
 /**
  * Validates the email
@@ -83,8 +84,6 @@ function validateUrl(url, explain = "Url") {
  * @param {string} explain The word to specity the errors
  *
  */
-
-const HEX_DICTIONARY = "0123456789abcdef";
 
 function validateId(id, explain = "User ID") {
   if (typeof id !== "string") {
