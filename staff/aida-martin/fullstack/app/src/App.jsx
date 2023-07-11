@@ -7,31 +7,17 @@ import Alert from './components/modals/Alert'
 import AppContext from './AppContext'
 import Loader from './library/Loader'
 import { utils } from 'com'
+import { Routes, Route, Navigate, useNavigate } from 'react-router-dom'
 
 const { Provider } = AppContext
 const { isTokenAlive, isTokenValid } = utils
 
 export default function App() {
-  const { token } = context
-  const [view, setView] = useState(
-    isTokenValid(token) && isTokenAlive(token) ? 'home' : 'login'
-  )
   const [feedback, setFeedback] = useState(null)
   const [loader, setLoader] = useState(false)
+  const navigate = useNavigate()
 
   useEffect(() => setTheme(getTheme()), [])
-
-  const handleGoToRegister = () => {
-    setView('register')
-  }
-
-  const handleGoToLogin = () => {
-    setView('login')
-  }
-
-  const handleGoToHome = () => {
-    setView('home')
-  }
 
   const handleAcceptAlert = () => {
     setFeedback(null)
@@ -45,20 +31,40 @@ export default function App() {
 
   // Con el Context.Provider podemos utilizar lo que pongamos de forma general en los demás componentes sin pasar por props
   return (
-    <Provider value={{ alert, freeze, unfreeze }}>
-      {view === 'login' && (
-        <Login
-          onRegisterClick={handleGoToRegister}
-          onUserLoggedIn={handleGoToHome}
+    <Provider value={{ alert, freeze, unfreeze, navigate }}>
+      <Routes>
+        <Route
+          path="/login"
+          element={
+            isTokenValid(context.token) && isTokenAlive(context.token) ? (
+              <Navigate to="/" />
+            ) : (
+              <Login />
+            )
+          }
         />
-      )}
-      {view === 'register' && (
-        <Register
-          onLoginClick={handleGoToLogin}
-          onUserRegisteredIn={handleGoToLogin}
+        <Route
+          path="/register"
+          element={
+            isTokenValid(context.token) && isTokenAlive(context.token) ? (
+              <Navigate to="/" />
+            ) : (
+              <Register />
+            )
+          }
         />
-      )}
-      {view === 'home' && <Home onLogOut={handleGoToLogin} />}
+        <Route
+          path="/"
+          element={
+            isTokenValid(context.token) && isTokenAlive(context.token) ? (
+              <Home />
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
+        />
+      </Routes>
+
       {feedback && (
         <Alert
           message={feedback.message}

@@ -2,15 +2,10 @@ import './Register.css'
 import { useAppContext } from '../hooks'
 import registerUser from '../logic/registerUser'
 import Container from '../library/Container'
+import { Link } from 'react-router-dom'
 
-export default function Register({ onLoginClick, onUserRegisteredIn }) {
-  const { alert, freeze, unfreeze } = useAppContext()
-
-  const handleLoginClick = (event) => {
-    event.preventDefault()
-
-    onLoginClick()
-  }
+export default function Register({}) {
+  const { alert, freeze, unfreeze, navigate } = useAppContext()
 
   const handleRegister = (event) => {
     event.preventDefault()
@@ -27,7 +22,7 @@ export default function Register({ onLoginClick, onUserRegisteredIn }) {
         .then(() => {
           unfreeze()
 
-          onUserRegisteredIn()
+          navigate('/login')
         })
         .catch((error) => {
           unfreeze()
@@ -71,9 +66,9 @@ export default function Register({ onLoginClick, onUserRegisteredIn }) {
 
       <p className="login-answer">
         Have already an account?{' '}
-        <a href="#" onClick={handleLoginClick} className="login-link link">
+        <Link className="login-link link" to="/login">
           Login here
-        </a>
+        </Link>
       </p>
     </Container>
   )

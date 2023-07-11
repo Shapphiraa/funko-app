@@ -3,15 +3,10 @@ import { useAppContext } from '../hooks'
 import { context } from '../ui'
 import authenticateUser from '../logic/authenticateUser'
 import Container from '../library/Container'
+import { Link } from 'react-router-dom'
 
-export default function Login({ onRegisterClick, onUserLoggedIn }) {
-  const { alert, freeze, unfreeze } = useAppContext()
-
-  const handleRegisterClick = (event) => {
-    event.preventDefault()
-
-    onRegisterClick()
-  }
+export default function Login({}) {
+  const { alert, freeze, unfreeze, navigate } = useAppContext()
 
   const handleLogin = (event) => {
     event.preventDefault()
@@ -28,7 +23,7 @@ export default function Login({ onRegisterClick, onUserLoggedIn }) {
 
           context.token = token
 
-          onUserLoggedIn()
+          navigate('/')
         })
         .catch((error) => {
           unfreeze()
@@ -72,13 +67,9 @@ export default function Login({ onRegisterClick, onUserLoggedIn }) {
 
       <p className="register-answer">
         Not a member?{' '}
-        <a
-          href="#"
-          onClick={handleRegisterClick}
-          className="register-link link"
-        >
+        <Link className="register-link link" to="/register">
           Sign up here
-        </a>
+        </Link>
       </p>
     </Container>
   )

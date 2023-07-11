@@ -11,7 +11,7 @@ import SellPostModal from '../components/modals/SellPostModal'
 import BuyPostModal from '../components/modals/BuyPostModal'
 import Profile from '../components/Profile'
 
-export default function Home({ onLogOut }) {
+export default function Home({}) {
   const { alert, freeze, unfreeze } = useAppContext()
 
   const [view, setView] = useState('posts')
@@ -20,13 +20,15 @@ export default function Home({ onLogOut }) {
   const [lastPostsUpdate, setLastPostsUpdate] = useState(null)
   const [dark, setDark] = useState(getTheme() === 'dark')
   const [user, setUser] = useState()
+  const { navigate } = useAppContext()
 
   useEffect(() => handleRefreshUser(), [])
 
   const handleLogOut = () => {
-    context.removeItem('userId')
+    context.removeItem('token')
+    //delete context.token (se puede hacer así también)
 
-    onLogOut()
+    navigate('/login')
   }
 
   const handleOpenAddPost = () => {
