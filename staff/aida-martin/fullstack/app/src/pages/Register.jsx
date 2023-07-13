@@ -1,6 +1,6 @@
 import './Register.css'
 import { useAppContext } from '../hooks'
-import registerUser from '../logic/registerUser'
+import { registerUser } from '../logic'
 import Container from '../library/Container'
 import { Link } from 'react-router-dom'
 
@@ -19,16 +19,9 @@ export default function Register({}) {
       freeze()
 
       registerUser(name, email, password, repeatPassword)
-        .then(() => {
-          unfreeze()
-
-          navigate('/login')
-        })
-        .catch((error) => {
-          unfreeze()
-
-          alert(error.message, 'error')
-        })
+        .then(navigate('/login'))
+        .catch((error) => alert(error.message, 'error'))
+        .finally(unfreeze)
     } catch (error) {
       unfreeze()
 

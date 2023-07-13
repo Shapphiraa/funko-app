@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import './Home.css'
 import { useAppContext } from '../hooks'
-import { context, openModal, hideModal, setTheme, getTheme } from '../ui'
-import retrieveUser from '../logic/retrieveUser'
+import { openModal, hideModal, setTheme, getTheme } from '../ui'
+import { retrieveUser } from '../logic'
 import { DEFAULT_AVATAR_URL } from '../constants'
 import Posts from '../components/Posts'
 import AddPostModal from '../components/modals/AddPostModal'
@@ -10,6 +10,7 @@ import EditPostModal from '../components/modals/EditPostModal'
 import SellPostModal from '../components/modals/SellPostModal'
 import BuyPostModal from '../components/modals/BuyPostModal'
 import Profile from '../components/Profile'
+import { logoutUser } from '../logic'
 
 export default function Home({}) {
   const { alert, freeze, unfreeze } = useAppContext()
@@ -25,8 +26,7 @@ export default function Home({}) {
   useEffect(() => handleRefreshUser(), [])
 
   const handleLogOut = () => {
-    context.removeItem('token')
-    //delete context.token (se puede hacer así también)
+    logoutUser()
 
     navigate('/login')
   }
@@ -110,17 +110,10 @@ export default function Home({}) {
     try {
       freeze()
 
-      retrieveUser(context.token)
-        .then((user) => {
-          unfreeze()
-
-          setUser(user)
-        })
-        .catch((error) => {
-          unfreeze()
-
-          alert(error.message, 'error')
-        })
+      retrieveUser()
+        .then(setUser)
+        .catch((error) => alert(error.message, 'error'))
+        .finally(unfreeze)
     } catch (error) {
       unfreeze()
 

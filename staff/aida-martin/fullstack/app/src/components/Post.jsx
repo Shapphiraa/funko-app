@@ -2,15 +2,15 @@ import './Post.css'
 import { useState } from 'react'
 import { useAppContext } from '../hooks'
 import { DEFAULT_AVATAR_URL } from '../constants'
-import { context } from '../ui'
 import formatLikes from '../logic/helpers/utils'
-import toggleLikePost from '../logic/toggleLikePost'
-import toggleSavePost from '../logic/toggleSavePost'
-import deletePost from '../logic/deletePost'
-import togglePrivatizePost from '../logic/togglePrivatizePost'
-import { utils } from 'com'
-
-const { extractSubFromToken } = utils
+import {
+  toggleLikePost,
+  toggleSavePost,
+  deletePost,
+  togglePrivatizePost,
+  isCurrentUser,
+  getUserId,
+} from '../logic'
 
 export default function Post({
   post,
@@ -32,17 +32,10 @@ export default function Post({
     try {
       freeze()
 
-      toggleLikePost(context.token, post.id)
-        .then(() => {
-          unfreeze()
-
-          onLiked()
-        })
-        .catch((error) => {
-          unfreeze()
-
-          alert(error.message, 'error')
-        })
+      toggleLikePost(post.id)
+        .then(onLiked)
+        .catch((error) => alert(error.message, 'error'))
+        .finally(unfreeze)
     } catch (error) {
       unfreeze()
 
@@ -54,17 +47,10 @@ export default function Post({
     try {
       freeze()
 
-      toggleSavePost(context.token, post.id)
-        .then(() => {
-          unfreeze()
-
-          onSaved()
-        })
-        .catch((error) => {
-          unfreeze()
-
-          alert(error.message, 'error')
-        })
+      toggleSavePost(post.id)
+        .then(onSaved)
+        .catch((error) => alert(error.message, 'error'))
+        .finally(unfreeze)
     } catch (error) {
       unfreeze()
 
@@ -80,17 +66,10 @@ export default function Post({
     try {
       freeze()
 
-      deletePost(context.token, post.id)
-        .then(() => {
-          unfreeze()
-
-          onDeletePost()
-        })
-        .catch((error) => {
-          unfreeze()
-
-          alert(error.message, 'error')
-        })
+      deletePost(post.id)
+        .then(onDeletePost)
+        .catch((error) => alert(error.message, 'error'))
+        .finally(unfreeze)
     } catch (error) {
       unfreeze()
 
@@ -102,19 +81,14 @@ export default function Post({
     try {
       freeze()
 
-      togglePrivatizePost(context.token, post.id)
+      togglePrivatizePost(post.id)
         .then(() => {
-          unfreeze()
-
           setPrivateIcon(privateIcon === 'lock' ? 'lock_open' : 'lock')
 
           onPrivatizePost()
         })
-        .catch((error) => {
-          unfreeze()
-
-          alert(error.message, 'error')
-        })
+        .catch((error) => alert(error.message, 'error'))
+        .finally(unfreeze)
     } catch (error) {
       unfreeze()
 
@@ -130,7 +104,7 @@ export default function Post({
     onBuyPost(post.id)
   }
 
-  const userId = extractSubFromToken(context.token)
+  const isCurrentUserPost = isCurrentUser(post.author.id)
 
   return (
     <article data-id={post.id}>
@@ -140,7 +114,7 @@ export default function Post({
           src={post.author.avatar ? post.author.avatar : DEFAULT_AVATAR_URL}
         />
         <p className="post-user">{post.author.name}</p>
-        {post.author.id === userId && (
+        {isCurrentUserPost && (
           <span
             className="material-symbols-outlined private"
             onClick={handlePrivatizePost}
@@ -155,7 +129,7 @@ export default function Post({
       <div className="likes-saves-container">
         <span
           className={`material-symbols-outlined likes ${
-            post.likes && post.likes.includes(userId) ? 'fill' : 'unfill'
+            post.likes && post.likes.includes(getUserId()) ? 'fill' : 'unfill'
           }`}
           onClick={handleLikePost}
         >
@@ -175,7 +149,7 @@ export default function Post({
         {new Date(post.date).toLocaleString('en-GB')}
       </time>
       <p className="post-text">{post.text}</p>
-      {post.author.id === userId && (
+      {isCurrentUserPost && (
         <div className="utils-container-post">
           <button
             className="button reverse-color icon-button edit-post-button"
@@ -198,7 +172,7 @@ export default function Post({
         </div>
       )}
 
-      {post.author.id !== userId && post.price !== 0 && (
+      {post.author.id !== getUserId() && post.price !== 0 && (
         <div className="utils-container-post">
           <button
             className="button reverse-color buy-post-button"

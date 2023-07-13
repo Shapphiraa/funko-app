@@ -2,15 +2,14 @@ import { useState, useEffect } from 'react'
 import Register from './pages/Register'
 import Login from './pages/Login'
 import Home from './pages/Home'
-import { context, setTheme, getTheme } from './ui'
+import { setTheme, getTheme } from './ui'
 import Alert from './components/modals/Alert'
 import AppContext from './AppContext'
 import Loader from './library/Loader'
-import { utils } from 'com'
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom'
+import { isUserLoggedIn } from './logic'
 
 const { Provider } = AppContext
-const { isTokenAlive, isTokenValid } = utils
 
 export default function App() {
   const [feedback, setFeedback] = useState(null)
@@ -35,33 +34,15 @@ export default function App() {
       <Routes>
         <Route
           path="/login"
-          element={
-            isTokenValid(context.token) && isTokenAlive(context.token) ? (
-              <Navigate to="/" />
-            ) : (
-              <Login />
-            )
-          }
+          element={isUserLoggedIn() ? <Navigate to="/" /> : <Login />}
         />
         <Route
           path="/register"
-          element={
-            isTokenValid(context.token) && isTokenAlive(context.token) ? (
-              <Navigate to="/" />
-            ) : (
-              <Register />
-            )
-          }
+          element={isUserLoggedIn() ? <Navigate to="/" /> : <Register />}
         />
         <Route
           path="/"
-          element={
-            isTokenValid(context.token) && isTokenAlive(context.token) ? (
-              <Home />
-            ) : (
-              <Navigate to="/login" />
-            )
-          }
+          element={isUserLoggedIn() ? <Home /> : <Navigate to="/login" />}
         />
       </Routes>
 

@@ -1,9 +1,9 @@
 import { validators } from 'com'
-const { validateToken, validateUrl, validateText, validateCallback } =
-  validators
+import context from './context'
 
-export default function createPost(token, image, text, callback) {
-  validateToken(token)
+const { validateUrl, validateText, validateCallback } = validators
+
+export default function createPost(image, text, callback) {
   validateUrl(image, 'Image URL')
   validateText(text)
 
@@ -35,6 +35,7 @@ export default function createPost(token, image, text, callback) {
     xhr.open('POST', `${import.meta.env.VITE_API_URL}/posts`)
 
     xhr.setRequestHeader('Content-Type', 'application/json')
+    //Este token con callbacks ahora no va a funcionar después de haber puesto estado interno...
     xhr.setRequestHeader('Authorization', `Bearer ${token}`)
 
     const post = { image, text }
@@ -49,7 +50,7 @@ export default function createPost(token, image, text, callback) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${context.token}`,
     },
     body: JSON.stringify({ image, text }),
   }).then((res) => {

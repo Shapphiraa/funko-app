@@ -1,7 +1,6 @@
 import './AddPostModal.css'
 import { useAppContext } from '../../hooks'
-import createPost from '../../logic/createPost'
-import { context } from '../../ui'
+import { createPost } from '../../logic'
 import Modal from '../../library/Modal'
 import Container from '../../library/Container'
 
@@ -17,17 +16,10 @@ export default function AddPostModal({ onPostCreated, onCancel }) {
     try {
       freeze()
 
-      createPost(context.token, image, text)
-        .then(() => {
-          unfreeze()
-
-          onPostCreated()
-        })
-        .catch((error) => {
-          unfreeze()
-
-          alert(error.message, 'error')
-        })
+      createPost(image, text)
+        .then(onPostCreated)
+        .catch((error) => alert(error.message, 'error'))
+        .finally(unfreeze)
     } catch (error) {
       unfreeze()
 

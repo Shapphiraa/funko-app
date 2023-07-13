@@ -1,10 +1,9 @@
 import { validators } from 'com'
+import context from './context'
 
-const { validateToken, validateCallback } = validators
+const { validateCallback } = validators
 
-export default function retrieveSavedPosts(token, callback) {
-  validateToken(token)
-
+export default function retrieveSavedPosts(callback) {
   if (callback) {
     validateCallback(callback)
 
@@ -43,9 +42,8 @@ export default function retrieveSavedPosts(token, callback) {
   }
 
   return fetch(`${import.meta.env.VITE_API_URL}/posts/saved`, {
-    method: 'GET',
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${context.token}`,
     },
   }).then((res) => {
     if (res.status !== 200)

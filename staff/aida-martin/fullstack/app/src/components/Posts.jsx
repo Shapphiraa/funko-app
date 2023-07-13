@@ -1,9 +1,7 @@
 import { useState, useEffect } from 'react'
 import './Posts.css'
 import Post from './Post'
-import retrievePosts from '../logic/retrievePosts'
-import retrieveSavedPosts from '../logic/retrieveSavedPosts'
-import { context } from '../ui'
+import { retrievePosts, retrieveSavedPosts } from '../logic'
 import { useAppContext } from '../hooks'
 
 export default function Posts({
@@ -25,29 +23,15 @@ export default function Posts({
     freeze()
     try {
       if (!mySavedPosts) {
-        retrievePosts(context.token)
-          .then((posts) => {
-            unfreeze()
-
-            setPosts(posts)
-          })
-          .catch((error) => {
-            unfreeze()
-
-            alert(error.message, 'error')
-          })
+        retrievePosts()
+          .then(setPosts)
+          .catch((error) => alert(error.message, 'error'))
+          .finally(unfreeze)
       } else {
-        retrieveSavedPosts(context.token)
-          .then((savedPosts) => {
-            unfreeze()
-
-            setPosts(savedPosts)
-          })
-          .catch((error) => {
-            unfreeze()
-
-            alert(error.message, 'error')
-          })
+        retrieveSavedPosts()
+          .then(setPosts)
+          .catch((error) => alert(error.message, 'error'))
+          .finally(unfreeze)
       }
     } catch (error) {
       unfreeze()

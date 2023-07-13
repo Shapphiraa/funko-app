@@ -1,14 +1,12 @@
 import './Profile.css'
 import { useAppContext } from '../hooks'
-import updateAvatar from '../logic/updateUserAvatar'
-import changePassword from '../logic/updateUserPassword'
-import { context } from '../ui'
+import { updateUserAvatar, updateUserPassword } from '../logic'
 import Container from '../library/Container'
 
 export default function Profile({ onUpdateUserAvatar, onUpdateUserPassword }) {
   const { alert, freeze, unfreeze } = useAppContext()
 
-  const updateUserAvatar = (event) => {
+  const handleUpdateUserAvatar = (event) => {
     event.preventDefault()
 
     const avatar = event.target.url.value
@@ -16,17 +14,10 @@ export default function Profile({ onUpdateUserAvatar, onUpdateUserPassword }) {
     try {
       freeze()
 
-      updateAvatar(context.token, avatar)
-        .then(() => {
-          unfreeze()
-
-          onUpdateUserAvatar()
-        })
-        .catch((error) => {
-          unfreeze()
-
-          alert(error.message, 'error')
-        })
+      updateUserAvatar(avatar)
+        .then(onUpdateUserAvatar)
+        .catch((error) => alert(error.message, 'error'))
+        .finally(unfreeze)
     } catch (error) {
       unfreeze()
 
@@ -34,7 +25,7 @@ export default function Profile({ onUpdateUserAvatar, onUpdateUserPassword }) {
     }
   }
 
-  const updateUserPassword = (event) => {
+  const handleUpdateUserPassword = (event) => {
     event.preventDefault()
 
     const password = event.target.oldpassword.value
@@ -44,17 +35,10 @@ export default function Profile({ onUpdateUserAvatar, onUpdateUserPassword }) {
     try {
       freeze()
 
-      changePassword(context.token, password, newPassword, newPasswordConfirm)
-        .then(() => {
-          unfreeze()
-
-          onUpdateUserPassword()
-        })
-        .catch((error) => {
-          unfreeze()
-
-          alert(error.message, 'error')
-        })
+      updateUserPassword(password, newPassword, newPasswordConfirm)
+        .then(onUpdateUserPassword)
+        .catch((error) => alert(error.message, 'error'))
+        .finally(unfreeze)
     } catch (error) {
       unfreeze()
 
@@ -66,7 +50,10 @@ export default function Profile({ onUpdateUserAvatar, onUpdateUserPassword }) {
     <Container className="profile">
       <h1 className="title">YOUR PROFILE</h1>
 
-      <form className="form profile-avatar-form" onSubmit={updateUserAvatar}>
+      <form
+        className="form profile-avatar-form"
+        onSubmit={handleUpdateUserAvatar}
+      >
         <h2>UPDATE AVATAR</h2>
         <input
           className="input"
@@ -84,7 +71,7 @@ export default function Profile({ onUpdateUserAvatar, onUpdateUserPassword }) {
 
       <form
         className="form profile-password-form"
-        onSubmit={updateUserPassword}
+        onSubmit={handleUpdateUserPassword}
       >
         <h2>UPDATE PASSWORD</h2>
         <input

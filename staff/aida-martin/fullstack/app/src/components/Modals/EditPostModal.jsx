@@ -1,9 +1,7 @@
 import './EditPostModal.css'
 import { useState, useEffect } from 'react'
 import { useAppContext } from '../../hooks'
-import updatePost from '../../logic/updatePost'
-import retrievePost from '../../logic/retrievePost'
-import { context } from '../../ui'
+import { updatePost, retrievePost } from '../../logic'
 import Modal from '../../library/Modal'
 import Container from '../../library/Container'
 
@@ -21,17 +19,10 @@ export default function EditPostModal({ postId, onPostEdited, onCancel }) {
     try {
       freeze()
 
-      updatePost(context.token, postId, image, text)
-        .then(() => {
-          unfreeze()
-
-          onPostEdited()
-        })
-        .catch((error) => {
-          unfreeze()
-
-          alert(error.message, 'error')
-        })
+      updatePost(postId, image, text)
+        .then(onPostEdited)
+        .catch((error) => alert(error.message, 'error'))
+        .finally(unfreeze)
     } catch (error) {
       unfreeze()
 
@@ -49,17 +40,10 @@ export default function EditPostModal({ postId, onPostEdited, onCancel }) {
     try {
       freeze()
 
-      retrievePost(context.token, postId)
-        .then((post) => {
-          unfreeze()
-
-          setPost(post)
-        })
-        .catch((error) => {
-          unfreeze()
-
-          alert(error.message, 'error')
-        })
+      retrievePost(postId)
+        .then(setPost)
+        .catch((error) => alert(error.message, 'error'))
+        .finally(unfreeze)
     } catch (error) {
       unfreeze()
 

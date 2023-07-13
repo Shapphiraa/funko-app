@@ -1,8 +1,9 @@
 import { validators } from 'com'
+import context from './context'
 
 const { validateEmail, validatePassword, validateCallback } = validators
 
-export default function authenticateUser(email, password, callback) {
+export default function loginUser(email, password, callback) {
   validateEmail(email)
   validatePassword(password)
 
@@ -50,18 +51,25 @@ export default function authenticateUser(email, password, callback) {
     return
   }
 
-  return fetch(`${import.meta.env.VITE_API_URL}/users/auth`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ email, password }),
-  }).then((res) => {
-    if (res.status !== 200)
-      return res.json().then(({ error: message }) => {
-        throw new Error(message)
-      })
+  return (
+    fetch(`${import.meta.env.VITE_API_URL}/users/auth`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password }),
+    })
+      .then((res) => {
+        if (res.status !== 200)
+          return res.json().then(({ error: message }) => {
+            throw new Error(message)
+          })
 
-    return res.json()
-  })
+        return res.json()
+      })
+      //Esto lo hacemos para convertir las lógicas (manejando estado interno). Guardamos estado ahora con el token. Las llaves se ponen para no devolver nada fuera de la lógica
+      .then((token) => {
+        context.token = token
+      })
+  )
 }

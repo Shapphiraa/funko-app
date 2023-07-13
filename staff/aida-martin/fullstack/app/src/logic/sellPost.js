@@ -1,9 +1,9 @@
 import { validators } from 'com'
+import context from './context'
 
-const { validateId, validateToken, validateCallback } = validators
+const { validateId, validateCallback } = validators
 
-export default function buyPost(token, postId, price, callback) {
-  validateToken(token)
+export default function buyPost(postId, price, callback) {
   validateId(postId, 'Post ID')
 
   if (callback) {
@@ -48,7 +48,7 @@ export default function buyPost(token, postId, price, callback) {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${context.token}`,
     },
     body: JSON.stringify({ price }),
   }).then((res) => {

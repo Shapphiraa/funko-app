@@ -1,9 +1,9 @@
 import { validators } from 'com'
+import context from './context'
 
-const { validateToken, validateId, validateCallback } = validators
+const { validateId, validateCallback } = validators
 
-export default function buyPost(token, postId, callback) {
-  validateToken(token)
+export default function buyPost(postId, callback) {
   validateId(postId, 'Post ID')
 
   if (callback) {
@@ -43,7 +43,7 @@ export default function buyPost(token, postId, callback) {
   return fetch(`${import.meta.env.VITE_API_URL}/posts/${postId}/buy`, {
     method: 'PATCH',
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${context.token}`,
     },
   }).then((res) => {
     if (res.status !== 204)

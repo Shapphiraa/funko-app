@@ -1,10 +1,9 @@
 import { validators } from 'com'
+import context from './context'
 
-const { validateToken, validateCallback } = validators
+const { validateCallback } = validators
 
-export default function retrievePosts(token, callback) {
-  validateToken(token)
-
+export default function retrievePosts(callback) {
   if (callback) {
     validateCallback(callback)
 
@@ -35,6 +34,7 @@ export default function retrievePosts(token, callback) {
 
     xhr.open('GET', `${import.meta.env.VITE_API_URL}/posts`)
 
+    //Este token con callbacks ahora no va a funcionar después de haber puesto estado interno...
     xhr.setRequestHeader('Authorization', `Bearer ${token}`)
 
     xhr.send()
@@ -43,9 +43,10 @@ export default function retrievePosts(token, callback) {
   }
 
   return fetch(`${import.meta.env.VITE_API_URL}/posts/`, {
-    method: 'GET',
+    // El método GET se puede obviar (es el único)
+    // method: 'GET',
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${context.token}`,
     },
   }).then((res) => {
     if (res.status !== 200)

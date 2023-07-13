@@ -1,14 +1,14 @@
 import { validators } from 'com'
-const { validateToken, validatePassword, validateCallback } = validators
+import context from './context'
 
-export default function changePassword(
-  token,
+const { validatePassword, validateCallback } = validators
+
+export default function updateUserPassword(
   password,
   newPassword,
   newPasswordConfirm,
   callback
 ) {
-  validateToken(token)
   validatePassword(password)
   validatePassword(newPassword, 'New password')
   validatePassword(newPasswordConfirm)
@@ -55,7 +55,7 @@ export default function changePassword(
     method: 'PATCH',
     headers: {
       'Content-type': 'application/json',
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${context.token}`,
     },
     body: JSON.stringify({ password, newPassword, newPasswordConfirm }),
   }).then((res) => {

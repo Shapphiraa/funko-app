@@ -1,7 +1,6 @@
 import './Login.css'
 import { useAppContext } from '../hooks'
-import { context } from '../ui'
-import authenticateUser from '../logic/authenticateUser'
+import { loginUser } from '../logic'
 import Container from '../library/Container'
 import { Link } from 'react-router-dom'
 
@@ -17,19 +16,10 @@ export default function Login({}) {
     try {
       freeze()
 
-      authenticateUser(email, password)
-        .then((token) => {
-          unfreeze()
-
-          context.token = token
-
-          navigate('/')
-        })
-        .catch((error) => {
-          unfreeze()
-
-          alert(error.message, 'error')
-        })
+      loginUser(email, password)
+        .then(navigate('/'))
+        .catch((error) => alert(error.message, 'error'))
+        .finally(unfreeze)
     } catch (error) {
       unfreeze()
 

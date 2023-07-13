@@ -5,16 +5,18 @@ export const hideModal = () => {
   document.body.classList.remove('scroll-lock')
 }
 
-export const context = sessionStorage
-
-export function setTheme (theme) {
+export function setTheme(theme) {
   const root = document.querySelector(':root') // <html>...</html>
 
-  if (theme === 'dark') { root.classList.add('dark') } else { root.classList.remove('dark') }
+  if (theme === 'dark') {
+    root.classList.add('dark')
+  } else {
+    root.classList.remove('dark')
+  }
 
   localStorage.theme = theme
 }
 
-export function getTheme () {
+export function getTheme() {
   return localStorage.theme || 'light'
 }

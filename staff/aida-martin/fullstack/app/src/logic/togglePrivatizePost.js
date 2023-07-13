@@ -1,9 +1,9 @@
 import { validators } from 'com'
+import context from './context'
 
-const { validateId, validateToken, validateCallback } = validators
+const { validateId, validateCallback } = validators
 
-export default function togglePrivatizePost(token, postId, callback) {
-  validateToken(token)
+export default function togglePrivatizePost(postId, callback) {
   validateId(postId, 'Post ID')
 
   if (callback) {
@@ -46,7 +46,7 @@ export default function togglePrivatizePost(token, postId, callback) {
   return fetch(`${import.meta.env.VITE_API_URL}/posts/${postId}/visibility`, {
     method: 'PATCH',
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${context.token}`,
     },
   }).then((res) => {
     if (res.status !== 204)

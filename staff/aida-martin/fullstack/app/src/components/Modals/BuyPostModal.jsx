@@ -1,9 +1,7 @@
 import './BuyPostModal.css'
 import { useState, useEffect } from 'react'
 import { useAppContext } from '../../hooks'
-import buyPost from '../../logic/buyPost'
-import retrievePost from '../../logic/retrievePost'
-import { context } from '../../ui'
+import { buyPost, retrievePost } from '../../logic'
 import Modal from '../../library/Modal'
 import Container from '../../library/Container'
 
@@ -16,17 +14,10 @@ export default function BuyPostModal({ postId, onPostBought, onCancel }) {
     try {
       freeze()
 
-      buyPost(context.token, postId)
-        .then(() => {
-          unfreeze()
-
-          onPostBought()
-        })
-        .catch((error) => {
-          unfreeze()
-
-          alert(error.messsage, 'error')
-        })
+      buyPost(postId)
+        .then(onPostBought)
+        .catch((error) => alert(error.message, 'error'))
+        .finally(unfreeze)
     } catch (error) {
       unfreeze()
 
@@ -42,17 +33,10 @@ export default function BuyPostModal({ postId, onPostBought, onCancel }) {
     try {
       freeze()
 
-      retrievePost(context.token, postId)
-        .then((post) => {
-          unfreeze()
-
-          setPost(post)
-        })
-        .catch((error) => {
-          unfreeze()
-
-          alert(error.message, 'error')
-        })
+      retrievePost(postId)
+        .then(setPost)
+        .catch((error) => alert(error.message, 'error'))
+        .finally(unfreeze)
     } catch (error) {
       unfreeze()
 

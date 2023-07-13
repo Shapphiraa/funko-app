@@ -1,8 +1,9 @@
 import { validators } from 'com'
-const { validateToken, validateUrl, validateCallback } = validators
+import context from './context'
 
-export default function updateAvatar(token, url, callback) {
-  validateToken(token)
+const { validateUrl, validateCallback } = validators
+
+export default function updateUserAvatar(url, callback) {
   validateUrl(url, 'Avatar url')
 
   if (callback) {
@@ -47,7 +48,7 @@ export default function updateAvatar(token, url, callback) {
     method: 'PATCH',
     headers: {
       'Content-type': 'application/json',
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${context.token}`,
     },
     body: JSON.stringify({ avatar: url }),
   }).then((res) => {
