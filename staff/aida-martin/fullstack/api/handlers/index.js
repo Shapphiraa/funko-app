@@ -16,4 +16,6 @@ module.exports = {
   toggleSavePostHandler: require('./toggleSavePostHandler'),
   buyPostHandler: require('./buyPostHandler'),
   sellPostHandler: require('./sellPostHandler'),
+  addCommentToPostHandler: require('./addCommentToPostHandler'),
+  removeCommentFromPostHandler: require('./removeCommentFromPostHandler'),
 }

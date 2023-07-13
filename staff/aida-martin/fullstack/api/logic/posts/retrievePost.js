@@ -11,7 +11,7 @@ module.exports = function retrievePost(userId, postId) {
 
   return Promise.all([
     User.findById(userId),
-    Post.findById(postId, '-_id, -__v, -author, -date, -likes'),
+    Post.findById(postId, '-_id -__v -author -date -likes'),
   ]).then(([user, post]) => {
     if (!user) throw new ExistenceError('User not found! 😥')
 

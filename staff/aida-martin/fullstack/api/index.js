@@ -22,6 +22,8 @@ const {
   toggleSavePostHandler,
   buyPostHandler,
   sellPostHandler,
+  addCommentToPostHandler,
+  removeCommentFromPostHandler,
 } = require('./handlers')
 
 const mongoose = require('mongoose')
@@ -54,6 +56,11 @@ mongoose
     api.patch('/posts/:postId/saves', toggleSavePostHandler)
     api.patch('/posts/:postId/buy', buyPostHandler)
     api.patch('/posts/:postId/sale', jsonBodyParser, sellPostHandler)
+    api.post('/posts/:postId/comments', jsonBodyParser, addCommentToPostHandler)
+    api.delete(
+      '/posts/:postId/comments/:commentId',
+      removeCommentFromPostHandler
+    )
 
     api.listen(process.env.PORT, () =>
       console.log(`server running in port ${process.env.PORT}`)

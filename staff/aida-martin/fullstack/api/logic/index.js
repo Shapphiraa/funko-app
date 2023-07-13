@@ -15,4 +15,6 @@ module.exports = {
   toggleSavePost: require('./posts/toggleSavePost'),
   buyPost: require('./posts/buyPost'),
   sellPost: require('./posts/sellPost'),
+  addCommentToPost: require('./posts/addCommentToPost'),
+  removeCommentFromPost: require('./posts/removeCommentFromPost'),
 }

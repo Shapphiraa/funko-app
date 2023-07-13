@@ -20,10 +20,14 @@ module.exports = function retrievePosts(userId) {
       {
         $or: [{ visibility: 'public' }, { author: userId }],
       },
-      '-__v'
+      '-__v -paymentMethods'
     )
       .sort('-date')
-      .populate('author', '-email -password -saves -__v')
+      .populate('author', 'name avatar')
+
+      // Aquí quitábamos, con la línea anterior decimos solo lo que queremos. La id siempre se mantiene, pero el --v si se quita
+      // .populate('author', '-email -password -saves -__v')
+      .populate('comments.author', 'name avatar')
       .lean(),
   ]).then(([user, posts]) => {
     if (!user) throw new ExistenceError(`user with id ${userId} not found`)
@@ -40,6 +44,16 @@ module.exports = function retrievePosts(userId) {
         post.author.id = post.author._id.toString()
         delete post.author._id
       }
+
+      post.comments?.forEach((comment) => {
+        comment.id = comment._id.toString()
+        delete comment._id
+
+        if (comment.author._id) {
+          comment.author.id = comment.author._id.toString()
+          delete comment.author._id
+        }
+      })
     })
 
     return posts

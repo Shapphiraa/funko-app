@@ -1,10 +1,13 @@
-const { deletePost } = require('../logic')
+const { addCommentToPost } = require('../logic')
 const { extractUserId, handleErrors } = require('./helpers')
 
 module.exports = handleErrors((req, res) => {
   const userId = extractUserId(req)
 
   const { postId } = req.params
+  const { text } = req.body
 
-  return deletePost(userId, postId).then(() => res.status(204).send())
+  return addCommentToPost(userId, postId, text).then(() =>
+    res.status(201).send()
+  )
 })
