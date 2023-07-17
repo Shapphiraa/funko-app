@@ -1,6 +1,6 @@
 const {
   validators: { validateName, validateEmail, validatePassword },
-  errors: { DuplicityError },
+  errors: { DuplicityError, ContentError },
 } = require('com')
 
 const { User } = require('../../data/models')
@@ -11,7 +11,7 @@ module.exports = function registerUser(name, email, password, repeatPassword) {
   validatePassword(password)
 
   if (password !== repeatPassword)
-    throw new Error('Passwords does not match 😢')
+    throw new ContentError('Passwords does not match 😢')
 
   return User.create({ name, email, password, avatar: null, saves: [] }).catch(
     (error) => {

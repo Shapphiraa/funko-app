@@ -50,7 +50,7 @@ export default function retrievePosts(callback) {
     },
   }).then((res) => {
     if (res.status !== 200)
-      return res.json().then(({ error: message }) => {
+      return res.json().then(({ message: message }) => {
         throw new Error(message)
       })
 

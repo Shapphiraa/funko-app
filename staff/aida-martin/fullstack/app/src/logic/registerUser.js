@@ -1,4 +1,4 @@
-import { validators } from 'com'
+import { validators, errors } from 'com'
 
 const { validateName, validateEmail, validatePassword, validateCallback } =
   validators
@@ -60,8 +60,9 @@ export default function registerUser(
     body: JSON.stringify({ name, email, password, repeatPassword }),
   }).then((res) => {
     if (res.status !== 201) {
-      return res.json().then(({ error: message }) => {
-        throw new Error(message)
+      return res.json().then(({ type, message }) => {
+        // Con [type] llamamos al constructor para que venga el tipo de error (es como errors.type)
+        throw new errors[type](message)
       })
     }
   })

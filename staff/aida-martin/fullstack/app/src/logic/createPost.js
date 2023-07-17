@@ -55,7 +55,7 @@ export default function createPost(image, text, callback) {
     body: JSON.stringify({ image, text }),
   }).then((res) => {
     if (res.status !== 201)
-      return res.json().then(({ error: message }) => {
+      return res.json().then(({ message: message }) => {
         throw new Error(message)
       })
   })

@@ -53,7 +53,7 @@ export default function buyPost(postId, price, callback) {
     body: JSON.stringify({ price }),
   }).then((res) => {
     if (res.status !== 204)
-      return res.json().then(({ error: message }) => {
+      return res.json().then(({ message: message }) => {
         throw new Error(message)
       })
   })

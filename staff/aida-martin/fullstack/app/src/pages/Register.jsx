@@ -3,6 +3,9 @@ import { useAppContext } from '../hooks'
 import { registerUser } from '../logic'
 import Container from '../library/Container'
 import { Link } from 'react-router-dom'
+import { errors } from 'com'
+
+const { DuplicityError, ContentError } = errors
 
 export default function Register({}) {
   const { alert, freeze, unfreeze, navigate } = useAppContext()
@@ -20,12 +23,17 @@ export default function Register({}) {
 
       registerUser(name, email, password, repeatPassword)
         .then(navigate('/login'))
-        .catch((error) => alert(error.message, 'error'))
+        .catch((error) => {
+          if (error instanceof DuplicityError) alert(error.message, 'error')
+          else alert(error.message, 'warn')
+        })
         .finally(unfreeze)
     } catch (error) {
       unfreeze()
 
-      alert(error.message, 'warn')
+      if (error instanceof TypeError) alert(error.message, 'warn')
+      else if (error instanceof ContentError) alert(error.message, 'error')
+      else alert(error.message)
     }
   }
 

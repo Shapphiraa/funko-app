@@ -60,7 +60,7 @@ export default function updateUserPassword(
     body: JSON.stringify({ password, newPassword, newPasswordConfirm }),
   }).then((res) => {
     if (res.status !== 204)
-      return res.json().then(({ error: message }) => {
+      return res.json().then(({ message: message }) => {
         throw new Error(message)
       })
   })
