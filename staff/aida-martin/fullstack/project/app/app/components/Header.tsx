@@ -1,16 +1,10 @@
-// import Link from './FooterLink'
+import Image from 'next/image'
+import logo from '../../public/logo1.png'
 
-// export default function Header () {
-
-//     return
-//     <header className='p-4'>
-//     <ul className='flex gap-4 text-blue-600 font-semibold'>
-//       <li>
-//         <Link href='/' className='p-2 hover:bg-red-500'>Home</Link>
-//       </li>
-//       <li>
-//         <Link href='/catalog' className='p-2 hover:bg-red-500'>Catalog</Link>
-//       </li>
-//     </ul>
-//   </header>
-// }
+export default function Header() {
+  return (
+    <header className="h-20 bg-white">
+      {/* <Image src={logo} alt="logo" /> */}
+    </header>
+  )
+}

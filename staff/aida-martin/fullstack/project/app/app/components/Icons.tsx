@@ -100,3 +100,52 @@ export function IconAccountFill({ size = '1em' }: { size?: string }) {
     </svg>
   )
 }
+
+export function IconHeart({ size = '1em' }: { size?: string }) {
+  return (
+    <svg viewBox="0 0 512 512" fill="none" height={size} width={size}>
+      <path
+        fill="none"
+        stroke="white"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={32}
+        d="M352.92 80C288 80 256 144 256 144s-32-64-96.92-64c-52.76 0-94.54 44.14-95.08 96.81-1.1 109.33 86.73 187.08 183 252.42a16 16 0 0018 0c96.26-65.34 184.09-143.09 183-252.42-.54-52.67-42.32-96.81-95.08-96.81z"
+      />
+    </svg>
+  )
+}
+
+export function IconHeartFill({ size = '1em' }: { size?: string }) {
+  return (
+    <svg viewBox="0 0 512 512" fill="white" height={size} width={size}>
+      <path d="M256 448l-9-6c-42.78-28.57-96.91-60.86-137-108.32-42.25-50-62.52-101.35-62-157C48.63 114.54 98.46 64 159.08 64c48.11 0 80.1 28 96.92 48.21C272.82 92 304.81 64 352.92 64c60.62 0 110.45 50.54 111.08 112.65.56 55.68-19.71 107-62 157-40.09 47.49-94.22 79.78-137 108.35z" />
+    </svg>
+  )
+}
+
+export function IconBookmark({ size = '1em' }: { size?: string }) {
+  return (
+    <svg fill="none" viewBox="0 0 15 15" height={size} width={size}>
+      <path
+        fill="white"
+        fillRule="evenodd"
+        d="M3 2.5a.5.5 0 01.5-.5h8a.5.5 0 01.5.5v11a.5.5 0 01-.765.424L7.5 11.59l-3.735 2.334A.5.5 0 013 13.5v-11zM4 3v9.598l2.97-1.856a1 1 0 011.06 0L11 12.598V3H4z"
+        clipRule="evenodd"
+      />
+    </svg>
+  )
+}
+
+export function IconBookmarkFill({ size = '1em' }: { size?: string }) {
+  return (
+    <svg fill="none" viewBox="0 0 15 15" height={size} width={size}>
+      <path
+        fill="white"
+        fillRule="evenodd"
+        d="M3.5 2a.5.5 0 00-.5.5v11a.5.5 0 00.765.424L7.5 11.59l3.735 2.334A.5.5 0 0012 13.5v-11a.5.5 0 00-.5-.5h-8z"
+        clipRule="evenodd"
+      />
+    </svg>
+  )
+}

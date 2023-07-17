@@ -1,9 +1,9 @@
 'use client'
 
 import './globals.css'
-import '../fonts/icons/style.css'
 import type { Metadata } from 'next'
 import { useState } from 'react'
+import Header from './components/Header'
 import Footer from './components/Footer'
 
 export const metadata: Metadata = {
@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-screen">
       <body className="flex flex-col h-screen">
-        {/* Header */}
+        <Header />
         <main
           className={`grow ${
             !isModalOpen ? 'overflow-auto' : 'overflow-hidden'
