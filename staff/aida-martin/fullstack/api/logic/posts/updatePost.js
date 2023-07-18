@@ -11,10 +11,14 @@ module.exports = function updatePost(userId, postId, image, text) {
   validateUrl(image, 'Image URL')
   validateText(text, 'Text')
 
-  return Promise.all([User.findById(userId), Post.findById(postId)])
-    .then(([user, post]) => {
-      if (!user) throw new ExistenceError('User not found! 😥')
+  return (async () => {
+    try {
+      const [user, post] = await Promise.all([
+        User.findById(userId),
+        Post.findById(postId),
+      ])
 
+      if (!user) throw new ExistenceError('User not found! 😥')
       if (!post) throw new ExistenceError('Post not found! 😥')
 
       if (post.author.toString() !== userId) {
@@ -23,11 +27,12 @@ module.exports = function updatePost(userId, postId, image, text) {
         )
       }
 
-      return Post.updateOne(
+      await Post.updateOne(
         { _id: postId },
         { $set: { image: image, text: text } }
       )
-    })
-
-    .then(() => {})
+    } catch (error) {
+      throw error
+    }
+  })()
 }

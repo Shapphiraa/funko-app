@@ -1,0 +1,73 @@
+[
+    {
+        "id": "user-1",
+        "name": "Pepa Grillo",
+        "email": "pepa@grillo.com",
+        "password": "123123123",
+        "avatar": "https://cdn-icons-png.flaticon.com/512/219/219989.png",
+        "saves": [
+            "post-1"
+        ]
+    },
+    {
+        "id": "user-2",
+        "name": "Aida",
+        "email": "aidamg93@gmail.com",
+        "password": "123123123",
+        "avatar": "https://cdn-icons-png.flaticon.com/512/219/219989.png",
+        "saves": [
+            "post-2",
+            "post-12"
+        ]
+    },
+    {
+        "id": "user-3",
+        "name": "Roger",
+        "email": "rogeliogplol@gmail.com",
+        "password": "123123123",
+        "avatar": null,
+        "saves": []
+    },
+    {
+        "id": "user-4",
+        "name": "Prueba",
+        "email": "prueba@gmail.com",
+        "password": "123123123",
+        "avatar": null,
+        "saves": []
+    },
+    {
+        "id": "user-5",
+        "name": "Pepi Grillo",
+        "email": "pepi@grillo.com",
+        "password": "123123123",
+        "avatar": null,
+        "saves": []
+    },
+    {
+        "id": "user-6",
+        "name": "Hi",
+        "email": "hi@gmail.com",
+        "password": "123123123",
+        "avatar": null,
+        "saves": []
+    },
+    {
+        "id": "user-7",
+        "name": "Maria",
+        "email": "chibipopstore@gmail.com",
+        "password": "123123123",
+        "avatar": "https://cdn-icons-png.flaticon.com/512/3135/3135823.png",
+        "saves": [
+            "post-4"
+        ]
+    },
+    {
+        "id": "user-8",
+        "name": "Pepito Grillo",
+        "email": "pepito@grillo.com",
+        "password": "123123123",
+        "avatar": "https://cdn-icons-png.flaticon.com/512/219/219989.png",
+        "saves": []
+    }
+]

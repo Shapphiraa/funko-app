@@ -10,10 +10,14 @@ module.exports = function removeCommentFromPost(userId, postId, commentId) {
   validateId(postId, 'Post ID')
   validateId(commentId, 'Comment ID')
 
-  return Promise.all([User.findById(userId), Post.findById(postId)]).then(
-    ([user, post]) => {
-      if (!user) throw new ExistenceError('User not found! 😥')
+  return (async () => {
+    try {
+      const [user, post] = await Promise.all([
+        User.findById(userId),
+        Post.findById(postId),
+      ])
 
+      if (!user) throw new ExistenceError('User not found! 😥')
       if (!post) throw new ExistenceError('Post not found! 😥')
 
       const index = post.comments.findIndex(
@@ -34,7 +38,9 @@ module.exports = function removeCommentFromPost(userId, postId, commentId) {
 
       post.comments.splice(index, 1)
 
-      return post.save()
+      await post.save()
+    } catch (error) {
+      throw error
     }
-  )
+  })()
 }

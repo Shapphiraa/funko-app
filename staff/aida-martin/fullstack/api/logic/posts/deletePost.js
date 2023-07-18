@@ -9,8 +9,13 @@ module.exports = function deletePost(userId, postId) {
   validateId(userId, 'User ID')
   validateId(postId, 'Post ID')
 
-  return Promise.all([User.findById(userId), Post.findById(postId)])
-    .then(([user, post]) => {
+  return (async () => {
+    try {
+      const [user, post] = await Promise.all([
+        User.findById(userId),
+        Post.findById(postId),
+      ])
+
       if (!user) throw new ExistenceError('User not found! 😥')
 
       if (!post) throw new ExistenceError('Post not found! 😥')
@@ -21,20 +26,22 @@ module.exports = function deletePost(userId, postId) {
         )
       }
 
-      return User.find({ saves: postId }).then((users) => {
-        const usersUpdated = users.map((user) => {
-          return User.updateOne(
-            { _id: user.id },
-            {
-              $pullAll: {
-                saves: [postId],
-              },
-            }
-          )
-        })
+      const users = await User.find({ saves: postId })
 
-        return Promise.all([...usersUpdated, Post.deleteOne({ _id: postId })])
+      const usersUpdated = users.map(async (user) => {
+        await User.updateOne(
+          { _id: user.id },
+          {
+            $pullAll: {
+              saves: [postId],
+            },
+          }
+        )
       })
-    })
-    .then(() => {})
+
+      await Promise.all([...usersUpdated, Post.deleteOne({ _id: postId })])
+    } catch (error) {
+      throw error
+    }
+  })()
 }

@@ -1,6 +1,6 @@
 const {
   validators: { validateId, validatePassword },
-  errors: { ContentError, ExistenceError },
+  errors: { ContentError, ExistenceError, AuthError },
 } = require('com')
 
 const { User } = require('../../data/models')
@@ -21,17 +21,20 @@ module.exports = function updateUserPassword(
   if (newPassword === password)
     throw new ContentError('Your new password matches the current one 😥')
 
-  return User.findById(userId)
-    .then((user) => {
+  return (async () => {
+    try {
+      const user = await User.findById(userId)
+
       if (!user) throw new ExistenceError('User not found! 😥')
 
       if (user.password !== password) throw new AuthError('Wrong password! 😢')
 
-      return User.updateOne(
+      return await User.updateOne(
         { _id: userId },
         { $set: { password: newPassword } }
       )
-    })
-
-    .then(() => {})
+    } catch (error) {
+      throw error
+    }
+  })()
 }

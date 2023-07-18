@@ -9,8 +9,13 @@ module.exports = function buyPost(userId, postId) {
   validateId(userId, 'User ID')
   validateId(postId, 'Post ID')
 
-  return Promise.all([User.findById(userId), Post.findById(postId)])
-    .then(([user, post]) => {
+  return (async () => {
+    try {
+      const [user, post] = await Promise.all([
+        User.findById(userId),
+        Post.findById(postId),
+      ])
+
       if (!user) throw new ExistenceError('User not found! 😥')
 
       if (!post) throw new ExistenceError('Post not found! 😥')
@@ -21,11 +26,12 @@ module.exports = function buyPost(userId, postId) {
         )
       }
 
-      return Post.updateOne(
+      await Post.updateOne(
         { _id: postId },
         { $set: { price: 0, author: userId } }
       )
-    })
-
-    .then(() => {})
+    } catch (error) {
+      throw error
+    }
+  })()
 }

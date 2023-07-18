@@ -9,10 +9,14 @@ module.exports = function buyPost(userId, postId, price) {
   validateId(userId, 'User ID')
   validateId(postId, 'Post ID')
 
-  return Promise.all([User.findById(userId), Post.findById(postId)])
-    .then(([user, post]) => {
-      if (!user) throw new ExistenceError('User not found! 😥')
+  return (async () => {
+    try {
+      const [user, post] = await Promise.all([
+        User.findById(userId),
+        Post.findById(postId),
+      ])
 
+      if (!user) throw new ExistenceError('User not found! 😥')
       if (!post) throw new ExistenceError('Post not found! 😥')
 
       if (post.author.toString() !== userId) {
@@ -21,7 +25,9 @@ module.exports = function buyPost(userId, postId, price) {
         )
       }
 
-      return Post.updateOne({ _id: postId }, { $set: { price: price } })
-    })
-    .then(() => {})
+      await Post.updateOne({ _id: postId }, { $set: { price: price } })
+    } catch (error) {
+      throw error
+    }
+  })()
 }

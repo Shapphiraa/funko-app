@@ -19,29 +19,22 @@ const { User } = require('../../data/models')
 module.exports = function retrieveUser(userId) {
   validateId(userId, 'User ID')
 
-  return User.findById(userId).then((user) => {
-    if (!user) throw new ExistenceError('User not found! 😥')
+  return (async () => {
+    try {
+      const user = await User.findById(userId)
 
-    const { name, avatar } = user
+      if (!user) throw new ExistenceError('User not found! 😥')
 
-    const nameUser = name.split(' ')[0]
+      const { name, avatar } = user
 
-    return {
-      name: nameUser,
-      avatar,
+      const nameUser = name.split(' ')[0]
+
+      return {
+        name: nameUser,
+        avatar,
+      }
+    } catch (error) {
+      throw error
     }
-
-    //Otra forma de hacerlo:
-
-    //Añadir el .lean() (para traer el objeto directo, sin el modelo) antes del .then() y:
-
-    //Sanitize:
-
-    // delete user._id
-    // delete user.password
-    // delete user.saves
-    //... (etc)
-
-    //return user
-  })
+  })()
 }
