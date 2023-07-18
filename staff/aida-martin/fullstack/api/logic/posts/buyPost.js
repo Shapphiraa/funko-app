@@ -10,28 +10,24 @@ module.exports = function buyPost(userId, postId) {
   validateId(postId, 'Post ID')
 
   return (async () => {
-    try {
-      const [user, post] = await Promise.all([
-        User.findById(userId),
-        Post.findById(postId),
-      ])
+    const [user, post] = await Promise.all([
+      User.findById(userId),
+      Post.findById(postId),
+    ])
 
-      if (!user) throw new ExistenceError('User not found! 😥')
+    if (!user) throw new ExistenceError('User not found! 😥')
 
-      if (!post) throw new ExistenceError('Post not found! 😥')
+    if (!post) throw new ExistenceError('Post not found! 😥')
 
-      if (post.author.toString() === userId) {
-        throw new PropertyError(
-          `Post with ID ${post._id.toString()} already belong to user with ID ${userId} 😥`
-        )
-      }
-
-      await Post.updateOne(
-        { _id: postId },
-        { $set: { price: 0, author: userId } }
+    if (post.author.toString() === userId) {
+      throw new PropertyError(
+        `Post with ID ${post._id.toString()} already belong to user with ID ${userId} 😥`
       )
-    } catch (error) {
-      throw error
     }
+
+    await Post.updateOne(
+      { _id: postId },
+      { $set: { price: 0, author: userId } }
+    )
   })()
 }

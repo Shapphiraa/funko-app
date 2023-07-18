@@ -22,19 +22,12 @@ module.exports = function updateUserPassword(
     throw new ContentError('Your new password matches the current one 😥')
 
   return (async () => {
-    try {
-      const user = await User.findById(userId)
+    const user = await User.findById(userId)
 
-      if (!user) throw new ExistenceError('User not found! 😥')
+    if (!user) throw new ExistenceError('User not found! 😥')
 
-      if (user.password !== password) throw new AuthError('Wrong password! 😢')
+    if (user.password !== password) throw new AuthError('Wrong password! 😢')
 
-      return await User.updateOne(
-        { _id: userId },
-        { $set: { password: newPassword } }
-      )
-    } catch (error) {
-      throw error
-    }
+    await User.updateOne({ _id: userId }, { $set: { password: newPassword } })
   })()
 }

@@ -1,6 +1,6 @@
 const {
   validators: { validateName, validateEmail, validatePassword },
-  errors: { DuplicityError, ContentError },
+  errors: { DuplicityError, ContentError, UnknownError },
 } = require('com')
 
 const { User } = require('../../data/models')
@@ -16,6 +16,8 @@ module.exports = function registerUser(name, email, password, repeatPassword) {
   // El async lo que hace es devolver una promesa
   // Con async-await, el try catch te captura los errores síncronos y asíncronos a la vez
 
+  // Este try-catch solo se pone en registerUser porque hay que capturar el error del index
+
   return (async () => {
     try {
       await User.create({ name, email, password, avatar: null, saves: [] })
@@ -23,7 +25,7 @@ module.exports = function registerUser(name, email, password, repeatPassword) {
       if (error.message.includes('E11000'))
         throw new DuplicityError('You are already registered! Please login! 😅')
 
-      throw error
+      throw new UnknownError(error.message)
     }
   })()
 }

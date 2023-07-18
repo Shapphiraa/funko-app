@@ -20,21 +20,17 @@ module.exports = function retrieveUser(userId) {
   validateId(userId, 'User ID')
 
   return (async () => {
-    try {
-      const user = await User.findById(userId)
+    const user = await User.findById(userId)
 
-      if (!user) throw new ExistenceError('User not found! 😥')
+    if (!user) throw new ExistenceError('User not found! 😥')
 
-      const { name, avatar } = user
+    const { name, avatar } = user
 
-      const nameUser = name.split(' ')[0]
+    const nameUser = name.split(' ')[0]
 
-      return {
-        name: nameUser,
-        avatar,
-      }
-    } catch (error) {
-      throw error
+    return {
+      name: nameUser,
+      avatar,
     }
   })()
 }

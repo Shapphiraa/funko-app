@@ -24,16 +24,12 @@ module.exports = function authenticateUser(email, password) {
   validatePassword(password)
 
   return (async () => {
-    try {
-      const user = await User.findOne({ email })
+    const user = await User.findOne({ email })
 
-      if (!user) throw new ExistenceError('User not found! 😥')
+    if (!user) throw new ExistenceError('User not found! 😥')
 
-      if (password !== user.password) throw new AuthError('Wrong password! 😥')
+    if (password !== user.password) throw new AuthError('Wrong password! 😥')
 
-      return user.id
-    } catch (error) {
-      throw error
-    }
+    return user.id
   })()
 }

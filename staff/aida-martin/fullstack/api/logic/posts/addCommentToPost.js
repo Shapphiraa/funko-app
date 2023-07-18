@@ -11,26 +11,22 @@ module.exports = function addCommentToPost(userId, postId, text) {
   validateText(text)
 
   return (async () => {
-    try {
-      const [user, post] = await Promise.all([
-        User.findById(userId),
-        Post.findById(postId),
-      ])
+    const [user, post] = await Promise.all([
+      User.findById(userId),
+      Post.findById(postId),
+    ])
 
-      if (!user) throw new ExistenceError('User not found! 😥')
+    if (!user) throw new ExistenceError('User not found! 😥')
 
-      if (!post) throw new ExistenceError('Post not found! 😥')
+    if (!post) throw new ExistenceError('Post not found! 😥')
 
-      const comment = new Comment({
-        author: userId,
-        text,
-      })
+    const comment = new Comment({
+      author: userId,
+      text,
+    })
 
-      post.comments.push(comment)
+    post.comments.push(comment)
 
-      await post.save()
-    } catch (error) {
-      throw error
-    }
+    await post.save()
   })()
 }

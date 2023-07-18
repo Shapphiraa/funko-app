@@ -10,14 +10,10 @@ module.exports = function updateUserAvatar(userId, url) {
   validateUrl(url, 'Avatar url')
 
   return (async () => {
-    try {
-      const user = await User.findById(userId)
+    const user = await User.findById(userId)
 
-      if (!user) throw new ExistenceError('User not found! 😥')
+    if (!user) throw new ExistenceError('User not found! 😥')
 
-      return await User.updateOne({ _id: userId }, { $set: { avatar: url } })
-    } catch (error) {
-      throw error
-    }
+    await User.updateOne({ _id: userId }, { $set: { avatar: url } })
   })()
 }

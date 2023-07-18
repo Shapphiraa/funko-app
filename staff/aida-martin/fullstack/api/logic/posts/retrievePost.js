@@ -10,18 +10,14 @@ module.exports = function retrievePost(userId, postId) {
   validateId(postId, 'Post ID')
 
   return (async () => {
-    try {
-      const [user, post] = await Promise.all([
-        User.findById(userId),
-        Post.findById(postId, '-_id -__v -author -date -likes'),
-      ])
+    const [user, post] = await Promise.all([
+      User.findById(userId),
+      Post.findById(postId, '-_id -__v -author -date -likes'),
+    ])
 
-      if (!user) throw new ExistenceError('User not found! 😥')
-      if (!post) throw new ExistenceError('Post not found! 😥')
+    if (!user) throw new ExistenceError('User not found! 😥')
+    if (!post) throw new ExistenceError('Post not found! 😥')
 
-      return post
-    } catch (error) {
-      throw error
-    }
+    return post
   })()
 }

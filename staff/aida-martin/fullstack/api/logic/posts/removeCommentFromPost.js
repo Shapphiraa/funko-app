@@ -11,36 +11,30 @@ module.exports = function removeCommentFromPost(userId, postId, commentId) {
   validateId(commentId, 'Comment ID')
 
   return (async () => {
-    try {
-      const [user, post] = await Promise.all([
-        User.findById(userId),
-        Post.findById(postId),
-      ])
+    const [user, post] = await Promise.all([
+      User.findById(userId),
+      Post.findById(postId),
+    ])
 
-      if (!user) throw new ExistenceError('User not found! 😥')
-      if (!post) throw new ExistenceError('Post not found! 😥')
+    if (!user) throw new ExistenceError('User not found! 😥')
+    if (!post) throw new ExistenceError('Post not found! 😥')
 
-      const index = post.comments.findIndex(
-        (comment) => comment.id === commentId
+    const index = post.comments.findIndex((comment) => comment.id === commentId)
+
+    if (index < 0)
+      throw new ExistenceError(
+        `Comment with ID ${commentId} not found in post with ID ${postId}! 😥`
       )
 
-      if (index < 0)
-        throw new ExistenceError(
-          `Comment with ID ${commentId} not found in post with ID ${postId}! 😥`
-        )
+    const comment = post.comments[index]
 
-      const comment = post.comments[index]
+    if (comment.author.toString() !== userId)
+      throw new PropertyError(
+        `Comment with ID ${commentId} does not belong to user with ID ${userId}! 😥`
+      )
 
-      if (comment.author.toString() !== userId)
-        throw new PropertyError(
-          `Comment with ID ${commentId} does not belong to user with ID ${userId}! 😥`
-        )
+    post.comments.splice(index, 1)
 
-      post.comments.splice(index, 1)
-
-      await post.save()
-    } catch (error) {
-      throw error
-    }
+    await post.save()
   })()
 }

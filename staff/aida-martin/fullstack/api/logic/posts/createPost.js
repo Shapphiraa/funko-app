@@ -11,18 +11,14 @@ module.exports = function createPost(userId, image, text) {
   validateText(text)
 
   return (async () => {
-    try {
-      const user = await User.findById(userId)
+    const user = await User.findById(userId)
 
-      if (!user) throw new ExistenceError('User not found! 😥')
+    if (!user) throw new ExistenceError('User not found! 😥')
 
-      await Post.create({
-        author: userId,
-        image,
-        text,
-      })
-    } catch (error) {
-      throw error
-    }
+    await Post.create({
+      author: userId,
+      image,
+      text,
+    })
   })()
 }

@@ -10,26 +10,22 @@ module.exports = function toggleSavePost(userId, postId) {
   validateId(postId, 'Post ID')
 
   return (async () => {
-    try {
-      const [user, post] = await Promise.all([
-        User.findById(userId),
-        Post.findById(postId),
-      ])
+    const [user, post] = await Promise.all([
+      User.findById(userId),
+      Post.findById(postId),
+    ])
 
-      if (!user) throw new ExistenceError('User not found! 😥')
-      if (!post) throw new ExistenceError('Post not found! 😥')
+    if (!user) throw new ExistenceError('User not found! 😥')
+    if (!post) throw new ExistenceError('Post not found! 😥')
 
-      const index = user.saves.findIndex((id) => id.toString() === postId)
+    const index = user.saves.findIndex((id) => id.toString() === postId)
 
-      if (index < 0) {
-        await User.updateOne({ _id: userId }, { $push: { saves: postId } })
-      } else {
-        user.saves.splice(index, 1)
+    if (index < 0) {
+      await User.updateOne({ _id: userId }, { $push: { saves: postId } })
+    } else {
+      user.saves.splice(index, 1)
 
-        await User.updateOne({ _id: userId }, { $set: { saves: user.saves } })
-      }
-    } catch (error) {
-      throw error
+      await User.updateOne({ _id: userId }, { $set: { saves: user.saves } })
     }
   })()
 }
