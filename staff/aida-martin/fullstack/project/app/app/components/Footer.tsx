@@ -12,50 +12,53 @@ import {
   IconAccountFill,
 } from './Icons'
 
+const links = [
+  {
+    label: 'Home',
+    route: '/',
+    _icon: IconHome,
+    _iconFill: IconHomeFill,
+  },
+  {
+    label: 'Catalog',
+    route: '/catalog',
+    _icon: IconCatalog,
+    _iconFill: IconCatalogFill,
+  },
+  {
+    label: 'Lists',
+    route: '/lists',
+    _icon: IconLists,
+    _iconFill: IconListsFill,
+  },
+  {
+    label: 'Trade',
+    route: '/trade',
+    _icon: IconTrade,
+    _iconFill: IconTradeFill,
+  },
+  {
+    label: 'Account',
+    route: '/account',
+    _icon: IconAccount,
+    _iconFill: IconAccountFill,
+  },
+]
+
 export default function Footer() {
   return (
-    <footer className="h-20 bg-[#007CEC] text-white p-2">
+    <footer className="bg-[#007CEC] text-white px-2">
       <ul className="flex gap-2 text-white font-semibold text-sm text-center h-full items-center">
-        <li className="grow shrink-0 basis-0">
-          <FooterLink
-            route="/"
-            icon={<IconHome size="24px" />}
-            iconFill={<IconHomeFill size="24px" />}
-            name="Home"
-          />
-        </li>
-        <li className="grow shrink-0 basis-0">
-          <FooterLink
-            route="/catalog"
-            icon={<IconCatalog size="24px" />}
-            iconFill={<IconCatalogFill size="24px" />}
-            name="Catalog"
-          />
-        </li>
-        <li className="grow shrink-0 basis-0">
-          <FooterLink
-            route="/lists"
-            icon={<IconLists size="24px" />}
-            iconFill={<IconListsFill size="24px" />}
-            name="Lists"
-          />
-        </li>
-        <li className="grow shrink-0 basis-0">
-          <FooterLink
-            route="/trade"
-            icon={<IconTrade size="24px" />}
-            iconFill={<IconTradeFill size="24px" />}
-            name="Trade"
-          />
-        </li>
-        <li className="grow shrink-0 basis-0">
-          <FooterLink
-            route="/account"
-            icon={<IconAccount size="24px" />}
-            iconFill={<IconAccountFill size="24px" />}
-            name="Account"
-          />
-        </li>
+        {links.map(({ label, route, _icon, _iconFill }) => (
+          <li className="grow shrink-0 basis-0" key={route}>
+            <FooterLink
+              route={route}
+              icon={<_icon size="24px" />}
+              iconFill={<_iconFill size="24px" />}
+              name={label}
+            />
+          </li>
+        ))}
       </ul>
     </footer>
   )
