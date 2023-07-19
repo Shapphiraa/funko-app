@@ -40,15 +40,23 @@ export default function toggleLikePost(postId, callback) {
     return
   }
 
-  return fetch(`${import.meta.env.VITE_API_URL}/posts/${postId}/likes`, {
-    method: 'PATCH',
-    headers: {
-      Authorization: `Bearer ${context.token}`,
-    },
-  }).then((res) => {
-    if (res.status !== 204)
-      return res.json().then(({ message: message }) => {
-        throw new Error(message)
-      })
-  })
+  return (async () => {
+    const res = await fetch(
+      `${import.meta.env.VITE_API_URL}/posts/${postId}/likes`,
+      {
+        method: 'PATCH',
+        headers: {
+          Authorization: `Bearer ${context.token}`,
+        },
+      }
+    )
+
+    if (res.status === 204) return
+
+    const { type, message } = await res.json()
+
+    const clazz = errors[type]
+
+    throw new clazz(message)
+  })()
 }

@@ -6,7 +6,11 @@ module.exports = handleErrors((req, res) => {
 
   const { postId, commentId } = req.params
 
-  return removeCommentFromPost(userId, postId, commentId).then(() =>
+  const promise = removeCommentFromPost(userId, postId, commentId)
+
+  return (async () => {
+    await promise
+
     res.status(204).send()
-  )
+  })()
 })

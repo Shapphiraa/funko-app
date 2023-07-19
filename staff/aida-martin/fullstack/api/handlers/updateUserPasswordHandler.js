@@ -7,10 +7,16 @@ module.exports = handleErrors((req, res) => {
 
   const { password, newPassword, newPasswordConfirm } = req.body
 
-  return updateUserPassword(
+  const promise = updateUserPassword(
     userId,
     password,
     newPassword,
     newPasswordConfirm
-  ).then(() => res.status(204).send())
+  )
+
+  return (async () => {
+    await promise
+
+    res.status(204).send()
+  })()
 })

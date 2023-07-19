@@ -6,5 +6,11 @@ module.exports = handleErrors((req, res) => {
 
   const { postId } = req.params
 
-  return togglePrivatizePost(userId, postId).then(() => res.status(204).send())
+  const promise = togglePrivatizePost(userId, postId)
+
+  return (async () => {
+    await promise
+
+    res.status(204).send()
+  })()
 })

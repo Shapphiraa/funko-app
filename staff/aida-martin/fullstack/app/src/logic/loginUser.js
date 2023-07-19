@@ -51,25 +51,27 @@ export default function loginUser(email, password, callback) {
     return
   }
 
-  return (
-    fetch(`${import.meta.env.VITE_API_URL}/users/auth`, {
+  return (async () => {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/users/auth`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ email, password }),
     })
-      .then((res) => {
-        if (res.status !== 200)
-          return res.json().then(({ message: message }) => {
-            throw new Error(message)
-          })
 
-        return res.json()
-      })
-      //Esto lo hacemos para convertir las lógicas (manejando estado interno). Guardamos estado ahora con el token. Las llaves se ponen para no devolver nada fuera de la lógica
-      .then((token) => {
-        context.token = token
-      })
-  )
+    if (res.status === 200) {
+      const token = await res.json()
+
+      context.token = token
+
+      return
+    }
+
+    const { type, message } = await res.json()
+
+    const clazz = errors[type]
+
+    throw new clazz(message)
+  })()
 }

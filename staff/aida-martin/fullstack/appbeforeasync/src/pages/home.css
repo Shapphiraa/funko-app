@@ -1,0 +1,65 @@
+.main-container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .home-title {
+    align-self: center;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--white);
+  }
+
+  .home {
+    height: 100%;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+  }
+  
+  .home-header{
+    position: fixed;
+    top: 0;
+    padding: 20px 30px 20px;
+    background-color: var(--header-home-color);
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    z-index: 1;
+  }
+  
+  .home-header-nav {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+  }
+
+  .profile-link {
+    font-weight: 400;
+    color: var(--white);
+  }
+
+  .logout-button {
+    margin-left: .5rem;
+    width: 5rem;
+  }
+
+  .button-new-post-container {
+    width: 100%;
+    padding-right: 1.87rem;
+    padding-left: 1.87rem;
+    padding-top: 5.5rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .new-post-button {
+    margin-left: auto;
+  }
+
+  .saved-posts-button {
+    margin-left: .3rem;
+  }

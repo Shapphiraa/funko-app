@@ -46,17 +46,22 @@ export default function updatePost(postId, image, text, callback) {
     return
   }
 
-  return fetch(`${import.meta.env.VITE_API_URL}/posts/${postId}`, {
-    method: 'PATCH',
-    headers: {
-      'Content-type': 'application/json',
-      Authorization: `Bearer ${context.token}`,
-    },
-    body: JSON.stringify({ image, text }),
-  }).then((res) => {
-    if (res.status !== 204)
-      return res.json().then(({ message: message }) => {
-        throw new Error(message)
-      })
-  })
+  return (async () => {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/posts/${postId}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${context.token}`,
+      },
+      body: JSON.stringify({ image, text }),
+    })
+
+    if (res.status === 204) return
+
+    const { type, message } = await res.json()
+
+    const clazz = errors[type]
+
+    throw new clazz(message)
+  })()
 }

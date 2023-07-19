@@ -46,17 +46,22 @@ export default function createPost(image, text, callback) {
     return
   }
 
-  return fetch(`${import.meta.env.VITE_API_URL}/posts`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${context.token}`,
-    },
-    body: JSON.stringify({ image, text }),
-  }).then((res) => {
-    if (res.status !== 201)
-      return res.json().then(({ message: message }) => {
-        throw new Error(message)
-      })
-  })
+  return (async () => {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/posts`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${context.token}`,
+      },
+      body: JSON.stringify({ image, text }),
+    })
+
+    if (res.status === 201) return
+
+    const { type, message } = await res.json()
+
+    const clazz = errors[type]
+
+    throw new clazz(message)
+  })()
 }

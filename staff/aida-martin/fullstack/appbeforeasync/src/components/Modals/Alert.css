@@ -1,0 +1,24 @@
+.alert {
+    color: var(--title-black);
+    text-align: center;
+    font-size: .8rem;
+    font-weight: 500;
+    background: var(--white);
+    width: 12rem;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    margin: auto;
+    gap: 1.125rem;
+    border-radius: 0.75rem;
+    box-shadow: 2px 2px 7px 2px rgba(0, 0, 0, 0.25);
+  }
+
+  .button.error {
+    background: rgb(145, 9, 9)
+  }
+
+  .button.warn {
+    background:goldenrod
+  }

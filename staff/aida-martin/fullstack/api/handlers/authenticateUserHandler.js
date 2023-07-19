@@ -6,7 +6,11 @@ const jwt = require('jsonwebtoken')
 module.exports = handleErrors((req, res) => {
   const { email, password } = req.body
 
-  return authenticateUser(email, password).then((userId) => {
+  const promise = authenticateUser(email, password)
+
+  return (async () => {
+    const userId = await promise
+
     const payload = { sub: userId }
 
     const { JWT_SECRET, JWT_EXPIRATION } = process.env
@@ -16,5 +20,5 @@ module.exports = handleErrors((req, res) => {
     })
 
     res.json(token)
-  })
+  })()
 })

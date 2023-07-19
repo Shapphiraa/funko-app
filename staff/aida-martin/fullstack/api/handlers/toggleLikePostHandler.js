@@ -6,5 +6,11 @@ module.exports = handleErrors((req, res) => {
 
   const { postId } = req.params
 
-  return toggleLikePost(userId, postId).then(() => res.status(204).send())
+  const promise = toggleLikePost(userId, postId)
+
+  return (async () => {
+    await promise
+
+    res.status(204).send()
+  })()
 })

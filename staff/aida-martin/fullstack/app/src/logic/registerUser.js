@@ -52,18 +52,22 @@ export default function registerUser(
     return
   }
 
-  return fetch(`${import.meta.env.VITE_API_URL}/users`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ name, email, password, repeatPassword }),
-  }).then((res) => {
-    if (res.status !== 201) {
-      return res.json().then(({ type, message }) => {
-        // Con [type] llamamos al constructor para que venga el tipo de error (es como errors.type)
-        throw new errors[type](message)
-      })
-    }
-  })
+  return (async () => {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/users`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ name, email, password, repeatPassword }),
+    })
+
+    if (res.status === 201) return
+
+    const { type, message } = await res.json()
+
+    // No se pone class por ser palabra reserved
+    const clazz = errors[type]
+
+    throw new clazz(message)
+  })()
 }

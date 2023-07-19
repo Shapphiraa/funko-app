@@ -1,0 +1,22 @@
+.posts-list {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    width: 21.87rem;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 768px) {
+    .posts-list {
+        width: 40rem;
+    }
+  }
+  
+  @media (max-width: 320px) {
+    .posts-list {
+        width: 18rem;
+    }
+  }

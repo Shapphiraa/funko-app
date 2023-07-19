@@ -7,5 +7,11 @@ module.exports = handleErrors((req, res) => {
   const { postId } = req.params
   const { price } = req.body
 
-  return sellPost(userId, postId, price).then(() => res.status(204).send())
+  const promise = sellPost(userId, postId, price)
+
+  return (async () => {
+    await promise
+
+    res.status(204).send()
+  })()
 })
