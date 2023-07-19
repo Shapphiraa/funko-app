@@ -12,8 +12,8 @@ export default function ProductImage({
       className="self-center"
       src={image}
       alt={name}
-      width="120"
-      height="120"
+      width="130"
+      height="130"
       quality="100"
     />
   )
