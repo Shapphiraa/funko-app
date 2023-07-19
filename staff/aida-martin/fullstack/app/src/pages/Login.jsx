@@ -1,11 +1,12 @@
 import './Login.css'
-import { useAppContext } from '../hooks'
+import { useAppContext, useHandleErrors } from '../hooks'
 import { loginUser } from '../logic'
 import Container from '../library/Container'
 import { Link } from 'react-router-dom'
 
 export default function Login({}) {
-  const { alert, freeze, unfreeze, navigate } = useAppContext()
+  const { navigate } = useAppContext()
+  const handleErrors = useHandleErrors()
 
   const handleLogin = (event) => {
     event.preventDefault()
@@ -13,18 +14,11 @@ export default function Login({}) {
     const email = event.target.email.value
     const password = event.target.password.value
 
-    try {
-      freeze()
+    handleErrors(async () => {
+      await loginUser(email, password)
 
-      loginUser(email, password)
-        .then(navigate('/'))
-        .catch((error) => alert(error.message, 'error'))
-        .finally(unfreeze)
-    } catch (error) {
-      unfreeze()
-
-      alert(error.message, 'warn')
-    }
+      navigate('/')
+    })
   }
 
   return (
