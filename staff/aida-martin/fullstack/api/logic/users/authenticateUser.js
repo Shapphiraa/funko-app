@@ -4,6 +4,7 @@ const {
 } = require('com')
 
 const { User } = require('../../data/models')
+const bcrypt = require('bcryptjs')
 
 /**
  * Authenticates a user against his/her credentials
@@ -28,7 +29,9 @@ module.exports = function authenticateUser(email, password) {
 
     if (!user) throw new ExistenceError('User not found! 😥')
 
-    if (password !== user.password) throw new AuthError('Wrong password! 😥')
+    const match = await bcrypt.compare(password, user.password)
+
+    if (!match) throw new AuthError('Wrong password! 😥')
 
     return user.id
   })()

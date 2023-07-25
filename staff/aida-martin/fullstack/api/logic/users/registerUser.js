@@ -4,6 +4,7 @@ const {
 } = require('com')
 
 const { User } = require('../../data/models')
+const bcrypt = require('bcryptjs')
 
 module.exports = function registerUser(name, email, password, repeatPassword) {
   validateName(name)
@@ -20,7 +21,15 @@ module.exports = function registerUser(name, email, password, repeatPassword) {
 
   return (async () => {
     try {
-      await User.create({ name, email, password, avatar: null, saves: [] })
+      const hash = await bcrypt.hash(password, 10)
+
+      await User.create({
+        name,
+        email,
+        password: hash,
+        avatar: null,
+        saves: [],
+      })
     } catch (error) {
       if (error.message.includes('E11000'))
         throw new DuplicityError('You are already registered! Please login! 😅')
