@@ -157,3 +157,33 @@ export function IconSearch({ size = '1em' }: { size?: string }) {
     </svg>
   )
 }
+
+export function IconFilter({ size = '1em' }: { size?: string }) {
+  return (
+    <svg viewBox="0 0 512 512" fill="white" height={size} width={size}>
+      <path
+        fill="none"
+        stroke="white"
+        strokeMiterlimit={10}
+        strokeWidth={32}
+        d="M448 256c0-106-86-192-192-192S64 150 64 256s86 192 192 192 192-86 192-192z"
+      />
+      <path
+        fill="none"
+        stroke="white"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={32}
+        d="M144 208h224M176 272h160M224 336h64"
+      />
+    </svg>
+  )
+}
+
+export function IconFilterFill({ size = '1em' }: { size?: string }) {
+  return (
+    <svg viewBox="0 0 512 512" fill="white" height={size} width={size}>
+      <path d="M256 48C141.31 48 48 141.31 48 256s93.31 208 208 208 208-93.31 208-208S370.69 48 256 48zm32 304h-64a16 16 0 010-32h64a16 16 0 010 32zm48-64H176a16 16 0 010-32h160a16 16 0 010 32zm32-64H144a16 16 0 010-32h224a16 16 0 010 32z" />
+    </svg>
+  )
+}
