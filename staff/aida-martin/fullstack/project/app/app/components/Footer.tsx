@@ -47,7 +47,7 @@ const links = [
 
 export default function Footer() {
   return (
-    <footer className="bg-[#007CEC] text-white px-2">
+    <footer className="bg-general-blue text-white px-2">
       <ul className="flex gap-2 text-white font-semibold text-sm text-center h-full items-center">
         {links.map(({ label, route, _icon, _iconFill }) => (
           <li className="grow shrink-0 basis-0" key={route}>
