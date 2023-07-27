@@ -16,9 +16,12 @@ export default function FooterLink({
 }: FooterLinkProps) {
   const currentRoute = usePathname()
 
+  const isInRoute =
+    route === '/' ? currentRoute === '/' : currentRoute.includes(route)
+
   return (
     <Link href={route} className="font-light p-2 flex flex-col items-center">
-      <span>{currentRoute !== route ? icon : iconFill}</span>
+      <span>{isInRoute ? iconFill : icon}</span>
       <span>{name}</span>
     </Link>
   )
