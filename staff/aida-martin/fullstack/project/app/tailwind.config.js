@@ -17,6 +17,7 @@ module.exports = {
         dark: '#343031',
         'product-dark': '#38414D',
         'text-light': '#656263',
+        'text-product-light': '#4F4C4D',
       },
     },
   },

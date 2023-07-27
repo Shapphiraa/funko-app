@@ -14,7 +14,7 @@ export default function Header() {
         quality="100"
       />
 
-      <Button className="mr-3">
+      <Button className="bg-general-blue mr-3 rounded-xl">
         <IconSearch size="20px" />
       </Button>
     </header>

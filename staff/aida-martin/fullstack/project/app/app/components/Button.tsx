@@ -1,12 +1,12 @@
 interface ButtonProps {
-  children: JSX.Element
+  children: JSX.Element | JSX.Element[]
   className?: string
 }
 
 export default function Button({ children, className }: ButtonProps) {
   return (
     <button
-      className={`bg-general-blue justify-self-end p-[6px] flex items-center rounded-xl ${className}`}
+      className={`justify-self-end p-[6px] flex items-center ${className}`}
     >
       {children}
     </button>
