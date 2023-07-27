@@ -3,7 +3,7 @@
 import Container from '../../components/Container'
 import Carousel from '../../components/Carousel'
 import ProductImage from '../../components/ProductImage'
-import DetailButton from '../../components/DetailButton'
+import GeneralButton from '../../components/GeneralButton'
 import Button from '../../components/Button'
 import CharacteristicsList from '../../components/CharacteristicsList'
 import Link from 'next/link'
@@ -58,14 +58,14 @@ export default function Detail() {
         </h2>
 
         <div className="flex flex-col gap-3 py-10">
-          <DetailButton
+          <GeneralButton
             icon={<IconBookmark size="25px" />}
             tittle="Add to Collection"
-          ></DetailButton>
-          <DetailButton
+          ></GeneralButton>
+          <GeneralButton
             icon={<IconHeart size="25px" />}
             tittle="Add to Whislist"
-          ></DetailButton>
+          ></GeneralButton>
         </div>
 
         <CharacteristicsList />

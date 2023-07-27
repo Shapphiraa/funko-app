@@ -8,7 +8,7 @@ import {
   IconBookmarkFill,
 } from './Icons'
 
-export default function GeneralButtons() {
+export default function AddListsButtons() {
   const [whislist, setWhislist] = useState(false)
   const [collection, setCollection] = useState(false)
 

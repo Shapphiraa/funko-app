@@ -1,4 +1,4 @@
-import GeneralButtons from './GeneralButtons'
+import AddToListsButtons from './AddToListsButtons'
 import ProductImage from './ProductImage'
 import Container from './Container'
 import Link from 'next/link'
@@ -21,7 +21,7 @@ export default function Product({
       <h2 className="text-text-product-light mx-2 text-[13px] font-semibold leading-none mb-3">
         {name}
       </h2>
-      <GeneralButtons />
+      <AddToListsButtons />
     </Container>
   )
 }

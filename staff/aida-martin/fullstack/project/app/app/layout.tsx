@@ -23,7 +23,7 @@ export default function RootLayout({
       <body className="flex flex-col h-screen">
         <Header />
         <main
-          className={`grow ${
+          className={`flex flex-col grow ${
             !isModalOpen ? 'overflow-auto' : 'overflow-hidden'
           }`}
         >
