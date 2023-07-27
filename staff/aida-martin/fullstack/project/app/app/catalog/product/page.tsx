@@ -46,16 +46,20 @@ export default function Detail() {
 
       <Container className="m-5 mt-2 p-7">
         <Carousel>
-          <ProductImage
-            image={pop.image}
-            name={pop.name}
-            size={250}
-          ></ProductImage>
-          <ProductImage
-            image={pop.boxImage}
-            name={pop.name}
-            size={250}
-          ></ProductImage>
+          <div className="h-full w-full !flex justify-center">
+            <ProductImage
+              image={pop.image}
+              name={pop.name}
+              size={250}
+            ></ProductImage>
+          </div>
+          <div className="h-full w-full !flex justify-center">
+            <ProductImage
+              image={pop.boxImage}
+              name={pop.name}
+              size={250}
+            ></ProductImage>
+          </div>
         </Carousel>
 
         {/* <div className="flex mt-1 gap-1 justify-center">
