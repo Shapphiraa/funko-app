@@ -14,8 +14,6 @@ import {
   IconHeart,
   IconHeartFill,
   IconArrowLeft,
-  IconCircleFill,
-  IconCircle,
 } from '../../components/Icons'
 
 const pop = {
@@ -26,16 +24,6 @@ const pop = {
 }
 
 export default function Detail() {
-  const [image, setImage] = useState('left')
-
-  const handleChangeAtFirstImage = () => {
-    setImage('left')
-  }
-
-  const handleChangeAtSecondImage = () => {
-    setImage('right')
-  }
-
   return (
     <>
       <Link href="/catalog">
@@ -62,26 +50,7 @@ export default function Detail() {
           </div>
         </Carousel>
 
-        {/* <div className="flex mt-1 gap-1 justify-center">
-          <button
-            className={
-              image === 'right'
-                ? 'bg-[#8CC4F6] rounded-full p-[6px] shadow-lg'
-                : 'bg-general-blue rounded-full p-[6px] shadow-lg'
-            }
-            onClick={handleChangeAtFirstImage}
-          ></button>
-          <button
-            className={
-              image === 'left'
-                ? 'bg-[#8CC4F6] rounded-full p-[6px] shadow-lg'
-                : 'bg-general-blue rounded-full p-[6px] shadow-lg'
-            }
-            onClick={handleChangeAtSecondImage}
-          ></button>
-        </div> */}
-
-        <h1 className="text-text-product-light text-3xl font-light mb-1 mt-3">
+        <h1 className="text-text-product-light text-3xl font-light mb-1 mt-10">
           {pop.type}
         </h1>
         <h2 className="text-text-product-light text-2xl font-semibold">
