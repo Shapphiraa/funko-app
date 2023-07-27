@@ -118,7 +118,7 @@ export function IconHeart({ size = '1em' }: { size?: string }) {
 
 export function IconHeartFill({ size = '1em' }: { size?: string }) {
   return (
-    <svg viewBox="0 0 512 512" fill="white" height={size} width={size}>
+    <svg viewBox="0 0 512 512" fill="currentColor" height={size} width={size}>
       <path d="M256 448l-9-6c-42.78-28.57-96.91-60.86-137-108.32-42.25-50-62.52-101.35-62-157C48.63 114.54 98.46 64 159.08 64c48.11 0 80.1 28 96.92 48.21C272.82 92 304.81 64 352.92 64c60.62 0 110.45 50.54 111.08 112.65.56 55.68-19.71 107-62 157-40.09 47.49-94.22 79.78-137 108.35z" />
     </svg>
   )
@@ -141,7 +141,7 @@ export function IconBookmarkFill({ size = '1em' }: { size?: string }) {
   return (
     <svg fill="none" viewBox="0 0 15 15" height={size} width={size}>
       <path
-        fill="white"
+        fill="currentColor"
         fillRule="evenodd"
         d="M3.5 2a.5.5 0 00-.5.5v11a.5.5 0 00.765.424L7.5 11.59l3.735 2.334A.5.5 0 0012 13.5v-11a.5.5 0 00-.5-.5h-8z"
         clipRule="evenodd"
@@ -184,6 +184,30 @@ export function IconFilterFill({ size = '1em' }: { size?: string }) {
   return (
     <svg viewBox="0 0 512 512" fill="white" height={size} width={size}>
       <path d="M256 48C141.31 48 48 141.31 48 256s93.31 208 208 208 208-93.31 208-208S370.69 48 256 48zm32 304h-64a16 16 0 010-32h64a16 16 0 010 32zm48-64H176a16 16 0 010-32h160a16 16 0 010 32zm32-64H144a16 16 0 010-32h224a16 16 0 010 32z" />
+    </svg>
+  )
+}
+
+export function IconArrowLeft({ size = '1em' }: { size?: string }) {
+  return (
+    <svg viewBox="0 0 1024 1024" fill="currentColor" height={size} width={size}>
+      <path d="M872 474H286.9l350.2-304c5.6-4.9 2.2-14-5.2-14h-88.5c-3.9 0-7.6 1.4-10.5 3.9L155 487.8a31.96 31.96 0 000 48.3L535.1 866c1.5 1.3 3.3 2 5.2 2h91.5c7.4 0 10.8-9.2 5.2-14L286.9 550H872c4.4 0 8-3.6 8-8v-60c0-4.4-3.6-8-8-8z" />
+    </svg>
+  )
+}
+
+export function IconCircleFill({ size = '1em' }: { size?: string }) {
+  return (
+    <svg fill="currentColor" viewBox="0 0 16 16" height={size} width={size}>
+      <path d="M16 8 A8 8 0 0 1 8 16 A8 8 0 0 1 0 8 A8 8 0 0 1 16 8 z" />
+    </svg>
+  )
+}
+
+export function IconCircle({ size = '1em' }: { size?: string }) {
+  return (
+    <svg fill="currentColor" viewBox="0 0 16 16" height={size} width={size}>
+      <path d="M8 15A7 7 0 118 1a7 7 0 010 14zm0 1A8 8 0 108 0a8 8 0 000 16z" />
     </svg>
   )
 }
