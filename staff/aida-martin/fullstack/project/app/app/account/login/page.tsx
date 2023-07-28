@@ -8,11 +8,6 @@ import Input from '../../components/Input'
 const inputs = [
   {
     type: 'text',
-    name: 'name',
-    placeholder: 'Name',
-  },
-  {
-    type: 'text',
     name: 'email',
     placeholder: 'Email',
   },
@@ -21,29 +16,22 @@ const inputs = [
     name: 'password',
     placeholder: 'Password',
   },
-  {
-    type: 'password',
-    name: 'repeatPassword',
-    placeholder: 'Repeat Password',
-  },
 ]
 
-export default function Register() {
-  // const handleRegister = (event) => {
+export default function Login() {
+  // const handleLogin = (event) => {
   //   event.preventDefault()
 
-  //   const name = event.target.name.value
   //   const email = event.target.email.value
   //   const password = event.target.password.value
-  //   const repeatPassword = event.target.repeatpassword.value
 
-  //   registerUser(name, email, password, repeatPassword)
+  //   authenticateUser(email, password)
 
   //   }
 
   return (
     <AccountContainer>
-      <Tittle name="Create account"></Tittle>
+      <Tittle name="Welcome!"></Tittle>
 
       <Form>
         <>
@@ -56,13 +44,13 @@ export default function Register() {
             />
           ))}
         </>
-        <GeneralButton tittle="Sign up"></GeneralButton>
+        <GeneralButton tittle="Log in"></GeneralButton>
       </Form>
 
       <AccountLink
-        text="Have already an account? "
-        textLink="Login here"
-        route="/account/login"
+        text="Not a member? "
+        textLink="Sing up here"
+        route="/account/register"
       ></AccountLink>
     </AccountContainer>
   )
