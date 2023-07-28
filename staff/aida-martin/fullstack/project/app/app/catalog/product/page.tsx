@@ -4,10 +4,8 @@ import Container from '../../components/Container'
 import Carousel from '../../components/Carousel'
 import ProductImage from '../../components/ProductImage'
 import GeneralButton from '../../components/GeneralButton'
-import Button from '../../components/Button'
 import CharacteristicsList from '../../components/CharacteristicsList'
-import Link from 'next/link'
-import { useState } from 'react'
+import BackArrow from '../../components/BackArrow'
 import {
   IconBookmark,
   IconBookmarkFill,
@@ -26,13 +24,11 @@ const pop = {
 export default function Detail() {
   return (
     <>
-      <Link href="/catalog">
-        <Button className="text-general-blue mt-2 ml-3">
-          <IconArrowLeft size="27px"></IconArrowLeft>
-        </Button>
-      </Link>
+      <div className="p-4">
+        <BackArrow></BackArrow>
+      </div>
 
-      <Container className="m-5 mt-2 p-7">
+      <Container className="m-5 mt-0 p-5">
         <Carousel>
           <div className="h-full w-full !flex justify-center">
             <ProductImage

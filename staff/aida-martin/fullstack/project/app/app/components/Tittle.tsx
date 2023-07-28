@@ -5,7 +5,7 @@ interface TittleProps {
 
 export default function Tittle({ name, className }: TittleProps) {
   return (
-    <h1 className={`text-2xl text-text-light text-center mb-3 ${className}`}>
+    <h1 className={`text-2xl text-text-light text-center ${className}`}>
       {name}
     </h1>
   )
