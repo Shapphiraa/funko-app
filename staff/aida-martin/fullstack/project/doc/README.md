@@ -45,6 +45,7 @@ You will be able to see the ads and contact the seller or buyer through the chat
 - Password (encrypted string)
 - Avatar (string)
 - Adress (string)
+- Phone number (string)
 - Rol (string)
 - Collection (array of pops IDs)
 - Whislist (array of pops IDs)
@@ -67,25 +68,29 @@ You will be able to see the ads and contact the seller or buyer through the chat
 - Release (string)
 - Status (string)
 - Trending Value (number)
-- User Collection (boolean)
-- User Whislist (boolean)
 - Collection (array of users IDs)
 - Whislist (array of users IDs)
+- User Collection (boolean)
+- User Whislist (boolean)
 
 #### Sale Post
 - ID (string)
+- Author:
+    - ID (string)
+    - Name (string)
+    - Avatar (string)
+    - Location (string)
 - Tittle (string)
 - Description (string)
 - Images (array of images IDs)
 - Type (string)
 - Category (string)
 - Price (string)
-
-
+- Status (string)
 
 ### Test Coverage
 
-//Enlace coverage (barritas verdes)
+//Coverage link
 
 ## Planning
 
@@ -94,5 +99,7 @@ Notion planning:
 https://www.notion.so/57704f1b37cd4f87b74183273bbcdfab?v=4b458dbb9d7943f8a7b11928a4aaff87&pvs=4
 
 ## Design
+
+Figma:
 
 https://www.figma.com/file/HMkXmnAVyCGVC4F0D4sI4U/Final-Project?type=design&node-id=0%3A1&mode=design&t=jaQM6iSOOX9ASzop-1
