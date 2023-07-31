@@ -49,13 +49,19 @@ You will be able to see the ads and contact the seller or buyer through the chat
 - Collection (array of pops IDs)
 - Whislist (array of pops IDs)
 
+#### Image
+- ID (string)
+- SRC (string)
+- Alt (string)
+- Width (number)
+- Height (number)
+
 #### Pop
 - ID (string)
 - Variant (string)
 - Type (string)
 - Name (string)
-- Image (string)
-- Box Image (string)
+- Images (array of images IDs)
 - Category (string)
 - Collection (string)
 - Release (string)
@@ -66,19 +72,16 @@ You will be able to see the ads and contact the seller or buyer through the chat
 - Collection (array of users IDs)
 - Whislist (array of users IDs)
 
-#### Sales posts
+#### Sale Post
 - ID (string)
 - Tittle (string)
 - Description (string)
-- Images (strings)
+- Images (array of images IDs)
 - Type (string)
 - Category (string)
 - Price (string)
 
-#### Images
-- ID (string)
-- SRC (string)
-- Type (pop or sale post) (string)
+
 
 ### Test Coverage
 
@@ -89,3 +92,7 @@ You will be able to see the ads and contact the seller or buyer through the chat
 Notion planning:
 
 https://www.notion.so/57704f1b37cd4f87b74183273bbcdfab?v=4b458dbb9d7943f8a7b11928a4aaff87&pvs=4
+
+## Design
+
+https://www.figma.com/file/HMkXmnAVyCGVC4F0D4sI4U/Final-Project?type=design&node-id=0%3A1&mode=design&t=jaQM6iSOOX9ASzop-1
