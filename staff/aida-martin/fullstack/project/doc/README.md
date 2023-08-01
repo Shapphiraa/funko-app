@@ -34,59 +34,67 @@ You will be able to see the ads and contact the seller or buyer through the chat
 - Public your sales posts for sell your pops
 - Manage your sales posts (CRUD)
 
+### UI design
+
+Figma:
+
+https://www.figma.com/file/HMkXmnAVyCGVC4F0D4sI4U/Final-Project?type=design&node-id=0%3A1&mode=design&t=jaQM6iSOOX9ASzop-1
+
 ## Technical description
 
 ### Data model
 
 #### User
-- ID (string)
-- Name (string)
-- Email (string)
-- Password (encrypted string)
-- Avatar (string)
-- Adress (string)
-- Phone number (string)
-- Rol (string)
-- Collection (array of pops IDs)
-- Whislist (array of pops IDs)
+- id (oid)
+- name (string)
+- email (string)
+- password (encrypted string)
+- avatar (string)
+- adress (string)
+- phoneNumber (string)
+- rol (string)
+- popCollect ([oid refers Pop])
+- popWhislist ([oid refers Pop])
 
-#### Image
-- ID (string)
-- SRC (string)
-- Alt (string)
-- Width (number)
-- Height (number)
+#### Image??
+- id (oid)
+- src (string)
+- alt (string)
+- width (number)
+- height (number)
 
 #### Pop
-- ID (string)
-- Variant (string)
-- Type (string)
-- Name (string)
-- Images (array of images IDs)
-- Category (string)
-- Collection (string)
-- Release (string)
-- Status (string)
-- Trending Value (number)
-- Collection (array of users IDs)
-- Whislist (array of users IDs)
-- User Collection (boolean)
-- User Whislist (boolean)
+- id (oid)
+- variant (string)
+- exclusivity (string)
+- name (string)
+- number (number)
+- images ([Image])
+- category (string)
+- collect (string)
+- release (string)
+- status (string)
+- trendingValue (number)
+- userCollection ([oid refers User])
+- userWhislist ([oid refers User])
 
 #### Sale Post
-- ID (string)
-- Author:
-    - ID (string)
-    - Name (string)
-    - Avatar (string)
-    - Location (string)
-- Tittle (string)
-- Description (string)
-- Images (array of images IDs)
-- Type (string)
-- Category (string)
-- Price (string)
-- Status (string)
+- id (oid)
+- author:
+    - id (oid refers User)
+    - name (string)
+    - avatar (string)
+    - location (string)
+- tittle (string)
+- description (string)
+- number (number)
+- images ([Image])
+- variant (string)
+- category (string)
+- exclusivity (string)
+- date (date)
+- price (number)
+- status (string)
 
 ### Test Coverage
 
@@ -94,12 +102,6 @@ You will be able to see the ads and contact the seller or buyer through the chat
 
 ## Planning
 
-Notion planning:
+Notion:
 
 https://www.notion.so/57704f1b37cd4f87b74183273bbcdfab?v=4b458dbb9d7943f8a7b11928a4aaff87&pvs=4
-
-## Design
-
-Figma:
-
-https://www.figma.com/file/HMkXmnAVyCGVC4F0D4sI4U/Final-Project?type=design&node-id=0%3A1&mode=design&t=jaQM6iSOOX9ASzop-1

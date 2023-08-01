@@ -1,12 +1,12 @@
 import Characteristic from './Characteristic'
 
 const pop = {
-  type: 'POP!',
-  type2: 'Exclusive',
+  variant: 'POP!',
+  exclusivity: 'Exclusive',
   name: 'STITCH WITH TURTLE',
   image: '/pops/Stitch-With-Turtle-Lilo-And-Stitch.webp',
   category: 'Disney',
-  collection: 'Lilo & Stitch',
+  collect: 'Lilo & Stitch',
   release: '2023',
   status: 'Coming Soon',
   trendingValue: '30€',
@@ -21,9 +21,12 @@ export default function CharacteristicsList() {
       ></Characteristic>
       <Characteristic
         name="Collection:"
-        value={`${pop.collection}`}
+        value={`${pop.collect}`}
       ></Characteristic>
-      <Characteristic name="Type:" value={`${pop.type2}`}></Characteristic>
+      <Characteristic
+        name="Type:"
+        value={`${pop.exclusivity}`}
+      ></Characteristic>
       <Characteristic name="Release:" value={`${pop.release}`}></Characteristic>
       <Characteristic name="Status:" value={`${pop.status}`}></Characteristic>
       <Characteristic

@@ -5,7 +5,7 @@
 ## Installation
 
 ```sh
-$ npm i
+$ npm i mongoose
 ```
 
 ## Run
