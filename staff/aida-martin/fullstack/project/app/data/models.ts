@@ -30,11 +30,11 @@ const user = new Schema({
   },
   adress: {
     type: String,
-    required: true,
+    // required: true
   },
   phoneNumber: {
     type: String,
-    unique: true,
+    // unique: true
   },
   rol: {
     type: String,

@@ -1,9 +1,12 @@
+'use client'
+
 import AccountContainer from '../../components/AccountContainer'
 import Tittle from '../../components/Tittle'
 import GeneralButton from '../../components/GeneralButton'
 import AccountLink from '../../components/AccountLink'
 import Form from '../../components/Form'
 import Input from '../../components/Input'
+import registerUser from '../../logic/registerUser'
 
 const inputs = [
   {
@@ -29,23 +32,29 @@ const inputs = [
 ]
 
 export default function Register() {
-  // const handleRegister = (event) => {
-  //   event.preventDefault()
+  const handleRegister = async (event: React.SyntheticEvent) => {
+    event.preventDefault()
 
-  //   const name = event.target.name.value
-  //   const email = event.target.email.value
-  //   const password = event.target.password.value
-  //   const repeatPassword = event.target.repeatpassword.value
+    const target = event.target as typeof event.target & {
+      name: { value: string }
+      email: { value: string }
+      password: { value: string }
+      repeatPassword: { value: string }
+    }
 
-  //   registerUser(name, email, password, repeatPassword)
+    const name = target.name.value
+    const email = target.email.value
+    const password = target.password.value
+    const repeatPassword = target.repeatPassword.value
 
-  //   }
+    await registerUser({ name, email, password, repeatPassword })
+  }
 
   return (
     <AccountContainer>
       <Tittle name="Create account"></Tittle>
 
-      <Form>
+      <Form onSubmit={handleRegister}>
         <>
           {inputs.map(({ type, name, placeholder }) => (
             <Input
