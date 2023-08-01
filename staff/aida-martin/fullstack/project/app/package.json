@@ -1,5 +1,5 @@
 {
-  "name": "app",
+  "name": "funkoapp",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -13,6 +13,7 @@
     "@types/react": "18.2.15",
     "@types/react-dom": "18.2.7",
     "autoprefixer": "10.4.14",
+    "mongoose": "^7.4.1",
     "next": "13.4.10",
     "postcss": "8.4.26",
     "react": "18.2.0",
