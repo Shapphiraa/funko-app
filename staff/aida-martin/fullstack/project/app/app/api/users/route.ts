@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
 
     const { name, email, password, repeatPassword }: Body = JSON.parse(body)
 
-    await registerUser(name, email, password, repeatPassword)
+    await registerUser({ name, email, password, repeatPassword })
 
     return NextResponse.json({ message: 'user registered' }, { status: 201 })
   })

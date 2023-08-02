@@ -10,12 +10,19 @@ import {
 import { User } from '../../../data/models'
 // const bcrypt = require('bcryptjs')
 
-export default function registerUser(
-  name: string,
-  email: string,
-  password: string,
+interface RegisterUserProps {
+  name: string
+  email: string
+  password: string
   repeatPassword: string
-) {
+}
+
+export default function registerUser({
+  name,
+  email,
+  password,
+  repeatPassword,
+}: RegisterUserProps) {
   validateName(name)
   validateEmail(email)
   validatePassword(password)

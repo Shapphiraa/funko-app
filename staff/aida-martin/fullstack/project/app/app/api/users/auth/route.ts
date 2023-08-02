@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
 
     const { email, password }: Body = JSON.parse(body)
 
-    const userId = await authenticateUser(email, password)
+    const userId = await authenticateUser({ email, password })
 
     const payload = { sub: userId }
 

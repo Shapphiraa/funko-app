@@ -8,7 +8,15 @@ import {
 import { User } from '../../../data/models'
 // const bcrypt = require('bcryptjs')
 
-export default function authenticateUser(email: string, password: string) {
+interface AuthenticateUserProps {
+  email: string
+  password: string
+}
+
+export default function authenticateUser({
+  email,
+  password,
+}: AuthenticateUserProps) {
   validateEmail(email)
   validatePassword(password)
 
