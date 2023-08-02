@@ -7,6 +7,7 @@ import AccountLink from '../../components/AccountLink'
 import Form from '../../components/Form'
 import Input from '../../components/Input'
 import registerUser from '../../logic/registerUser'
+import { useRouter } from 'next/navigation'
 
 const inputs = [
   {
@@ -32,6 +33,8 @@ const inputs = [
 ]
 
 export default function Register() {
+  const router = useRouter()
+
   const handleRegister = async (event: React.SyntheticEvent) => {
     event.preventDefault()
 
@@ -47,7 +50,13 @@ export default function Register() {
     const password = target.password.value
     const repeatPassword = target.repeatPassword.value
 
-    await registerUser({ name, email, password, repeatPassword })
+    try {
+      await registerUser({ name, email, password, repeatPassword })
+
+      router.push('/account/login')
+    } catch (error: any) {
+      console.log(error.message)
+    }
   }
 
   return (
