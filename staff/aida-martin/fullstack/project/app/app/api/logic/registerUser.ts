@@ -1,7 +1,11 @@
-// const {
-//   validators: { validateName, validateEmail, validatePassword },
-//   errors: { DuplicityError, ContentError, UnknownError },
-// } = require('com')
+import {
+  validateName,
+  validateEmail,
+  validatePassword,
+  DuplicityError,
+  ContentError,
+  UnknownError,
+} from '../../../../com'
 
 import { User } from '../../../data/models'
 // const bcrypt = require('bcryptjs')
@@ -12,12 +16,12 @@ export default function registerUser(
   password: string,
   repeatPassword: string
 ) {
-  // validateName(name)
-  // validateEmail(email)
-  // validatePassword(password)
+  validateName(name)
+  validateEmail(email)
+  validatePassword(password)
 
   if (password !== repeatPassword)
-    throw new Error('Passwords does not match 😢')
+    throw new ContentError('Passwords does not match 😢')
 
   return (async () => {
     try {
@@ -29,9 +33,9 @@ export default function registerUser(
       })
     } catch (error: any) {
       if (error.message.includes('E11000'))
-        throw new Error('You are already registered! Please login! 😅')
+        throw new DuplicityError('You are already registered! Please login! 😅')
 
-      throw new Error(error.message)
+      throw new UnknownError(error.message)
     }
   })()
 }

@@ -1,6 +1,6 @@
 import dbConnect from '../../../data/dbConnect'
 import { headers } from 'next/headers'
-import { NextResponse, NextRequest } from 'next/server'
+import { NextResponse } from 'next/server'
 
 const handleRequest = async (
   callback:
