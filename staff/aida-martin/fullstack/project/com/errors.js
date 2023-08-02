@@ -57,3 +57,13 @@ export class UnknownError extends Error {
     return UnknownError.name;
   }
 }
+
+export class PermissionsError extends Error {
+  constructor(message) {
+    super(message);
+  }
+
+  get name() {
+    return PermissionsError.name;
+  }
+}

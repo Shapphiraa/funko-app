@@ -17,4 +17,5 @@ export {
   AuthError,
   PropertyError,
   UnknownError,
+  PermissionsError,
 } from "./errors";
