@@ -56,7 +56,7 @@ const image = new Schema({
   src: {
     type: String,
     required: true,
-    unique: true,
+    // unique: true,
   },
   alt: {
     type: String,
@@ -146,6 +146,11 @@ const pop = new Schema({
   userWhislist: {
     type: [ObjectId],
     ref: 'User',
+  },
+  date: {
+    type: Date,
+    required: true,
+    default: Date.now,
   },
 })
 

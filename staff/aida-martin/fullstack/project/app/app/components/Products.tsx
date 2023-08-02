@@ -1,19 +1,34 @@
+'use client'
+
 import Product from './Product'
-import retrieveProducts from '../logic/retrieveProducts'
+import retrievePops from '../logic/retrievePops'
+import { useEffect, useState } from 'react'
+
+import { PopType } from '../logic/retrievePops'
 
 export default function Products({ className }: { className?: string }) {
-  const products = retrieveProducts()
+  const [pops, setPops] = useState<PopType[]>([])
+
+  const getProps = async () => {
+    const pops = await retrievePops()
+    setPops(pops)
+  }
+
+  useEffect(() => {
+    getProps()
+  }, [])
 
   return (
     <div
       className={`w-full max-w-6xl mx-auto grid grid-cols-[repeat(auto-fit,_minmax(136px,1fr))] gap-4 ${className}`}
     >
-      {products &&
-        products.map((product) => (
+      {pops &&
+        pops.map((pop) => (
           <Product
-            image={product.image}
-            type={product.type}
-            name={product.name}
+            key={pop.id}
+            image={pop.images[0]}
+            type={pop.variant}
+            name={pop.name}
           />
         ))}
     </div>

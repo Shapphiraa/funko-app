@@ -73,10 +73,11 @@ https://www.figma.com/file/HMkXmnAVyCGVC4F0D4sI4U/Final-Project?type=design&node
 - category (string)
 - collect (string)
 - release (string)
-- status (string)
+- availability (string)
 - trendingValue (number)
 - userCollection ([oid refers User])
 - userWhislist ([oid refers User])
+- date (date)
 
 #### Sale Post
 - id (oid)

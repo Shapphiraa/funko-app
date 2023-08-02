@@ -57,6 +57,7 @@ export default function createPop({
       collect,
       release,
       availability,
+      date: new Date(),
     })
   })()
 }

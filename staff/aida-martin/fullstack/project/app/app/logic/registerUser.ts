@@ -1,6 +1,4 @@
-import { NextResponse, NextRequest } from 'next/server'
-
-interface registerUserProps {
+interface RegisterUserProps {
   name: string
   email: string
   password: string
@@ -12,7 +10,7 @@ export default function registerUser({
   email,
   password,
   repeatPassword,
-}: registerUserProps): Promise<void> {
+}: RegisterUserProps): Promise<void> {
   return (async () => {
     const res = await fetch(`http://localhost:3000/api/users`, {
       method: 'POST',

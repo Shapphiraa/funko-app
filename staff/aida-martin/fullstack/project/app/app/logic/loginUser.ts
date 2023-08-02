@@ -2,7 +2,7 @@ import context from './context'
 
 // const { validateEmail, validatePassword, validateCallback } = validators
 
-interface loginUserProps {
+interface LoginUserProps {
   email: string
   password: string
 }
@@ -10,7 +10,7 @@ interface loginUserProps {
 export default function loginUser({
   email,
   password,
-}: loginUserProps): Promise<void> {
+}: LoginUserProps): Promise<void> {
   // validateEmail(email)
   // validatePassword(password)
 

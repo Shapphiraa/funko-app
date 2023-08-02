@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import handleRequest from '../handlers/handleRequest'
 import createPop from '../logic/createPop'
+import retrievePops from '../logic/retrievePops'
 import extractUserId from '../handlers/helpers/extractUserId'
 
 interface Body {
@@ -47,5 +48,13 @@ export async function POST(req: NextRequest) {
     })
 
     return NextResponse.json({ message: 'pop created' }, { status: 201 })
+  })
+}
+
+export async function GET() {
+  return handleRequest(async () => {
+    const pops = await retrievePops()
+
+    return NextResponse.json(pops)
   })
 }
