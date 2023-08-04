@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <section className="p-4 bg-white">
       <Tittle name="Latests releases" />
-      <Products />
+      <Products className="mt-3" />
     </section>
   )
 }

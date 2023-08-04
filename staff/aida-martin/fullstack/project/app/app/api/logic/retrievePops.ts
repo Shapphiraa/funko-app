@@ -1,12 +1,33 @@
-import { Pop } from '../../../data/models'
+import { Pop, Category } from '../../../data/models'
 
-export default async function retrievePosts() {
-  // Con el {} dentro del find busca todos
-  const pops = await Pop.find({}, 'variant name images').sort('-date').lean()
+export default async function retrievePops(filter: { slug?: string }) {
+  let pops
+
+  if (filter.slug) {
+    const [category] = await Category.find({ slug: filter.slug }).lean()
+
+    pops = await Pop.find(
+      { category: category._id },
+      'variant name images category'
+    )
+      .populate('category', 'name slug imageList imageDetail')
+      .sort('-date')
+      .lean()
+  } else {
+    pops = await Pop.find({}, 'variant name images category')
+      .populate('category', 'name slug imageList imageDetail')
+      .sort('-date')
+      .lean()
+  }
 
   pops.forEach((pop: any) => {
     pop.id = pop._id.toString()
     delete pop._id
+
+    if (pop.category._id) {
+      pop.category.id = pop.category._id.toString()
+      delete pop.category._id
+    }
   })
 
   return pops

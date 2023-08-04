@@ -72,6 +72,26 @@ const image = new Schema({
   },
 })
 
+const category = new Schema({
+  name: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  slug: {
+    type: String,
+    required: true,
+  },
+  imageList: {
+    type: String,
+    required: true,
+  },
+  imageDetail: {
+    type: String,
+    required: true,
+  },
+})
+
 const pop = new Schema({
   variant: {
     type: String,
@@ -108,18 +128,9 @@ const pop = new Schema({
     required: true,
   },
   category: {
-    type: String,
-    enum: [
-      'Disney',
-      'Harry Potter',
-      'Games',
-      'Anime',
-      'Music',
-      'Movies & TV',
-      'Animation',
-      'Sports',
-    ],
+    type: ObjectId,
     required: true,
+    ref: 'Category',
   },
   collect: {
     type: String,
@@ -233,7 +244,8 @@ const salePost = new Schema({
 // Se hace así por Vercel, para que, si ya está montado el modelo, lo utilice y no lo vuelva a crear
 const User = mongoose.models.User || mongoose.model('User', user)
 const Image = mongoose.models.Image || model('Image', image)
+const Category = mongoose.models.Category || model('Category', category)
 const Pop = mongoose.models.Pop || model('Pop', pop)
 const SalePost = mongoose.models.SalePost || model('SalePost', salePost)
 
-export { User, Image, Pop, SalePost }
+export { User, Image, Category, Pop, SalePost }

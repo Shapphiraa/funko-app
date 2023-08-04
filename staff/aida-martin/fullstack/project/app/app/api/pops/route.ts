@@ -51,9 +51,12 @@ export async function POST(req: NextRequest) {
   })
 }
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   return handleRequest(async () => {
-    const pops = await retrievePops()
+    // Convertir el URLSearchParams a objeto (antes solo devolvía un URLSearchParams)
+    const params = Object.fromEntries(req.nextUrl.searchParams)
+
+    const pops = await retrievePops(params)
 
     return NextResponse.json(pops)
   })

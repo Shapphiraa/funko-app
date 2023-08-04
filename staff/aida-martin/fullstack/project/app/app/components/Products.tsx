@@ -6,11 +6,18 @@ import { useEffect, useState } from 'react'
 
 import { PopType } from '../logic/retrievePops'
 
-export default function Products({ className }: { className?: string }) {
+export default function Products({
+  className,
+  slug,
+}: {
+  className?: string
+  slug?: string
+}) {
   const [pops, setPops] = useState<PopType[]>([])
 
   const getProps = async () => {
-    const pops = await retrievePops()
+    let pops = await retrievePops({ slug })
+
     setPops(pops)
   }
 

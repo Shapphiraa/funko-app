@@ -21,7 +21,16 @@ You will be able to see the ads and contact the seller or buyer through the chat
 #### Admin (exclusive)
 
 - Pops CRUD
-- All sales posts CRUD
+    - Create pop
+    - Edit pop
+    - Delete pop
+
+- Categories CRUD
+    - Create category
+    - Edit category
+    - Delete category
+
+- All Sales Posts CRUD
 
 #### User
 
@@ -56,12 +65,19 @@ https://www.figma.com/file/HMkXmnAVyCGVC4F0D4sI4U/Final-Project?type=design&node
 - popCollect ([oid refers Pop])
 - popWhislist ([oid refers Pop])
 
-#### Image??
+#### Image
 - id (oid)
 - src (string)
 - alt (string)
 - width (number)
 - height (number)
+
+#### Category
+- id (oid)
+- name (string)
+- slug (string)
+- imageList (Image)
+- imageDetail (Image)
 
 #### Pop
 - id (oid)
@@ -70,7 +86,7 @@ https://www.figma.com/file/HMkXmnAVyCGVC4F0D4sI4U/Final-Project?type=design&node
 - name (string)
 - number (number)
 - images ([Image])
-- category (string)
+- category (oid refers Category)
 - collect (string)
 - release (string)
 - availability (string)

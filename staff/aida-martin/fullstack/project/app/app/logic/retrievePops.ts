@@ -2,11 +2,22 @@ export type PopType = {
   variant: string
   name: string
   images: string[]
+  category: string
   id: string
 }
 
-export default async function retrievePops(): Promise<PopType[]> {
-  const res = await fetch(`http://localhost:3000/api/pops`, {
+export default async function retrievePops({
+  slug,
+}: {
+  slug?: string
+}): Promise<PopType[]> {
+  let url = 'http://localhost:3000/api/pops'
+
+  if (slug) {
+    url += `?slug=${slug}`
+  }
+
+  const res = await fetch(url, {
     headers: {
       'Content-Type': 'application/json',
     },

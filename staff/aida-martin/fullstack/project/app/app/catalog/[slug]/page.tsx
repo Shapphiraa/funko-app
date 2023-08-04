@@ -21,7 +21,7 @@ export default function CatalogPages({ params }: { params: { slug: string } }) {
           quality="100"
         ></Image>
 
-        <Products className="p-4" />
+        <Products slug={params.slug} className="p-4" />
       </section>
     )
   }
