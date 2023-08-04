@@ -12,7 +12,7 @@ export default function registerUser({
   repeatPassword,
 }: RegisterUserProps): Promise<void> {
   return (async () => {
-    const res = await fetch(`http://localhost:3000/api/users`, {
+    const res = await fetch(`http://localhost:3000/api/user`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

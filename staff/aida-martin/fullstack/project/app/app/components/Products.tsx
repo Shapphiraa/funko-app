@@ -15,14 +15,14 @@ export default function Products({
 }) {
   const [pops, setPops] = useState<PopType[]>([])
 
-  const getProps = async () => {
+  const getPops = async () => {
     let pops = await retrievePops({ slug })
 
     setPops(pops)
   }
 
   useEffect(() => {
-    getProps()
+    getPops()
   }, [])
 
   return (

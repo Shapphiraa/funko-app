@@ -15,7 +15,7 @@ export default function loginUser({
   // validatePassword(password)
 
   return (async () => {
-    const res = await fetch('http://localhost:3000/api/users/auth', {
+    const res = await fetch('http://localhost:3000/api/user/auth', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

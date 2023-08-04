@@ -1,4 +1,4 @@
-export type PopType = {
+export interface Pop {
   variant: string
   name: string
   images: string[]
@@ -10,8 +10,8 @@ export default async function retrievePops({
   slug,
 }: {
   slug?: string
-}): Promise<PopType[]> {
-  let url = 'http://localhost:3000/api/pops'
+}): Promise<Pop[]> {
+  let url = 'http://localhost:3000/api/pop'
 
   if (slug) {
     url += `?slug=${slug}`

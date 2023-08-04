@@ -1,10 +1,18 @@
-import { categories } from '../../infraestructure/categories'
 import Image from 'next/image'
 import MenuHeader from '../../components/MenuHeader'
 import Products from '../../components/Products'
+import retrieveCategory from '../../logic/retrieveCategory'
 
-export default function CatalogPages({ params }: { params: { slug: string } }) {
-  const category = categories.find((element) => element.slug === params.slug)
+async function getData(params: { slug: string }) {
+  return await retrieveCategory(params)
+}
+
+export default async function CatalogPages({
+  params,
+}: {
+  params: { slug: string }
+}) {
+  const category = await getData(params)
 
   if (category) {
     return (
@@ -13,7 +21,7 @@ export default function CatalogPages({ params }: { params: { slug: string } }) {
 
         <Image
           className="shadow-lg"
-          src={category.headerImage}
+          src={category.imageDetail}
           alt={category.name}
           width={0}
           height={0}

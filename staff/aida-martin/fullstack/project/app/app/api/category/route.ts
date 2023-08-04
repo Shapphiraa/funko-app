@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import handleRequest from '../handlers/handleRequest'
 import createCategory from '../logic/createCategory'
+import retrieveCategories from '../logic/retrieveCategories'
 import extractUserId from '../handlers/helpers/extractUserId'
 
 interface Body {
@@ -25,5 +26,13 @@ export async function POST(req: NextRequest) {
     })
 
     return NextResponse.json({ message: 'category created' }, { status: 201 })
+  })
+}
+
+export async function GET() {
+  return handleRequest(async () => {
+    const categories = await retrieveCategories()
+
+    return NextResponse.json(categories)
   })
 }

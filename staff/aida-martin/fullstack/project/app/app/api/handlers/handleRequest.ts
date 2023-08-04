@@ -6,6 +6,7 @@ const handleRequest = async (
   callback:
     | (() => Promise<NextResponse<string>>)
     | (() => Promise<NextResponse<Array<object>>>)
+    | (() => Promise<NextResponse<object>>)
     | (() => Promise<NextResponse<{ message: string }>>)
 ) => {
   try {
