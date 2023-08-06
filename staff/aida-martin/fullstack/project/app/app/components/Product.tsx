@@ -7,14 +7,16 @@ export default function Product({
   image,
   type,
   name,
+  id,
 }: {
   image: string
   type: string
   name: string
+  id: string
 }) {
   return (
     <Container className="p-2">
-      <Link className="flex flex-col items-center" href="/catalog/product">
+      <Link className="flex flex-col items-center" href={`/catalog/pop/${id}`}>
         <ProductImage image={image} name={name} size={130} />
       </Link>
       <h1 className="text-text-product-light mt-1 mx-2 font-light">{type}</h1>

@@ -4,7 +4,7 @@ import Product from './Product'
 import retrievePops from '../logic/retrievePops'
 import { useEffect, useState } from 'react'
 
-import { PopType } from '../logic/retrievePops'
+import { Pop } from '../logic/retrievePops'
 
 export default function Products({
   className,
@@ -13,7 +13,7 @@ export default function Products({
   className?: string
   slug?: string
 }) {
-  const [pops, setPops] = useState<PopType[]>([])
+  const [pops, setPops] = useState<Pop[]>([])
 
   const getPops = async () => {
     let pops = await retrievePops({ slug })
@@ -33,6 +33,7 @@ export default function Products({
         pops.map((pop) => (
           <Product
             key={pop.id}
+            id={pop.id}
             image={pop.images[0]}
             type={pop.variant}
             name={pop.name}

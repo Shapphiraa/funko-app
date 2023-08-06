@@ -1,3 +1,5 @@
+import { validateName, validateEmail, validatePassword } from '../../../com'
+
 interface RegisterUserProps {
   name: string
   email: string
@@ -11,6 +13,10 @@ export default function registerUser({
   password,
   repeatPassword,
 }: RegisterUserProps): Promise<void> {
+  validateName(name)
+  validateEmail(email)
+  validatePassword(password)
+
   return (async () => {
     const res = await fetch(`http://localhost:3000/api/user`, {
       method: 'POST',

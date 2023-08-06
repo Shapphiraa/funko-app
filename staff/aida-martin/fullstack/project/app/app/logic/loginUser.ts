@@ -1,6 +1,6 @@
 import context from './context'
 
-// const { validateEmail, validatePassword, validateCallback } = validators
+import { validateEmail, validatePassword } from '../../../com'
 
 interface LoginUserProps {
   email: string
@@ -11,8 +11,8 @@ export default function loginUser({
   email,
   password,
 }: LoginUserProps): Promise<void> {
-  // validateEmail(email)
-  // validatePassword(password)
+  validateEmail(email)
+  validatePassword(password)
 
   return (async () => {
     const res = await fetch('http://localhost:3000/api/user/auth', {

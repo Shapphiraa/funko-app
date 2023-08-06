@@ -1,23 +1,12 @@
 import Characteristic from './Characteristic'
+import { Pop } from '../logic/retrievePop'
 
-const pop = {
-  variant: 'POP!',
-  exclusivity: 'Exclusive',
-  name: 'STITCH WITH TURTLE',
-  image: '/pops/Stitch-With-Turtle-Lilo-And-Stitch.webp',
-  category: 'Disney',
-  collect: 'Lilo & Stitch',
-  release: '2023',
-  status: 'Coming Soon',
-  trendingValue: '30€',
-}
-
-export default function CharacteristicsList() {
+export default function CharacteristicsList({ pop }: { pop: Pop }) {
   return (
     <ul className="flex flex-col gap-2">
       <Characteristic
         name="Category:"
-        value={`${pop.category}`}
+        value={`${pop.category.name}`}
       ></Characteristic>
       <Characteristic
         name="Collection:"
@@ -28,10 +17,15 @@ export default function CharacteristicsList() {
         value={`${pop.exclusivity}`}
       ></Characteristic>
       <Characteristic name="Release:" value={`${pop.release}`}></Characteristic>
-      <Characteristic name="Status:" value={`${pop.status}`}></Characteristic>
+      <Characteristic
+        name="Status:"
+        value={`${pop.availability}`}
+      ></Characteristic>
       <Characteristic
         name="Trending value:"
-        value={`${pop.trendingValue}`}
+        value={
+          pop.trendingValue !== 0 ? `${pop.trendingValue}€` : 'No data yet'
+        }
       ></Characteristic>
     </ul>
   )
