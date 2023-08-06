@@ -1,5 +1,5 @@
 import {
-  validateName,
+  validateString,
   validateEmail,
   validatePassword,
   DuplicityError,
@@ -23,7 +23,7 @@ export default function registerUser({
   password,
   repeatPassword,
 }: RegisterUserProps) {
-  validateName(name)
+  validateString(name, 'Name')
   validateEmail(email)
   validatePassword(password)
 

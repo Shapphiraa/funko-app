@@ -1,6 +1,6 @@
 import {
   validateId,
-  validateText,
+  validateString,
   ExistenceError,
   PermissionsError,
 } from '../../../../com'
@@ -21,8 +21,8 @@ export default function createCategory({
   imageList,
   imageDetail,
 }: CreateCategoryProps) {
-  validateId(userId, 'User ID')
-  validateText(name)
+  validateId(userId)
+  validateString(name, 'Name')
 
   const slug = slugify(name, { lower: true, locale: 'en' })
 

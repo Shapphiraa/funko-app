@@ -1,14 +1,13 @@
 // export { utils } from './utils'
 
 export {
-  validateName,
   validateEmail,
   validatePassword,
   validateId,
-  validateText,
   validateToken,
-  validateUrl,
+  validateString,
   validateCallback,
+  validateNumber,
 } from "./validators";
 export {
   DuplicityError,

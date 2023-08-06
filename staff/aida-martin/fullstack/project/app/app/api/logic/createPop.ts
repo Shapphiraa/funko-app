@@ -1,7 +1,7 @@
 import {
   validateId,
-  // validateText,
-  // validateUrl,
+  validateString,
+  validateNumber,
   ExistenceError,
   PermissionsError,
 } from '../../../../com'
@@ -33,9 +33,16 @@ export default function createPop({
   release,
   availability,
 }: CreatePopProps) {
-  validateId(userId, 'User ID')
-  // validateUrl(image, 'Image URL')
-  // validateText(text)
+  validateId(userId)
+  validateString(variant, 'Variant')
+  validateString(exclusivity, 'Exclusivity')
+  validateString(name, 'Name')
+  validateNumber(number, 'Number')
+  // validateString(images, 'Images')
+  validateString(category, 'Category')
+  validateString(collect, 'Collect')
+  validateString(release, 'Release')
+  validateString(availability, 'Availability')
 
   return (async () => {
     const user = await User.findById(userId)

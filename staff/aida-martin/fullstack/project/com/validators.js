@@ -41,32 +41,17 @@ export function validatePassword(password, explain = "Password") {
 }
 
 /**
- * Validates the name
+ * Validates a string
  *
- * @param {string} name The name to validate
- */
-
-export function validateName(name) {
-  if (typeof name !== "string") {
-    throw new TypeError("Name is not a string 😥");
-  }
-  if (!name.trim().length) {
-    throw new ContentError("Name is empty 😥");
-  }
-}
-
-/**
- * Validates the url
- *
- * @param {string} url The url to validate
+ * @param {string} string The string to validate
  * @param {string} explain The word to specity the errors
  */
 
-export function validateUrl(url, explain = "Url") {
-  if (typeof url !== "string") {
+export function validateString(string, explain = "String") {
+  if (typeof string !== "string") {
     throw new TypeError(`${explain} is not a string 😥`);
   }
-  if (!url.trim().length) {
+  if (!string.trim().length) {
     throw new ContentError(`${explain} is empty 😥`);
   }
 }
@@ -95,22 +80,6 @@ export function validateId(id, explain = "User ID") {
   }
 }
 
-/**
- * Validates the text
- *
- * @param {string} text The text to validate
- * @param {string} explain The word to specity the errors
- */
-
-export function validateText(text, explain = "Text") {
-  if (typeof text !== "string") {
-    throw new TypeError(`${explain} is not a string 😥`);
-  }
-  if (!text.trim().length) {
-    throw new ContentError(`${explain} is empty 😥`);
-  }
-}
-
 export function validateCallback(callback, explain = "Callback") {
   if (typeof callback !== "export function") {
     throw new TypeError(`${explain} is not a function 😥`);
@@ -122,4 +91,9 @@ export function validateToken(token, explain = "Token") {
     throw new TypeError(`${explain} is not a string 😥`);
   if (token.split(".").length !== 3)
     throw new ContentError(`${explain} is not valid 😥`);
+}
+
+export function validateNumber(number, explain = "Number") {
+  if (isNaN(number)) throw new TypeError(`${explain} is not a number 😥`);
+  if (number.length < 1) throw new ContentError(`${explain} is empty 😥`);
 }
