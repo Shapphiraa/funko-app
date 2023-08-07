@@ -1,8 +1,5 @@
-'use client'
-
 import './globals.css'
 import type { Metadata } from 'next'
-import { useState } from 'react'
 import Header from './components/Header'
 import Footer from './components/Footer'
 
@@ -16,19 +13,11 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const [isModalOpen, setIsModalOpen] = useState(false)
-
   return (
     <html lang="en" className="h-screen">
       <body className="flex flex-col h-screen">
         <Header />
-        <main
-          className={`flex flex-col grow ${
-            !isModalOpen ? 'overflow-auto' : 'overflow-hidden'
-          }`}
-        >
-          {children}
-        </main>
+        <main className={'flex flex-col grow overflow-auto'}>{children}</main>
         <Footer />
       </body>
     </html>
