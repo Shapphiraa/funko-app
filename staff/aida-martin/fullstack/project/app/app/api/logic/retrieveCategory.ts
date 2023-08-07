@@ -1,4 +1,4 @@
-import { ExistenceError } from '../../../../com'
+import { ExistenceError } from '../../com'
 import { Category } from '../../../data/models'
 
 export default async function retrieveCategory(filter: { slug: string }) {

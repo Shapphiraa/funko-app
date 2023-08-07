@@ -1,4 +1,4 @@
-import { ExistenceError } from '../../../../com'
+import { ExistenceError } from '../../com'
 import { Pop, Category } from '../../../data/models'
 
 export default async function retrievePops(filter: { slug?: string }) {

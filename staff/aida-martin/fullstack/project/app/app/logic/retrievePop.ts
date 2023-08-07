@@ -1,3 +1,5 @@
+import { validateId } from '../com'
+
 export interface Pop {
   variant: string
   exclusivity: string
@@ -15,20 +17,20 @@ export interface Pop {
   userWhislist: []
 }
 
-export default async function retrievePop({
-  id,
-}: {
-  id: string
-}): Promise<Pop> {
-  const res = await fetch(`http://localhost:3000/api/pop/${id}`, {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
+export default function retrievePop({ id }: { id: string }): Promise<Pop> {
+  validateId(id, 'Pop ID')
 
-  if (res.status === 200) return await res.json()
+  return (async () => {
+    const res = await fetch(`http://localhost:3000/api/pop/${id}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
 
-  const { message } = await res.json()
+    if (res.status === 200) return await res.json()
 
-  throw new Error(message)
+    const { message } = await res.json()
+
+    throw new Error(message)
+  })()
 }

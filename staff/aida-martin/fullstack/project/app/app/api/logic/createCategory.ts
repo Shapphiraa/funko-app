@@ -3,7 +3,8 @@ import {
   validateString,
   ExistenceError,
   PermissionsError,
-} from '../../../../com'
+  DuplicityError,
+} from '../../com'
 import slugify from 'slugify'
 
 import { User, Category } from '../../../data/models'
@@ -27,20 +28,25 @@ export default function createCategory({
   const slug = slugify(name, { lower: true, locale: 'en' })
 
   return (async () => {
-    const user = await User.findById(userId)
+    try {
+      const user = await User.findById(userId)
 
-    if (!user) throw new ExistenceError('User not found! 😢')
+      if (!user) throw new ExistenceError('User not found! 😢')
 
-    if (user.rol !== 'admin')
-      throw new PermissionsError(
-        'You do not have permissions to perform this action! 😥'
-      )
+      if (user.rol !== 'admin')
+        throw new PermissionsError(
+          'You do not have permissions to perform this action! 😥'
+        )
 
-    await Category.create({
-      name,
-      slug,
-      imageList,
-      imageDetail,
-    })
+      await Category.create({
+        name,
+        slug,
+        imageList,
+        imageDetail,
+      })
+    } catch (error: any) {
+      if (error.message.includes('E11000'))
+        throw new DuplicityError('This category is already created! 😥')
+    }
   })()
 }

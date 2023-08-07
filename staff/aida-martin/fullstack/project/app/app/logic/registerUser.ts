@@ -1,4 +1,4 @@
-import { validateName, validateEmail, validatePassword } from '../../../com'
+import { validateString, validateEmail, validatePassword } from '../com'
 
 interface RegisterUserProps {
   name: string
@@ -13,7 +13,7 @@ export default function registerUser({
   password,
   repeatPassword,
 }: RegisterUserProps): Promise<void> {
-  validateName(name)
+  validateString(name, 'Name')
   validateEmail(email)
   validatePassword(password)
 

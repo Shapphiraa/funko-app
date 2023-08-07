@@ -1,6 +1,6 @@
 import context from './context'
 
-import { validateEmail, validatePassword } from '../../../com'
+import { validateEmail, validatePassword } from '../com'
 
 interface LoginUserProps {
   email: string
