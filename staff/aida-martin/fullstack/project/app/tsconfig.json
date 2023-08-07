@@ -25,6 +25,7 @@
       "react": [ "./node_modules/@types/react" ]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/api/users/route.js"],
-  "exclude": ["node_modules"]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/api/users/route.js", "app/api/logic/registerUser.spec.js"],
+  "exclude": ["node_modules"],
+  "ts-node": {"esm": true}
 }

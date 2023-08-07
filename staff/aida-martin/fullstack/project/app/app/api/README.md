@@ -17,3 +17,11 @@ $ npm i mongoose
 ...
 
 ### Watch
+
+...
+
+### Test
+
+```sh
+$ npx ts-node -O '{"module": "commonjs"}' ./app/logic/*.test.ts
+```
