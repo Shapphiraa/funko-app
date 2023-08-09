@@ -1,7 +1,7 @@
 'use client'
 
-import Container from '../../components/Container'
-import Carousel from '../../components/Carousel'
+import Container from '../../library/Container'
+import Carousel from '../../library/Carousel'
 import ProductImage from '../../components/ProductImage'
 import GeneralButton from '../../components/GeneralButton'
 import CharacteristicsList from '../../components/CharacteristicsList'

@@ -1,5 +1,5 @@
-import Tittle from './Tittle'
-import Button from './Button'
+import Tittle from '../library/Tittle'
+import Button from '../library/Button'
 import BackArrow from './BackArrow'
 import { IconFilter } from './Icons'
 

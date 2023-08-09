@@ -1,4 +1,4 @@
-import Container from './Container'
+import Container from '../library/Container'
 import Image from 'next/image'
 
 interface ListPreviewProps {

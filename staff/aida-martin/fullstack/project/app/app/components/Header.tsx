@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import Button from './Button'
+import Button from '../library/Button'
 import { IconSearch } from './Icons'
 
 export default function Header() {

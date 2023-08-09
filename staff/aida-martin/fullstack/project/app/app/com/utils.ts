@@ -1,17 +1,17 @@
 import { validateToken } from './validators'
 
-function extractPayloadFromToken(token) {
+function extractPayloadFromToken(token: string) {
   return JSON.parse(atob(token.split('.')[1]))
 }
 
-export function isTokenAlive(token) {
+export function isTokenAlive(token: string) {
   const { iat, exp } = extractPayloadFromToken(token)
   const now = Date.now() / 1000
 
   return exp - iat > now - iat
 }
 
-export function isTokenValid(token) {
+export function isTokenValid(token: string) {
   try {
     validateToken(token)
 
@@ -23,7 +23,7 @@ export function isTokenValid(token) {
 }
 
 //Para extraer el userId y lo usamos en front:
-export function extractSubFromToken(token) {
+export function extractSubFromToken(token: string) {
   const { sub } = extractPayloadFromToken(token)
 
   return sub

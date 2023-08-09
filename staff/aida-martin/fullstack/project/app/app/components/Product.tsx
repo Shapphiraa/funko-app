@@ -1,6 +1,6 @@
 import AddToListsButtons from './AddToListsButtons'
 import ProductImage from './ProductImage'
-import Container from './Container'
+import Container from '../library/Container'
 import Link from 'next/link'
 import context from '../logic/context'
 

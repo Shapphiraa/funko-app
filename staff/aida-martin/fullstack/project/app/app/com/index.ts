@@ -1,14 +1,12 @@
-// export { utils } from './utils'
-
 export {
   validateEmail,
   validatePassword,
   validateId,
   validateToken,
   validateString,
-  validateCallback,
   validateNumber,
-} from "./validators";
+} from './validators'
+
 export {
   DuplicityError,
   ContentError,
@@ -17,4 +15,6 @@ export {
   PropertyError,
   UnknownError,
   PermissionsError,
-} from "./errors";
+} from './errors'
+
+export { isTokenAlive, isTokenValid, extractSubFromToken } from './utils'

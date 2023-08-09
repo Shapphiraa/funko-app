@@ -1,4 +1,4 @@
-import Button from './Button'
+import Button from '../library/Button'
 
 interface GeneralButtonProps {
   icon?: JSX.Element

@@ -8,7 +8,7 @@ const HEX_DICTIONARY = '0123456789abcdef'
  * @param {string} email The email to validate
  */
 
-export function validateEmail(email) {
+export function validateEmail(email: string) {
   if (typeof email !== 'string') {
     throw new TypeError('Email is not a string 😥')
   }
@@ -28,7 +28,7 @@ export function validateEmail(email) {
  * @param {string} explain The word to specity the errors
  */
 
-export function validatePassword(password, explain = 'Password') {
+export function validatePassword(password: string, explain = 'Password') {
   if (typeof password !== 'string') {
     throw new TypeError(`${explain} is not a string 😥`)
   }
@@ -47,7 +47,7 @@ export function validatePassword(password, explain = 'Password') {
  * @param {string} explain The word to specity the errors
  */
 
-export function validateString(string, explain = 'String') {
+export function validateString(string: string, explain = 'String') {
   if (typeof string !== 'string') {
     throw new TypeError(`${explain} is not a string 😥`)
   }
@@ -64,7 +64,7 @@ export function validateString(string, explain = 'String') {
  *
  */
 
-export function validateId(id, explain = 'User ID') {
+export function validateId(id: string, explain = 'User ID') {
   if (typeof id !== 'string') {
     throw new TypeError(`${explain} is not a string 😥`)
   }
@@ -80,20 +80,15 @@ export function validateId(id, explain = 'User ID') {
   }
 }
 
-export function validateCallback(callback, explain = 'Callback') {
-  if (typeof callback !== 'export function') {
-    throw new TypeError(`${explain} is not a function 😥`)
-  }
-}
-
-export function validateToken(token, explain = 'Token') {
+export function validateToken(token: string, explain = 'Token') {
   if (typeof token !== 'string')
     throw new TypeError(`${explain} is not a string 😥`)
   if (token.split('.').length !== 3)
     throw new ContentError(`${explain} is not valid 😥`)
 }
 
-export function validateNumber(number, explain = 'Number') {
+export function validateNumber(number: number, explain = 'Number') {
   if (isNaN(number)) throw new TypeError(`${explain} is not a number 😥`)
-  if (number.length < 1) throw new ContentError(`${explain} is empty 😥`)
+  if (number.toString().length < 1)
+    throw new ContentError(`${explain} is empty 😥`)
 }

@@ -1,11 +1,11 @@
 'use client'
 
 import AccountContainer from '../../components/AccountContainer'
-import Tittle from '../../components/Tittle'
+import Tittle from '../../library/Tittle'
 import GeneralButton from '../../components/GeneralButton'
 import AccountLink from '../../components/AccountLink'
-import Form from '../../components/Form'
-import Input from '../../components/Input'
+import Form from '../../library/Form'
+import Input from '../../library/Input'
 import registerUser from '../../logic/registerUser'
 import { useRouter } from 'next/navigation'
 

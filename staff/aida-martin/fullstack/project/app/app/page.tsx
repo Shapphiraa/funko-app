@@ -1,5 +1,5 @@
 import Products from './components/Products'
-import Tittle from './components/Tittle'
+import Tittle from './library/Tittle'
 
 export default function Home() {
   return (

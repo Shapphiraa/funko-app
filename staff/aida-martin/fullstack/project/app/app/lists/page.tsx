@@ -1,4 +1,4 @@
-import Tittle from '../components/Tittle'
+import Tittle from '../library/Tittle'
 import ListPreview from '../components/ListPreview'
 import ContainerLink from '../components/ContainerLink'
 import { lists } from '../infraestructure/lists'
