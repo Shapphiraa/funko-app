@@ -60,7 +60,7 @@ https://www.figma.com/file/HMkXmnAVyCGVC4F0D4sI4U/Final-Project?type=design&node
 - avatar (string)
 - adress (string)
 - phoneNumber (string)
-- rol (string)
+- role (string)
 - popCollect ([oid refers Pop])
 - popWhislist ([oid refers Pop])
 

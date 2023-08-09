@@ -49,7 +49,7 @@ export default function createPop({
 
     if (!user) throw new ExistenceError('User not found! 😢')
 
-    if (user.rol !== 'admin')
+    if (user.role !== 'admin')
       throw new PermissionsError(
         'You do not have permissions to perform this action! 😥'
       )
