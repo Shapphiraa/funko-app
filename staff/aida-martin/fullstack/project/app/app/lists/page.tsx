@@ -8,7 +8,6 @@ export default function Lists() {
   return (
     <section className="p-4 bg-white">
       <Tittle name="Your lists" />
-
       <div className="flex flex-col gap-3">
         <ContainerLink route={lists[0].route}>
           <ListPreview
@@ -18,7 +17,7 @@ export default function Lists() {
             subtittle="Last added"
             image="/previews/Preview-Snow-White.webp"
             color="text-[#007cec]"
-          ></ListPreview>
+          />
         </ContainerLink>
 
         <ContainerLink route={lists[1].route}>
@@ -29,7 +28,7 @@ export default function Lists() {
             subtittle="Last added"
             image="/previews/Preview-Peter-Pan.webp"
             color="text-[#EC0063]"
-          ></ListPreview>
+          />
         </ContainerLink>
       </div>
     </section>

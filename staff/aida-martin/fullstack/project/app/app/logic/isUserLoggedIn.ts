@@ -1,4 +1,9 @@
-import context from './context'
+import useStorage from '../hooks/useStorage'
 import { isTokenAlive, isTokenValid } from '../com'
 
-export default () => isTokenValid(context.token) && isTokenAlive(context.token)
+const { getItem } = useStorage()
+
+export default () => {
+  const token = getItem('token', 'session')
+  return isTokenValid(token) && isTokenAlive(token)
+}
