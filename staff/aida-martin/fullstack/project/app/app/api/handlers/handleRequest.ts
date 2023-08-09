@@ -5,6 +5,7 @@ import { NextResponse } from 'next/server'
 const handleRequest = async (
   callback:
     | (() => Promise<NextResponse<string>>)
+    | (() => Promise<Response>)
     | (() => Promise<NextResponse<Array<object>>>)
     | (() => Promise<NextResponse<object>>)
     | (() => Promise<NextResponse<{ message: string }>>)

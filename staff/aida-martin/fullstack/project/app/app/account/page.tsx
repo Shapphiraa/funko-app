@@ -1,24 +1,22 @@
-'use client'
+// import retrieveUser from '../logic/retrieveUser'
+// import { User } from '../logic/retrieveUser'
 
-import retrieveUser from '../logic/retrieveUser'
-import { User } from '../logic/retrieveUser'
-
-import { useState, useEffect } from 'react'
+// import { useState, useEffect } from 'react'
 
 export default function Account() {
-  const [user, setUser] = useState<User>()
+  // const [user, setUser] = useState<User>()
 
-  const getUser = async () => {
-    let user = await retrieveUser()
+  // const getUser = async () => {
+  //   let user = await retrieveUser()
 
-    setUser(user)
-  }
+  //   setUser(user)
+  // }
 
-  useEffect(() => {
-    getUser()
-  }, [])
+  // useEffect(() => {
+  //   getUser()
+  // }, [])
 
-  if (user) {
-    return <h1>Hello {user.name}</h1>
-  }
+  // if (user) {
+  return <h1>Welcome!</h1>
 }
+// }

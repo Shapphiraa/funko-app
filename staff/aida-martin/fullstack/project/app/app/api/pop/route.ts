@@ -54,9 +54,11 @@ export async function POST(req: NextRequest) {
 export async function GET(req: NextRequest) {
   return handleRequest(async () => {
     // Convertir el URLSearchParams a objeto (antes solo devolvía un URLSearchParams)
-    const params = Object.fromEntries(req.nextUrl.searchParams)
+    const filter = Object.fromEntries(req.nextUrl.searchParams)
 
-    const pops = await retrievePops(params)
+    const userId = extractUserId(req)
+
+    const pops = await retrievePops({ userId, filter })
 
     return NextResponse.json(pops)
   })

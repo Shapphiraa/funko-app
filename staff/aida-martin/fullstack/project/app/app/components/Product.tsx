@@ -2,17 +2,24 @@ import AddToListsButtons from './AddToListsButtons'
 import ProductImage from './ProductImage'
 import Container from './Container'
 import Link from 'next/link'
+import context from '../logic/context'
 
 export default function Product({
   image,
   type,
   name,
   id,
+  pop,
 }: {
   image: string
   type: string
   name: string
   id: string
+  pop: {
+    id: string
+    userCollect: boolean
+    userWhislist: boolean
+  }
 }) {
   return (
     <Container className="p-2">
@@ -23,7 +30,7 @@ export default function Product({
       <h2 className="text-text-product-light mx-2 text-[13px] font-semibold leading-none mb-3">
         {name}
       </h2>
-      <AddToListsButtons />
+      <AddToListsButtons pop={pop} />
     </Container>
   )
 }

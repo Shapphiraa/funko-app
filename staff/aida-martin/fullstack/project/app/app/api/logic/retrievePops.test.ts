@@ -73,15 +73,54 @@ dotenv.config()
       availability: 'Coming Soon',
     })
 
-    const allPops = await retrievePops({})
-    const disneyPops = await retrievePops({ slug: category1.slug })
-    const harryPotterPops = await retrievePops({ slug: category2.slug })
+    const pop1 = await Pop.findOne({ name: 'STITCH WITH FROG - LILO & STITCH' })
+    const pop2 = await Pop.findOne({ name: 'PETER PAN FLYING - PETER PAN' })
+
+    await User.create({
+      name: 'Peter Pan',
+      email: 'peter@pan.com',
+      password: '123123123',
+      repeatPassword: '123123123',
+      avatar: null,
+      rol: 'user',
+      popCollect: [`${pop1.id}`],
+      popWhislist: [`${pop2.id}`],
+    })
+
+    const user = await User.findOne({ email: 'peter@pan.com' })
+
+    // Sin usuario logueado:
+    const allPops = await retrievePops({ filter: {} })
+    const disneyPops = await retrievePops({ filter: { slug: category1.slug } })
+    const harryPotterPops = await retrievePops({
+      filter: { slug: category2.slug },
+    })
 
     console.log(allPops)
     console.log('-------')
     console.log(disneyPops)
     console.log('-------')
     console.log(harryPotterPops)
+
+    // Con usuario logueado:
+    const allUserLoggedPops = await retrievePops({
+      userId: user.id,
+      filter: {},
+    })
+    const userLoggedDisneyPops = await retrievePops({
+      userId: user.id,
+      filter: { slug: category1.slug },
+    })
+    const userLoggedHarryPotterPops = await retrievePops({
+      userId: user.id,
+      filter: { slug: category2.slug },
+    })
+
+    console.log(allUserLoggedPops)
+    console.log('-------')
+    console.log(userLoggedDisneyPops)
+    console.log('-------')
+    console.log(userLoggedHarryPotterPops)
   } catch (error) {
     console.error(error)
   } finally {

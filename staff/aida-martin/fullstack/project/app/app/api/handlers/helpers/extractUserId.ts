@@ -8,11 +8,14 @@ export default function extractUserId(req: NextRequest) {
   const authorization = headersList.get('Authorization')
 
   // La autorización vendrá así: "Bearer user-id"
-  const token = authorization!.slice(7)
 
-  const payload = jwt.verify(token, process.env.JWT_SECRET)
+  if (authorization) {
+    const token = authorization!.slice(7)
 
-  const { sub: userId } = payload
+    const payload = jwt.verify(token, process.env.JWT_SECRET)
 
-  return userId
+    const { sub: userId } = payload
+
+    return userId
+  }
 }

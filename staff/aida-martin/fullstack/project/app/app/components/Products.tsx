@@ -32,6 +32,7 @@ export default function Products({
       {pops &&
         pops.map((pop) => (
           <Product
+            pop={pop}
             key={pop.id}
             id={pop.id}
             image={pop.images[0]}

@@ -40,7 +40,6 @@ You will be able to see the ads and contact the seller or buyer through the chat
 - Manage your whislist
 - View sales posts in 'trade' section (search, filter, order)
 - Contact the seller through the chat if you wish
-- Public your sales posts for sell your pops
 - Manage your sales posts (CRUD)
 
 ### UI design

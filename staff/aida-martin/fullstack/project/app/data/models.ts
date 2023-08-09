@@ -151,12 +151,12 @@ const pop = new Schema({
     required: true,
   },
   userCollect: {
-    type: [ObjectId],
-    ref: 'User',
+    type: Boolean,
+    default: false,
   },
   userWhislist: {
-    type: [ObjectId],
-    ref: 'User',
+    type: Boolean,
+    default: false,
   },
   date: {
     type: Date,
