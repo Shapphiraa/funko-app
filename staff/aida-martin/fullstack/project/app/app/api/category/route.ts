@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import handleRequest from '../handlers/handleRequest'
-import createCategory from '../logic/createCategory'
-import retrieveCategories from '../logic/retrieveCategories'
+import createCategory from '../logic/category/createCategory'
+import retrieveCategories from '../logic/category/retrieveCategories'
 import extractUserId from '../handlers/helpers/extractUserId'
 
 interface Body {

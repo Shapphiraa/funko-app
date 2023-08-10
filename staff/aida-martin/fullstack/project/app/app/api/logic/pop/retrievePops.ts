@@ -1,5 +1,5 @@
-import { ExistenceError } from '../../com'
-import { User, Pop, Category } from '../../../data/models'
+import { ExistenceError } from '../../../com'
+import { User, Pop, Category } from '../../../../data/models'
 
 export default async function retrievePops({
   userId,
@@ -8,6 +8,8 @@ export default async function retrievePops({
   userId?: string
   filter: { slug?: string }
 }) {
+  //TODO validators
+
   let pops
 
   if (filter.slug) {

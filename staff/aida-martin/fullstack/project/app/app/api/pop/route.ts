@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import handleRequest from '../handlers/handleRequest'
-import createPop from '../logic/createPop'
-import retrievePops from '../logic/retrievePops'
+import createPop from '../logic/pop/createPop'
+import retrievePops from '../logic/pop/retrievePops'
 import extractUserId from '../handlers/helpers/extractUserId'
 
 interface Body {

@@ -4,9 +4,9 @@ import {
   validateNumber,
   ExistenceError,
   PermissionsError,
-} from '../../com'
+} from '../../../com'
 
-import { User, Pop } from '../../../data/models'
+import { User, Pop } from '../../../../data/models'
 
 interface CreatePopProps {
   userId: string

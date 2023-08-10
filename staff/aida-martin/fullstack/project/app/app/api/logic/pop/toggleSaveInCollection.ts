@@ -1,5 +1,5 @@
-import { validateId, ExistenceError } from '../../com'
-import { User, Pop } from '../../../data/models'
+import { validateId, ExistenceError } from '../../../com'
+import { User, Pop } from '../../../../data/models'
 
 export default function toggleSaveInCollection(
   userId: string,

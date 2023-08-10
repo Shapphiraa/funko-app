@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import handleRequest from '../../handlers/handleRequest'
-import retrievePop from '../../logic/retrievePop'
+import retrievePop from '../../logic/pop/retrievePop'
 
 export async function GET(
   req: NextRequest,

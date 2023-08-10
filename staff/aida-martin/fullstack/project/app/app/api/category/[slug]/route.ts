@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import handleRequest from '../../handlers/handleRequest'
-import retrieveCategory from '../../logic/retrieveCategory'
+import retrieveCategory from '../../logic/category/retrieveCategory'
 
 export async function GET(
   req: NextRequest,

@@ -1,8 +1,8 @@
 import dotenv from 'dotenv'
 
 import mongoose from 'mongoose'
-import { User, Category, Pop } from '../../../data/models'
-import createPop from './createPop'
+import { User, Category } from '../../../../data/models'
+import createCategory from './createCategory'
 
 dotenv.config()
 ;(async () => {
@@ -11,11 +11,7 @@ dotenv.config()
       `${process.env.MONGODB_URL}${process.env.DATABASE_NAME}`
     )
 
-    await Promise.all([
-      User.deleteMany(),
-      Category.deleteMany(),
-      Pop.deleteMany(),
-    ])
+    await Promise.all([User.deleteMany(), Category.deleteMany()])
 
     await User.create({
       name: 'Peter Pan',
@@ -30,31 +26,16 @@ dotenv.config()
 
     const user = await User.findOne({ email: 'peter@pan.com' })
 
-    await Category.create({
+    await createCategory({
+      userId: `${user.id}`,
       name: 'Disney',
-      slug: 'disney',
       imageList: '/categories/Disney.svg',
       imageDetail: '/categories/Header-Disney.svg',
     })
 
     const category = await Category.findOne({ slug: 'disney' })
 
-    await createPop({
-      userId: `${user.id}`,
-      variant: 'POP!',
-      exclusivity: 'Exclusive',
-      name: 'STITCH WITH FROG - LILO & STITCH',
-      number: 1452,
-      images: ['Stitch-with-frog.svg', 'Stitch-with-frog-box.svg'],
-      category: `${category.id}`,
-      collect: 'Lilo & Stitch',
-      release: '2021',
-      availability: 'Available',
-    })
-
-    const pop = await Pop.findOne({ name: 'STITCH WITH FROG - LILO & STITCH' })
-
-    console.log(pop)
+    console.log(category)
   } catch (error) {
     console.error(error)
   } finally {

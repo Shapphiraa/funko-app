@@ -1,6 +1,6 @@
-import { validateId, ExistenceError } from '../../com'
+import { validateId, ExistenceError } from '../../../com'
 
-import { User } from '../../../data/models'
+import { User } from '../../../../data/models'
 
 export default function retrieveUser(userId: string) {
   validateId(userId)

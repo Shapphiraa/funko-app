@@ -1,7 +1,7 @@
 import { NextRequest } from 'next/server'
 import handleRequest from '../../../handlers/handleRequest'
 import extractUserId from '../../../handlers/helpers/extractUserId'
-import toggleSaveInWhislist from '../../../logic/toggleSaveInWhislist'
+import toggleSaveInWhislist from '../../../logic/pop/toggleSaveInWhislist'
 
 export async function PATCH(
   req: NextRequest,

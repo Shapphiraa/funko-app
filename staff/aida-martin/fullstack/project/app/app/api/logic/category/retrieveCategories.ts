@@ -1,4 +1,4 @@
-import { Category } from '../../../data/models'
+import { Category } from '../../../../data/models'
 
 export default async function retrieveCategories() {
   const categories = await Category.find({}, 'name imageList slug').lean()

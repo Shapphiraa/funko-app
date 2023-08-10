@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import handleRequest from '../handlers/handleRequest'
-import registerUser from '../logic/registerUser'
-import retrieveUser from '../logic/retrieveUser'
+import registerUser from '../logic/user/registerUser'
+import retrieveUser from '../logic/user/retrieveUser'
 import extractUserId from '../handlers/helpers/extractUserId'
 
 interface BodyPost {

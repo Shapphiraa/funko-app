@@ -1,8 +1,8 @@
 import dotenv from 'dotenv'
 
 import mongoose from 'mongoose'
-import { User, Category, Pop } from '../../../data/models'
-import retrieveCategory from './retrieveCategory'
+import { User, Category, Pop } from '../../../../data/models'
+import retrieveCategories from './retrieveCategories'
 
 dotenv.config()
 ;(async () => {
@@ -31,11 +31,9 @@ dotenv.config()
       imageDetail: '/categories/Header-Anime.svg',
     })
 
-    const category = await Category.findOne({ slug: 'disney' })
+    const categories = await retrieveCategories()
 
-    const _category = await retrieveCategory({ slug: category.slug })
-
-    console.log(_category)
+    console.log(categories)
   } catch (error) {
     console.error(error)
   } finally {

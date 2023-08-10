@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import handleRequest from '../../handlers/handleRequest'
-import authenticateUser from '../../logic/authenticateUser'
+import authenticateUser from '../../logic/user/authenticateUser'
 import jwt from 'jsonwebtoken'
 
 interface Body {

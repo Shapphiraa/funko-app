@@ -1,8 +1,8 @@
 import dotenv from 'dotenv'
 
 import mongoose from 'mongoose'
-import { User, Pop } from '../../../data/models'
-import authenticateUser from './authenticateUser'
+import { User, Pop } from '../../../../data/models'
+import registerUser from './registerUser'
 
 dotenv.config()
 ;(async () => {
@@ -13,25 +13,16 @@ dotenv.config()
 
     await Promise.all([User.deleteMany(), Pop.deleteMany()])
 
-    await User.create({
+    await registerUser({
       name: 'Peter Pan',
       email: 'peter@pan.com',
       password: '123123123',
       repeatPassword: '123123123',
-      avatar: null,
-      rol: 'user',
-      popCollect: [],
-      popWhislist: [],
     })
 
     const user = await User.findOne({ email: 'peter@pan.com' })
 
-    const userId = await authenticateUser({
-      email: user.email,
-      password: user.password,
-    })
-
-    console.log(userId)
+    console.log(user)
   } catch (error) {
     console.error(error)
   } finally {
