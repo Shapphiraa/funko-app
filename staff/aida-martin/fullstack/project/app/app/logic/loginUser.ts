@@ -1,4 +1,6 @@
-import context from './context'
+import useStorage from '../hooks/useStorage'
+
+const { setItem } = useStorage()
 
 import { validateEmail, validatePassword } from '../com'
 
@@ -26,7 +28,9 @@ export default function loginUser({
     if (res.status === 200) {
       const token = await res.json()
 
-      context.token = token
+      // context.token = token
+
+      setItem('token', token, 'session')
 
       return
     }
