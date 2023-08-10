@@ -2,7 +2,6 @@ import AddToListsButtons from './AddToListsButtons'
 import ProductImage from './ProductImage'
 import Container from '../library/Container'
 import Link from 'next/link'
-import context from '../logic/context'
 
 export default function Product({
   image,
@@ -10,6 +9,7 @@ export default function Product({
   name,
   id,
   pop,
+  onChange,
 }: {
   image: string
   type: string
@@ -20,6 +20,7 @@ export default function Product({
     userCollect: boolean
     userWhislist: boolean
   }
+  onChange?: () => void
 }) {
   return (
     <Container className="p-2">
@@ -30,7 +31,7 @@ export default function Product({
       <h2 className="text-text-product-light mx-2 text-[13px] font-semibold leading-none mb-3">
         {name}
       </h2>
-      <AddToListsButtons pop={pop} />
+      <AddToListsButtons pop={pop} onChange={onChange} />
     </Container>
   )
 }

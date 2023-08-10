@@ -1,22 +1,10 @@
-// import retrieveUser from '../logic/retrieveUser'
-// import { User } from '../logic/retrieveUser'
+'use client'
 
-// import { useState, useEffect } from 'react'
+import { redirect } from 'next/navigation'
+import isUserLoggedIn from '../logic/isUserLoggedIn'
 
 export default function Account() {
-  // const [user, setUser] = useState<User>()
+  if (!isUserLoggedIn()) redirect('/account/login')
 
-  // const getUser = async () => {
-  //   let user = await retrieveUser()
-
-  //   setUser(user)
-  // }
-
-  // useEffect(() => {
-  //   getUser()
-  // }, [])
-
-  // if (user) {
   return <h1>Welcome!</h1>
 }
-// }

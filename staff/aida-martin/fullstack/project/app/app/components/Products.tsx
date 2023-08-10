@@ -2,6 +2,9 @@
 
 import Product from './Product'
 import retrievePops from '../logic/retrievePops'
+import retrievePopCollection from '../logic/retrievePopCollection'
+import { PopCollection } from '../logic/retrievePopCollection'
+import retrievePopWhislist from '../logic/retrievePopWhislist'
 import { useEffect, useState } from 'react'
 
 import { Pop } from '../logic/retrievePops'
@@ -13,10 +16,16 @@ export default function Products({
   className?: string
   slug?: string
 }) {
-  const [pops, setPops] = useState<Pop[]>([])
+  const [pops, setPops] = useState<Pop[] | PopCollection[] | null>([])
 
   const getPops = async () => {
-    let pops = await retrievePops({ slug })
+    const pops =
+      slug === 'collection'
+        ? await retrievePopCollection()
+        : slug === 'whislist'
+        ? await retrievePopWhislist()
+        : await retrievePops({ slug })
+    //helper isValidRoute para retrievePops?
 
     setPops(pops)
   }
@@ -38,6 +47,7 @@ export default function Products({
             image={pop.images[0]}
             type={pop.variant}
             name={pop.name}
+            onChange={getPops}
           />
         ))}
     </div>

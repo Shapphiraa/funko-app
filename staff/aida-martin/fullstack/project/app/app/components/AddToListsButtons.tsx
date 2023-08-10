@@ -14,12 +14,14 @@ import { useRouter } from 'next/navigation'
 
 export default function AddListsButtons({
   pop,
+  onChange,
 }: {
   pop: {
     id: string
     userCollect: boolean
     userWhislist: boolean
   }
+  onChange?: () => void
 }) {
   const [inCollection, setInCollection] = useState(pop.userCollect)
   const [inWhislist, setInWhislist] = useState(pop.userWhislist)
@@ -32,6 +34,8 @@ export default function AddListsButtons({
         await toggleSaveInCollection({ id: pop.id })
 
         setInCollection(!inCollection)
+
+        if (onChange) onChange()
 
         return
       }
@@ -48,6 +52,8 @@ export default function AddListsButtons({
         await toggleSaveInWhislist({ id: pop.id })
 
         setInWhislist(!inWhislist)
+
+        if (onChange) onChange()
 
         return
       }

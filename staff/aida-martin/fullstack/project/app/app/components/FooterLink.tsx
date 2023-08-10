@@ -2,14 +2,12 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import isUserLoggedIn from '../logic/isUserLoggedIn'
 
 interface FooterLinkProps {
   route: string
   icon: JSX.Element
   iconFill: JSX.Element
   name: string
-  requiredLogin: boolean
 }
 
 export default function FooterLink({
@@ -17,20 +15,20 @@ export default function FooterLink({
   icon,
   iconFill,
   name,
-  requiredLogin,
 }: FooterLinkProps) {
   const currentRoute = usePathname()
 
   const isInRoute =
-    route === '/' ? currentRoute === '/' : currentRoute.includes(route)
+    route === '/'
+      ? currentRoute === '/'
+      : currentRoute !== null
+      ? currentRoute.includes(route)
+      : false
 
   return (
-    <Link
-      href={requiredLogin && !isUserLoggedIn() ? '/account/login' : route}
-      className="font-light p-2 flex flex-col items-center"
-    >
+    <Link href={route} className="font-light p-2 flex flex-col items-center">
       <span>{isInRoute ? iconFill : icon}</span>
-      <span>{name}</span>
+      {name}
     </Link>
   )
 }
