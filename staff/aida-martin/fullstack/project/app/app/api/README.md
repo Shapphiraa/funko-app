@@ -23,5 +23,5 @@ $ npm i mongoose
 ### Test
 
 ```sh
-$ npx ts-node -O '{"module": "commonjs"}' ./app/api/logic/*.test.ts
+$ npx ts-node -O '{"module": "commonjs"}' ./app/api/logic/*/*.test.ts
 ```

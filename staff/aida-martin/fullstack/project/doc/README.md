@@ -90,8 +90,8 @@ https://www.figma.com/file/HMkXmnAVyCGVC4F0D4sI4U/Final-Project?type=design&node
 - release (string)
 - availability (string)
 - trendingValue (number)
-- userCollection ([oid refers User])
-- userWhislist ([oid refers User])
+- userCollect (boolean)
+- userWhislist (boolean)
 - date (date)
 
 #### Sale Post
