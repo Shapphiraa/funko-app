@@ -20,7 +20,7 @@ export default function retrieveWhislistPreview({
       'images'
     ).lean()
 
-    if (!pop) throw new ExistenceError('Pop not found 😥')
+    if (pop === null) return null
 
     delete pop._id
 

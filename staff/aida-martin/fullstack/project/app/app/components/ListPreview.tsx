@@ -46,15 +46,25 @@ export default function ListPreview({
         <div className="flex flex-col items-center p-10">
           {icon}
           <h3 className="text-text-light text-4xl font-bold">
-            {preview?.quantity}
+            {preview ? preview.quantity : 0}
           </h3>
         </div>
         <div className="flex flex-col items-center p-2">
-          <h3 className="text-text-light text-lg font-normal">{subtittle}</h3>
+          <h3 className="text-text-light text-lg font-normal">
+            {preview ? subtittle : 'No added pop'}
+          </h3>
           <div>
-            {preview && (
+            {preview ? (
               <Image
                 src={preview.lastAddedPopImage}
+                alt="Preview"
+                width="130"
+                height="130"
+                quality="100"
+              />
+            ) : (
+              <Image
+                src="/no-pop.svg"
                 alt="Preview"
                 width="130"
                 height="130"

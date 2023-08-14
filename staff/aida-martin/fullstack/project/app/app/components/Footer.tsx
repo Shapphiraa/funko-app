@@ -54,14 +54,13 @@ export default function Footer() {
   return (
     <footer className="bg-general-blue text-white px-2">
       <ul className="flex gap-2 text-white font-semibold text-sm text-center h-full items-center">
-        {links.map(({ label, route, _icon, _iconFill, requiredLogin }) => (
+        {links.map(({ label, route, _icon, _iconFill }) => (
           <li className="grow shrink-0 basis-0" key={route}>
             <FooterLink
               route={route}
               icon={<_icon size="24px" />}
               iconFill={<_iconFill size="24px" />}
               name={label}
-              requiredLogin={requiredLogin}
             />
           </li>
         ))}
