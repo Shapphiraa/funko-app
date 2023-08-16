@@ -58,11 +58,12 @@ https://www.figma.com/file/HMkXmnAVyCGVC4F0D4sI4U/Final-Project?type=design&node
 - email (string)
 - password (encrypted string)
 - avatar (string)
-- adress (string)
+- location (string)
 - phoneNumber (string)
 - role (string)
 - popCollect ([oid refers Pop])
 - popWhislist ([oid refers Pop])
+- sales ([oid refers salePop])
 
 #### Image
 - id (oid)
@@ -75,8 +76,8 @@ https://www.figma.com/file/HMkXmnAVyCGVC4F0D4sI4U/Final-Project?type=design&node
 - id (oid)
 - name (string)
 - slug (string)
-- imageList (Image)
-- imageDetail (Image)
+- imageList (oid refers Image)
+- imageDetail (oid refers Image)
 
 #### Pop
 - id (oid)
@@ -84,7 +85,7 @@ https://www.figma.com/file/HMkXmnAVyCGVC4F0D4sI4U/Final-Project?type=design&node
 - exclusivity (string)
 - name (string)
 - number (number)
-- images ([Image])
+- images ([oids refers Image])
 - category (oid refers Category)
 - collect (string)
 - release (string)
@@ -94,7 +95,7 @@ https://www.figma.com/file/HMkXmnAVyCGVC4F0D4sI4U/Final-Project?type=design&node
 - userWhislist (boolean)
 - date (date)
 
-#### Sale Post
+#### Sale Pop
 - id (oid)
 - author:
     - id (oid refers User)
@@ -104,7 +105,7 @@ https://www.figma.com/file/HMkXmnAVyCGVC4F0D4sI4U/Final-Project?type=design&node
 - tittle (string)
 - description (string)
 - number (number)
-- images ([Image])
+- images ([oids refers Image])
 - variant (string)
 - category (string)
 - exclusivity (string)

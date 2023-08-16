@@ -27,14 +27,14 @@ const user = new Schema({
   },
   avatar: {
     type: String,
+    default: '/default-avatar.png',
   },
-  adress: {
+  location: {
     type: String,
-    // required: true
   },
   phoneNumber: {
     type: String,
-    // unique: true
+    unique: true,
   },
   role: {
     type: String,
@@ -49,6 +49,10 @@ const user = new Schema({
   popWhislist: {
     type: [ObjectId],
     ref: 'Pop',
+  },
+  sales: {
+    type: [ObjectId],
+    ref: 'SalePop',
   },
 })
 
@@ -165,7 +169,7 @@ const pop = new Schema({
   },
 })
 
-const salePost = new Schema({
+const salePop = new Schema({
   author: {
     type: ObjectId,
     ref: 'User',
@@ -186,7 +190,8 @@ const salePost = new Schema({
     required: true,
   },
   images: {
-    type: [image],
+    type: [ObjectId],
+    ref: 'Image',
     required: true,
   },
   variant: {
@@ -246,6 +251,6 @@ const User = mongoose.models.User || mongoose.model('User', user)
 const Image = mongoose.models.Image || model('Image', image)
 const Category = mongoose.models.Category || model('Category', category)
 const Pop = mongoose.models.Pop || model('Pop', pop)
-const SalePost = mongoose.models.SalePost || model('SalePost', salePost)
+const SalePop = mongoose.models.SalePop || model('SalePop', salePop)
 
-export { User, Image, Category, Pop, SalePost }
+export { User, Image, Category, Pop, SalePop }
