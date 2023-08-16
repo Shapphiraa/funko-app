@@ -1,6 +1,7 @@
 import { ContentError } from './errors'
 const EMAIL_REGEX = /([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})/i
 const HEX_DICTIONARY = '0123456789abcdef'
+const PHONE_NUMBER_REGEX = /(^\+?(6\d{2}|7[1-9]\d{1})\d{6}$)/
 
 /**
  * Validates the email
@@ -89,6 +90,18 @@ export function validateToken(token: string, explain = 'Token') {
 
 export function validateNumber(number: number, explain = 'Number') {
   if (isNaN(number)) throw new TypeError(`${explain} is not a number 😥`)
-  if (number.toString().length < 1)
+  if (!number.toString().trim().length)
     throw new ContentError(`${explain} is empty 😥`)
+}
+
+export function validatePhoneNumber(
+  phoneNumber: string,
+  explain = 'Phone Number'
+) {
+  if (!phoneNumber.trim().length)
+    throw new ContentError(`${explain} is empty 😥`)
+
+  if (!PHONE_NUMBER_REGEX.test(phoneNumber.replaceAll(' ', ''))) {
+    throw new ContentError('Phone number is not valid 😥')
+  }
 }

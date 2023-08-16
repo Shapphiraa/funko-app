@@ -6,7 +6,10 @@ export default function retrieveUser(userId: string) {
   validateId(userId)
 
   return (async () => {
-    const user: any = await User.findById(userId, 'name avatar').lean()
+    const user: any = await User.findById(
+      userId,
+      'name avatar email phoneNumber location'
+    ).lean()
 
     if (!user) throw new ExistenceError('User not found! 😥')
 

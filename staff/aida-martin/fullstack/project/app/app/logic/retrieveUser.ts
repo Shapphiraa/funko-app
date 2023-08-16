@@ -2,7 +2,10 @@ import context from './context'
 
 export interface User {
   name: string
-  avatar: string | null
+  avatar: string
+  email: string
+  phoneNumber?: string
+  location?: string
 }
 
 export default async function retrieveUser(): Promise<User> {

@@ -5,6 +5,7 @@ export {
   validateToken,
   validateString,
   validateNumber,
+  validatePhoneNumber,
 } from './validators'
 
 export {
