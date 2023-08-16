@@ -1,4 +1,5 @@
 import { validateId } from '../com'
+import context from './context'
 
 export interface Pop {
   variant: string
@@ -13,19 +14,31 @@ export interface Pop {
   release: string
   availability: string
   trendingValue: number
-  userCollect: []
-  userWhislist: []
+  userCollect: boolean
+  userWhislist: boolean
 }
 
 export default function retrievePop({ id }: { id: string }): Promise<Pop> {
   validateId(id, 'Pop ID')
 
   return (async () => {
-    const res = await fetch(`http://localhost:3000/api/pop/${id}`, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
+    let url = `http://localhost:3000/api/pop/${id}`
+    let res
+
+    if (context.token) {
+      res = await fetch(url, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${context.token}`,
+        },
+      })
+    } else {
+      res = await fetch(url, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+    }
 
     if (res.status === 200) return await res.json()
 
