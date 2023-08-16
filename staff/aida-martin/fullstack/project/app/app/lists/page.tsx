@@ -6,10 +6,10 @@ import ContainerLink from '../components/ContainerLink'
 import { IconBookmarkFill, IconHeartFill } from '../components/Icons'
 import { redirect } from 'next/navigation'
 import isUserLoggedIn from '../logic/isUserLoggedIn'
+import { useEffect, useState } from 'react'
 
 export default function Lists() {
-  // Es necesario ponerlo de cliente para comprobar si el usuario está logueado
-  if (!isUserLoggedIn()) redirect('/account/login')
+  const [isUserLogged, setIsUserLogged] = useState(false)
 
   const lists = [
     {
@@ -27,6 +27,17 @@ export default function Lists() {
       color: 'text-[#EC0063]',
     },
   ]
+
+  useEffect(() => {
+    if (!isUserLoggedIn()) {
+      setIsUserLogged(false)
+      redirect('/account/login')
+    }
+
+    setIsUserLogged(true)
+  }, [])
+
+  if (!isUserLogged) return null
 
   return (
     <section className="p-4 bg-white">
