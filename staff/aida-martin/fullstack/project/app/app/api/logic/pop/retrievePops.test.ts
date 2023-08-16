@@ -81,8 +81,6 @@ dotenv.config()
       email: 'peter@pan.com',
       password: '123123123',
       repeatPassword: '123123123',
-      avatar: null,
-      rol: 'user',
       popCollect: [`${pop1.id}`],
       popWhislist: [`${pop2.id}`],
     })

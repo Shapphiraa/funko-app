@@ -8,6 +8,7 @@ import Form from '../../library/Form'
 import Input from '../../library/Input'
 import registerUser from '../../logic/registerUser'
 import { useRouter } from 'next/navigation'
+import { FormEvent } from 'react'
 
 const inputs = [
   {
@@ -35,7 +36,7 @@ const inputs = [
 export default function Register() {
   const router = useRouter()
 
-  const handleRegister = async (event: React.SyntheticEvent) => {
+  const handleRegister = async (event: FormEvent) => {
     event.preventDefault()
 
     const target = event.target as typeof event.target & {

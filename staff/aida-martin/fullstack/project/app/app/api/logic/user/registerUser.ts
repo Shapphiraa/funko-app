@@ -36,7 +36,6 @@ export default function registerUser({
         name,
         email,
         password,
-        avatar: null,
       })
     } catch (error: any) {
       if (error.message.includes('E11000'))

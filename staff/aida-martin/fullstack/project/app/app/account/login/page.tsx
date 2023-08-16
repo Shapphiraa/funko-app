@@ -8,6 +8,7 @@ import Form from '../../library/Form'
 import Input from '../../library/Input'
 import loginUser from '../../logic/loginUser'
 import { useRouter } from 'next/navigation'
+import { FormEvent } from 'react'
 
 const inputs = [
   {
@@ -25,7 +26,7 @@ const inputs = [
 export default function Login() {
   const router = useRouter()
 
-  const handleLogin = async (event: React.SyntheticEvent) => {
+  const handleLogin = async (event: FormEvent) => {
     event.preventDefault()
 
     const target = event.target as typeof event.target & {

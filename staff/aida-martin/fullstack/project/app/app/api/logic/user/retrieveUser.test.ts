@@ -17,11 +17,6 @@ dotenv.config()
       name: 'Peter Pan',
       email: 'peter@pan.com',
       password: '123123123',
-      repeatPassword: '123123123',
-      avatar: null,
-      rol: 'user',
-      popCollect: [],
-      popWhislist: [],
     })
 
     const user = await User.findOne({ email: 'peter@pan.com' })
