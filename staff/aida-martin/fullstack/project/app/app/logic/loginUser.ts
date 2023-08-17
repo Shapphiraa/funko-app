@@ -1,6 +1,4 @@
-import useStorage from '../hooks/useStorage'
-
-const { setItem } = useStorage()
+import context from '../logic/context'
 
 import { validateEmail, validatePassword } from '../com'
 
@@ -28,9 +26,7 @@ export default function loginUser({
     if (res.status === 200) {
       const token = await res.json()
 
-      // context.token = token
-
-      setItem('token', token, 'session')
+      context.token = token
 
       return
     }
