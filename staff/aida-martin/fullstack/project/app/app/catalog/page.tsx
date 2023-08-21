@@ -13,7 +13,7 @@ export default async function Catalog() {
 
   return (
     <section className="py-4 bg-white">
-      <MenuHeader name="Catalog" />
+      <MenuHeader name="Categories" text="All" direction="/catalog/all" />
 
       <div className="grid grid-cols-2 px-4 gap-3 mt-4 place-items-center">
         {categories.map(({ name, imageList, slug }) => (
