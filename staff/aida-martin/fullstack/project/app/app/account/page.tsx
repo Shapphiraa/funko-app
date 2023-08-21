@@ -23,10 +23,12 @@ import {
   FieldType,
   PersonalInfo,
 } from '../../types.d'
+import CreatePopModal from '../components/Modals/CreatePopModal'
 
 export default function Account() {
   const [user, setUser] = useState<User>()
   const [fieldToEdit, setFieldToEdit] = useState<FieldType | null>(null)
+  const [adminModal, setAdminModal] = useState<boolean>(false)
 
   const getUser = async () => {
     const user = await retrieveUser()
@@ -52,6 +54,11 @@ export default function Account() {
 
   const handleCloseModal = () => {
     setFieldToEdit(null)
+    setAdminModal(false)
+  }
+
+  const handleOpenAdminModal = () => {
+    setAdminModal(true)
   }
 
   useEffect(() => {
@@ -140,8 +147,19 @@ export default function Account() {
 
           <div className="flex place-content-between items-center py-2 text-general-blue">
             <p className="text-lg text-text-light font-medium">Add pop</p>
-            <GeneralButton className="px-4" tittle="Add" />
+            <GeneralButton
+              className="px-4"
+              tittle="Add"
+              onClick={handleOpenAdminModal}
+            />
           </div>
+
+          {adminModal && (
+            <CreatePopModal
+              onCreated={handleCloseModal}
+              onCancel={handleCloseModal}
+            />
+          )}
         </>
       )}
 
