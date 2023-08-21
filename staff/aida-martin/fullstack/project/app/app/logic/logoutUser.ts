@@ -6,4 +6,4 @@
 
 import context from './context'
 
-export default () => (context.token = null)
+export default () => context.removetoken()

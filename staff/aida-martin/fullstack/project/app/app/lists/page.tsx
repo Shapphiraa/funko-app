@@ -30,7 +30,6 @@ export default function Lists() {
 
   useEffect(() => {
     if (!isUserLoggedIn()) {
-      setIsUserLogged(false)
       redirect('/account/login')
     }
 
