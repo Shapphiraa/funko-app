@@ -1,7 +1,7 @@
 import dotenv from 'dotenv'
 
 import mongoose from 'mongoose'
-import { User, Category, Pop } from '../../../../data/models'
+import { User, Category, Pop } from '../../data/models'
 import retrievePopWhislist from './retrievePopWhislist'
 
 dotenv.config()

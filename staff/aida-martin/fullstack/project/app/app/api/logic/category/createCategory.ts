@@ -7,7 +7,7 @@ import {
 } from '../../../com'
 import slugify from 'slugify'
 
-import { User, Category } from '../../../../data/models'
+import { User, Category } from '../../data/models'
 
 interface CreateCategoryProps {
   userId: string

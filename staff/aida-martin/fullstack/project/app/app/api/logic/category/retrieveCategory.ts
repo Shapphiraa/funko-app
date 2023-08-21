@@ -1,5 +1,5 @@
 import { ExistenceError } from '../../../com'
-import { Category } from '../../../../data/models'
+import { Category } from '../../data/models'
 
 export default async function retrieveCategory(filter: { slug: string }) {
   const [category] = await Category.find(

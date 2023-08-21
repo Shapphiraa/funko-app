@@ -1,7 +1,7 @@
 import dotenv from 'dotenv'
 
 import mongoose from 'mongoose'
-import { User, Category } from '../../../../data/models'
+import { User, Category } from '../../data/models'
 import createCategory from './createCategory'
 
 dotenv.config()

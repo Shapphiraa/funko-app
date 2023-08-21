@@ -1,5 +1,5 @@
 import { ExistenceError } from '../../../com'
-import { User, Pop } from '../../../../data/models'
+import { User, Pop } from '../../data/models'
 
 export default async function retrievePopCollection({
   userId,

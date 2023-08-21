@@ -7,7 +7,7 @@ import {
   ContentError,
 } from '../../../com'
 
-import { User } from '../../../../data/models'
+import { User } from '../../data/models'
 
 interface UpdateUserPhoneNumberProps {
   userId: string
@@ -30,10 +30,14 @@ export default function updateUserPhoneNumber({
       if (phoneNumber === user.phoneNumber)
         throw new ContentError('Your new email matches the current one 😥')
 
-      await User.updateOne(
-        { _id: userId },
-        { $set: { phoneNumber: phoneNumber.replaceAll(' ', '') } }
-      )
+      // await User.updateOne(
+      //   { _id: userId },
+      //   { $set: { phoneNumber: phoneNumber.replaceAll(' ', '') } }
+      // )
+
+      user.phoneNumber = phoneNumber.replaceAll(' ', '')
+
+      await user.save()
     } catch (error: any) {
       if (error.message.includes('E11000'))
         throw new DuplicityError('You cannot use an existing phone number')

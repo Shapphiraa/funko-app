@@ -1,5 +1,5 @@
 import { validateId, ExistenceError } from '../../../com'
-import { User, Pop } from '../../../../data/models'
+import { User, Pop } from '../../data/models'
 
 export default function toggleSaveInCollection(
   userId: string,
@@ -22,14 +22,20 @@ export default function toggleSaveInCollection(
     )
 
     if (index < 0) {
-      await User.updateOne({ _id: userId }, { $push: { popCollect: popId.id } })
+      // await User.updateOne({ _id: userId }, { $push: { popCollect: popId.id } })
+
+      user.popCollect.push(popId.id)
+
+      await user.save()
     } else {
       user.popCollect.splice(index, 1)
 
-      await User.updateOne(
-        { _id: userId },
-        { $set: { popCollect: user.popCollect } }
-      )
+      // await User.updateOne(
+      //   { _id: userId },
+      //   { $set: { popCollect: user.popCollect } }
+      // )
+
+      await user.save()
     }
   })()
 }

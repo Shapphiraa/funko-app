@@ -1,5 +1,5 @@
 import { ExistenceError } from '../../../com'
-import { User, Pop, Category } from '../../../../data/models'
+import { User, Pop, Category } from '../../data/models'
 
 export default async function retrievePops({
   userId,
@@ -22,6 +22,7 @@ export default async function retrievePops({
       'variant name images category userCollect userWhislist'
     )
       .populate('category', 'name slug imageList imageDetail')
+      .limit(10)
       .sort('-date')
       .lean()
   } else {
@@ -30,6 +31,7 @@ export default async function retrievePops({
       'variant name images category userCollect userWhislist'
     )
       .populate('category', 'name slug imageList imageDetail')
+      .limit(10)
       .sort('-date')
       .lean()
   }

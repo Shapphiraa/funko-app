@@ -6,7 +6,7 @@ import {
   PermissionsError,
 } from '../../../com'
 
-import { User, Pop } from '../../../../data/models'
+import { User, Pop } from '../../data/models'
 
 interface CreatePopProps {
   userId: string

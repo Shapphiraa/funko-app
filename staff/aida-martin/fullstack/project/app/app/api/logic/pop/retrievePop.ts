@@ -1,4 +1,4 @@
-import { Pop, User } from '../../../../data/models'
+import { Pop, User } from '../../data/models'
 
 export default async function retrievePop({
   userId,
@@ -7,13 +7,14 @@ export default async function retrievePop({
   userId?: string
   popId: string
 }) {
-  const pop: any = await Pop.findById(popId, '-__v -number -date')
+  const pop: any = await Pop.findById(popId, '-__v -date')
     .populate('category', 'name')
     .lean()
 
   pop.id = pop._id.toString()
   delete pop._id
 
+  pop.category.id = pop.category._id.toString()
   delete pop.category._id
 
   const user = await User.findById(userId)

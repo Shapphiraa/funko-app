@@ -7,7 +7,7 @@ import {
   ContentError,
 } from '../../../com'
 
-import { User } from '../../../../data/models'
+import { User } from '../../data/models'
 
 interface UpdateUserEmailProps {
   userId: string
@@ -30,7 +30,11 @@ export default function updateUserEmail({
       if (email === user.email)
         throw new ContentError('Your new email matches the current one 😥')
 
-      await User.updateOne({ _id: userId }, { $set: { email: email } })
+      // await User.updateOne({ _id: userId }, { $set: { email: email } })
+
+      user.email = email
+
+      await user.save()
     } catch (error: any) {
       if (error.message.includes('E11000'))
         throw new DuplicityError('You cannot use an existing email')

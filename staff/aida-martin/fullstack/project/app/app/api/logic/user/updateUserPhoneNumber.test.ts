@@ -1,7 +1,7 @@
 import dotenv from 'dotenv'
 
 import mongoose from 'mongoose'
-import { User, Pop } from '../../../../data/models'
+import { User, Pop } from '../../data/models'
 import updateUserPhoneNumber from './updateUserPhoneNumber'
 
 dotenv.config()

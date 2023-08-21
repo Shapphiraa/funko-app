@@ -1,6 +1,6 @@
 import { validateId, validateString, ExistenceError } from '../../../com'
 
-import { User } from '../../../../data/models'
+import { User } from '../../data/models'
 
 interface UpdateUserLocationProps {
   userId: string
@@ -19,6 +19,10 @@ export default function updateUserLocation({
 
     if (!user) throw new ExistenceError('User not found! 😥')
 
-    await User.updateOne({ _id: userId }, { $set: { location: location } })
+    // await User.updateOne({ _id: userId }, { $set: { location: location } })
+
+    user.location = location
+
+    await user.save()
   })()
 }

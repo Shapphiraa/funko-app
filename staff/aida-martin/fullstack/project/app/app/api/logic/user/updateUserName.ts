@@ -1,6 +1,6 @@
 import { validateId, validateString, ExistenceError } from '../../../com'
 
-import { User } from '../../../../data/models'
+import { User } from '../../data/models'
 
 interface UpdateUserNameProps {
   userId: string
@@ -16,6 +16,10 @@ export default function updateUserName({ userId, name }: UpdateUserNameProps) {
 
     if (!user) throw new ExistenceError('User not found! 😥')
 
-    await User.updateOne({ _id: userId }, { $set: { name: name } })
+    // await User.updateOne({ _id: userId }, { $set: { name: name } })
+
+    user.name = name
+
+    await user.save()
   })()
 }
