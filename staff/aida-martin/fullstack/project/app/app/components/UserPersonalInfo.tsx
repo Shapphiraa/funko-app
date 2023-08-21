@@ -19,7 +19,7 @@ export default function UserPersonalInfo({
       <div className="flex items-center gap-3 text-general-blue">
         <p className="text-lg text-text-light">{value}</p>
         <Button onClick={onEdit}>
-          <IconEdit size="20px" />
+          <IconEdit size="24px" />
         </Button>
       </div>
     </div>

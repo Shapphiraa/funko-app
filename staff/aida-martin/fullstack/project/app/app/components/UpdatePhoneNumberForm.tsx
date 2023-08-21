@@ -49,10 +49,10 @@ export default function UpdatePhoneNumberForm({
         <Input
           type="text"
           name="phoneNumber"
-          placeholder={
+          defaultValue={
             user.phoneNumber
               ? user.phoneNumber.replace(/(\d{3})(\d{3})(\d{3})/, '$1 $2 $3')
-              : 'Your phone number'
+              : ''
           }
         />
 

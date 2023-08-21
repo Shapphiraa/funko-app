@@ -118,15 +118,9 @@ export default function Account() {
             handleOpenModal(FIELD_PASSWORD)
           }}
         >
-          <IconEdit size="20px" />
+          <IconEdit size="24px" />
         </Button>
       </div>
-
-      <GeneralButton
-        className="w-full my-6"
-        tittle="Log out"
-        onClick={handleLogout}
-      />
 
       {fieldToEdit && (
         <UpdatePersonalInfoModal
@@ -136,6 +130,26 @@ export default function Account() {
           user={user}
         />
       )}
+
+      {user.role === 'admin' && (
+        <>
+          <Tittle
+            className="text-xl font-semibold mt-7 mb-4"
+            name="Administrator options"
+          />
+
+          <div className="flex place-content-between items-center py-2 text-general-blue">
+            <p className="text-lg text-text-light font-medium">Add pop</p>
+            <GeneralButton className="px-4" tittle="Add" />
+          </div>
+        </>
+      )}
+
+      <GeneralButton
+        className="w-full my-6"
+        tittle="Log out"
+        onClick={handleLogout}
+      />
     </section>
   )
 }

@@ -37,7 +37,7 @@ export default function UpdateEmailForm({
       <Tittle className="text-xl" name="Update email"></Tittle>
 
       <Form onSubmit={handleUpdate}>
-        <Input type="text" name="email" placeholder={user.email} />
+        <Input type="text" name="email" defaultValue={user.email} />
 
         <GeneralButton tittle="Update" />
       </Form>

@@ -1,16 +1,7 @@
 import context from './context'
 
-export interface User {
-  name: string
-  avatar: string
-  email: string
-  role: string
-  phoneNumber?: string
-  location?: string
-}
-
-export default async function retrieveUser(): Promise<User> {
-  const res = await fetch(`http://localhost:3000/api/user`, {
+export default async function retrieveUserRole(): Promise<string> {
+  const res = await fetch(`http://localhost:3000/api/user/role`, {
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${context.token}`,

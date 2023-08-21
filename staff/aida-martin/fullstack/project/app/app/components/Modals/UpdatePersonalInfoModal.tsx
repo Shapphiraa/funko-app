@@ -45,7 +45,7 @@ export default function UpdatePersonalInfoModal({
 
   return (
     <>
-      <AccountContainer>
+      <AccountContainer className="h-auto">
         <button
           className="text-general-blue flex items-center justify-center h-5 w-5 mb-7"
           onClick={onCancel}

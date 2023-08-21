@@ -37,7 +37,7 @@ export default function UpdateNameForm({
       <Tittle className="text-xl" name="Update name"></Tittle>
 
       <Form onSubmit={handleUpdate}>
-        <Input type="text" name="name" placeholder={user.name} />
+        <Input type="text" name="name" defaultValue={user.name} />
 
         <GeneralButton tittle="Update" />
       </Form>
