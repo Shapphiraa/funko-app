@@ -39,7 +39,7 @@ You will be able to see the ads and contact the seller or buyer through the chat
 - Manage your collection list
 - Manage your whislist
 - View sales posts in 'trade' section (search, filter, order)
-- Contact the seller through the chat if you wish
+- Contact the seller through the chat if you wish??
 - Manage your sales posts (CRUD)
 
 ### UI design
@@ -60,15 +60,15 @@ https://www.figma.com/file/HMkXmnAVyCGVC4F0D4sI4U/Final-Project?type=design&node
 - avatar (string)
 - location (string)
 - phoneNumber (string)
-- role (string)
+- role (string)  ('admin' | 'user')
 - popCollect ([oid refers Pop])
 - popWhislist ([oid refers Pop])
 - sales ([oid refers salePop])
 
 #### Image
 - id (oid)
-- src (string)
-- alt (string)
+- field/source (string)
+- description/alt (string)
 - width (number)
 - height (number)
 
@@ -81,19 +81,29 @@ https://www.figma.com/file/HMkXmnAVyCGVC4F0D4sI4U/Final-Project?type=design&node
 
 #### Pop
 - id (oid)
-- variant (string)
-- exclusivity (string)
+- variant (string) ('POP!'
+      | 'POP! DELUXE'
+      | 'POP! MOMENT'
+      | 'POP! 2-PACK'
+      | 'POP! SUPER'
+      | 'POP! JUMBO'
+      | 'POP! COVER'
+      | 'POP! ALBUM'
+      | 'POP! MOVIE POSTER'
+      | 'POP! TRAIN')
+- exclusivity (string) ('Exclusive' | 'Regular')
 - name (string)
 - number (number)
 - images ([oids refers Image])
 - category (oid refers Category)
 - collect (string)
 - release (string)
-- availability (string)
+- availability (string) ('Coming Soon' | 'Available' | 'Temporarily Unavailable' | 'Vaulted')
 - trendingValue (number)
 - userCollect (boolean)
 - userWhislist (boolean)
 - date (date)
+
 
 #### Sale Pop
 - id (oid)
@@ -112,6 +122,7 @@ https://www.figma.com/file/HMkXmnAVyCGVC4F0D4sI4U/Final-Project?type=design&node
 - date (date)
 - price (number)
 - status (string)
+- pop (oid refers Pop)
 
 ### Test Coverage
 

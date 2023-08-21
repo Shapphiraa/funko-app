@@ -1,4 +1,4 @@
-import dbConnect from '../../../data/dbConnect'
+import dbConnect from '../data/dbConnect'
 import { headers } from 'next/headers'
 import { NextResponse } from 'next/server'
 
