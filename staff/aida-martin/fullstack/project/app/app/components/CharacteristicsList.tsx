@@ -12,6 +12,7 @@ export default function CharacteristicsList({ pop }: { pop: Pop }) {
         name="Collection:"
         value={`${pop.collect}`}
       ></Characteristic>
+      <Characteristic name="Number:" value={`${pop.number}`}></Characteristic>
       <Characteristic
         name="Type:"
         value={`${pop.exclusivity}`}

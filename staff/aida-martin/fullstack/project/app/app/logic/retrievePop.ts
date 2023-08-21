@@ -7,9 +7,11 @@ export interface Pop {
   name: string
   images: string[]
   category: {
+    id: string
     name: string
   }
   id: string
+  number: number
   collect: string
   release: string
   availability: string
