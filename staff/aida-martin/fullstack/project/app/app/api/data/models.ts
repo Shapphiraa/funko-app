@@ -86,6 +86,7 @@ const user = new Schema({
   },
   phoneNumber: {
     type: String,
+    sparse: true,
     unique: true,
   },
   role: {
@@ -102,31 +103,31 @@ const user = new Schema({
     type: [ObjectId],
     ref: 'Pop',
   },
-  sales: {
-    type: [ObjectId],
-    ref: 'SalePop',
-  },
+  // sales: {
+  //   type: [ObjectId],
+  //   ref: 'SalePop',
+  // },
 })
 
-const image = new Schema({
-  src: {
-    type: String,
-    required: true,
-    // unique: true,
-  },
-  alt: {
-    type: String,
-    required: true,
-  },
-  width: {
-    type: Number,
-    required: true,
-  },
-  height: {
-    type: Number,
-    required: true,
-  },
-})
+// const image = new Schema({
+//   src: {
+//     type: String,
+//     required: true,
+// unique: true,
+//   },
+//   alt: {
+//     type: String,
+//     required: true,
+//   },
+//   width: {
+//     type: Number,
+//     required: true,
+//   },
+//   height: {
+//     type: Number,
+//     required: true,
+//   },
+// })
 
 const category = new Schema({
   name: {
@@ -300,9 +301,9 @@ const salePop = new Schema({
 
 // Se hace así por Vercel, para que, si ya está montado el modelo, lo utilice y no lo vuelva a crear
 const User = mongoose.models.User || mongoose.model('User', user)
-const Image = mongoose.models.Image || model('Image', image)
+// const Image = mongoose.models.Image || model('Image', image)
 const Category = mongoose.models.Category || model('Category', category)
 const Pop = mongoose.models.Pop || model('Pop', pop)
 const SalePop = mongoose.models.SalePop || model('SalePop', salePop)
 
-export { User, Image, Category, Pop, SalePop }
+export { User, Category, Pop, SalePop }

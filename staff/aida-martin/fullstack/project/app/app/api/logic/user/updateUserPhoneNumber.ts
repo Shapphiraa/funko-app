@@ -28,7 +28,9 @@ export default function updateUserPhoneNumber({
       if (!user) throw new ExistenceError('User not found! 😥')
 
       if (phoneNumber === user.phoneNumber)
-        throw new ContentError('Your new email matches the current one 😥')
+        throw new ContentError(
+          'Your new phone number matches the current one 😥'
+        )
 
       // await User.updateOne(
       //   { _id: userId },

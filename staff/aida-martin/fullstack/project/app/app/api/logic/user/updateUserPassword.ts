@@ -26,14 +26,14 @@ export default function updateUserPassword({
   validatePassword(newPassword, 'New password')
 
   if (newPassword !== newPasswordConfirm)
-    throw new ContentError('Passwords does not match 😢')
+    throw new ContentError('Passwords does not match 😥')
 
   return (async () => {
     const user = await User.findById(userId)
 
     if (!user) throw new ExistenceError('User not found! 😥')
 
-    if (user.password !== password) throw new AuthError('Wrong password! 😢')
+    if (user.password !== password) throw new AuthError('Wrong password! 😥')
 
     if (user.password === newPassword)
       throw new ContentError('Your new password matches the current one 😥')

@@ -41,7 +41,7 @@ export default function registerUser({
       if (error.message.includes('E11000'))
         throw new DuplicityError('You are already registered! Please login! 😅')
 
-      throw new UnknownError(error.message)
+      // throw new UnknownError(error.message)
     }
   })()
 }
