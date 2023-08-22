@@ -2,10 +2,10 @@ import { ExistenceError } from '../../../com'
 import { Category } from '../../data/models'
 
 export default async function retrieveCategory(filter: { slug: string }) {
-  const [category] = await Category.find(
+  const category = await Category.findOne(
     { slug: filter.slug },
     'name imageDetail'
-  ).lean()
+  )
 
   if (!category) throw new ExistenceError('Category not found! 😥')
 
