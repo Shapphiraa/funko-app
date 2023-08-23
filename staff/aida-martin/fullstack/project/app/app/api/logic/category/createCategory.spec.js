@@ -4,8 +4,7 @@ import { describe } from 'mocha'
 import mongoose from 'mongoose'
 import { User, Category } from '../../data/models'
 import createCategory from './createCategory'
-import cleanUp from '../helpers/tests/cleanUp'
-import generate from '../helpers/tests/generate'
+import { cleanUp, generate } from '../helpers/tests'
 import slugify from 'slugify'
 
 dotenv.config()

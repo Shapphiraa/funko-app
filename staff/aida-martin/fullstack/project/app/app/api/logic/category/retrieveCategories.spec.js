@@ -4,8 +4,7 @@ import { describe } from 'mocha'
 import mongoose from 'mongoose'
 import { Category } from '../../data/models'
 import retrieveCategories from './retrieveCategories'
-import cleanUp from '../helpers/tests/cleanUp'
-import generate from '../helpers/tests/generate'
+import { cleanUp, generate } from '../helpers/tests'
 
 dotenv.config()
 
