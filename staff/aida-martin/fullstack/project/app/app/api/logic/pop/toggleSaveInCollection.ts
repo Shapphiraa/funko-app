@@ -21,6 +21,7 @@ export default function toggleSaveInCollection(
       (id: string) => id.toString() === popId.id
     )
 
+    // cambiar por pulls?
     if (index < 0) {
       // await User.updateOne({ _id: userId }, { $push: { popCollect: popId.id } })
 

@@ -47,7 +47,7 @@ export default function createPop({
   return (async () => {
     const user = await User.findById(userId)
 
-    if (!user) throw new ExistenceError('User not found! 😢')
+    if (!user) throw new ExistenceError('User not found! 😥')
 
     if (user.role !== 'admin')
       throw new PermissionsError(

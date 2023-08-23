@@ -15,20 +15,21 @@ export default function retrieveWhislistPreview({
 
     const quantity = user.popWhislist.length
 
+    // Arreglar any!!
     const pop: any = await Pop.findById(
       user.popWhislist[user.popWhislist.length - 1],
       'images'
     ).lean()
 
-    if (pop === null) return null
+    if (pop) {
+      delete pop._id
 
-    delete pop._id
+      const lastAddedPopImage = pop.images[1]
 
-    const lastAddedPopImage = pop.images[1]
-
-    return {
-      quantity,
-      lastAddedPopImage,
+      return {
+        quantity,
+        lastAddedPopImage,
+      }
     }
   })()
 }

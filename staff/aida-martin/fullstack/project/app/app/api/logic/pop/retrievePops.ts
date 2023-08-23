@@ -10,10 +10,19 @@ export default async function retrievePops({
 }) {
   //TODO validators
 
+  // arreglar los any
+  let user: any
+
+  if (userId) {
+    user = await User.findById(userId)
+
+    if (!user) throw new ExistenceError('User not found! 😥')
+  }
+
   let pops
 
   if (filter.slug) {
-    const [category] = await Category.find({ slug: filter.slug }).lean()
+    const category = await Category.findOne({ slug: filter.slug })
 
     if (!category) throw new ExistenceError('Category not found! 😥')
 
@@ -22,7 +31,7 @@ export default async function retrievePops({
       'variant name images category userCollect userWhislist'
     )
       .populate('category', 'name slug imageList imageDetail')
-      .limit(10)
+      .limit(20)
       .sort('-date')
       .lean()
   } else {
@@ -31,12 +40,10 @@ export default async function retrievePops({
       'variant name images category userCollect userWhislist'
     )
       .populate('category', 'name slug imageList imageDetail')
-      .limit(10)
+      .limit(20)
       .sort('-date')
       .lean()
   }
-
-  const user = await User.findById(userId)
 
   pops.forEach((pop: any) => {
     pop.id = pop._id.toString()

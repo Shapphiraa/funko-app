@@ -12,7 +12,7 @@ export default function deletePop(userId: string, popId: { id: string }) {
       Pop.findById(popId.id),
     ])
 
-    if (!user) throw new ExistenceError('User not found! 😢')
+    if (!user) throw new ExistenceError('User not found! 😥')
 
     if (user.role !== 'admin')
       throw new PermissionsError(

@@ -93,7 +93,7 @@ describe('createCategory', () => {
       await Category.findOne({ name: category.name })
     } catch (error) {
       expect(error).to.be.instanceOf(Error)
-      expect(error).to.equal(
+      expect(error.message).to.equal(
         'You do not have permissions to perform this action! 😥'
       )
     }

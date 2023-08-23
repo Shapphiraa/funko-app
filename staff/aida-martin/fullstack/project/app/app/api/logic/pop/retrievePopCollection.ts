@@ -23,13 +23,13 @@ export default async function retrievePopCollection({
     pop.id = pop._id.toString()
     delete pop._id
 
-    pop.userCollect = user
-      ? user.popCollect.some((id: string) => id.toString() === pop.id)
-      : false
+    pop.userCollect = user.popCollect.some(
+      (id: string) => id.toString() === pop.id
+    )
 
-    pop.userWhislist = user
-      ? user.popWhislist.some((id: string) => id.toString() === pop.id)
-      : false
+    pop.userWhislist = user.popWhislist.some(
+      (id: string) => id.toString() === pop.id
+    )
   })
 
   return popCollection

@@ -52,7 +52,7 @@ export default function UpdatePop({
       Pop.findById(popId),
     ])
 
-    if (!user) throw new ExistenceError('User not found! 😢')
+    if (!user) throw new ExistenceError('User not found! 😥')
 
     if (user.role !== 'admin')
       throw new PermissionsError(

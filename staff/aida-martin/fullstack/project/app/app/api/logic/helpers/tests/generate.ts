@@ -24,7 +24,7 @@ const generate = {
     variant: 'POP!',
     exclusivity: 'Regular',
     name: `name-${Math.random()}`,
-    number: `number-${Math.random()}`,
+    number: Math.random(),
     images: [`image1-${Math.random()}`, `image2-${Math.random()}`],
     category: categoryId,
     collect: `collect-${Math.random()}`,

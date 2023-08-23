@@ -173,4 +173,18 @@ describe('registerUser', () => {
       )
     ).to.throw(Error, 'Name is not a string')
   })
+
+  it('fails on non-string email', () => {
+    expect(() =>
+      registerUser(
+        {
+          name: user.name,
+          email: 23,
+          password: user.password,
+          repeatPassword: user.password,
+        },
+        () => {}
+      )
+    ).to.throw(Error, 'Email is not a string')
+  })
 })
