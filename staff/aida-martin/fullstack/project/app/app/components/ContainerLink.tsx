@@ -7,5 +7,9 @@ export default function ContainerLink({
   children: JSX.Element
   route: string
 }) {
-  return <Link href={route}>{children}</Link>
+  return (
+    <Link href={route} key={`key-${route}`}>
+      {children}
+    </Link>
+  )
 }

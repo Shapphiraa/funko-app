@@ -1,4 +1,6 @@
-import { FormEvent } from 'react'
+'use client'
+
+import { FormEvent, useRef, useState } from 'react'
 import Form from '../library/Form'
 import Input from '../library/Input'
 import Tittle from '../library/Tittle'
@@ -7,6 +9,8 @@ import updatePop from '../logic/updatePop'
 import { Pop } from '../logic/retrievePop'
 import retrieveCategories from '../logic/retrieveCategories'
 import Select from './Select'
+import Image from 'next/image'
+import { IKContext, IKUpload } from 'imagekitio-react'
 
 export default async function UpdatePopForm({
   onEdited,
@@ -15,6 +19,12 @@ export default async function UpdatePopForm({
   pop: Pop
   onEdited: () => void
 }) {
+  const [image, setImage] = useState<string>(pop.images[0])
+  const [boxImage, setBoxImage] = useState<string>(pop.images[1])
+
+  const imageRef = useRef<HTMLInputElement>(null)
+  const boxImageRef = useRef<HTMLInputElement>(null)
+
   const categories = await retrieveCategories()
 
   const categoriesOptions = categories.map((category) => ({
@@ -22,6 +32,22 @@ export default async function UpdatePopForm({
     value: category.id,
     label: category.name,
   }))
+
+  const urlEndpoint = `${process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT}`
+  const publicKey = `${process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY}`
+  const authenticationEndpoint = `${process.env.NEXT_PUBLIC_URL}/api/image`
+
+  const onError = (err: any) => {
+    console.log('Error', err)
+  }
+
+  const onSuccessImage = (res: any) => {
+    setImage(res.url)
+  }
+
+  const onSuccessBoxImage = (res: any) => {
+    setBoxImage(res.url)
+  }
 
   const exclusivities = [
     {
@@ -57,6 +83,11 @@ export default async function UpdatePopForm({
       key: 'variant-moment',
       value: 'POP! MOMENT',
       label: 'POP! MOMENT',
+    },
+    {
+      key: 'variant-ride',
+      value: 'POP! RIDE',
+      label: 'POP! RIDE',
     },
     {
       key: 'variant-2-pack',
@@ -133,6 +164,11 @@ export default async function UpdatePopForm({
   const handleUpdate = async (event: FormEvent) => {
     event.preventDefault()
 
+    // Errores typescript... mostrar alert de error
+    if (image === null || boxImage === null) {
+      return
+    }
+
     const target = event.target as typeof event.target & {
       variant: { value: string }
       exclusivity: { value: string }
@@ -149,6 +185,7 @@ export default async function UpdatePopForm({
     const name = target.name.value
     const number = target.number.value
     const category = target.category.value
+    const images = [image, boxImage]
     const collect = target.collect.value
     const release = target.release.value
     const availability = target.availability.value
@@ -161,6 +198,7 @@ export default async function UpdatePopForm({
         name,
         number,
         category,
+        images,
         collect,
         release,
         availability,
@@ -176,6 +214,60 @@ export default async function UpdatePopForm({
       <Tittle className="text-xl" name="Edit pop"></Tittle>
 
       <Form onSubmit={handleUpdate}>
+        <div className="flex m-auto gap-3 mt-3">
+          <Image
+            src={image}
+            alt={pop.name}
+            width={150}
+            height={150}
+            className="rounded-2xl w-[150px] h-[150px]"
+            onClick={() => {
+              imageRef.current!.click()
+            }}
+          />
+
+          {/* @ts-ignore */}
+          <IKContext
+            publicKey={publicKey}
+            urlEndpoint={urlEndpoint}
+            authenticationEndpoint={authenticationEndpoint}
+          >
+            {/* @ts-ignore */}
+            <IKUpload
+              inputRef={imageRef}
+              onError={onError}
+              onSuccess={onSuccessImage}
+              hidden
+            />
+          </IKContext>
+
+          <Image
+            src={boxImage}
+            alt={pop.name}
+            width={150}
+            height={150}
+            className="rounded-2xl w-[150px] h-[150px]"
+            onClick={() => {
+              imageRef.current!.click()
+            }}
+          />
+
+          {/* @ts-ignore */}
+          <IKContext
+            publicKey={publicKey}
+            urlEndpoint={urlEndpoint}
+            authenticationEndpoint={authenticationEndpoint}
+          >
+            {/* @ts-ignore */}
+            <IKUpload
+              inputRef={boxImageRef}
+              onError={onError}
+              onSuccess={onSuccessBoxImage}
+              hidden
+            />
+          </IKContext>
+        </div>
+
         <label className="text-text-light text-lg font-normal">Variant:</label>
         <Select
           id="variant-select"

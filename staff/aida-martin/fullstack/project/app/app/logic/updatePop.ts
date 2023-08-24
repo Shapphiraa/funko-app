@@ -8,7 +8,7 @@ interface UpdatePopProps {
   name: string
   number: number
   category: string
-  // images: Array<string>
+  images: Array<string>
   collect: string
   release: string
   availability: string
@@ -21,6 +21,7 @@ export default function updatePop({
   name,
   number,
   category,
+  images,
   collect,
   release,
   availability,
@@ -30,7 +31,7 @@ export default function updatePop({
   validateString(exclusivity, 'Exclusivity')
   validateString(name, 'Name')
   validateNumber(number, 'Number')
-  // validateString(images, 'Images')
+  //validateString(images, 'Images')
   validateString(category, 'Category')
   validateString(collect, 'Collect')
   validateString(release, 'Release')
@@ -49,6 +50,7 @@ export default function updatePop({
         name,
         number,
         category,
+        images,
         collect,
         release,
         availability,

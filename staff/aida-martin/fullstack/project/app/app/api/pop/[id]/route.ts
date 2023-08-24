@@ -24,6 +24,7 @@ interface Body {
   name: string
   number: number
   category: string
+  images: Array<string>
   collect: string
   release: string
   availability: string
@@ -42,6 +43,7 @@ export async function PATCH(
       name,
       number,
       category,
+      images,
       collect,
       release,
       availability,
@@ -57,6 +59,7 @@ export async function PATCH(
       name,
       number,
       category,
+      images,
       collect,
       release,
       availability,

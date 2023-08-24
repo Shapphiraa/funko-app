@@ -16,7 +16,7 @@ interface EditPopProps {
   name: string
   number: number
   category: string
-  // images: Array<string>
+  images: Array<string>
   collect: string
   release: string
   availability: string
@@ -30,6 +30,7 @@ export default function UpdatePop({
   name,
   number,
   category,
+  images,
   collect,
   release,
   availability,
@@ -81,6 +82,7 @@ export default function UpdatePop({
     pop.name = name
     pop.number = number
     pop.category = category
+    pop.images = images
     pop.collect = collect
     pop.release = release
     pop.availability = availability

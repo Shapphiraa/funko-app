@@ -1,18 +1,36 @@
-import { FormEvent } from 'react'
+'use client'
+
+import { FormEvent, useRef, useState } from 'react'
+import { IKContext, IKUpload } from 'imagekitio-react'
+
 import Form from '../library/Form'
 import Input from '../library/Input'
 import Tittle from '../library/Tittle'
 import GeneralButton from './GeneralButton'
 import createPop from '../logic/createPop'
-import retrieveCategories from '../logic/retrieveCategories'
 import Select from './Select'
+import Image from 'next/image'
+import Button from '../library/Button'
+import { IconDelete } from './Icons'
+import { Category } from '../logic/retrieveCategories'
+import { IconCamera } from './Icons'
 
-export default async function CreatePopForm({
+export default function CreatePopForm({
+  categories,
   onCreated,
 }: {
+  categories: Category[]
   onCreated: () => void
 }) {
-  const categories = await retrieveCategories()
+  const [image, setImage] = useState<string | null>(null)
+  const [boxImage, setBoxImage] = useState<string | null>(null)
+
+  const imageRef = useRef<HTMLInputElement>(null)
+  const boxImageRef = useRef<HTMLInputElement>(null)
+
+  const urlEndpoint = `${process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT}`
+  const publicKey = `${process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY}`
+  const authenticationEndpoint = `${process.env.NEXT_PUBLIC_URL}/api/image`
 
   const categoriesOptions = categories.map((category) => ({
     key: `category-${category.slug}`,
@@ -54,6 +72,11 @@ export default async function CreatePopForm({
       key: 'variant-moment',
       value: 'POP! MOMENT',
       label: 'POP! MOMENT',
+    },
+    {
+      key: 'variant-ride',
+      value: 'POP! RIDE',
+      label: 'POP! RIDE',
     },
     {
       key: 'variant-2-pack',
@@ -127,22 +150,31 @@ export default async function CreatePopForm({
     label: availability.label,
   }))
 
+  const onError = (err: any) => {
+    console.log('Error', err)
+  }
+
+  const onSuccessImage = (res: any) => {
+    setImage(res.url)
+  }
+
+  const onSuccessBoxImage = (res: any) => {
+    setBoxImage(res.url)
+  }
+
   const handleCreate = async (event: FormEvent) => {
     event.preventDefault()
+
+    // Errores typescript... mostrar alert de error
+    if (image === null || boxImage === null) {
+      return
+    }
 
     const target = event.target as typeof event.target & {
       variant: { value: string }
       exclusivity: { value: string }
       name: { value: string }
       number: { value: number }
-      images: [
-        image1: {
-          value: string
-        },
-        image2: {
-          value: string
-        }
-      ]
       category: { value: string }
       collect: { value: string }
       release: { value: string }
@@ -153,7 +185,7 @@ export default async function CreatePopForm({
     const exclusivity = target.exclusivity.value
     const name = target.name.value
     const number = target.number.value
-    const images = [target.image1.value, target.image2.value]
+    const images = [image, boxImage]
     const category = target.category.value
     const collect = target.collect.value
     const release = target.release.value
@@ -182,6 +214,103 @@ export default async function CreatePopForm({
       <Tittle className="text-xl" name="Create pop"></Tittle>
 
       <Form onSubmit={handleCreate}>
+        <div className="flex m-auto gap-3 mt-3">
+          {image === null ? (
+            <>
+              <button
+                type="button"
+                className="w-[150px] h-[150px] border-[#D9D9D9] border-2 rounded-2xl text-[#D9D9D9]"
+                onClick={() => {
+                  imageRef.current!.click()
+                }}
+              >
+                <IconCamera size="50px" className="m-auto" />
+              </button>
+              {/* @ts-ignore */}
+              <IKContext
+                publicKey={publicKey}
+                urlEndpoint={urlEndpoint}
+                authenticationEndpoint={authenticationEndpoint}
+              >
+                {/* @ts-ignore */}
+                <IKUpload
+                  inputRef={imageRef}
+                  onError={onError}
+                  onSuccess={onSuccessImage}
+                  hidden
+                />
+              </IKContext>
+            </>
+          ) : (
+            <div className="relative">
+              <Image
+                src={image}
+                alt="hello"
+                width={150}
+                height={150}
+                className="rounded-2xl"
+              />
+
+              <Button
+                type="button"
+                className="bg-white rounded-2xl m-auto text-general-blue"
+                onClick={() => {
+                  setImage(null)
+                }}
+              >
+                <IconDelete size="24px" />
+              </Button>
+            </div>
+          )}
+
+          {boxImage === null ? (
+            <>
+              <button
+                type="button"
+                className="w-[150px] h-[150px] border-[#D9D9D9] border-2 rounded-2xl text-[#D9D9D9]"
+                onClick={() => {
+                  boxImageRef.current!.click()
+                }}
+              >
+                <IconCamera size="50px" className="m-auto" />
+              </button>
+              {/* @ts-ignore */}
+              <IKContext
+                publicKey={publicKey}
+                urlEndpoint={urlEndpoint}
+                authenticationEndpoint={authenticationEndpoint}
+              >
+                {/* @ts-ignore */}
+                <IKUpload
+                  inputRef={boxImageRef}
+                  onError={onError}
+                  onSuccess={onSuccessBoxImage}
+                  hidden
+                />
+              </IKContext>
+            </>
+          ) : (
+            <div className="relative">
+              <Image
+                src={boxImage}
+                alt="hello"
+                width={150}
+                height={150}
+                className="rounded-2xl"
+              />
+              <Button
+                type="button"
+                className="bg-white rounded-2xl m-auto text-general-blue"
+                onClick={() => {
+                  setBoxImage(null)
+                }}
+              >
+                <IconDelete size="24px" />
+              </Button>
+            </div>
+          )}
+        </div>
+
         <label className="text-text-light text-lg font-normal">Variant:</label>
         <Select id="variant-select" name="variant" options={variantsOptions} />
 
@@ -199,11 +328,6 @@ export default async function CreatePopForm({
         <label className="text-text-light text-lg font-normal">Number:</label>
 
         <Input type="number" name="number" />
-
-        <label className="text-text-light text-lg font-normal">Images:</label>
-
-        <Input type="text" name="image1" />
-        <Input type="text" name="image2" />
 
         <label className="text-text-light text-lg font-normal">Category:</label>
         <Select
