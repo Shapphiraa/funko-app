@@ -84,6 +84,7 @@ https://www.figma.com/file/HMkXmnAVyCGVC4F0D4sI4U/Final-Project?type=design&node
 - variant (string) ('POP!'
       | 'POP! DELUXE'
       | 'POP! MOMENT'
+      | 'POP! RIDE'
       | 'POP! 2-PACK'
       | 'POP! SUPER'
       | 'POP! JUMBO'
