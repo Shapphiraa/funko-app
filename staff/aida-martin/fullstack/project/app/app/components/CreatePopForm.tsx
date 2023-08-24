@@ -208,7 +208,7 @@ export default function CreatePopForm({
 
   return (
     <>
-      <Tittle className="text-xl" name="Create pop"></Tittle>
+      <Tittle className="text-2xl" name="Create pop"></Tittle>
 
       <Form onSubmit={handleCreate}>
         <div className="flex m-auto gap-3 mt-3">

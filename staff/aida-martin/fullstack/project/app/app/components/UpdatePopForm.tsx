@@ -208,7 +208,7 @@ export default async function UpdatePopForm({
 
   return (
     <>
-      <Tittle className="text-xl" name="Edit pop"></Tittle>
+      <Tittle className="text-2xl" name="Edit pop"></Tittle>
 
       <Form onSubmit={handleUpdate}>
         <div className="flex m-auto gap-3 mt-3">

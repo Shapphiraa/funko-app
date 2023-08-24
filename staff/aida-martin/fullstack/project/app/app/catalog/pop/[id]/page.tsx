@@ -69,67 +69,74 @@ export default function Detail({ params }: { params: { id: string } }) {
 
   return (
     <>
-      <div className="p-4">
-        <BackArrow></BackArrow>
-      </div>
-
-      <Container className="m-5 mt-0 p-5">
-        <Carousel>
-          <div className="h-full w-full !flex justify-center">
-            <ProductImage
-              image={pop.images[0]}
-              name={pop.name}
-              size={250}
-            ></ProductImage>
-          </div>
-          <div className="h-full w-full !flex justify-center">
-            <ProductImage
-              image={pop.images[1]}
-              name={pop.name}
-              size={250}
-            ></ProductImage>
-          </div>
-        </Carousel>
-
-        <h1 className="text-text-product-light text-3xl font-light mb-1 mt-10">
-          {pop.variant}
-        </h1>
-        <h2 className="text-text-product-light text-2xl font-semibold">
-          {pop.name}
-        </h2>
-
-        <AddToListsButtonsDetail pop={pop} onChange={getPop} />
-
-        <CharacteristicsList pop={pop} />
-
+      {!isOpenModal && (
         <>
-          {isAdmin && (
-            <>
-              <div className="flex justify-center gap-1 mt-4 text-general-blue">
-                <Button
-                  className="bg-white rounded-2xl"
-                  onClick={handleOpenModal}
-                >
-                  <IconEdit size="24px" />
-                </Button>
-                <Button
-                  className="bg-white rounded-2xl"
-                  onClick={handleDeletePop}
-                >
-                  <IconDelete size="24px" />
-                </Button>
+          <div className="p-4">
+            <BackArrow></BackArrow>
+          </div>
+
+          <Container className="m-5 mt-0 p-5">
+            <Carousel>
+              <div className="h-full w-full !flex justify-center">
+                <ProductImage
+                  image={pop.images[0]}
+                  name={pop.name}
+                  size={250}
+                ></ProductImage>
               </div>
-              {isOpenModal && (
-                <UpdatePopModal
-                  pop={pop}
-                  onEdited={handleCloseModal}
-                  onCancel={handleCloseModal}
-                ></UpdatePopModal>
+              <div className="h-full w-full !flex justify-center">
+                <ProductImage
+                  image={pop.images[1]}
+                  name={pop.name}
+                  size={250}
+                ></ProductImage>
+              </div>
+            </Carousel>
+
+            <h1 className="text-text-product-light text-3xl font-light mb-1 mt-10">
+              {pop.variant}
+            </h1>
+            <h2 className="text-text-product-light text-2xl font-semibold">
+              {pop.name}
+            </h2>
+
+            <AddToListsButtonsDetail pop={pop} onChange={getPop} />
+
+            <CharacteristicsList pop={pop} />
+
+            <>
+              {isAdmin && (
+                <>
+                  <div className="flex justify-center gap-1 mt-4 text-general-blue">
+                    <Button
+                      className="bg-white rounded-2xl"
+                      onClick={handleOpenModal}
+                    >
+                      <IconEdit size="24px" />
+                    </Button>
+                    <Button
+                      className="bg-white rounded-2xl"
+                      onClick={handleDeletePop}
+                    >
+                      <IconDelete size="24px" />
+                    </Button>
+                  </div>
+                </>
               )}
             </>
-          )}
+          </Container>
         </>
-      </Container>
+      )}
+
+      {isOpenModal && (
+        <div className="p-8 bg-white">
+          <UpdatePopModal
+            pop={pop}
+            onEdited={handleCloseModal}
+            onCancel={handleCloseModal}
+          ></UpdatePopModal>
+        </div>
+      )}
     </>
   )
 }
