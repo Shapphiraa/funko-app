@@ -11,6 +11,7 @@ import retrieveCategories from '../logic/retrieveCategories'
 import Select from './Select'
 import Image from 'next/image'
 import { IKContext, IKUpload } from 'imagekitio-react'
+import { urlEndpoint, publicKey, authenticationEndpoint } from '../ui'
 
 export default async function UpdatePopForm({
   onEdited,
@@ -32,10 +33,6 @@ export default async function UpdatePopForm({
     value: category.id,
     label: category.name,
   }))
-
-  const urlEndpoint = `${process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT}`
-  const publicKey = `${process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY}`
-  const authenticationEndpoint = `${process.env.NEXT_PUBLIC_URL}/api/image`
 
   const onError = (err: any) => {
     console.log('Error', err)

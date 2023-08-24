@@ -26,6 +26,7 @@ import {
 } from '../../types.d'
 import CreatePopModal from '../components/Modals/CreatePopModal'
 import { IKContext, IKUpload } from 'imagekitio-react'
+import { urlEndpoint, publicKey, authenticationEndpoint } from '../ui'
 
 export default function Account() {
   const [user, setUser] = useState<User>()
@@ -74,10 +75,6 @@ export default function Account() {
   useEffect(() => {
     getUser()
   }, [fieldToEdit, image])
-
-  const urlEndpoint = `${process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT}`
-  const publicKey = `${process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY}`
-  const authenticationEndpoint = `${process.env.NEXT_PUBLIC_URL}/api/image`
 
   const onError = (err: any) => {
     console.log('Error', err)

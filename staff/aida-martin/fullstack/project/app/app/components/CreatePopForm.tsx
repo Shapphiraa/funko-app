@@ -14,6 +14,7 @@ import Button from '../library/Button'
 import { IconDelete } from './Icons'
 import { Category } from '../logic/retrieveCategories'
 import { IconCamera } from './Icons'
+import { urlEndpoint, publicKey, authenticationEndpoint } from '../ui'
 
 export default function CreatePopForm({
   categories,
@@ -27,10 +28,6 @@ export default function CreatePopForm({
 
   const imageRef = useRef<HTMLInputElement>(null)
   const boxImageRef = useRef<HTMLInputElement>(null)
-
-  const urlEndpoint = `${process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT}`
-  const publicKey = `${process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY}`
-  const authenticationEndpoint = `${process.env.NEXT_PUBLIC_URL}/api/image`
 
   const categoriesOptions = categories.map((category) => ({
     key: `category-${category.slug}`,
