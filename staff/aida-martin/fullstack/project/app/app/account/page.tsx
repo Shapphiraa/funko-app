@@ -1,7 +1,7 @@
 'use client'
 
 import { redirect, useRouter } from 'next/navigation'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import isUserLoggedIn from '../logic/isUserLoggedIn'
 import retrieveUser from '../logic/retrieveUser'
 import { User } from '../logic/retrieveUser'
@@ -33,6 +33,8 @@ export default function Account() {
   const [adminModal, setAdminModal] = useState<boolean>(false)
 
   const [image, setImage] = useState<boolean>(false)
+
+  const imageRef = useRef<HTMLInputElement>(null)
 
   const getUser = async () => {
     const user = await retrieveUser()
@@ -132,7 +134,7 @@ export default function Account() {
             width={140}
             height={140}
             onClick={() => {
-              document.getElementById('test-image')?.click()
+              imageRef.current!.click()
             }}
           />
 
@@ -144,7 +146,7 @@ export default function Account() {
           >
             {/* @ts-ignore */}
             <IKUpload
-              id="test-image"
+              inputRef={imageRef}
               onError={onError}
               onSuccess={onSuccessImage}
               hidden
