@@ -31,5 +31,7 @@ export default function retrievePopCollectionPreview({
         lastAddedPopImage,
       }
     }
+
+    return null
   })()
 }

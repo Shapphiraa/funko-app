@@ -35,7 +35,7 @@ You will be able to see the ads and contact the seller or buyer through the chat
 #### User
 
 - View latest releases
-- View complete catalog (search, filter, order)
+- View complete catalog (search, filter for category)
 - Manage your collection list
 - Manage your whislist
 - View sales posts in 'trade' section (search, filter, order)

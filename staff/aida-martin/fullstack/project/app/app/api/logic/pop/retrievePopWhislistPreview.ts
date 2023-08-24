@@ -31,5 +31,7 @@ export default function retrieveWhislistPreview({
         lastAddedPopImage,
       }
     }
+
+    return null
   })()
 }

@@ -156,6 +156,7 @@ const pop = new Schema({
       'POP!',
       'POP! DELUXE',
       'POP! MOMENT',
+      'POP! RIDE',
       'POP! 2-PACK',
       'POP! SUPER',
       'POP! JUMBO',
