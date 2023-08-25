@@ -1,4 +1,4 @@
-import { validateEmail } from '../com'
+import { validateEmail } from '../helpers'
 import context from './context'
 
 interface UpdateUserEmailProps {

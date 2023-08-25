@@ -5,7 +5,7 @@ import {
   DuplicityError,
   UnknownError,
   ContentError,
-} from '../../../com'
+} from '../../../helpers'
 
 import { User } from '../../data/models'
 

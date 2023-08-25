@@ -1,4 +1,4 @@
-import { validateId, ExistenceError, PermissionsError } from '../../../com'
+import { validateId, ExistenceError, PermissionsError } from '../../../helpers'
 
 import { User, Pop } from '../../data/models'
 

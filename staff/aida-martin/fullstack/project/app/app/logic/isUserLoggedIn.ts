@@ -9,6 +9,6 @@
 // }
 
 import context from './context'
-import { isTokenAlive, isTokenValid } from '../com'
+import { isTokenAlive, isTokenValid } from './helpers/utils'
 
 export default () => isTokenValid(context.token) && isTokenAlive(context.token)

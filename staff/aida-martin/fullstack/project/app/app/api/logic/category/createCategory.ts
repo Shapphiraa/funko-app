@@ -4,7 +4,7 @@ import {
   ExistenceError,
   PermissionsError,
   DuplicityError,
-} from '../../../com'
+} from '../../../helpers'
 import slugify from 'slugify'
 
 import { User, Category } from '../../data/models'

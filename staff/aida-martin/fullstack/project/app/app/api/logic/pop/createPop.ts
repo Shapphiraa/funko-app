@@ -4,7 +4,7 @@ import {
   validateNumber,
   ExistenceError,
   PermissionsError,
-} from '../../../com'
+} from '../../../helpers'
 
 import { User, Pop } from '../../data/models'
 

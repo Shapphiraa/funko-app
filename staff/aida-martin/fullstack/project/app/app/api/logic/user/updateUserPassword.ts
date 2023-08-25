@@ -4,7 +4,7 @@ import {
   ContentError,
   ExistenceError,
   AuthError,
-} from '../../../com'
+} from '../../../helpers'
 
 import { User } from '../../data/models'
 

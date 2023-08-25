@@ -1,4 +1,4 @@
-import { validateId, validateString, validateNumber } from '../com'
+import { validateId, validateString, validateNumber } from '../helpers'
 import context from './context'
 
 interface UpdatePopProps {

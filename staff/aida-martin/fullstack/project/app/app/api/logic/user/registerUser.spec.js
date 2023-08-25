@@ -69,8 +69,6 @@ describe('registerUser', () => {
     }
   })
 
-  // Some validators tests:
-
   it('fails on non-matching passwords', async () => {
     try {
       await registerUser({
@@ -84,6 +82,8 @@ describe('registerUser', () => {
       expect(error.message).to.equal('Passwords does not match 😢')
     }
   })
+
+  // Some validators tests:
 
   it('fails on empty name', () =>
     expect(() =>

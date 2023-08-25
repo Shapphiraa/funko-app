@@ -1,4 +1,4 @@
-import { validateId, validateString, ExistenceError } from '../../../com'
+import { validateId, validateString, ExistenceError } from '../../../helpers'
 
 import { User } from '../../data/models'
 

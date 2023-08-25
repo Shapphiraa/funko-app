@@ -5,7 +5,7 @@ import {
   DuplicityError,
   ContentError,
   UnknownError,
-} from '../../../com'
+} from '../../../helpers'
 
 import { User } from '../../data/models'
 // const bcrypt = require('bcryptjs')

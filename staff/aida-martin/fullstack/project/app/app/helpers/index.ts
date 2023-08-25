@@ -17,5 +17,3 @@ export {
   UnknownError,
   PermissionsError,
 } from './errors'
-
-export { isTokenAlive, isTokenValid, extractSubFromToken } from './utils'

@@ -1,4 +1,4 @@
-import { validateToken } from './validators'
+import { validateToken } from '../../helpers/validators'
 
 function extractPayloadFromToken(token: string) {
   return JSON.parse(atob(token.split('.')[1]))

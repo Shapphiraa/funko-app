@@ -1,6 +1,6 @@
 import context from '../logic/context'
 
-import { validateEmail, validatePassword } from '../com'
+import { validateEmail, validatePassword } from '../helpers'
 
 interface LoginUserProps {
   email: string

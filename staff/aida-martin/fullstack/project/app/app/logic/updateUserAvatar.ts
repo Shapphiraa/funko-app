@@ -1,4 +1,4 @@
-import { validateString } from '../com'
+import { validateString } from '../helpers'
 import context from './context'
 
 interface UpdateUserAvatarProps {

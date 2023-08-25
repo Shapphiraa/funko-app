@@ -1,4 +1,4 @@
-import { validateId, ExistenceError } from '../../../com'
+import { validateId, ExistenceError } from '../../../helpers'
 import { User, Pop } from '../../data/models'
 
 export default function toggleSaveIWhislist(

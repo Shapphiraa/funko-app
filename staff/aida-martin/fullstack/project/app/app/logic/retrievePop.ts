@@ -1,4 +1,4 @@
-import { validateId } from '../com'
+import { validateId } from '../helpers'
 import context from './context'
 
 export interface Pop {

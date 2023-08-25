@@ -1,4 +1,4 @@
-import { validateString, validateEmail, validatePassword } from '../com'
+import { validateString, validateEmail, validatePassword } from '../helpers'
 
 interface RegisterUserProps {
   name: string

@@ -1,4 +1,4 @@
-import { validatePhoneNumber } from '../com'
+import { validatePhoneNumber } from '../helpers'
 import context from './context'
 
 interface UpdateUserPhoneNumberProps {

@@ -3,7 +3,7 @@ import {
   validatePassword,
   ExistenceError,
   AuthError,
-} from '../../../com'
+} from '../../../helpers'
 
 import { User } from '../../data/models'
 // const bcrypt = require('bcryptjs')

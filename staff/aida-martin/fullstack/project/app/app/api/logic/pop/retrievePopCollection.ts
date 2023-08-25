@@ -1,4 +1,4 @@
-import { ExistenceError } from '../../../com'
+import { ExistenceError } from '../../../helpers'
 import { User, Pop } from '../../data/models'
 
 export default async function retrievePopCollection({

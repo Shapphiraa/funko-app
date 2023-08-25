@@ -1,4 +1,4 @@
-import { validatePassword } from '../com'
+import { validatePassword } from '../helpers'
 import context from './context'
 
 interface UpdateUserPasswordProps {
