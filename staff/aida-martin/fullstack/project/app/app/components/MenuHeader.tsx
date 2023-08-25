@@ -8,11 +8,15 @@ export default function MenuHeader({
   route,
   text,
   direction,
+  isAdmin,
+  onClick,
 }: {
   name: string
   route?: string
   text?: string
   direction?: string
+  isAdmin?: boolean
+  onClick?: () => void
 }) {
   return (
     <div className="px-4 grid grid-cols-[40px_1fr_40px] mb-3">
@@ -21,10 +25,27 @@ export default function MenuHeader({
 
       {text && direction && (
         <ContainerLink route={direction}>
-          <Button className="bg-general-blue self-center shadow-lg rounded-xl text-lg text-white">
+          <Button
+            className={
+              'bg-general-blue self-center shadow-lg rounded-xl text-lg text-white'
+            }
+          >
             {text}
           </Button>
         </ContainerLink>
+      )}
+
+      {isAdmin && (
+        <>
+          <Button
+            onClick={onClick}
+            className={
+              'bg-general-blue self-center shadow-lg rounded-xl text-lg text-white'
+            }
+          >
+            {text!}
+          </Button>
+        </>
       )}
     </div>
   )

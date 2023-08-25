@@ -24,14 +24,16 @@ import {
   FieldType,
   PersonalInfo,
 } from '../../types.d'
-import CreatePopModal from '../components/Modals/CreatePopModal'
 import { IKContext, IKUpload } from 'imagekitio-react'
-import { urlEndpoint, publicKey, authenticationEndpoint } from '../ui'
+import {
+  urlEndpoint,
+  publicKey,
+  authenticationEndpoint,
+} from '../infrastructure'
 
 export default function Account() {
   const [user, setUser] = useState<User>()
   const [fieldToEdit, setFieldToEdit] = useState<FieldType | null>(null)
-  const [adminModal, setAdminModal] = useState<boolean>(false)
 
   const [image, setImage] = useState<boolean>(false)
 
@@ -61,11 +63,6 @@ export default function Account() {
 
   const handleCloseModal = () => {
     setFieldToEdit(null)
-    setAdminModal(false)
-  }
-
-  const handleOpenAdminModal = () => {
-    setAdminModal(true)
   }
 
   useEffect(() => {
@@ -122,100 +119,70 @@ export default function Account() {
 
   return (
     <section className="p-8 bg-white">
-      {!adminModal && (
-        <>
-          <Image
-            className="mx-auto rounded-full w-[140px] h-[140px] mt-1 mb-7 object-cover p-1 shadow-2xl"
-            src={user.avatar}
-            alt="avatar"
-            width={140}
-            height={140}
-            onClick={() => {
-              imageRef.current!.click()
-            }}
-          />
+      <Image
+        className="mx-auto rounded-full w-[140px] h-[140px] mt-1 mb-7 object-cover p-1 shadow-2xl"
+        src={user.avatar}
+        alt="avatar"
+        width={140}
+        height={140}
+        onClick={() => {
+          imageRef.current!.click()
+        }}
+      />
 
-          {/* @ts-ignore */}
-          <IKContext
-            publicKey={publicKey}
-            urlEndpoint={urlEndpoint}
-            authenticationEndpoint={authenticationEndpoint}
-          >
-            {/* @ts-ignore */}
-            <IKUpload
-              inputRef={imageRef}
-              onError={onError}
-              onSuccess={onSuccessImage}
-              hidden
-            />
-          </IKContext>
+      {/* @ts-ignore */}
+      <IKContext
+        publicKey={publicKey}
+        urlEndpoint={urlEndpoint}
+        authenticationEndpoint={authenticationEndpoint}
+      >
+        {/* @ts-ignore */}
+        <IKUpload
+          inputRef={imageRef}
+          onError={onError}
+          onSuccess={onSuccessImage}
+          hidden
+        />
+      </IKContext>
 
-          <Tittle className="text-xl font-semibold mb-4" name="Personal Info" />
-          {personalInfo.map(({ label, value, field }) => (
-            <UserPersonalInfo
-              label={label}
-              value={value}
-              onEdit={() => {
-                handleOpenModal(field)
-              }}
-              key={label}
-            />
-          ))}
+      <Tittle className="text-xl font-semibold mb-4" name="Personal Info" />
+      {personalInfo.map(({ label, value, field }) => (
+        <UserPersonalInfo
+          label={label}
+          value={value}
+          onEdit={() => {
+            handleOpenModal(field)
+          }}
+          key={label}
+        />
+      ))}
 
-          <Tittle className="text-xl font-semibold mt-7 mb-4" name="Settings" />
-          <div className="flex place-content-between items-center py-2 text-general-blue">
-            <p className="text-lg text-text-light font-medium">Password</p>
-            <Button
-              onClick={() => {
-                handleOpenModal(FIELD_PASSWORD)
-              }}
-            >
-              <IconEdit size="24px" />
-            </Button>
-          </div>
+      <Tittle className="text-xl font-semibold mt-7 mb-4" name="Settings" />
+      <div className="flex place-content-between items-center py-2 text-general-blue">
+        <p className="text-lg text-text-light font-medium">Password</p>
+        <Button
+          onClick={() => {
+            handleOpenModal(FIELD_PASSWORD)
+          }}
+        >
+          <IconEdit size="24px" />
+        </Button>
+      </div>
 
-          {fieldToEdit && (
-            <UpdatePersonalInfoModal
-              onUpdated={handleCloseModal}
-              onCancel={handleCloseModal}
-              field={fieldToEdit}
-              user={user}
-            />
-          )}
-
-          {/* // Mejorar con una lógica (isAdmin) */}
-          {user.role === 'admin' && (
-            <>
-              <Tittle
-                className="text-xl font-semibold mt-7 mb-4"
-                name="Administrator options"
-              />
-
-              <div className="flex place-content-between items-center py-2 text-general-blue">
-                <p className="text-lg text-text-light font-medium">Add pop</p>
-                <GeneralButton
-                  className="px-4"
-                  tittle="Add"
-                  onClick={handleOpenAdminModal}
-                />
-              </div>
-            </>
-          )}
-
-          <GeneralButton
-            className="w-full my-6"
-            tittle="Log out"
-            onClick={handleLogout}
-          />
-        </>
-      )}
-
-      {adminModal && (
-        <CreatePopModal
-          onCreated={handleCloseModal}
+      {fieldToEdit && (
+        <UpdatePersonalInfoModal
+          onUpdated={handleCloseModal}
           onCancel={handleCloseModal}
+          field={fieldToEdit}
+          user={user}
         />
       )}
+
+      <GeneralButton
+        className="w-full my-6"
+        tittle="Log out"
+        onClick={handleLogout}
+      />
     </section>
   )
 }

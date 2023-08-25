@@ -7,7 +7,7 @@ export default function Form({
 }) {
   return (
     <form
-      className="flex flex-col gap-[1.125rem] mt-4 mb-7"
+      className="flex flex-col gap-[1.125rem] mt-4 mb-7 px-4"
       onSubmit={onSubmit}
     >
       {children}

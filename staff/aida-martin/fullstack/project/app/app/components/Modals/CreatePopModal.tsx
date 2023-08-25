@@ -1,15 +1,15 @@
 import AccountContainer from '../AccountContainer'
 import { IconArrowLeft } from '../Icons'
-import CreatePopForm from '../CreatePopForm'
+import PopForm from '../PopForm'
 import retrieveCategories from '@/app/logic/retrieveCategories'
 
 interface CreatePopModalProps {
-  onCreated: () => void
+  onSubmit: () => void
   onCancel: () => void
 }
 
 export default async function CreatePopModal({
-  onCreated,
+  onSubmit,
   onCancel,
 }: CreatePopModalProps) {
   const categories = await retrieveCategories()
@@ -18,13 +18,18 @@ export default async function CreatePopModal({
     <>
       <AccountContainer className="h-auto">
         <button
-          className="text-general-blue flex items-center justify-center h-5 w-5 mb-7"
+          className="text-general-blue flex items-center justify-center h-9 w-9 mb-5"
           onClick={onCancel}
         >
           <IconArrowLeft size="24px"></IconArrowLeft>
         </button>
 
-        <CreatePopForm categories={categories} onCreated={onCreated} />
+        <PopForm
+          categories={categories}
+          onSubmit={onSubmit}
+          tittle="Create pop"
+          submitLabel="Create"
+        />
       </AccountContainer>
     </>
   )

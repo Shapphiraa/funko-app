@@ -10,21 +10,36 @@ import GeneralButton from './GeneralButton'
 import createPop from '../logic/createPop'
 import Select from './Select'
 import Image from 'next/image'
-import Button from '../library/Button'
-import { IconDelete } from './Icons'
 import { Category } from '../logic/retrieveCategories'
+import { Pop } from '../logic/retrievePop'
 import { IconCamera } from './Icons'
-import { urlEndpoint, publicKey, authenticationEndpoint } from '../ui'
+import {
+  urlEndpoint,
+  publicKey,
+  authenticationEndpoint,
+  exclusivities,
+  variants,
+  availabilities,
+} from '../infrastructure'
+import updatePop from '../logic/updatePop'
 
-export default function CreatePopForm({
+export default function PopForm({
   categories,
-  onCreated,
+  onSubmit,
+  pop,
+  tittle,
+  submitLabel,
 }: {
   categories: Category[]
-  onCreated: () => void
+  onSubmit: () => void
+  pop?: Pop
+  tittle: string
+  submitLabel: string
 }) {
-  const [image, setImage] = useState<string | null>(null)
-  const [boxImage, setBoxImage] = useState<string | null>(null)
+  const [image, setImage] = useState<string | null>(pop?.images[0] ?? null)
+  const [boxImage, setBoxImage] = useState<string | null>(
+    pop?.images[1] ?? null
+  )
 
   const imageRef = useRef<HTMLInputElement>(null)
   const boxImageRef = useRef<HTMLInputElement>(null)
@@ -33,118 +48,6 @@ export default function CreatePopForm({
     key: `category-${category.slug}`,
     value: category.id,
     label: category.name,
-  }))
-
-  const exclusivities = [
-    {
-      key: 'exclusivity-regular',
-      value: 'Regular',
-      label: 'Regular',
-    },
-    {
-      key: 'exclusivity-exclusive',
-      value: 'Exclusive',
-      label: 'Exclusive',
-    },
-  ]
-
-  const exclusivitiesOptions = exclusivities.map((exclusivity) => ({
-    key: exclusivity.key,
-    value: exclusivity.value,
-    label: exclusivity.label,
-  }))
-
-  const variants = [
-    {
-      key: 'variant-pop',
-      value: 'POP!',
-      label: 'POP!',
-    },
-    {
-      key: 'variant-deluxe',
-      value: 'POP! DELUXE',
-      label: 'POP! DELUXE',
-    },
-    {
-      key: 'variant-moment',
-      value: 'POP! MOMENT',
-      label: 'POP! MOMENT',
-    },
-    {
-      key: 'variant-ride',
-      value: 'POP! RIDE',
-      label: 'POP! RIDE',
-    },
-    {
-      key: 'variant-2-pack',
-      value: 'POP! 2-PACK',
-      label: 'POP! 2-PACK',
-    },
-    {
-      key: 'variant-super',
-      value: 'POP! SUPER',
-      label: 'POP! SUPER',
-    },
-    {
-      key: 'variant-jumbo',
-      value: 'POP! JUMBO',
-      label: 'POP! JUMBO',
-    },
-    {
-      key: 'variant-cover',
-      value: 'POP! COVER',
-      label: 'POP! COVER',
-    },
-    {
-      key: 'variant-album',
-      value: 'POP! ALBUM',
-      label: 'POP! ALBUM',
-    },
-    {
-      key: 'variant-movie-poster',
-      value: 'POP! MOVIE POSTER',
-      label: 'POP! MOVIE POSTER',
-    },
-    {
-      key: 'variant-train',
-      value: 'POP! TRAIN',
-      label: 'POP! TRAIN',
-    },
-  ]
-
-  const variantsOptions = variants.map((variant) => ({
-    key: variant.key,
-    value: variant.value,
-    label: variant.label,
-  }))
-
-  const availabilities = [
-    {
-      key: 'availability-coming-soon',
-      value: 'Coming Soon',
-      label: 'Coming Soon',
-    },
-    {
-      key: 'availability-available',
-      value: 'Available',
-      label: 'Available',
-    },
-    {
-      key: 'availability-temporarily-unavailable',
-      value: 'Temporarily Unavailable',
-      label: 'Temporarily Unavailable',
-    },
-    {
-      key: 'availability-vaulted',
-      value: 'Vaulted',
-      label: 'Vaulted',
-    },
-  ]
-
-  const availabilitiesOptions = availabilities.map((availability) => ({
-    key: availability.key,
-    value: availability.value,
-    label: availability.label,
   }))
 
   const onError = (err: any) => {
@@ -159,7 +62,7 @@ export default function CreatePopForm({
     setBoxImage(res.url)
   }
 
-  const handleCreate = async (event: FormEvent) => {
+  const handleSubmit = async (event: FormEvent) => {
     event.preventDefault()
 
     // Errores typescript... mostrar alert de error
@@ -189,18 +92,31 @@ export default function CreatePopForm({
     const availability = target.availability.value
 
     try {
-      await createPop({
-        variant,
-        exclusivity,
-        name,
-        number,
-        images,
-        category,
-        collect,
-        release,
-        availability,
-      })
-      onCreated()
+      pop
+        ? await updatePop({
+            id: pop.id,
+            variant,
+            exclusivity,
+            name,
+            number,
+            images,
+            category,
+            collect,
+            release,
+            availability,
+          })
+        : await createPop({
+            variant,
+            exclusivity,
+            name,
+            number,
+            images,
+            category,
+            collect,
+            release,
+            availability,
+          })
+      onSubmit()
     } catch (error: any) {
       console.log(error)
     }
@@ -208,15 +124,15 @@ export default function CreatePopForm({
 
   return (
     <>
-      <Tittle className="text-2xl" name="Create pop"></Tittle>
+      <Tittle className="text-2xl" name={tittle}></Tittle>
 
-      <Form onSubmit={handleCreate}>
+      <Form onSubmit={handleSubmit}>
         <div className="flex m-auto gap-3 mt-3">
           {image === null ? (
             <>
               <button
                 type="button"
-                className="w-[150px] h-[150px] border-[#D9D9D9] border-2 rounded-2xl text-[#D9D9D9]"
+                className="w-[150px] h-[150px] border-general-blue border-2 rounded-2xl text-general-blue"
                 onClick={() => {
                   imageRef.current!.click()
                 }}
@@ -239,32 +155,40 @@ export default function CreatePopForm({
               </IKContext>
             </>
           ) : (
-            <div className="relative">
+            <>
               <Image
                 src={image}
-                alt="hello"
+                alt="New image"
                 width={150}
                 height={150}
-                className="rounded-2xl"
+                className="rounded-2xl  w-[150px] h-[150px]"
+                onClick={() => {
+                  imageRef.current!.click()
+                }}
               />
 
-              <Button
-                type="button"
-                className="bg-white rounded-2xl m-auto text-general-blue"
-                onClick={() => {
-                  setImage(null)
-                }}
+              {/* @ts-ignore */}
+              <IKContext
+                publicKey={publicKey}
+                urlEndpoint={urlEndpoint}
+                authenticationEndpoint={authenticationEndpoint}
               >
-                <IconDelete size="24px" />
-              </Button>
-            </div>
+                {/* @ts-ignore */}
+                <IKUpload
+                  inputRef={imageRef}
+                  onError={onError}
+                  onSuccess={onSuccessImage}
+                  hidden
+                />
+              </IKContext>
+            </>
           )}
 
           {boxImage === null ? (
             <>
               <button
                 type="button"
-                className="w-[150px] h-[150px] border-[#D9D9D9] border-2 rounded-2xl text-[#D9D9D9]"
+                className="w-[150px] h-[150px] border-general-blue border-2 rounded-2xl text-general-blue"
                 onClick={() => {
                   boxImageRef.current!.click()
                 }}
@@ -287,29 +211,43 @@ export default function CreatePopForm({
               </IKContext>
             </>
           ) : (
-            <div className="relative">
+            <>
               <Image
                 src={boxImage}
-                alt="hello"
+                alt="New Box Image"
                 width={150}
                 height={150}
-                className="rounded-2xl"
-              />
-              <Button
-                type="button"
-                className="bg-white rounded-2xl m-auto text-general-blue"
+                className="rounded-2xl w-[150px] h-[150px]"
                 onClick={() => {
-                  setBoxImage(null)
+                  boxImageRef.current!.click()
                 }}
+              />
+
+              {/* @ts-ignore */}
+              <IKContext
+                publicKey={publicKey}
+                urlEndpoint={urlEndpoint}
+                authenticationEndpoint={authenticationEndpoint}
               >
-                <IconDelete size="24px" />
-              </Button>
-            </div>
+                {/* @ts-ignore */}
+                <IKUpload
+                  inputRef={boxImageRef}
+                  onError={onError}
+                  onSuccess={onSuccessBoxImage}
+                  hidden
+                />
+              </IKContext>
+            </>
           )}
         </div>
 
         <label className="text-text-light text-lg font-normal">Variant:</label>
-        <Select id="variant-select" name="variant" options={variantsOptions} />
+        <Select
+          id="variant-select"
+          name="variant"
+          options={variants}
+          defaultValue={pop?.variant ?? ''}
+        />
 
         <label className="text-text-light text-lg font-normal">
           Exclusivity:
@@ -317,28 +255,30 @@ export default function CreatePopForm({
         <Select
           id="exclusivity-select"
           name="exclusivity"
-          options={exclusivitiesOptions}
+          options={exclusivities}
+          defaultValue={pop?.exclusivity ?? ''}
         />
 
         <label className="text-text-light text-lg font-normal">Name:</label>
-        <Input type="text" name="name" />
+        <Input type="text" name="name" defaultValue={pop?.name ?? ''} />
         <label className="text-text-light text-lg font-normal">Number:</label>
 
-        <Input type="number" name="number" />
+        <Input type="number" name="number" defaultValue={pop?.number ?? ''} />
 
         <label className="text-text-light text-lg font-normal">Category:</label>
         <Select
           id="category-select"
           name="category"
           options={categoriesOptions}
+          defaultValue={pop?.category.id ?? ''}
         />
 
         <label className="text-text-light text-lg font-normal">
           Collection:
         </label>
-        <Input type="text" name="collect" />
+        <Input type="text" name="collect" defaultValue={pop?.collect ?? ''} />
         <label className="text-text-light text-lg font-normal">Release:</label>
-        <Input type="text" name="release" />
+        <Input type="text" name="release" defaultValue={pop?.release ?? ''} />
 
         <label className="text-text-light text-lg font-normal">
           Availability:
@@ -346,10 +286,11 @@ export default function CreatePopForm({
         <Select
           id="availability-select"
           name="availability"
-          options={availabilitiesOptions}
+          options={availabilities}
+          defaultValue={pop?.availability ?? ''}
         />
 
-        <GeneralButton tittle="Create" />
+        <GeneralButton tittle={submitLabel} />
       </Form>
     </>
   )

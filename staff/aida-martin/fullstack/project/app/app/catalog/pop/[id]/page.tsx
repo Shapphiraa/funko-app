@@ -129,10 +129,10 @@ export default function Detail({ params }: { params: { id: string } }) {
       )}
 
       {isOpenModal && (
-        <div className="p-8 bg-white">
+        <div className="p-4 bg-white">
           <UpdatePopModal
             pop={pop}
-            onEdited={handleCloseModal}
+            onSubmit={handleCloseModal}
             onCancel={handleCloseModal}
           ></UpdatePopModal>
         </div>

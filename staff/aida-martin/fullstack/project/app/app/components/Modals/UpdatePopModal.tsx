@@ -1,30 +1,39 @@
 import AccountContainer from '../AccountContainer'
 import { IconArrowLeft } from '../Icons'
-import UpdatePopForm from '../UpdatePopForm'
 import { Pop } from '../../logic/retrievePop'
+import PopForm from '../PopForm'
+import retrieveCategories from '@/app/logic/retrieveCategories'
 
 interface UpdatePopModalProps {
   pop: Pop
-  onEdited: () => void
+  onSubmit: () => void
   onCancel: () => void
 }
 
-export default function UpdatePopModal({
-  onEdited,
+export default async function UpdatePopModal({
+  onSubmit,
   onCancel,
   pop,
 }: UpdatePopModalProps) {
+  const categories = await retrieveCategories()
+
   return (
     <>
       <AccountContainer className="h-auto">
         <button
-          className="text-general-blue flex items-center justify-center h-5 w-5 mb-7"
+          className="text-general-blue flex items-center justify-center h-9 w-9 mb-5"
           onClick={onCancel}
         >
           <IconArrowLeft size="24px"></IconArrowLeft>
         </button>
 
-        <UpdatePopForm pop={pop} onEdited={onEdited} />
+        <PopForm
+          categories={categories}
+          pop={pop}
+          onSubmit={onSubmit}
+          tittle="Update pop"
+          submitLabel="Update"
+        />
       </AccountContainer>
     </>
   )
