@@ -1,6 +1,5 @@
 import dotenv from 'dotenv'
 import { expect } from 'chai'
-import { describe } from 'mocha'
 import mongoose from 'mongoose'
 import { Category } from '../../data/models'
 import retrieveCategory from './retrieveCategory'
@@ -19,8 +18,6 @@ describe('retrieveCategory', () => {
 
   beforeEach(async () => {
     category = generate.category()
-
-    console.log(category)
 
     await cleanUp()
   })

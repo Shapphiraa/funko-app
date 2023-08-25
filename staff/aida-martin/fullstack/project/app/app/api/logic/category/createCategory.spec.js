@@ -1,6 +1,5 @@
 import dotenv from 'dotenv'
 import { expect } from 'chai'
-import { describe } from 'mocha'
 import mongoose from 'mongoose'
 import { User, Category } from '../../data/models'
 import createCategory from './createCategory'

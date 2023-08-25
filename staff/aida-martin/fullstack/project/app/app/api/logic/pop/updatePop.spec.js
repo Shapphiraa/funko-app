@@ -1,6 +1,5 @@
 import dotenv from 'dotenv'
 import { expect } from 'chai'
-import { describe } from 'mocha'
 import mongoose from 'mongoose'
 import { User, Category, Pop } from '../../data/models'
 import updatePop from './updatePop'
@@ -74,6 +73,7 @@ describe('updatePop', () => {
       name: updatedPop.name,
       number: updatedPop.number,
       category: categoryCreated.id,
+      images: updatedPop.images,
       collect: updatedPop.collect,
       release: updatedPop.release,
       availability: updatedPop.availability,
@@ -111,6 +111,7 @@ describe('updatePop', () => {
         name: updatedPop.name,
         number: updatedPop.number,
         category: '123123123123123123123123',
+        images: updatedPop.images,
         collect: updatedPop.collect,
         release: updatedPop.release,
         availability: updatedPop.availability,
@@ -131,6 +132,7 @@ describe('updatePop', () => {
         name: updatedPop.name,
         number: updatedPop.number,
         category: '123123123123123123123123',
+        images: updatedPop.images,
         collect: updatedPop.collect,
         release: updatedPop.release,
         availability: updatedPop.availability,
@@ -160,6 +162,7 @@ describe('updatePop', () => {
         name: updatedPop.name,
         number: updatedPop.number,
         category: '123123123123123123123123',
+        images: updatedPop.images,
         collect: updatedPop.collect,
         release: updatedPop.release,
         availability: updatedPop.availability,
