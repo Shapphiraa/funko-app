@@ -4,6 +4,7 @@ import mongoose from 'mongoose'
 import { User, Category, Pop } from '../../data/models'
 import retrievePopWhislistPreview from './retrievePopWhislistPreview'
 import { cleanUp, generate } from '../helpers/tests'
+import { ExistenceError } from '../../../helpers'
 
 dotenv.config()
 
@@ -92,6 +93,24 @@ describe('retrievePopWhislistPreview', () => {
     expect(whislistPreviewRecovered.lastAddedPopImage).to.equal(
       secondPopCreated.images[1]
     )
+  })
+
+  it('succeeds on return null when no pops in user whislist', async () => {
+    await User.create({
+      name: user.name,
+      email: user.email,
+      password: user.password,
+      role: 'user',
+      popWhislist: [],
+    })
+
+    const userRegistered = await User.findOne({ email: user.email })
+
+    const whislistPreviewRecovered = await retrievePopWhislistPreview({
+      userId: userRegistered.id,
+    })
+
+    expect(whislistPreviewRecovered).to.be.null
   })
 
   it('fails on non-existing user', async () => {

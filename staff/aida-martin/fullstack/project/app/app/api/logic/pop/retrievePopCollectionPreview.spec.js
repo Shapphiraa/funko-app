@@ -94,6 +94,24 @@ describe('retrievePopCollectionPreview', () => {
     )
   })
 
+  it('succeeds on return null when no pops in user collection', async () => {
+    await User.create({
+      name: user.name,
+      email: user.email,
+      password: user.password,
+      role: 'user',
+      popCollect: [],
+    })
+
+    const userRegistered = await User.findOne({ email: user.email })
+
+    const collectionPreviewRecovered = await retrievePopCollectionPreview({
+      userId: userRegistered.id,
+    })
+
+    expect(collectionPreviewRecovered).to.be.null
+  })
+
   it('fails on non-existing user', async () => {
     try {
       await retrievePopCollectionPreview({
