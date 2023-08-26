@@ -18,7 +18,7 @@ export default function AllCatalogPage() {
 
       userRole === 'admin' ? setIsAdmin(true) : setIsAdmin(false)
     } catch (error: any) {
-      console.log(error)
+      console.log(error.message)
     }
   }
 

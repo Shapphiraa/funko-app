@@ -7,24 +7,27 @@ import AccountLink from '../../components/AccountLink'
 import Form from '../../library/Form'
 import Input from '../../library/Input'
 import loginUser from '../../logic/loginUser'
-import { useRouter } from 'next/navigation'
-import { FormEvent } from 'react'
-
-const inputs = [
-  {
-    type: 'text',
-    name: 'email',
-    placeholder: 'Email',
-  },
-  {
-    type: 'password',
-    name: 'password',
-    placeholder: 'Password',
-  },
-]
+import { redirect, useRouter } from 'next/navigation'
+import { FormEvent, useEffect, useState } from 'react'
+import isUserLoggedIn from '@/app/logic/isUserLoggedIn'
 
 export default function Login() {
+  const [isUserLogged, setIsUserLogged] = useState<boolean | null>(null)
+
   const router = useRouter()
+
+  const inputs = [
+    {
+      type: 'text',
+      name: 'email',
+      placeholder: 'Email',
+    },
+    {
+      type: 'password',
+      name: 'password',
+      placeholder: 'Password',
+    },
+  ]
 
   const handleLogin = async (event: FormEvent) => {
     event.preventDefault()
@@ -46,29 +49,42 @@ export default function Login() {
     }
   }
 
+  useEffect(() => {
+    if (isUserLoggedIn()) {
+      setIsUserLogged(true)
+      redirect('/account')
+    }
+
+    setIsUserLogged(false)
+  }, [])
+
   return (
-    <AccountContainer>
-      <Tittle name="Welcome!"></Tittle>
+    <>
+      {isUserLogged === false && (
+        <AccountContainer>
+          <Tittle name="Welcome!"></Tittle>
 
-      <Form onSubmit={handleLogin}>
-        <>
-          {inputs.map(({ type, name, placeholder }) => (
-            <Input
-              key={name}
-              type={type}
-              name={name}
-              placeholder={placeholder}
-            />
-          ))}
-        </>
-        <GeneralButton tittle="Log in"></GeneralButton>
-      </Form>
+          <Form onSubmit={handleLogin}>
+            <>
+              {inputs.map(({ type, name, placeholder }) => (
+                <Input
+                  key={name}
+                  type={type}
+                  name={name}
+                  placeholder={placeholder}
+                />
+              ))}
+            </>
+            <GeneralButton tittle="Log in"></GeneralButton>
+          </Form>
 
-      <AccountLink
-        text="Not a member? "
-        textLink="Sing up here"
-        route="/account/register"
-      ></AccountLink>
-    </AccountContainer>
+          <AccountLink
+            text="Not a member? "
+            textLink="Sing up here"
+            route="/account/register"
+          ></AccountLink>
+        </AccountContainer>
+      )}
+    </>
   )
 }

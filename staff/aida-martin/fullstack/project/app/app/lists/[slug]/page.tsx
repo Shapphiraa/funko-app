@@ -4,6 +4,7 @@ import isUserLoggedIn from '@/app/logic/isUserLoggedIn'
 import MenuHeader from '../../components/MenuHeader'
 import Products from '../../components/Products'
 import { redirect } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
 export async function generateStaticParams() {
   return [
@@ -17,15 +18,27 @@ export async function generateStaticParams() {
 }
 
 export default function ListsPages({ params }: { params: { slug: string } }) {
-  if (!isUserLoggedIn()) redirect('/account/login')
+  const [isUserLogged, setIsUserLogged] = useState<boolean | null>(null)
 
   const tittle = params.slug === 'collection' ? 'My Collection' : 'My Whislist'
 
-  return (
-    <section className="pt-4 bg-white">
-      <MenuHeader name={tittle} route="/lists" />
+  useEffect(() => {
+    if (!isUserLoggedIn()) {
+      redirect('/account/login')
+    }
 
-      <Products slug={params.slug} className="p-4" />
-    </section>
+    setIsUserLogged(true)
+  }, [])
+
+  return (
+    <>
+      {isUserLogged && (
+        <section className="pt-4 bg-white">
+          <MenuHeader name={tittle} route="/lists" />
+
+          <Products slug={params.slug} className="p-4" />
+        </section>
+      )}
+    </>
   )
 }

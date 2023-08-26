@@ -36,24 +36,26 @@ export default function Lists() {
     setIsUserLogged(true)
   }, [])
 
-  if (!isUserLogged) return null
-
   return (
-    <section className="p-4 bg-white">
-      <Tittle name="Your lists" />
-      <div className="flex flex-col gap-3">
-        {lists.map(({ route, tittle, _icon, section, color }) => (
-          <ContainerLink route={route} key={section}>
-            <ListPreview
-              tittle={tittle}
-              icon={<_icon size="60px" />}
-              section={section}
-              subtittle="Last added"
-              color={color}
-            />
-          </ContainerLink>
-        ))}
-      </div>
-    </section>
+    <>
+      {isUserLogged && (
+        <section className="p-4 bg-white">
+          <Tittle name="Your lists" />
+          <div className="flex flex-col gap-3">
+            {lists.map(({ route, tittle, _icon, section, color }) => (
+              <ContainerLink route={route} key={section}>
+                <ListPreview
+                  tittle={tittle}
+                  icon={<_icon size="60px" />}
+                  section={section}
+                  subtittle="Last added"
+                  color={color}
+                />
+              </ContainerLink>
+            ))}
+          </div>
+        </section>
+      )}
+    </>
   )
 }

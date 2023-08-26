@@ -7,34 +7,37 @@ import AccountLink from '../../components/AccountLink'
 import Form from '../../library/Form'
 import Input from '../../library/Input'
 import registerUser from '../../logic/registerUser'
-import { useRouter } from 'next/navigation'
-import { FormEvent } from 'react'
-
-const inputs = [
-  {
-    type: 'text',
-    name: 'name',
-    placeholder: 'Name',
-  },
-  {
-    type: 'text',
-    name: 'email',
-    placeholder: 'Email',
-  },
-  {
-    type: 'password',
-    name: 'password',
-    placeholder: 'Password',
-  },
-  {
-    type: 'password',
-    name: 'repeatPassword',
-    placeholder: 'Repeat Password',
-  },
-]
+import { redirect, useRouter } from 'next/navigation'
+import { FormEvent, useEffect, useState } from 'react'
+import isUserLoggedIn from '@/app/logic/isUserLoggedIn'
 
 export default function Register() {
+  const [isUserLogged, setIsUserLogged] = useState<boolean | null>(null)
+
   const router = useRouter()
+
+  const inputs = [
+    {
+      type: 'text',
+      name: 'name',
+      placeholder: 'Name',
+    },
+    {
+      type: 'text',
+      name: 'email',
+      placeholder: 'Email',
+    },
+    {
+      type: 'password',
+      name: 'password',
+      placeholder: 'Password',
+    },
+    {
+      type: 'password',
+      name: 'repeatPassword',
+      placeholder: 'Repeat Password',
+    },
+  ]
 
   const handleRegister = async (event: FormEvent) => {
     event.preventDefault()
@@ -60,29 +63,42 @@ export default function Register() {
     }
   }
 
+  useEffect(() => {
+    if (isUserLoggedIn()) {
+      setIsUserLogged(true)
+      redirect('/account')
+    }
+
+    setIsUserLogged(false)
+  }, [])
+
   return (
-    <AccountContainer>
-      <Tittle name="Create account"></Tittle>
+    <>
+      {isUserLogged === false && (
+        <AccountContainer>
+          <Tittle name="Create account"></Tittle>
 
-      <Form onSubmit={handleRegister}>
-        <>
-          {inputs.map(({ type, name, placeholder }) => (
-            <Input
-              key={name}
-              type={type}
-              name={name}
-              placeholder={placeholder}
-            />
-          ))}
-        </>
-        <GeneralButton tittle="Sign up"></GeneralButton>
-      </Form>
+          <Form onSubmit={handleRegister}>
+            <>
+              {inputs.map(({ type, name, placeholder }) => (
+                <Input
+                  key={name}
+                  type={type}
+                  name={name}
+                  placeholder={placeholder}
+                />
+              ))}
+            </>
+            <GeneralButton tittle="Sign up"></GeneralButton>
+          </Form>
 
-      <AccountLink
-        text="Have already an account? "
-        textLink="Login here"
-        route="/account/login"
-      ></AccountLink>
-    </AccountContainer>
+          <AccountLink
+            text="Have already an account? "
+            textLink="Login here"
+            route="/account/login"
+          ></AccountLink>
+        </AccountContainer>
+      )}
+    </>
   )
 }

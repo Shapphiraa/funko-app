@@ -40,9 +40,13 @@ export default function Account() {
   const imageRef = useRef<HTMLInputElement>(null)
 
   const getUser = async () => {
-    const user = await retrieveUser()
+    try {
+      const user = await retrieveUser()
 
-    setUser(user)
+      setUser(user)
+    } catch (error: any) {
+      console.log(error.message)
+    }
   }
 
   const router = useRouter()
