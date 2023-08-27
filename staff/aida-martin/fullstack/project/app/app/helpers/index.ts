@@ -4,6 +4,7 @@ export {
   validateId,
   validateToken,
   validateString,
+  validateDescription,
   validateNumber,
   validatePhoneNumber,
 } from './validators'

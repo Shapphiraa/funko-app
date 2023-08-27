@@ -37,6 +37,7 @@ export default function Products({
     getPops()
   }, [])
 
+  // Arreglar con spinner
   if (loading) return null
 
   return (
@@ -44,17 +45,7 @@ export default function Products({
       className={`w-full max-w-6xl mx-auto grid grid-cols-[repeat(auto-fit,_minmax(136px,1fr))] gap-4 ${className}`}
     >
       {pops.length > 0 ? (
-        pops.map((pop) => (
-          <Product
-            pop={pop}
-            key={pop.id}
-            id={pop.id}
-            image={pop.images[0]}
-            type={pop.variant}
-            name={pop.name}
-            onChange={getPops}
-          />
-        ))
+        pops.map((pop) => <Product pop={pop} key={pop.id} onChange={getPops} />)
       ) : slug === 'collection' || slug === 'whislist' ? (
         <h2 className="text-text-light text-xl font-normal text-justify">
           This list is empty. Tap catalog to add products to this list.

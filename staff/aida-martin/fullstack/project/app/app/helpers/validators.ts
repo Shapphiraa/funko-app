@@ -57,6 +57,18 @@ export function validateString(string: string, explain = 'String') {
   }
 }
 
+export function validateDescription(string: string, explain = 'Description') {
+  if (typeof string !== 'string') {
+    throw new TypeError(`${explain} is not a string 😥`)
+  }
+  if (!string.trim().length) {
+    throw new ContentError(`${explain} is empty 😥`)
+  }
+  if (string.trim().length < 50) {
+    throw new RangeError(`${explain} does not have 30 characters 😥`)
+  }
+}
+
 /**
  * Validates the ID
  *

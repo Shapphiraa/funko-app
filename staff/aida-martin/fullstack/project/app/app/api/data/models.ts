@@ -239,48 +239,23 @@ const salePop = new Schema({
     required: true,
     minLength: 50,
   },
-  number: {
-    type: Number,
+  condition: {
+    type: String,
+    enum: [
+      'Never opened',
+      'Good condition',
+      'Figure with defects',
+      'Box with defects',
+      'Flawed',
+    ],
+  },
+  pop: {
+    type: ObjectId,
+    ref: 'Pop',
     required: true,
   },
   images: {
-    type: [ObjectId],
-    ref: 'Image',
-    required: true,
-  },
-  variant: {
-    type: String,
-    enum: [
-      'POP!',
-      'POP! DELUXE',
-      'POP! MOMENT',
-      'POP! 2-PACK',
-      'POP! SUPER',
-      'POP! JUMBO',
-      'POP! COVER',
-      'POP! ALBUM',
-      'POP! MOVIE POSTER',
-      'POP! TRAIN',
-    ],
-    required: true,
-  },
-  category: {
-    type: String,
-    enum: [
-      'Disney',
-      'Harry Potter',
-      'Games',
-      'Anime',
-      'Music',
-      'Movies & TV',
-      'Animation',
-      'Sports',
-    ],
-    required: true,
-  },
-  exclusivity: {
-    type: String,
-    enum: ['Exclusive', 'Regular'],
+    type: [String],
     required: true,
   },
   date: {
