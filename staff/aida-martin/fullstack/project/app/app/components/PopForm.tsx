@@ -263,6 +263,7 @@ export default function PopForm({
         <Input type="text" name="name" defaultValue={pop?.name ?? ''} />
         <label className="text-text-light text-lg font-normal">Number:</label>
 
+        {/* @ts-ignore */}
         <Input type="number" name="number" defaultValue={pop?.number ?? ''} />
 
         <label className="text-text-light text-lg font-normal">Category:</label>

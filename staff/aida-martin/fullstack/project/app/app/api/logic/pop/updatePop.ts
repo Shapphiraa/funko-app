@@ -8,7 +8,7 @@ import {
 
 import { User, Pop } from '../../data/models'
 
-interface EditPopProps {
+interface UpdatePopProps {
   userId: string
   popId: string
   variant: string
@@ -34,7 +34,7 @@ export default function UpdatePop({
   collect,
   release,
   availability,
-}: EditPopProps) {
+}: UpdatePopProps) {
   validateId(userId)
   validateId(popId, 'Pop ID')
   validateString(variant, 'Variant')

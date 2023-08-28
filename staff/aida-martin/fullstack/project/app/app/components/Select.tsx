@@ -7,6 +7,7 @@ interface OptionType {
 interface SelectProps {
   options: OptionType[]
   defaultValue?: string
+  disabled?: boolean
   name: string
   id: string
 }
@@ -14,6 +15,7 @@ interface SelectProps {
 export default function Select({
   options,
   defaultValue,
+  disabled,
   name,
   id,
 }: SelectProps) {
@@ -24,6 +26,7 @@ export default function Select({
         name={name}
         id={id}
         defaultValue={defaultValue}
+        disabled={disabled}
       >
         {options.map((option) => (
           <option className="" value={option.value} key={option.key}>

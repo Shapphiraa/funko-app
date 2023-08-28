@@ -95,3 +95,49 @@ export const availabilities = [
     label: 'Vaulted',
   },
 ]
+
+export const conditions = [
+  {
+    key: 'condition-never-opened',
+    value: 'Never opened',
+    label: 'Never opened',
+  },
+  {
+    key: 'condition-good-condition',
+    value: 'Good condition',
+    label: 'Good condition',
+  },
+  {
+    key: 'condition-figure-with-defects',
+    value: 'Figure with defects',
+    label: 'Figure with defects',
+  },
+  {
+    key: 'condition-box-with-defects',
+    value: 'Box with defects',
+    label: 'Box with defects',
+  },
+  {
+    key: 'condition-flawed',
+    value: 'Flawed',
+    label: 'Flawed',
+  },
+]
+
+export const status = [
+  {
+    key: 'status-available',
+    value: 'Available',
+    label: 'Available',
+  },
+  {
+    key: 'status-reserved',
+    value: 'Reserved',
+    label: 'Reserved',
+  },
+  {
+    key: 'status-sold',
+    value: 'Sold',
+    label: 'Sold',
+  },
+]

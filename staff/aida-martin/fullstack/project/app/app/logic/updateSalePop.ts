@@ -1,30 +1,35 @@
-import { validateString, validateNumber, validateDescription } from '../helpers'
+import {
+  validateId,
+  validateString,
+  validateNumber,
+  validateDescription,
+} from '../helpers'
 import context from './context'
 
-interface CreateSalePopProps {
+interface UpdateSalePopProps {
+  id: string
   description: string
   condition: string
-  pop: string
-  images: Array<string>
   price: number
+  images: Array<string>
 }
 
-export default function createSalePop({
+export default function updateSalePop({
+  id,
   description,
   condition,
-  pop,
-  images,
   price,
-}: CreateSalePopProps): Promise<void> {
+  images,
+}: UpdateSalePopProps) {
+  validateId(id, 'Sale Pop ID')
   validateDescription(description)
   validateString(condition, 'Condition')
-  // validateString(images, 'Images')
-  validateString(pop, 'Pop')
   validateNumber(price, 'Price')
+  // validateString(images, 'Images')
 
   return (async () => {
-    const res = await fetch(`http://localhost:3000/api/trade`, {
-      method: 'POST',
+    const res = await fetch(`http://localhost:3000/api/trade/${id}`, {
+      method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${context.token}`,
@@ -32,13 +37,12 @@ export default function createSalePop({
       body: JSON.stringify({
         description,
         condition,
-        pop,
-        images,
         price,
+        images,
       }),
     })
 
-    if (res.status === 201) return
+    if (res.status === 204) return
 
     const { message } = await res.json()
 

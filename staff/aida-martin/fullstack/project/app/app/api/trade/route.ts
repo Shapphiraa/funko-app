@@ -5,7 +5,6 @@ import extractUserId from '../handlers/helpers/extractUserId'
 import retrieveSalePops from '../logic/trade/retrieveSalePops'
 
 interface Body {
-  tittle: string
   description: string
   condition: string
   pop: string
@@ -19,12 +18,11 @@ export async function POST(req: NextRequest) {
 
     const userId = extractUserId(req)
 
-    const { tittle, description, condition, pop, images, price }: Body =
+    const { description, condition, pop, images, price }: Body =
       JSON.parse(body)
 
     await createSalePop({
       userId,
-      tittle,
       description,
       condition,
       pop,

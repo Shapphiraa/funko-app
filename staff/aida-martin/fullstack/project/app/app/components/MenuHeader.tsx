@@ -8,14 +8,14 @@ export default function MenuHeader({
   route,
   text,
   direction,
-  isAdmin,
+  permission,
   onClick,
 }: {
   name: string
   route?: string
   text?: string
   direction?: string
-  isAdmin?: boolean
+  permission?: boolean
   onClick?: () => void
 }) {
   return (
@@ -35,7 +35,7 @@ export default function MenuHeader({
         </ContainerLink>
       )}
 
-      {isAdmin && (
+      {permission && (
         <>
           <Button
             onClick={onClick}

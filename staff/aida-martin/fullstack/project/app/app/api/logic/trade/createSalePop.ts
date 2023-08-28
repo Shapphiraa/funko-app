@@ -10,7 +10,6 @@ import { User, SalePop } from '../../data/models'
 
 interface CreateSalePopProps {
   userId: string
-  tittle: string
   description: string
   condition: string
   pop: string
@@ -20,7 +19,6 @@ interface CreateSalePopProps {
 
 export default function createSalePop({
   userId,
-  tittle,
   description,
   condition,
   pop,
@@ -28,7 +26,6 @@ export default function createSalePop({
   price,
 }: CreateSalePopProps) {
   validateId(userId)
-  validateString(tittle, 'Tittle')
   validateDescription(description)
   validateString(condition, 'Condition')
   // validateString(images, 'Images')
@@ -42,7 +39,6 @@ export default function createSalePop({
 
     await SalePop.create({
       author: userId,
-      tittle,
       description,
       condition,
       pop,

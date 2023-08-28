@@ -137,9 +137,21 @@ export function IconBookmark({ size = '1em' }: { size?: string }) {
   )
 }
 
-export function IconBookmarkFill({ size = '1em' }: { size?: string }) {
+export function IconBookmarkFill({
+  size = '1em',
+  className,
+}: {
+  size?: string
+  className?: string
+}) {
   return (
-    <svg fill="none" viewBox="0 0 15 15" height={size} width={size}>
+    <svg
+      fill="none"
+      viewBox="0 0 15 15"
+      height={size}
+      width={size}
+      className={className}
+    >
       <path
         fill="currentColor"
         fillRule="evenodd"
@@ -230,6 +242,19 @@ export function IconCamera({
     >
       <path d="M320 272 A64 64 0 0 1 256 336 A64 64 0 0 1 192 272 A64 64 0 0 1 320 272 z" />
       <path d="M432 144h-59c-3 0-6.72-1.94-9.62-5l-25.94-40.94a15.52 15.52 0 00-1.37-1.85C327.11 85.76 315 80 302 80h-92c-13 0-25.11 5.76-34.07 16.21a15.52 15.52 0 00-1.37 1.85l-25.94 41c-2.22 2.42-5.34 5-8.62 5v-8a16 16 0 00-16-16h-24a16 16 0 00-16 16v8h-4a48.05 48.05 0 00-48 48V384a48.05 48.05 0 0048 48h352a48.05 48.05 0 0048-48V192a48.05 48.05 0 00-48-48zM256 368a96 96 0 1196-96 96.11 96.11 0 01-96 96z" />
+    </svg>
+  )
+}
+
+export function IconUnavailable({ size = '1em' }: { size?: string }) {
+  return (
+    <svg fill="none" viewBox="0 0 24 24" height={size} width={size}>
+      <path
+        fill="currentColor"
+        fillRule="evenodd"
+        d="M18.364 5.636A9 9 0 115.636 18.364 9 9 0 0118.364 5.636zm-2.172 11.97L6.393 7.808a7.001 7.001 0 009.8 9.8zM16.95 7.05a7.002 7.002 0 01.657 9.142l-9.8-9.799a7.001 7.001 0 019.143.657z"
+        clipRule="evenodd"
+      />
     </svg>
   )
 }

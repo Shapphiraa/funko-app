@@ -1,5 +1,4 @@
 export interface PopForSale {
-  tittle: string
   description: string
   condition: string
   images: string[]
@@ -11,6 +10,8 @@ export interface PopForSale {
     avatar: string
   }
   pop: {
+    id: string
+    name: string
     variant: string
     exclusivity: string
     number: string

@@ -46,7 +46,7 @@ export default function AllCatalogPage() {
           <MenuHeader
             name="Catalog"
             route="/catalog"
-            isAdmin={isAdmin}
+            permission={isAdmin}
             text="Add"
             onClick={handleOpenAdminModal}
           />

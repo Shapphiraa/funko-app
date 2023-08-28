@@ -1,5 +1,4 @@
 export interface PopForSale {
-  tittle: string
   images: string[]
   price: number
   id: string
@@ -8,8 +7,12 @@ export interface PopForSale {
     name: string
     avatar: string
   }
+  pop: {
+    name: string
+  }
   number: number
   collect: string
+  status: string
 }
 
 export default async function retrieveSalePops(): Promise<PopForSale[]> {

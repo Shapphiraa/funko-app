@@ -229,11 +229,6 @@ const salePop = new Schema({
     ref: 'User',
     required: true,
   },
-  tittle: {
-    type: String,
-    required: true,
-    maxLength: 50,
-  },
   description: {
     type: String,
     required: true,

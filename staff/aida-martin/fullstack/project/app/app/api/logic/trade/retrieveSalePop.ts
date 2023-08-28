@@ -13,7 +13,7 @@ export default async function retrieveSalePop({
     .populate({
       path: 'pop',
       populate: { path: 'category', select: 'name' },
-      select: 'variant exclusivity number collect',
+      select: 'variant name exclusivity number collect',
     })
     .lean()
 

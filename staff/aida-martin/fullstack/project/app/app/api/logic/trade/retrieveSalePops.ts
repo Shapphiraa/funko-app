@@ -1,7 +1,12 @@
 import { SalePop } from '../../data/models'
 
 export default async function retrieveSalePops() {
-  const salePops = await SalePop.find({}, 'tittle price images')
+  const salePops = await SalePop.find(
+    {
+      status: ['Available', 'Reserved'],
+    },
+    'price images status'
+  )
     .limit(20)
     .populate('author', 'name avatar')
     .populate('pop', 'name')
