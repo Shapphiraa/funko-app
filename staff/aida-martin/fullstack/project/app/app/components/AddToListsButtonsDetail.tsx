@@ -22,7 +22,7 @@ export default function AddListsButtonsDetail({
     userCollect: boolean
     userWhislist: boolean
   }
-  onChange?: () => void
+  onChange: () => void
 }) {
   const [inCollection, setInCollection] = useState(pop.userCollect)
   const [inWhislist, setInWhislist] = useState(pop.userWhislist)
@@ -36,7 +36,7 @@ export default function AddListsButtonsDetail({
 
         setInCollection(!inCollection)
 
-        if (onChange) onChange()
+        onChange()
 
         return
       }
@@ -54,7 +54,7 @@ export default function AddListsButtonsDetail({
 
         setInWhislist(!inWhislist)
 
-        if (onChange) onChange()
+        onChange()
 
         return
       }

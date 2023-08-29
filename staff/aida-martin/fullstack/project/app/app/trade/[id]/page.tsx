@@ -21,6 +21,9 @@ import Image from 'next/image'
 import SalePopCharacteristicsList from '@/app/components/SalePopCharacteristicsList'
 import getUserId from '@/app/logic/getUserId'
 import UpdateSalePopModal from '@/app/components/Modals/UpdateSalePopModal'
+import GeneralButton from '@/app/components/GeneralButton'
+import ToggleSalePopStatus from '@/app/api/logic/trade/toggleSalePopStatus'
+import ToggleSalePopStatusButton from '@/app/components/ToggleSalePopStatusButton'
 
 export default function Detail({ params }: { params: { id: string } }) {
   const [salePop, setSalePop] = useState<PopForSale>()
@@ -115,6 +118,24 @@ export default function Detail({ params }: { params: { id: string } }) {
                     ></ProductImage>
                   </div>
                 </Carousel>
+
+                <>
+                  {isUserLoggedIn() && salePop.author.id === getUserId() && (
+                    <>
+                      <div className="grid grid-cols-2 gap-2 mt-10 text-general-blue">
+                        <ToggleSalePopStatusButton
+                          salePop={salePop}
+                          onChange={getPopForSale}
+                        ></ToggleSalePopStatusButton>
+
+                        <GeneralButton
+                          className="justify-self-center w-full bg-red-500"
+                          tittle="Sold"
+                        ></GeneralButton>
+                      </div>
+                    </>
+                  )}
+                </>
 
                 <div className="flex flex-col gap-1 mt-7 text-text-product-light">
                   <span className="text-3xl text-general-blue font-bold">{`${salePop.price}€`}</span>
