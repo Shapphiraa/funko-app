@@ -3,6 +3,7 @@ import handleRequest from '../../handlers/handleRequest'
 import retrieveSalePop from '../../logic/trade/retrieveSalePop'
 import updateSalePop from '../../logic/trade/updateSalePop'
 import extractUserId from '../../handlers/helpers/extractUserId'
+import deleteSalePop from '../../logic/trade/deleteSalePop'
 
 export async function GET(
   req: NextRequest,
@@ -41,6 +42,19 @@ export async function PATCH(
       price,
       images,
     })
+
+    return new Response(null, { status: 204 })
+  })
+}
+
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  return handleRequest(async () => {
+    const userId = extractUserId(req)
+
+    await deleteSalePop(userId, params)
 
     return new Response(null, { status: 204 })
   })

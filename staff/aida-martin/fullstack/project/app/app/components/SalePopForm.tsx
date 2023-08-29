@@ -231,9 +231,10 @@ export default function SalePopForm({
         </label>
 
         <textarea
-          className="focus:outline-general-blue p-1 text-text-light h-[100px]"
+          className="focus:outline-general-blue p-2 text-text-light h-[100px] bg-[#F6F6F6] rounded-xl text-lg"
           name="description"
           defaultValue={salePop?.description ?? ''}
+          spellCheck={false}
         />
 
         <label className="text-text-light text-lg font-medium">
@@ -261,7 +262,12 @@ export default function SalePopForm({
               <label className="text-text-light text-lg font-medium">
                 Status:
               </label>
-              <Select id="status-select" name="status" options={status} />
+              <Select
+                id="status-select"
+                name="status"
+                options={status}
+                disabled
+              />
             </>
           )}
         </>

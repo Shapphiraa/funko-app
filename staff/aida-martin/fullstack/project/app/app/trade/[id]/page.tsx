@@ -24,6 +24,7 @@ import UpdateSalePopModal from '@/app/components/Modals/UpdateSalePopModal'
 import GeneralButton from '@/app/components/GeneralButton'
 import ToggleSalePopStatus from '@/app/api/logic/trade/toggleSalePopStatus'
 import ToggleSalePopStatusButton from '@/app/components/ToggleSalePopStatusButton'
+import deleteSalePop from '@/app/logic/deleteSalePop'
 
 export default function Detail({ params }: { params: { id: string } }) {
   const [salePop, setSalePop] = useState<PopForSale>()
@@ -43,6 +44,15 @@ export default function Detail({ params }: { params: { id: string } }) {
 
   const handleCloseModal = () => {
     setIsOpenModal(false)
+  }
+
+  const handleDeletePop = async () => {
+    // Change to custom modal
+    if (confirm('Are you sure you want to delete?')) {
+      await deleteSalePop(params)
+
+      router.back()
+    }
   }
 
   useEffect(() => {
@@ -164,7 +174,7 @@ export default function Detail({ params }: { params: { id: string } }) {
                           </Button>
                           <Button
                             className="bg-white rounded-2xl"
-                            // onClick={handleDeletePop}
+                            onClick={handleDeletePop}
                           >
                             <IconDelete size="24px" />
                           </Button>
