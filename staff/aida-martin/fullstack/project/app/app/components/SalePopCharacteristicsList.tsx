@@ -10,23 +10,28 @@ export default function SalePopCharacteristicsList({
     <ul className="flex flex-col gap-2">
       <Characteristic
         name="Condition:"
-        value={`${salePop.condition}`}
+        value={salePop.condition}
       ></Characteristic>
       <Characteristic
         name="Category:"
-        value={`${salePop.pop.category.name}`}
+        value={salePop.pop.category.name}
       ></Characteristic>
       <Characteristic
         name="Collection:"
-        value={`${salePop.pop.collect}`}
+        value={salePop.pop.collect}
       ></Characteristic>
       <Characteristic
         name="Exclusivity:"
-        value={`${salePop.pop.exclusivity}`}
+        value={salePop.pop.exclusivity}
       ></Characteristic>
       <Characteristic
         name="Number:"
-        value={`${salePop.pop.number}`}
+        value={salePop.pop.number}
+      ></Characteristic>
+
+      <Characteristic
+        name="Publication date:"
+        value={salePop.date}
       ></Characteristic>
     </ul>
   )

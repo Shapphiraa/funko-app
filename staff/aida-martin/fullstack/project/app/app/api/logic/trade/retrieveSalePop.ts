@@ -35,5 +35,7 @@ export default async function retrieveSalePop({
   salePop.pop.category.id = salePop.pop.category._id.toString()
   delete salePop.pop.category._id
 
+  salePop.date = new Date(salePop.date).toLocaleDateString('en-GB')
+
   return salePop
 }
