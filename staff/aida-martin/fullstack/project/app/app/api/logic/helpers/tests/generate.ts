@@ -5,7 +5,7 @@ const generate = {
     email: `email-${Math.random()}@mail.com`,
     password: `password-${Math.random()}`,
     avatar: `avatar-${Math.random()}`,
-    location: `location-${Math.random()}`,
+    location: `Granada`,
     phoneNumber: `phoneNumber-${Math.random()}`,
     role: 'user',
     popCollect: [],
@@ -30,6 +30,17 @@ const generate = {
     collect: `collect-${Math.random()}`,
     release: `release-${Math.random()}`,
     availability: 'Available',
+  }),
+
+  salePop: (popId: string, userId: string) => ({
+    id: `salePop-${Math.random()}`,
+    author: userId,
+    description: `description-description-description-${Math.random()}`,
+    condition: 'Good condition',
+    pop: popId,
+    images: [`image1-${Math.random()}`, `image2-${Math.random()}`],
+    price: Math.random(),
+    status: 'Available',
   }),
 }
 

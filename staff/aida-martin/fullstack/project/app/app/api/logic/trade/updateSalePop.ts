@@ -7,7 +7,7 @@ import {
   PropertyError,
 } from '../../../helpers'
 
-import { User, SalePop, Pop } from '../../data/models'
+import { User, SalePop } from '../../data/models'
 
 interface UpdateSalePopProps {
   userId: string
@@ -41,17 +41,13 @@ export default function UpdateSalePop({
 
     if (!user) throw new ExistenceError('User not found! 😥')
 
-    if (!salePop) throw new ExistenceError('Pop not found! 😥')
+    if (!salePop) throw new ExistenceError('Sale pop not found! 😥')
 
     if (salePop.author.toString() !== userId) {
       throw new PropertyError(
         `Sale pop with ID ${salePop._id.toString()} does not belong to user with ID ${userId} 😥`
       )
     }
-
-    const pop = await Pop.findById(salePop.pop._id.toString())
-
-    if (!pop) throw new ExistenceError('Pop not found! 😥')
 
     salePop.description = description
     salePop.condition = condition

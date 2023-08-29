@@ -1,5 +1,5 @@
 import { validateId, ExistenceError } from '../../../helpers'
-import { SalePop, Pop } from '../../data/models'
+import { SalePop } from '../../data/models'
 
 export default async function retrieveSalePop({
   salePopId,
@@ -9,7 +9,7 @@ export default async function retrieveSalePop({
   validateId(salePopId, 'Sale Pop ID')
 
   const salePop: any = await SalePop.findById(salePopId, '-__v')
-    .populate('author', 'name avatar')
+    .populate('author', 'name avatar location phoneNumber')
     .populate({
       path: 'pop',
       populate: { path: 'category', select: 'name' },
@@ -18,10 +18,6 @@ export default async function retrieveSalePop({
     .lean()
 
   if (!salePop) throw new ExistenceError('Sale pop not found! 😥')
-
-  const pop = await Pop.findById(salePop.pop._id.toString())
-
-  if (!pop) throw new ExistenceError('Pop not found! 😥')
 
   salePop.id = salePop._id.toString()
   delete salePop._id
