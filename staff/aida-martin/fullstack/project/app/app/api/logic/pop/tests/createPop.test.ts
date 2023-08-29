@@ -1,8 +1,8 @@
 import dotenv from 'dotenv'
 
 import mongoose from 'mongoose'
-import { User, Category, Pop } from '../../data/models'
-import createPop from './createPop'
+import { User, Category, Pop } from '../../../data/models'
+import createPop from '../createPop'
 
 dotenv.config()
 ;(async () => {
