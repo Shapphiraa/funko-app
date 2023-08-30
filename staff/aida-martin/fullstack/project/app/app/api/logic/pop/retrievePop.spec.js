@@ -1,9 +1,10 @@
 import dotenv from 'dotenv'
 import { expect } from 'chai'
 import mongoose from 'mongoose'
-import { User, Category, Pop } from '../../data/models'
+import { User, Category, Pop, SalePop } from '../../data/models'
 import retrievePop from './retrievePop'
 import { cleanUp, generate } from '../helpers/tests'
+import calculateTrendingValue from '../helpers/tests/calculateTrendingValue'
 
 dotenv.config()
 
@@ -17,11 +18,17 @@ describe('retrievePop', () => {
   let user
   let category
   let pop
+  let salePop
+  let secondSalePop
+  let thirdSalePop
 
   beforeEach(async () => {
     user = generate.user()
     category = generate.category()
     pop = generate.pop()
+    salePop = generate.salePop()
+    secondSalePop = generate.salePop()
+    thirdSalePop = generate.salePop()
 
     await cleanUp()
   })
@@ -69,7 +76,7 @@ describe('retrievePop', () => {
     expect(popRecovered.collect).to.equal(pop.collect)
     expect(popRecovered.release).to.equal(pop.release)
     expect(popRecovered.availability).to.equal(pop.availability)
-    expect(popRecovered.trendingValue).to.equal(0)
+    expect(popRecovered.trendingValue).to.equal(undefined)
     expect(popRecovered.userCollect).to.be.false
     expect(popRecovered.userWhislist).to.be.false
   })
@@ -125,13 +132,87 @@ describe('retrievePop', () => {
     expect(popRecovered.collect).to.equal(pop.collect)
     expect(popRecovered.release).to.equal(pop.release)
     expect(popRecovered.availability).to.equal(pop.availability)
-    expect(popRecovered.trendingValue).to.equal(0)
+    expect(popRecovered.trendingValue).to.equal(undefined)
     expect(popRecovered.userCollect).to.be.false
     expect(popRecovered.userWhislist).to.be.false
     expect(userRegistered.popCollect).to.be.instanceOf(Array)
     expect(userRegistered.popCollect).to.have.lengthOf(0)
     expect(userRegistered.popWhislist).to.be.instanceOf(Array)
     expect(userRegistered.popWhislist).to.have.lengthOf(0)
+  })
+
+  it('succeeds on retrieve pop with trending value', async () => {
+    await User.create({
+      name: user.name,
+      email: user.email,
+      password: user.password,
+      role: 'user',
+    })
+
+    const userRegistered = await User.findOne({ email: user.email })
+
+    await Category.create({
+      name: category.name,
+      slug: category.name,
+      imageList: category.imageList,
+      imageDetail: category.imageDetail,
+    })
+
+    const categoryCreated = await Category.findOne({ name: category.name })
+
+    await Pop.create({
+      variant: pop.variant,
+      exclusivity: pop.exclusivity,
+      name: pop.name,
+      number: pop.number,
+      images: pop.images,
+      category: categoryCreated.id,
+      collect: pop.collect,
+      release: pop.release,
+      availability: pop.availability,
+    })
+
+    const popCreated = await Pop.findOne({ name: pop.name })
+
+    await SalePop.create({
+      author: userRegistered.id,
+      description: salePop.description,
+      condition: salePop.condition,
+      pop: popCreated.id,
+      images: salePop.images,
+      price: salePop.price,
+      status: 'Sold',
+    })
+
+    await SalePop.create({
+      author: userRegistered.id,
+      description: secondSalePop.description,
+      condition: secondSalePop.condition,
+      pop: popCreated.id,
+      images: secondSalePop.images,
+      price: secondSalePop.price,
+      status: 'Sold',
+    })
+
+    await SalePop.create({
+      author: userRegistered.id,
+      description: thirdSalePop.description,
+      condition: thirdSalePop.condition,
+      pop: popCreated.id,
+      images: thirdSalePop.images,
+      price: thirdSalePop.price,
+      status: 'Available',
+    })
+
+    const popRecovered = await retrievePop({ popId: popCreated.id })
+
+    const _trendingValue = calculateTrendingValue([
+      salePop.price,
+      secondSalePop.price,
+    ])
+
+    expect(popRecovered).to.exist
+    expect(popRecovered.trendingValue).to.equal(_trendingValue)
   })
 
   it('fails on non-existing pop', async () => {

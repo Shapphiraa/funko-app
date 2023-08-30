@@ -24,9 +24,7 @@ export default function CharacteristicsList({ pop }: { pop: Pop }) {
       ></Characteristic>
       <Characteristic
         name="Trending value:"
-        value={
-          pop.trendingValue !== 0 ? `${pop.trendingValue}€` : 'No data yet'
-        }
+        value={pop.trendingValue ? `${pop.trendingValue}€` : 'No data yet'}
       ></Characteristic>
     </ul>
   )

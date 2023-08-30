@@ -76,7 +76,7 @@ describe('createPop', () => {
     expect(newPop.collect).to.equal(pop.collect)
     expect(newPop.release).to.equal(pop.release)
     expect(newPop.availability).to.equal(pop.availability)
-    expect(newPop.trendingValue).to.equal(0)
+    expect(newPop.trendingValue).to.equal(undefined)
     expect(newPop.userCollect).to.be.false
     expect(newPop.userWhislist).to.be.false
   })

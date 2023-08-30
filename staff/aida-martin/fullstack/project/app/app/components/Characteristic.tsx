@@ -3,7 +3,7 @@ export default function Characteristic({
   value,
 }: {
   name: string
-  value: string
+  value: string | number
 }) {
   return (
     <li className="text-text-product-light text-xl font-semibold">

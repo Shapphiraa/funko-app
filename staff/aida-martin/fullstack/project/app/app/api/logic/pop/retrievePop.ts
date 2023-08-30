@@ -1,5 +1,6 @@
 import { validateId, ExistenceError } from '../../../helpers'
-import { Pop, User } from '../../data/models'
+import { Pop, User, SalePop } from '../../data/models'
+import calculateTrendingValue from '../helpers/tests/calculateTrendingValue'
 
 export default async function retrievePop({
   userId,
@@ -36,6 +37,18 @@ export default async function retrievePop({
   pop.userWhislist = user
     ? user.popWhislist.some((id: string) => id.toString() === pop.id)
     : false
+
+  const salePops: any = await SalePop.find({
+    $and: [{ pop: pop.id }, { status: 'Sold' }],
+  })
+
+  if (salePops.length > 1) {
+    const salePopPrices = salePops.map((salePop: any) => salePop.price)
+
+    const trendingValue = calculateTrendingValue(salePopPrices)
+
+    pop.trendingValue = trendingValue
+  }
 
   return pop
 }
