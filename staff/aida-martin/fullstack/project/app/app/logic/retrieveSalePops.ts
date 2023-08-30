@@ -10,8 +10,6 @@ export interface PopForSale {
   pop: {
     name: string
   }
-  number: number
-  collect: string
   status: string
 }
 

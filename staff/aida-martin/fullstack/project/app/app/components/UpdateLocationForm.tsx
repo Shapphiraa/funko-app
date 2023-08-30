@@ -226,8 +226,8 @@ export default function UpdateLocationForm({
     },
     {
       key: 'location-santa-cruz-de-tenerife',
-      value: 'Santa Cruz de Tenerife',
-      label: 'Santa Cruz de Tenerife',
+      value: 'Sta Cruz de Tenerife',
+      label: 'Sta Cruz de Tenerife',
     },
     {
       key: 'location-teruel',

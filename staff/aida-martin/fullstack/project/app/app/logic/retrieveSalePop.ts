@@ -8,6 +8,8 @@ export interface PopForSale {
     id: string
     name: string
     avatar: string
+    location: string
+    phoneNumber: string
   }
   pop: {
     id: string

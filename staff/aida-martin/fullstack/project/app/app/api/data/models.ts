@@ -74,7 +74,7 @@ const user = new Schema({
       'Sevilla',
       'Soria',
       'Tarragona',
-      'Santa Cruz de Tenerife',
+      'Sta Cruz de Tenerife',
       'Teruel',
       'Toledo',
       'Valencia',
@@ -103,10 +103,6 @@ const user = new Schema({
     type: [ObjectId],
     ref: 'Pop',
   },
-  // sales: {
-  //   type: [ObjectId],
-  //   ref: 'SalePop',
-  // },
 })
 
 // const image = new Schema({

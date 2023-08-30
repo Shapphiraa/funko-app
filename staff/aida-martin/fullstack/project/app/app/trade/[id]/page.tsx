@@ -25,6 +25,7 @@ import GeneralButton from '@/app/components/GeneralButton'
 import ToggleSalePopStatus from '@/app/api/logic/trade/toggleSalePopStatus'
 import ToggleSalePopStatusButton from '@/app/components/ToggleSalePopStatusButton'
 import deleteSalePop from '@/app/logic/deleteSalePop'
+import ViewUserContactInfoButton from '@/app/components/ViewUserContactInfoButton'
 
 export default function Detail({ params }: { params: { id: string } }) {
   const [salePop, setSalePop] = useState<PopForSale>()
@@ -72,15 +73,18 @@ export default function Detail({ params }: { params: { id: string } }) {
               <Container className="m-5 mt-0 px-5 pb-5">
                 <div className="flex gap-1 items-center py-3 text-[15px] text-text-light">
                   <Image
-                    className="rounded-full border-1 w-[30px] h-[30px] object-cover shadow-2xl"
+                    className="rounded-full border-1 w-[37px] h-[37px] object-cover shadow-2xl"
                     src={salePop.author.avatar}
                     alt="avatar"
                     width={50}
                     height={50}
                   />
-                  <p className="text-lg font-semibold">{`@${salePop.author.name
-                    .toLowerCase()
-                    .replace(' ', '')}`}</p>
+                  <div>
+                    <p className="text-lg font-semibold">{`@${salePop.author.name
+                      .toLowerCase()
+                      .replace(' ', '')}`}</p>
+                    <p className="text-sm">{salePop.author.location}</p>
+                  </div>
                 </div>
                 <Carousel>
                   <div className="h-full max-w-[290px] mx-auto !flex justify-center text-general-blue relative">
@@ -159,6 +163,18 @@ export default function Detail({ params }: { params: { id: string } }) {
                 </div>
 
                 <SalePopCharacteristicsList salePop={salePop} />
+
+                <>
+                  {isUserLoggedIn() &&
+                    salePop.author.id !== getUserId() &&
+                    salePop.status === 'Available' && (
+                      <>
+                        <ViewUserContactInfoButton
+                          salePop={salePop}
+                        ></ViewUserContactInfoButton>
+                      </>
+                    )}
+                </>
 
                 <>
                   {isUserLoggedIn() &&
