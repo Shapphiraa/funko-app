@@ -1,19 +1,32 @@
 'use client'
 
-import retrievePopsForSale from '../logic/retrieveSalePops'
 import { useEffect, useState } from 'react'
 import SalePop from './SalePop'
+import retrieveSalePops, { PopForSale } from '../logic/retrieveSalePops'
+import { User } from '../logic/retrieveUser'
+import retrieveUserSalePops from '../logic/retrieveUserSalePops'
 
-import { PopForSale } from '../logic/retrieveSalePops'
-
-export default function PopSales({ className }: { className?: string }) {
+export default function PopSales({
+  className,
+  user,
+}: {
+  className?: string
+  user?: User
+}) {
   const [popsForSale, setPopsForSale] = useState<PopForSale[]>([])
   // TODO: spinner (freeze, unfreeze)
   const [loading, setLoading] = useState<Boolean>(true)
 
   const getPopsForSale = async () => {
     setLoading(true)
-    const popsForSale = await retrievePopsForSale()
+
+    let popsForSale
+
+    if (user) {
+      popsForSale = await retrieveUserSalePops()
+    } else {
+      popsForSale = await retrieveSalePops()
+    }
 
     setPopsForSale(popsForSale)
     setLoading(false)

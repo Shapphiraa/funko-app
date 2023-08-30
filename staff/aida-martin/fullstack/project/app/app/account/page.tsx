@@ -30,6 +30,7 @@ import {
   publicKey,
   authenticationEndpoint,
 } from '../infrastructure'
+import PopSales from '../components/PopSales'
 
 export default function Account() {
   const [user, setUser] = useState<User>()
@@ -173,6 +174,16 @@ export default function Account() {
         </Button>
       </div>
 
+      <GeneralButton
+        className="w-full my-6"
+        tittle="Log out"
+        onClick={handleLogout}
+      />
+      <hr className="bg-text-light"></hr>
+
+      <Tittle className="text-xl font-semibold mt-7" name="Your sale pops" />
+      <PopSales user={user} className="mt-2" />
+
       {fieldToEdit && (
         <UpdatePersonalInfoModal
           onUpdated={handleCloseModal}
@@ -181,12 +192,6 @@ export default function Account() {
           user={user}
         />
       )}
-
-      <GeneralButton
-        className="w-full my-6"
-        tittle="Log out"
-        onClick={handleLogout}
-      />
     </section>
   )
 }
