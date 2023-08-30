@@ -1,15 +1,14 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import CreateSalePopModal from '../components/Modals/CreateSalePopModal'
 import PopSales from '../components/PopSales'
-import Tittle from '../library/Tittle'
-import Button from '../library/Button'
-import GeneralButton from '../components/GeneralButton'
 import MenuHeader from '../components/MenuHeader'
+import isUserLoggedIn from '../logic/isUserLoggedIn'
 
 export default function Trade() {
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false)
+  const [isLogged, setIsLogged] = useState<boolean>(false)
 
   const handleCloseModal = () => {
     setIsOpenModal(false)
@@ -19,13 +18,22 @@ export default function Trade() {
     setIsOpenModal(true)
   }
 
+  useEffect(() => {
+    if (isUserLoggedIn()) {
+      setIsLogged(true)
+      return
+    }
+
+    setIsLogged(false)
+  }, [])
+
   return (
     <>
       {!isOpenModal && (
         <section className="py-4 bg-white">
           <MenuHeader
             name="Pops for sale"
-            permission={true}
+            permission={isLogged}
             text="New"
             onClick={handleOpenModal}
           />
@@ -33,7 +41,7 @@ export default function Trade() {
         </section>
       )}
 
-      {isOpenModal && (
+      {isOpenModal && isLogged && (
         <section className="p-4 bg-white">
           <CreateSalePopModal
             onSubmit={handleCloseModal}
