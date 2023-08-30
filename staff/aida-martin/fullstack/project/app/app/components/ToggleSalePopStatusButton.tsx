@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import toggleSalePopStatus from '../logic/toggleSalePopStatus '
+import toggleSalePopStatus from '../logic/toggleSalePopStatus'
 import GeneralButton from './GeneralButton'
 
 export default function ToggleSalePopStatusButton({

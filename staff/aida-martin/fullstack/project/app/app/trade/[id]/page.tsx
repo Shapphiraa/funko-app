@@ -26,10 +26,12 @@ import ToggleSalePopStatus from '@/app/api/logic/trade/toggleSalePopStatus'
 import ToggleSalePopStatusButton from '@/app/components/ToggleSalePopStatusButton'
 import deleteSalePop from '@/app/logic/deleteSalePop'
 import ViewUserContactInfoButton from '@/app/components/ViewUserContactInfoButton'
+import changeSalePopStatusToSold from '@/app/logic/changeSalePopStatusToSold'
 
 export default function Detail({ params }: { params: { id: string } }) {
   const [salePop, setSalePop] = useState<PopForSale>()
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false)
+  const [isSold, setIsSold] = useState<boolean>(false)
 
   const router = useRouter()
 
@@ -56,9 +58,20 @@ export default function Detail({ params }: { params: { id: string } }) {
     }
   }
 
+  const handleSoldSalePop = async () => {
+    try {
+      if (confirm('Are you sure you want to sold?'))
+        await changeSalePopStatusToSold({ id: salePop!.id })
+
+      setIsSold(true)
+    } catch (error: any) {
+      console.log(error)
+    }
+  }
+
   useEffect(() => {
     getPopForSale()
-  }, [isOpenModal])
+  }, [isOpenModal, isSold])
 
   return (
     <>
@@ -134,21 +147,24 @@ export default function Detail({ params }: { params: { id: string } }) {
                 </Carousel>
 
                 <>
-                  {isUserLoggedIn() && salePop.author.id === getUserId() && (
-                    <>
-                      <div className="grid grid-cols-2 gap-2 mt-10 text-general-blue">
-                        <ToggleSalePopStatusButton
-                          salePop={salePop}
-                          onChange={getPopForSale}
-                        ></ToggleSalePopStatusButton>
+                  {isUserLoggedIn() &&
+                    salePop.author.id === getUserId() &&
+                    salePop.status !== 'Sold' && (
+                      <>
+                        <div className="grid grid-cols-2 gap-2 mt-10 text-general-blue">
+                          <ToggleSalePopStatusButton
+                            salePop={salePop}
+                            onChange={getPopForSale}
+                          ></ToggleSalePopStatusButton>
 
-                        <GeneralButton
-                          className="justify-self-center w-full bg-red-500"
-                          tittle="Sold"
-                        ></GeneralButton>
-                      </div>
-                    </>
-                  )}
+                          <GeneralButton
+                            className="justify-self-center w-full bg-red-500"
+                            tittle="Sold"
+                            onClick={handleSoldSalePop}
+                          ></GeneralButton>
+                        </div>
+                      </>
+                    )}
                 </>
 
                 <div className="flex flex-col gap-1 mt-7 text-text-product-light">
