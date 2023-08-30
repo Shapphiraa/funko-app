@@ -46,7 +46,11 @@ export default function Detail({ params }: { params: { id: string } }) {
 
   const handleDeletePop = async () => {
     // Change to custom modal
-    if (confirm('Are you sure you want to delete?')) {
+    if (
+      confirm(
+        'Are you sure you want to delete? All of sale pops will be deleted too'
+      )
+    ) {
       await deletePop(params)
 
       router.back()

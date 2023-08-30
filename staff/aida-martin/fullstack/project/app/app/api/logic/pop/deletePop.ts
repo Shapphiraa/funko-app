@@ -1,6 +1,6 @@
 import { validateId, ExistenceError, PermissionsError } from '../../../helpers'
 
-import { User, Pop } from '../../data/models'
+import { User, Pop, SalePop } from '../../data/models'
 
 export default function deletePop(userId: string, popId: { id: string }) {
   validateId(userId)
@@ -25,20 +25,6 @@ export default function deletePop(userId: string, popId: { id: string }) {
       $or: [{ popCollect: popId.id }, { popWhislist: popId.id }],
     })
 
-    // El map se usó en el deletePost de la app anterior y el Promise.all, pero no me funciona...
-
-    // const usersUpdated = users.map((user) => {
-    //   User.updateOne(
-    //     { _id: user.id },
-    //     {
-    //       $pullAll: {
-    //         popCollect: [popId.id],
-    //         popWhislist: [popId.id],
-    //       },
-    //     }
-    //   )
-    // })
-
     users.forEach(async (user) => {
       await User.updateOne(
         { _id: user.id },
@@ -50,6 +36,8 @@ export default function deletePop(userId: string, popId: { id: string }) {
         }
       )
     })
+
+    await SalePop.deleteMany({ pop: popId.id })
 
     await Pop.deleteOne({ _id: popId.id })
   })()

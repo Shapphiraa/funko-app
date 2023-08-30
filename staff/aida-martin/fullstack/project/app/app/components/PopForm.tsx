@@ -132,7 +132,7 @@ export default function PopForm({
             <>
               <button
                 type="button"
-                className="w-[150px] h-[150px] border-[#62AEF4] border-2 rounded-2xl text-[#62AEF4]"
+                className="w-[150px] h-[150px] border-general-blue border-2 rounded-2xl text-general-blue"
                 onClick={() => {
                   imageRef.current!.click()
                 }}
@@ -188,7 +188,7 @@ export default function PopForm({
             <>
               <button
                 type="button"
-                className="w-[150px] h-[150px] border-[#62AEF4] border-2 rounded-2xl text-[#62AEF4]"
+                className="w-[150px] h-[150px] border-general-blue border-2 rounded-2xl text-general-blue"
                 onClick={() => {
                   boxImageRef.current!.click()
                 }}
