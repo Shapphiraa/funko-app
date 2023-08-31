@@ -10,7 +10,7 @@ import isUserLoggedIn from '@/app/logic/isUserLoggedIn'
 
 export default function AllCatalogPage() {
   const [adminModal, setAdminModal] = useState<boolean>(false)
-  const [isAdmin, setIsAdmin] = useState<boolean>(false)
+  const [isAdmin, setIsAdmin] = useState<boolean | null>(null)
 
   const getUserRole = async () => {
     try {
@@ -38,6 +38,8 @@ export default function AllCatalogPage() {
   const handleOpenAdminModal = () => {
     setAdminModal(true)
   }
+
+  if (isAdmin === null) return null
 
   return (
     <>

@@ -1,11 +1,17 @@
-import { SalePop } from '../../data/models'
+import { ExistenceError, validateId } from '../../../helpers'
+import { SalePop, User } from '../../data/models'
 
 export default async function retrieveUserSalePops({
   userId,
 }: {
   userId: string
 }) {
-  //TODO validators
+  // validateId(userId)
+  // Cambiar el async antes
+
+  const user = await User.findById(userId)
+
+  if (!user) throw new ExistenceError('User not found! 😥')
 
   const userSalePops = await SalePop.find(
     {

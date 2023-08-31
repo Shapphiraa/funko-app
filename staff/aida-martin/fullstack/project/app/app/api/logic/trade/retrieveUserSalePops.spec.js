@@ -2,12 +2,12 @@ import dotenv from 'dotenv'
 import { expect } from 'chai'
 import mongoose from 'mongoose'
 import { User, Category, Pop, SalePop } from '../../data/models'
-import retrieveSalePops from './retrieveSalePops'
+import retrieveUserSalePops from './retrieveUserSalePops'
 import { cleanUp, generate } from '../helpers/tests'
 
 dotenv.config()
 
-describe('retrieveSalePops', () => {
+describe('retrieveUserSalePops', () => {
   before(async () => {
     await mongoose.connect(
       `${process.env.MONGODB_URL}${process.env.DATABASE_NAME}`
@@ -15,6 +15,7 @@ describe('retrieveSalePops', () => {
   })
 
   let user
+  let secondUser
   let category
   let pop
   let secondPop
@@ -22,6 +23,7 @@ describe('retrieveSalePops', () => {
 
   beforeEach(async () => {
     user = generate.user()
+    secondUser = generate.user()
     category = generate.category()
     pop = generate.pop()
     secondPop = generate.pop()
@@ -34,15 +36,22 @@ describe('retrieveSalePops', () => {
     await mongoose.disconnect()
   })
 
-  it('succeeds on retrieve sale pops', async () => {
+  it('succeeds on retrieve user sale pops', async () => {
     await User.create({
       name: user.name,
       email: user.email,
       password: user.password,
-      role: 'user',
     })
 
     const userRegistered = await User.findOne({ email: user.email })
+
+    await User.create({
+      name: secondUser.name,
+      email: secondUser.email,
+      password: secondUser.password,
+    })
+
+    const secondUserRegistered = await User.findOne({ email: secondUser.email })
 
     await Category.create({
       name: category.name,
@@ -92,7 +101,7 @@ describe('retrieveSalePops', () => {
     })
 
     await SalePop.create({
-      author: userRegistered.id,
+      author: secondUserRegistered.id,
       description: salePop.description,
       condition: salePop.condition,
       pop: secondPopCreated.id,
@@ -111,12 +120,24 @@ describe('retrieveSalePops', () => {
       status: 'Sold',
     })
 
-    const salePopsRecovered = await retrieveSalePops()
+    const userSalePopsRecovered = await retrieveUserSalePops({
+      userId: userRegistered.id,
+    })
 
-    expect(salePopsRecovered).to.exist
-    expect(salePopsRecovered).to.be.instanceOf(Array)
-    expect(salePopsRecovered).to.have.lengthOf(2)
-    expect(salePopsRecovered[1].status).to.be.equal('Available')
-    expect(salePopsRecovered[0].status).to.be.equal('Reserved')
+    expect(userSalePopsRecovered).to.exist
+    expect(userSalePopsRecovered).to.be.instanceOf(Array)
+    expect(userSalePopsRecovered).to.have.lengthOf(1)
+    expect(userSalePopsRecovered[0].status).to.be.equal('Available')
+  })
+
+  it('fails on non-existing user', async () => {
+    try {
+      await retrieveUserSalePops({
+        userId: '123123123123123123123123',
+      })
+    } catch (error) {
+      expect(error).to.be.instanceOf(Error)
+      expect(error.message).to.equal('User not found! 😥')
+    }
   })
 })
