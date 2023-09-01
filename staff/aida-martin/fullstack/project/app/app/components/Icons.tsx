@@ -164,7 +164,7 @@ export function IconBookmarkFill({
 
 export function IconSearch({ size = '1em' }: { size?: string }) {
   return (
-    <svg fill="white" viewBox="0 0 16 16" height={size} width={size}>
+    <svg fill="currentColor" viewBox="0 0 16 16" height={size} width={size}>
       <path d="M11.742 10.344a6.5 6.5 0 10-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 001.415-1.414l-3.85-3.85a1.007 1.007 0 00-.115-.1zM12 6.5a5.5 5.5 0 11-11 0 5.5 5.5 0 0111 0z" />
     </svg>
   )
@@ -188,14 +188,6 @@ export function IconFilter({ size = '1em' }: { size?: string }) {
         strokeWidth={32}
         d="M144 208h224M176 272h160M224 336h64"
       />
-    </svg>
-  )
-}
-
-export function IconFilterFill({ size = '1em' }: { size?: string }) {
-  return (
-    <svg viewBox="0 0 512 512" fill="white" height={size} width={size}>
-      <path d="M256 48C141.31 48 48 141.31 48 256s93.31 208 208 208 208-93.31 208-208S370.69 48 256 48zm32 304h-64a16 16 0 010-32h64a16 16 0 010 32zm48-64H176a16 16 0 010-32h160a16 16 0 010 32zm32-64H144a16 16 0 010-32h224a16 16 0 010 32z" />
     </svg>
   )
 }
@@ -255,6 +247,20 @@ export function IconUnavailable({ size = '1em' }: { size?: string }) {
         d="M18.364 5.636A9 9 0 115.636 18.364 9 9 0 0118.364 5.636zm-2.172 11.97L6.393 7.808a7.001 7.001 0 009.8 9.8zM16.95 7.05a7.002 7.002 0 01.657 9.142l-9.8-9.799a7.001 7.001 0 019.143.657z"
         clipRule="evenodd"
       />
+    </svg>
+  )
+}
+
+export function IconClear({ size = '1em' }: { size?: string }) {
+  return (
+    <svg
+      baseProfile="tiny"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      height={size}
+      width={size}
+    >
+      <path d="M12 4c-4.419 0-8 3.582-8 8s3.581 8 8 8 8-3.582 8-8-3.581-8-8-8zm3.707 10.293a.999.999 0 11-1.414 1.414L12 13.414l-2.293 2.293a.997.997 0 01-1.414 0 .999.999 0 010-1.414L10.586 12 8.293 9.707a.999.999 0 111.414-1.414L12 10.586l2.293-2.293a.999.999 0 111.414 1.414L13.414 12l2.293 2.293z" />
     </svg>
   )
 }

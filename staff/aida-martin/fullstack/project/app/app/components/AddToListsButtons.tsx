@@ -68,13 +68,13 @@ export default function AddListsButtons({
     <div className="flex drop-shadow-lg items-center justify-center mt-auto text-white">
       <button
         onClick={handleAddToWhislist}
-        className="bg-general-blue p-[6px_2px_6px_16px] flex items-center justify-center rounded-tl-2xl rounded-bl-2xl"
+        className="bg-general-blue p-[6px_2px_6px_16px] flex items-center justify-center rounded-2xl rounded-r-none "
       >
         {inWhislist ? <IconHeartFill size="24px" /> : <IconHeart size="24px" />}
       </button>
       <button
         onClick={handleAddToCollection}
-        className="bg-general-blue p-[6px_16px_6px_2px] flex items-center justify-center rounded-tr-2xl rounded-br-2xl"
+        className="bg-general-blue p-[6px_16px_6px_2px] flex items-center justify-center rounded-2xl rounded-l-none "
       >
         {inCollection ? (
           <IconBookmarkFill size="24px" />

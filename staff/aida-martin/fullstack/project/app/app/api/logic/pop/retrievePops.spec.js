@@ -189,6 +189,52 @@ describe('retrievePops', () => {
     expect(popsRecovered[1].variant).to.equal(secondPopCreated.variant)
   })
 
+  it('succeeds on retrieve pops with search filter', async () => {
+    await Category.create({
+      name: category.name,
+      slug: category.name,
+      imageList: category.imageList,
+      imageDetail: category.imageDetail,
+    })
+
+    const categoryCreated = await Category.findOne({ name: category.name })
+
+    await Pop.create({
+      variant: pop.variant,
+      exclusivity: pop.exclusivity,
+      name: 'STITCH WITH TURTLE',
+      number: pop.number,
+      images: pop.images,
+      category: categoryCreated.id,
+      collect: pop.collect,
+      release: pop.release,
+      availability: pop.availability,
+    })
+
+    await Pop.create({
+      variant: secondPop.variant,
+      exclusivity: secondPop.exclusivity,
+      name: 'HARRY POTTER WITH WAND',
+      number: secondPop.number,
+      images: secondPop.images,
+      category: categoryCreated.id,
+      collect: secondPop.collect,
+      release: secondPop.release,
+      availability: secondPop.availability,
+    })
+
+    const popCreated = await Pop.findOne({ name: 'STITCH WITH TURTLE' })
+
+    const popsRecovered = await retrievePops({
+      filter: { search: ' stitch ' },
+    })
+
+    expect(popsRecovered).to.exist
+    expect(popsRecovered).to.be.instanceOf(Array)
+    expect(popsRecovered).to.have.lengthOf(1)
+    expect(popsRecovered[0].name).to.equal(popCreated.name)
+  })
+
   it('fails on an user logged but non-existing user', async () => {
     await Category.create({
       name: category.name,

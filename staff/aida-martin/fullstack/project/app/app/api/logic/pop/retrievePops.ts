@@ -6,7 +6,7 @@ export default async function retrievePops({
   filter,
 }: {
   userId?: string
-  filter: { slug?: string }
+  filter: { slug?: string; search?: string }
 }) {
   //TODO validators
 
@@ -19,31 +19,33 @@ export default async function retrievePops({
     if (!user) throw new ExistenceError('User not found! 😥')
   }
 
-  let pops
+  let findAnd = []
 
   if (filter.slug) {
     const category = await Category.findOne({ slug: filter.slug })
 
     if (!category) throw new ExistenceError('Category not found! 😥')
 
-    pops = await Pop.find(
-      { category: category._id },
-      'variant name images category userCollect userWhislist'
-    )
-      .populate('category', 'name slug imageList imageDetail')
-      .limit(20)
-      .sort('-date')
-      .lean()
-  } else {
-    pops = await Pop.find(
-      {},
-      'variant name images category userCollect userWhislist'
-    )
-      .populate('category', 'name slug imageList imageDetail')
-      .limit(20)
-      .sort('-date')
-      .lean()
+    findAnd.push({ category: category._id })
   }
+
+  // validador search > 2 characters (utilizar el validateString pero arreglar en otro si necesito algún string con menos de 3 caracteres, ej num del pop)
+  if (filter.search) {
+    findAnd.push({
+      name: { $regex: '.*' + filter.search.trim() + '.*', $options: 'i' },
+    })
+  }
+
+  const find = findAnd.length > 0 ? { $and: findAnd } : {}
+
+  const pops = await Pop.find(
+    find,
+    'variant name images category userCollect userWhislist'
+  )
+    .populate('category', 'name slug imageList imageDetail')
+    .limit(20)
+    .sort('-date')
+    .lean()
 
   pops.forEach((pop: any) => {
     pop.id = pop._id.toString()

@@ -39,41 +39,43 @@ export default function AllCatalogPage() {
     setAdminModal(true)
   }
 
-  if (isAdmin === null) return null
-
   return (
     <>
-      {!adminModal && (
-        <section className="pt-4 bg-white">
-          <MenuHeader
-            name="Catalog"
-            route="/catalog"
-            permission={isAdmin}
-            text="Add"
-            onClick={handleOpenAdminModal}
-          />
+      {isAdmin !== null && (
+        <>
+          {!adminModal && (
+            <section className="pt-4 bg-white">
+              <MenuHeader
+                name="Catalog"
+                route="/catalog"
+                permission={isAdmin}
+                text="Add"
+                onClick={handleOpenAdminModal}
+              />
 
-          <Image
-            className="shadow-lg"
-            src="/categories/All-Catalog.svg"
-            alt="All-Catalog"
-            width={0}
-            height={0}
-            style={{ width: '100%', height: '200' }}
-            quality="100"
-          ></Image>
+              <Image
+                className="shadow-lg"
+                src="/categories/All-Catalog.svg"
+                alt="All-Catalog"
+                width={0}
+                height={0}
+                style={{ width: '100%', height: '200' }}
+                quality="100"
+              ></Image>
 
-          <Products className="p-4" />
-        </section>
-      )}
+              <Products className="p-4" search={true} searchClassName="px-4" />
+            </section>
+          )}
 
-      {adminModal && (
-        <section className="p-4 bg-white">
-          <CreatePopModal
-            onSubmit={handleCloseModal}
-            onCancel={handleCloseModal}
-          />
-        </section>
+          {adminModal && (
+            <section className="p-4 bg-white">
+              <CreatePopModal
+                onSubmit={handleCloseModal}
+                onCancel={handleCloseModal}
+              />
+            </section>
+          )}
+        </>
       )}
     </>
   )

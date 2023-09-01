@@ -13,11 +13,12 @@ export default function Input({
 }: InputProps) {
   return (
     <input
-      className="h[1.75rem] text-text-light border-0 bg-[#F6F6F6] rounded-xl p-2 outline-none text-lg"
+      className="text-text-light border-0 bg-[#F6F6F6] rounded-xl p-2 outline-none text-lg"
       type={type}
       name={name}
       placeholder={placeholder}
       defaultValue={defaultValue}
+      spellCheck={false}
     />
   )
 }

@@ -1,6 +1,4 @@
 import Image from 'next/image'
-import Button from '../library/Button'
-import { IconSearch } from './Icons'
 
 export default function Header() {
   return (
@@ -13,10 +11,6 @@ export default function Header() {
         height="80"
         quality="100"
       />
-
-      <Button className="bg-general-blue mr-3 rounded-xl">
-        <IconSearch size="20px" />
-      </Button>
     </header>
   )
 }

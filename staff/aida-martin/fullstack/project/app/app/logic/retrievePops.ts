@@ -12,14 +12,24 @@ export interface Pop {
 
 export default async function retrievePops({
   slug,
+  search,
 }: {
   slug?: string
+  search?: string
 }): Promise<Pop[]> {
   let url = 'http://localhost:3000/api/pop'
   let res
 
   if (slug) {
     url += `?slug=${slug}`
+  }
+
+  if (search && !slug) {
+    url += `?search=${search}`
+  }
+
+  if (search && slug) {
+    url += `&search=${search}`
   }
 
   if (context.token) {

@@ -44,7 +44,12 @@ export default async function CatalogPages({
         quality="100"
       ></Image>
 
-      <Products slug={params.slug} className="p-4" />
+      <Products
+        slug={params.slug}
+        className="p-4"
+        search={true}
+        searchClassName="px-4"
+      />
     </section>
   )
 }
