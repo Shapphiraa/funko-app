@@ -5,6 +5,7 @@ import SalePop from './SalePop'
 import retrieveSalePops, { PopForSale } from '../logic/retrieveSalePops'
 import { User } from '../logic/retrieveUser'
 import retrieveUserSalePops from '../logic/retrieveUserSalePops'
+import useAppContext from '@/app/hooks/useAppContext'
 
 export default function PopSales({
   className,
@@ -13,6 +14,8 @@ export default function PopSales({
   className?: string
   user?: User
 }) {
+  const { alert } = useAppContext()
+
   const [popsForSale, setPopsForSale] = useState<PopForSale[]>([])
   // TODO: spinner (freeze, unfreeze)
   const [loading, setLoading] = useState<Boolean>(true)
@@ -22,14 +25,18 @@ export default function PopSales({
 
     let popsForSale
 
-    if (user) {
-      popsForSale = await retrieveUserSalePops()
-    } else {
-      popsForSale = await retrieveSalePops()
-    }
+    try {
+      if (user) {
+        popsForSale = await retrieveUserSalePops()
+      } else {
+        popsForSale = await retrieveSalePops()
+      }
 
-    setPopsForSale(popsForSale)
-    setLoading(false)
+      setPopsForSale(popsForSale)
+      setLoading(false)
+    } catch (error: any) {
+      alert(error.message)
+    }
   }
 
   useEffect(() => {

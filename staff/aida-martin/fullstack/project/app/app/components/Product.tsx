@@ -15,7 +15,7 @@ export default function Product({
     userCollect: boolean
     userWhislist: boolean
   }
-  onChange?: () => void
+  onChange: () => void
 }) {
   return (
     <Container className="py-5 px-2">

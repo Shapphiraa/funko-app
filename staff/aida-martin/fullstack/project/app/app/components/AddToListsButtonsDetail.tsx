@@ -12,6 +12,7 @@ import { useState } from 'react'
 import isUserLoggedIn from '../logic/isUserLoggedIn'
 import { useRouter } from 'next/navigation'
 import GeneralButton from './GeneralButton'
+import useAppContext from '@/app/hooks/useAppContext'
 
 export default function AddListsButtonsDetail({
   pop,
@@ -24,6 +25,8 @@ export default function AddListsButtonsDetail({
   }
   onChange: () => void
 }) {
+  const { alert } = useAppContext()
+
   const [inCollection, setInCollection] = useState(pop.userCollect)
   const [inWhislist, setInWhislist] = useState(pop.userWhislist)
 
@@ -43,7 +46,7 @@ export default function AddListsButtonsDetail({
 
       router.push('/account/login')
     } catch (error: any) {
-      console.log(error.message)
+      alert(error.message)
     }
   }
 
@@ -61,7 +64,7 @@ export default function AddListsButtonsDetail({
 
       router.push('/account/login')
     } catch (error: any) {
-      console.log(error.message)
+      alert(error.message)
     }
   }
 

@@ -11,7 +11,6 @@ import isUserLoggedIn from '@/app/logic/isUserLoggedIn'
 import {
   IconEdit,
   IconDelete,
-  IconBookmark,
   IconBookmarkFill,
   IconUnavailable,
 } from '@/app/components/Icons'
@@ -22,13 +21,15 @@ import SalePopCharacteristicsList from '@/app/components/SalePopCharacteristicsL
 import getUserId from '@/app/logic/getUserId'
 import UpdateSalePopModal from '@/app/components/Modals/UpdateSalePopModal'
 import GeneralButton from '@/app/components/GeneralButton'
-import ToggleSalePopStatus from '@/app/api/logic/trade/toggleSalePopStatus'
 import ToggleSalePopStatusButton from '@/app/components/ToggleSalePopStatusButton'
 import deleteSalePop from '@/app/logic/deleteSalePop'
 import ViewUserContactInfoButton from '@/app/components/ViewUserContactInfoButton'
 import changeSalePopStatusToSold from '@/app/logic/changeSalePopStatusToSold'
+import useAppContext from '@/app/hooks/useAppContext'
 
 export default function Detail({ params }: { params: { id: string } }) {
+  const { alert } = useAppContext()
+
   const [salePop, setSalePop] = useState<PopForSale>()
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false)
   const [isSold, setIsSold] = useState<boolean>(false)
@@ -36,9 +37,13 @@ export default function Detail({ params }: { params: { id: string } }) {
   const router = useRouter()
 
   const getPopForSale = async () => {
-    let salePop = await retrieveSalePop(params)
+    try {
+      const salePop = await retrieveSalePop(params)
 
-    setSalePop(salePop)
+      setSalePop(salePop)
+    } catch (error: any) {
+      alert(error.message)
+    }
   }
 
   const handleOpenModal = () => {
@@ -51,10 +56,15 @@ export default function Detail({ params }: { params: { id: string } }) {
 
   const handleDeletePop = async () => {
     // Change to custom modal
-    if (confirm('Are you sure you want to delete?')) {
-      await deleteSalePop(params)
 
-      router.back()
+    try {
+      if (confirm('Are you sure you want to delete?')) {
+        await deleteSalePop(params)
+
+        router.back()
+      }
+    } catch (error: any) {
+      alert(error.message)
     }
   }
 
@@ -65,7 +75,7 @@ export default function Detail({ params }: { params: { id: string } }) {
 
       setIsSold(true)
     } catch (error: any) {
-      console.log(error)
+      alert(error.message)
     }
   }
 

@@ -2,15 +2,16 @@ import { NextRequest, NextResponse } from 'next/server'
 import handleRequest from '../../handlers/handleRequest'
 import retrieveUserRole from '../../logic/user/retrieveUserRole'
 import extractUserId from '../../handlers/helpers/extractUserId'
+import { handleErrors } from '../../handlers/helpers/handleErrors'
 
 export async function GET(req: NextRequest) {
-  const userId = extractUserId(req)
+  return handleErrors(async () => {
+    return await handleRequest(async () => {
+      const userId = extractUserId(req)
 
-  const promise = retrieveUserRole(userId)
+      const userRole = await retrieveUserRole(userId)
 
-  return handleRequest(async () => {
-    const user = await promise
-
-    return NextResponse.json(user)
+      return NextResponse.json(userRole)
+    })
   })
 }

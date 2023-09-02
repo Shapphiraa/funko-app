@@ -1,7 +1,8 @@
 import AccountContainer from '../AccountContainer'
 import { IconArrowLeft } from '../Icons'
 import PopForm from '../PopForm'
-import retrieveCategories from '@/app/logic/retrieveCategories'
+import retrieveCategories, { Category } from '@/app/logic/retrieveCategories'
+import useAppContext from '@/app/hooks/useAppContext'
 
 interface CreatePopModalProps {
   onSubmit: () => void
@@ -12,7 +13,15 @@ export default async function CreatePopModal({
   onSubmit,
   onCancel,
 }: CreatePopModalProps) {
-  const categories = await retrieveCategories()
+  const { alert } = useAppContext()
+
+  let categories: Category[] = []
+
+  try {
+    categories = await retrieveCategories()
+  } catch (error: any) {
+    alert(error.message)
+  }
 
   return (
     <>

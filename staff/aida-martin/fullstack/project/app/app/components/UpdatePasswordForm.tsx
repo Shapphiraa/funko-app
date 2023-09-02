@@ -4,12 +4,15 @@ import Input from '../library/Input'
 import Tittle from '../library/Tittle'
 import GeneralButton from './GeneralButton'
 import updateUserPassword from '../logic/updateUserPassword'
+import useAppContext from '../hooks/useAppContext'
 
 export default function UpdatePasswordForm({
   onUpdated,
 }: {
   onUpdated: () => void
 }) {
+  const { alert } = useAppContext()
+
   const handleUpdate = async (event: FormEvent) => {
     event.preventDefault()
 
@@ -31,7 +34,7 @@ export default function UpdatePasswordForm({
       })
       onUpdated()
     } catch (error: any) {
-      console.log(error)
+      alert(error.message)
     }
   }
 

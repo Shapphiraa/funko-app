@@ -5,6 +5,7 @@ import Tittle from '../library/Tittle'
 import GeneralButton from './GeneralButton'
 import updateUserPhoneNumber from '../logic/updateUserPhoneNumber'
 import { User } from '../logic/retrieveUser'
+import useAppContext from '../hooks/useAppContext'
 
 export default function UpdatePhoneNumberForm({
   onUpdated,
@@ -13,6 +14,8 @@ export default function UpdatePhoneNumberForm({
   user: User
   onUpdated: () => void
 }) {
+  const { alert } = useAppContext()
+
   const addEspace = (numbers: string) =>
     Array.from(numbers).reduce((acc, t, i) => {
       if (i > 0 && i % 3 == 0) acc += ' '
@@ -37,7 +40,7 @@ export default function UpdatePhoneNumberForm({
       })
       onUpdated()
     } catch (error: any) {
-      console.log(error)
+      alert(error.message)
     }
   }
 

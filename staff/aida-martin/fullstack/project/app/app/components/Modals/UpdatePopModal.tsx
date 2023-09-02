@@ -2,7 +2,8 @@ import AccountContainer from '../AccountContainer'
 import { IconArrowLeft } from '../Icons'
 import { Pop } from '../../logic/retrievePop'
 import PopForm from '../PopForm'
-import retrieveCategories from '@/app/logic/retrieveCategories'
+import retrieveCategories, { Category } from '@/app/logic/retrieveCategories'
+import useAppContext from '@/app/hooks/useAppContext'
 
 interface UpdatePopModalProps {
   pop: Pop
@@ -15,7 +16,15 @@ export default async function UpdatePopModal({
   onCancel,
   pop,
 }: UpdatePopModalProps) {
-  const categories = await retrieveCategories()
+  const { alert } = useAppContext()
+
+  let categories: Category[] = []
+
+  try {
+    categories = await retrieveCategories()
+  } catch (error: any) {
+    alert(error.message)
+  }
 
   return (
     <>

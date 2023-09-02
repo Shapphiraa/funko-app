@@ -20,8 +20,8 @@ import {
   conditions,
   status,
 } from '../infrastructure'
-import updatePop from '../logic/updatePop'
 import updateSalePop from '../logic/updateSalePop'
+import useAppContext from '@/app/hooks/useAppContext'
 
 export default function SalePopForm({
   pops,
@@ -36,11 +36,13 @@ export default function SalePopForm({
   tittle: string
   submitLabel: string
 }) {
-  const [firstImage, setFirstImage] = useState<string | null>(
-    salePop?.images[0] ?? null
+  const { alert } = useAppContext()
+
+  const [firstImage, setFirstImage] = useState<string | ''>(
+    salePop?.images[0] ?? ''
   )
-  const [secondImage, setSecondImage] = useState<string | null>(
-    salePop?.images[1] ?? null
+  const [secondImage, setSecondImage] = useState<string | ''>(
+    salePop?.images[1] ?? ''
   )
 
   const firstImageRef = useRef<HTMLInputElement>(null)
@@ -66,11 +68,6 @@ export default function SalePopForm({
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault()
-
-    // Errores typescript... mostrar alert de error
-    if (firstImage === null || secondImage === null) {
-      return
-    }
 
     const target = event.target as typeof event.target & {
       description: { value: string }
@@ -103,7 +100,7 @@ export default function SalePopForm({
           })
       onSubmit()
     } catch (error: any) {
-      console.log(error)
+      alert(error.message)
     }
   }
 

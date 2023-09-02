@@ -41,7 +41,8 @@ export default function UpdatePop({
   validateString(exclusivity, 'Exclusivity')
   validateString(name, 'Name')
   validateNumber(number, 'Number')
-  // validateString(images, 'Images')
+  validateString(images[0], 'First image')
+  validateString(images[1], 'Second image')
   validateString(category, 'Category')
   validateString(collect, 'Collect')
   validateString(release, 'Release')
@@ -61,21 +62,6 @@ export default function UpdatePop({
       )
 
     if (!pop) throw new ExistenceError('Pop not found! 😥')
-
-    // await Pop.updateOne(
-    // { _id: popId },
-    // {
-    //   $set: {
-    //     variant: variant,
-    //     exclusivity: exclusivity,
-    //     name: name,
-    //     number: number,
-    //     collect: collect,
-    //     release: release,
-    //     availability: availability,
-    //   },
-    // }
-    // )
 
     pop.variant = variant
     pop.exclusivity = exclusivity

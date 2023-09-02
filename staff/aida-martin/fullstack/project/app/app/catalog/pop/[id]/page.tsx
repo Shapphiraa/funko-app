@@ -16,8 +16,11 @@ import Button from '@/app/library/Button'
 import UpdatePopModal from '@/app/components/Modals/UpdatePopModal'
 import deletePop from '@/app/logic/deletePop'
 import { useRouter } from 'next/navigation'
+import useAppContext from '@/app/hooks/useAppContext'
 
 export default function Detail({ params }: { params: { id: string } }) {
+  const { alert } = useAppContext()
+
   const [pop, setPop] = useState<Pop>()
   const [isAdmin, setIsAdmin] = useState<boolean>(false)
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false)
@@ -25,15 +28,23 @@ export default function Detail({ params }: { params: { id: string } }) {
   const router = useRouter()
 
   const getPop = async () => {
-    let pop = await retrievePop(params)
+    try {
+      let pop = await retrievePop(params)
 
-    setPop(pop)
+      setPop(pop)
+    } catch (error: any) {
+      alert(error.message)
+    }
   }
 
   const getUserRole = async () => {
-    const userRole = await retrieveUserRole()
+    try {
+      const userRole = await retrieveUserRole()
 
-    userRole === 'admin' ? setIsAdmin(true) : setIsAdmin(false)
+      userRole === 'admin' ? setIsAdmin(true) : setIsAdmin(false)
+    } catch (error: any) {
+      alert(error.message)
+    }
   }
 
   const handleOpenModal = () => {
@@ -46,14 +57,19 @@ export default function Detail({ params }: { params: { id: string } }) {
 
   const handleDeletePop = async () => {
     // Change to custom modal
-    if (
-      confirm(
-        'Are you sure you want to delete? All of sale pops will be deleted too'
-      )
-    ) {
-      await deletePop(params)
 
-      router.back()
+    try {
+      if (
+        confirm(
+          'Are you sure you want to delete? All of sale pops will be deleted too'
+        )
+      ) {
+        await deletePop(params)
+
+        router.back()
+      }
+    } catch (error: any) {
+      alert(error.message)
     }
   }
 

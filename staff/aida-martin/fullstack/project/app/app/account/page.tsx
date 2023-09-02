@@ -31,8 +31,11 @@ import {
   authenticationEndpoint,
 } from '../infrastructure'
 import PopSales from '../components/PopSales'
+import useAppContext from '../hooks/useAppContext'
 
 export default function Account() {
+  const { alert } = useAppContext()
+
   const [user, setUser] = useState<User>()
   const [fieldToEdit, setFieldToEdit] = useState<FieldType | null>(null)
 
@@ -46,20 +49,16 @@ export default function Account() {
 
       setUser(user)
     } catch (error: any) {
-      console.log(error.message)
+      alert(error.message)
     }
   }
 
   const router = useRouter()
 
   const handleLogout = () => {
-    try {
-      logoutUser()
+    logoutUser()
 
-      router.push('/')
-    } catch (error: any) {
-      console.log(error)
-    }
+    router.push('/')
   }
 
   const handleOpenModal = (field: FieldType) => {
@@ -91,7 +90,7 @@ export default function Account() {
       handleCloseModal()
       setImage(!image)
     } catch (error: any) {
-      console.log(error)
+      alert(error.message)
     }
   }
 

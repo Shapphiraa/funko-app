@@ -6,6 +6,7 @@ import retrievePopCollectionPreview from '../logic/retrievePopCollectionPreview'
 import { PopCollectionPreview } from '../logic/retrievePopCollectionPreview'
 import retrievePopWhislistPreview from '../logic/retrievePopWhislistPreview'
 import { useEffect, useState } from 'react'
+import useAppContext from '@/app/hooks/useAppContext'
 
 interface ListPreviewProps {
   icon: JSX.Element
@@ -22,16 +23,22 @@ export default function ListPreview({
   subtittle,
   color,
 }: ListPreviewProps) {
+  const { alert } = useAppContext()
+
   const [preview, setPreview] = useState<PopCollectionPreview>()
 
   const getPreview = async () => {
-    if (section) {
-      const preview =
-        section === 'collection'
-          ? await retrievePopCollectionPreview()
-          : await retrievePopWhislistPreview()
+    try {
+      if (section) {
+        const preview =
+          section === 'collection'
+            ? await retrievePopCollectionPreview()
+            : await retrievePopWhislistPreview()
 
-      setPreview(preview)
+        setPreview(preview)
+      }
+    } catch (error: any) {
+      alert(error.message)
     }
   }
 

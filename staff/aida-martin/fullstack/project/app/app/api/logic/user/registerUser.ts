@@ -26,9 +26,11 @@ export default function registerUser({
   validateString(name, 'Name')
   validateEmail(email)
   validatePassword(password)
+  validatePassword(repeatPassword, 'Repeat password field')
 
-  if (password !== repeatPassword)
+  if (password !== repeatPassword) {
     throw new ContentError('Passwords does not match 😢')
+  }
 
   return (async () => {
     try {

@@ -18,7 +18,8 @@ export default function createSalePop({
 }: CreateSalePopProps): Promise<void> {
   validateDescription(description)
   validateString(condition, 'Condition')
-  // validateString(images, 'Images')
+  validateString(images[0], 'First image')
+  validateString(images[1], 'Second image')
   validateString(pop, 'Pop')
   validateNumber(price, 'Price')
 

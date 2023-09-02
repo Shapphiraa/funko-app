@@ -5,6 +5,7 @@ import Tittle from '../library/Tittle'
 import GeneralButton from './GeneralButton'
 import updateUserName from '../logic/updateUserName'
 import { User } from '../logic/retrieveUser'
+import useAppContext from '../hooks/useAppContext'
 
 export default function UpdateNameForm({
   onUpdated,
@@ -13,6 +14,8 @@ export default function UpdateNameForm({
   user: User
   onUpdated: () => void
 }) {
+  const { alert } = useAppContext()
+
   const handleUpdate = async (event: FormEvent) => {
     event.preventDefault()
 
@@ -28,7 +31,7 @@ export default function UpdateNameForm({
       })
       onUpdated()
     } catch (error: any) {
-      console.log(error)
+      alert(error.message)
     }
   }
 

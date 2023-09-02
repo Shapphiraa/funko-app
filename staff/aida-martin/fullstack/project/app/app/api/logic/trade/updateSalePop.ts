@@ -31,7 +31,8 @@ export default function UpdateSalePop({
   validateDescription(description)
   validateString(condition, 'Condition')
   validateNumber(price, 'Price')
-  // validateString(images, 'Images')
+  validateString(images[0], 'First image')
+  validateString(images[1], 'Second image')
 
   return (async () => {
     const [user, salePop] = await Promise.all([

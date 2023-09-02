@@ -10,8 +10,11 @@ import registerUser from '../../logic/registerUser'
 import { redirect, useRouter } from 'next/navigation'
 import { FormEvent, useEffect, useState } from 'react'
 import isUserLoggedIn from '@/app/logic/isUserLoggedIn'
+import useAppContext from '@/app/hooks/useAppContext'
 
 export default function Register() {
+  const { alert } = useAppContext()
+
   const [isUserLogged, setIsUserLogged] = useState<boolean | null>(null)
 
   const router = useRouter()
@@ -59,7 +62,7 @@ export default function Register() {
 
       router.push('/account/login')
     } catch (error: any) {
-      console.log(error.message)
+      alert(error.message, 'error')
     }
   }
 

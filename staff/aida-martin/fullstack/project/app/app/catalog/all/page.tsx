@@ -7,8 +7,11 @@ import { useEffect, useState } from 'react'
 import CreatePopModal from '@/app/components/Modals/CreatePopModal'
 import retrieveUserRole from '@/app/logic/retrieveUserRole'
 import isUserLoggedIn from '@/app/logic/isUserLoggedIn'
+import useAppContext from '@/app/hooks/useAppContext'
 
 export default function AllCatalogPage() {
+  const { alert } = useAppContext()
+
   const [adminModal, setAdminModal] = useState<boolean>(false)
   const [isAdmin, setIsAdmin] = useState<boolean | null>(null)
 
@@ -18,7 +21,7 @@ export default function AllCatalogPage() {
 
       userRole === 'admin' ? setIsAdmin(true) : setIsAdmin(false)
     } catch (error: any) {
-      console.log(error.message)
+      alert(error.message)
     }
   }
 

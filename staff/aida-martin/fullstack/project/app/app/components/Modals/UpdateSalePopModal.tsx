@@ -2,7 +2,8 @@ import { PopForSale } from '@/app/logic/retrieveSalePop'
 import AccountContainer from '../AccountContainer'
 import { IconArrowLeft } from '../Icons'
 import SalePopForm from '../SalePopForm'
-import retrievePops from '@/app/logic/retrievePops'
+import retrievePops, { Pop } from '@/app/logic/retrievePops'
+import useAppContext from '@/app/hooks/useAppContext'
 
 interface UpdateSalePopModalProps {
   salePop: PopForSale
@@ -15,7 +16,15 @@ export default async function UpdateSalePopModal({
   onCancel,
   salePop,
 }: UpdateSalePopModalProps) {
-  const pops = await retrievePops({})
+  const { alert } = useAppContext()
+
+  let pops: Pop[] = []
+
+  try {
+    pops = await retrievePops({})
+  } catch (error: any) {
+    alert(error.message)
+  }
 
   return (
     <>

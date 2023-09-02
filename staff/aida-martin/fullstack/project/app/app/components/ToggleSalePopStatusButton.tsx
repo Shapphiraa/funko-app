@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import toggleSalePopStatus from '../logic/toggleSalePopStatus'
 import GeneralButton from './GeneralButton'
+import useAppContext from '@/app/hooks/useAppContext'
 
 export default function ToggleSalePopStatusButton({
   salePop,
@@ -12,18 +13,22 @@ export default function ToggleSalePopStatusButton({
   }
   onChange: () => void
 }) {
+  const { alert } = useAppContext()
+
   const [isReserved, setIsReserved] = useState<boolean>(
     salePop.status === 'Reserved' ? true : false
   )
 
   const handleToggleStatus = async () => {
-    await toggleSalePopStatus({ id: salePop.id })
+    try {
+      await toggleSalePopStatus({ id: salePop.id })
 
-    setIsReserved(!isReserved)
+      setIsReserved(!isReserved)
 
-    onChange()
-
-    return
+      onChange()
+    } catch (error: any) {
+      alert(error.message)
+    }
   }
 
   return (

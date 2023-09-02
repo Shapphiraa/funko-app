@@ -25,7 +25,8 @@ export default function updateSalePop({
   validateDescription(description)
   validateString(condition, 'Condition')
   validateNumber(price, 'Price')
-  // validateString(images, 'Images')
+  validateString(images[0], 'First image')
+  validateString(images[1], 'Second image')
 
   return (async () => {
     const res = await fetch(`http://localhost:3000/api/trade/${id}`, {

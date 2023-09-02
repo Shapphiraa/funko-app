@@ -16,6 +16,7 @@ export default function registerUser({
   validateString(name, 'Name')
   validateEmail(email)
   validatePassword(password)
+  validatePassword(repeatPassword, 'Repeat password field')
 
   return (async () => {
     const res = await fetch(`http://localhost:3000/api/user`, {

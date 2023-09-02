@@ -55,7 +55,6 @@ export function validateString(string: string, explain = 'String') {
   if (!string.trim().length) {
     throw new ContentError(`${explain} is empty 😥`)
   }
-
   if (string.trim().length < 3) {
     throw new ContentError(`${explain} does not have 3 characters 😥`)
   }

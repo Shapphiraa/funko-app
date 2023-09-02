@@ -5,6 +5,7 @@ import GeneralButton from './GeneralButton'
 import updateUserLocation from '../logic/updateUserLocation'
 import { User } from '../logic/retrieveUser'
 import Select from './Select'
+import useAppContext from '../hooks/useAppContext'
 
 export default function UpdateLocationForm({
   onUpdated,
@@ -13,6 +14,8 @@ export default function UpdateLocationForm({
   user: User
   onUpdated: () => void
 }) {
+  const { alert } = useAppContext()
+
   const locations = [
     {
       key: 'location-a-coruña',
@@ -288,7 +291,7 @@ export default function UpdateLocationForm({
 
       onUpdated()
     } catch (error: any) {
-      console.log(error)
+      alert(error.message)
     }
   }
 

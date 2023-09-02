@@ -10,26 +10,21 @@ const handleRequest = async (
     | (() => Promise<NextResponse<object>>)
     | (() => Promise<NextResponse<{ message: string }>>)
 ) => {
-  try {
-    await dbConnect()
+  const headersList = headers()
 
-    const headersList = headers()
+  const contentType = headersList.get('Content-Type')
 
-    const contentType = headersList.get('Content-Type')
+  if (contentType !== 'application/json') {
+    NextResponse.json(
+      { error: 'no application/json header found' },
+      { status: 400 }
+    )
 
-    if (contentType !== 'application/json') {
-      NextResponse.json(
-        { error: 'no application/json header found' },
-        { status: 400 }
-      )
-
-      return
-    }
-
-    return await callback()
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 })
+    return
   }
+
+  await dbConnect()
+  return await callback()
 }
 
 export default handleRequest

@@ -22,6 +22,7 @@ import {
   availabilities,
 } from '../infrastructure'
 import updatePop from '../logic/updatePop'
+import useAppContext from '@/app/hooks/useAppContext'
 
 export default function PopForm({
   categories,
@@ -36,10 +37,10 @@ export default function PopForm({
   tittle: string
   submitLabel: string
 }) {
-  const [image, setImage] = useState<string | null>(pop?.images[0] ?? null)
-  const [boxImage, setBoxImage] = useState<string | null>(
-    pop?.images[1] ?? null
-  )
+  const { alert } = useAppContext()
+
+  const [image, setImage] = useState<string | ''>(pop?.images[0] ?? '')
+  const [boxImage, setBoxImage] = useState<string | ''>(pop?.images[1] ?? '')
 
   const imageRef = useRef<HTMLInputElement>(null)
   const boxImageRef = useRef<HTMLInputElement>(null)
@@ -64,11 +65,6 @@ export default function PopForm({
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault()
-
-    // Errores typescript... mostrar alert de error
-    if (image === null || boxImage === null) {
-      return
-    }
 
     const target = event.target as typeof event.target & {
       variant: { value: string }
@@ -118,7 +114,7 @@ export default function PopForm({
           })
       onSubmit()
     } catch (error: any) {
-      console.log(error)
+      alert(error.message)
     }
   }
 
@@ -128,7 +124,7 @@ export default function PopForm({
 
       <Form onSubmit={handleSubmit}>
         <div className="flex m-auto gap-3 mt-3">
-          {image === null ? (
+          {image === '' ? (
             <>
               <button
                 type="button"
@@ -184,7 +180,7 @@ export default function PopForm({
             </>
           )}
 
-          {boxImage === null ? (
+          {boxImage === '' ? (
             <>
               <button
                 type="button"

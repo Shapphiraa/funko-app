@@ -11,6 +11,7 @@ import toggleSaveInWhislist from '../logic/toggleSaveInWhislist'
 import { useState } from 'react'
 import isUserLoggedIn from '../logic/isUserLoggedIn'
 import { useRouter } from 'next/navigation'
+import useAppContext from '@/app/hooks/useAppContext'
 
 export default function AddListsButtons({
   pop,
@@ -21,8 +22,10 @@ export default function AddListsButtons({
     userCollect: boolean
     userWhislist: boolean
   }
-  onChange?: () => void
+  onChange: () => void
 }) {
+  const { alert } = useAppContext()
+
   const [inCollection, setInCollection] = useState(pop.userCollect)
   const [inWhislist, setInWhislist] = useState(pop.userWhislist)
 
@@ -35,14 +38,14 @@ export default function AddListsButtons({
 
         setInCollection(!inCollection)
 
-        if (onChange) onChange()
+        onChange()
 
         return
       }
 
       router.push('/account/login')
     } catch (error: any) {
-      console.log(error.message)
+      alert(error.message)
     }
   }
 
@@ -53,14 +56,14 @@ export default function AddListsButtons({
 
         setInWhislist(!inWhislist)
 
-        if (onChange) onChange()
+        onChange()
 
         return
       }
 
       router.push('/account/login')
     } catch (error: any) {
-      console.log(error.message)
+      alert(error.message)
     }
   }
 

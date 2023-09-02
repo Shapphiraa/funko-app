@@ -5,6 +5,7 @@ import Tittle from '../library/Tittle'
 import GeneralButton from './GeneralButton'
 import updateUserEmail from '../logic/updateUserEmail'
 import { User } from '../logic/retrieveUser'
+import useAppContext from '@/app/hooks/useAppContext'
 
 export default function UpdateEmailForm({
   onUpdated,
@@ -13,6 +14,8 @@ export default function UpdateEmailForm({
   user: User
   onUpdated: () => void
 }) {
+  const { alert } = useAppContext()
+
   const handleUpdate = async (event: FormEvent) => {
     event.preventDefault()
 
@@ -28,7 +31,7 @@ export default function UpdateEmailForm({
       })
       onUpdated()
     } catch (error: any) {
-      console.log(error)
+      alert(error.message)
     }
   }
 

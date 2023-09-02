@@ -2,7 +2,7 @@ import ProductImage from './ProductImage'
 import Container from '../library/Container'
 import Link from 'next/link'
 import Image from 'next/image'
-import { IconBookmarkFill, IconUnavailable } from './Icons'
+import { IconBookmarkFill } from './Icons'
 
 export default function PopForSale({
   salePop,

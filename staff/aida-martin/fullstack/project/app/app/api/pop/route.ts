@@ -3,6 +3,7 @@ import handleRequest from '../handlers/handleRequest'
 import createPop from '../logic/pop/createPop'
 import retrievePops from '../logic/pop/retrievePops'
 import extractUserId from '../handlers/helpers/extractUserId'
+import { handleErrors } from '../handlers/helpers/handleErrors'
 
 interface Body {
   variant: string
@@ -17,49 +18,53 @@ interface Body {
 }
 
 export async function POST(req: NextRequest) {
-  return handleRequest(async () => {
-    const body = await req.text()
+  return handleErrors(async () => {
+    return await handleRequest(async () => {
+      const body = await req.text()
 
-    const userId = extractUserId(req)
+      const userId = extractUserId(req)
 
-    const {
-      variant,
-      exclusivity,
-      name,
-      number,
-      images,
-      category,
-      collect,
-      release,
-      availability,
-    }: Body = JSON.parse(body)
+      const {
+        variant,
+        exclusivity,
+        name,
+        number,
+        images,
+        category,
+        collect,
+        release,
+        availability,
+      }: Body = JSON.parse(body)
 
-    await createPop({
-      userId,
-      variant,
-      exclusivity,
-      name,
-      number,
-      images,
-      category,
-      collect,
-      release,
-      availability,
+      await createPop({
+        userId,
+        variant,
+        exclusivity,
+        name,
+        number,
+        images,
+        category,
+        collect,
+        release,
+        availability,
+      })
+
+      return NextResponse.json({ message: 'pop created' }, { status: 201 })
     })
-
-    return NextResponse.json({ message: 'pop created' }, { status: 201 })
   })
 }
 
 export async function GET(req: NextRequest) {
-  return handleRequest(async () => {
-    // Convertir el URLSearchParams a objeto (antes solo devolvía un URLSearchParams)
-    const filter = Object.fromEntries(req.nextUrl.searchParams)
+  return handleErrors(async () => {
+    return await handleRequest(async () => {
+      // Convertir el URLSearchParams a objeto (antes solo devolvía un URLSearchParams)
+      const filter = Object.fromEntries(req.nextUrl.searchParams)
 
-    const userId = extractUserId(req)
+      const userId = extractUserId(req)
 
-    const pops = await retrievePops({ userId, filter })
+      const pops = await retrievePops({ userId, filter })
 
-    return NextResponse.json(pops)
+      return NextResponse.json(pops)
+    })
   })
 }

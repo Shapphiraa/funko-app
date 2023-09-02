@@ -4,6 +4,7 @@ import Header from './components/Header'
 import Footer from './components/Footer'
 import Loading from './loading'
 import { Suspense } from 'react'
+import App from '@/App'
 
 export const metadata: Metadata = {
   title: 'Funko App',
@@ -20,7 +21,9 @@ export default function RootLayout({
       <body className="flex flex-col h-screen">
         <Header />
         <Suspense fallback={<Loading />}>
-          <main className={'flex flex-col grow overflow-auto'}>{children}</main>
+          <main className="flex flex-col grow overflow-auto">
+            <App>{children}</App>
+          </main>
         </Suspense>
         <Footer />
       </body>

@@ -4,6 +4,7 @@ import retrieveSalePop from '../../logic/trade/retrieveSalePop'
 import updateSalePop from '../../logic/trade/updateSalePop'
 import extractUserId from '../../handlers/helpers/extractUserId'
 import deleteSalePop from '../../logic/trade/deleteSalePop'
+import { handleErrors } from '../../handlers/helpers/handleErrors'
 
 export async function GET(
   req: NextRequest,
@@ -27,23 +28,25 @@ export async function PATCH(
   req: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  return handleRequest(async () => {
-    const body = await req.text()
+  return handleErrors(async () => {
+    return await handleRequest(async () => {
+      const body = await req.text()
 
-    const { description, condition, price, images }: Body = JSON.parse(body)
+      const { description, condition, price, images }: Body = JSON.parse(body)
 
-    const userId = extractUserId(req)
+      const userId = extractUserId(req)
 
-    await updateSalePop({
-      userId,
-      salePopId: params.id,
-      description,
-      condition,
-      price,
-      images,
+      await updateSalePop({
+        userId,
+        salePopId: params.id,
+        description,
+        condition,
+        price,
+        images,
+      })
+
+      return new Response(null, { status: 204 })
     })
-
-    return new Response(null, { status: 204 })
   })
 }
 
@@ -51,11 +54,13 @@ export async function DELETE(
   req: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  return handleRequest(async () => {
-    const userId = extractUserId(req)
+  return handleErrors(async () => {
+    return await handleRequest(async () => {
+      const userId = extractUserId(req)
 
-    await deleteSalePop(userId, params)
+      await deleteSalePop(userId, params)
 
-    return new Response(null, { status: 204 })
+      return new Response(null, { status: 204 })
+    })
   })
 }

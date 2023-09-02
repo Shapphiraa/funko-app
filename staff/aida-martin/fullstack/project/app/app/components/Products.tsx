@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react'
 import { Pop } from '../logic/retrievePops'
 import Search from './Search'
 import Image from 'next/image'
+import useAppContext from '@/app/hooks/useAppContext'
 
 export default function Products({
   className,
@@ -22,6 +23,8 @@ export default function Products({
   searchClassName?: string
   slug?: string
 }) {
+  const { alert } = useAppContext()
+
   const [pops, setPops] = useState<Pop[] | PopCollection[]>([])
   const [searchValue, setSearchValue] = useState<string | undefined>(undefined)
 
@@ -42,7 +45,7 @@ export default function Products({
 
       setPops(pops)
     } catch (error: any) {
-      console.log(error)
+      alert(error.message)
     }
   }
 

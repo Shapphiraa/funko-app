@@ -4,17 +4,20 @@ import retrievePop from '../../logic/pop/retrievePop'
 import updatePop from '../../logic/pop/updatePop'
 import extractUserId from '../../handlers/helpers/extractUserId'
 import deletePop from '../../logic/pop/deletePop'
+import { handleErrors } from '../../handlers/helpers/handleErrors'
 
 export async function GET(
   req: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  return handleRequest(async () => {
-    const userId = extractUserId(req)
+  return handleErrors(async () => {
+    return await handleRequest(async () => {
+      const userId = extractUserId(req)
 
-    const pop = await retrievePop({ userId, popId: params.id })
+      const pop = await retrievePop({ userId, popId: params.id })
 
-    return NextResponse.json(pop)
+      return NextResponse.json(pop)
+    })
   })
 }
 
@@ -34,38 +37,40 @@ export async function PATCH(
   req: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  return handleRequest(async () => {
-    const body = await req.text()
+  return handleErrors(async () => {
+    return await handleRequest(async () => {
+      const body = await req.text()
 
-    const {
-      variant,
-      exclusivity,
-      name,
-      number,
-      category,
-      images,
-      collect,
-      release,
-      availability,
-    }: Body = JSON.parse(body)
+      const {
+        variant,
+        exclusivity,
+        name,
+        number,
+        category,
+        images,
+        collect,
+        release,
+        availability,
+      }: Body = JSON.parse(body)
 
-    const userId = extractUserId(req)
+      const userId = extractUserId(req)
 
-    await updatePop({
-      userId,
-      popId: params.id,
-      variant,
-      exclusivity,
-      name,
-      number,
-      category,
-      images,
-      collect,
-      release,
-      availability,
+      await updatePop({
+        userId,
+        popId: params.id,
+        variant,
+        exclusivity,
+        name,
+        number,
+        category,
+        images,
+        collect,
+        release,
+        availability,
+      })
+
+      return new Response(null, { status: 204 })
     })
-
-    return new Response(null, { status: 204 })
   })
 }
 
@@ -73,11 +78,13 @@ export async function DELETE(
   req: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  return handleRequest(async () => {
-    const userId = extractUserId(req)
+  return handleErrors(async () => {
+    return await handleRequest(async () => {
+      const userId = extractUserId(req)
 
-    await deletePop(userId, params)
+      await deletePop(userId, params)
 
-    return new Response(null, { status: 204 })
+      return new Response(null, { status: 204 })
+    })
   })
 }
