@@ -2,9 +2,9 @@ import Image from 'next/image'
 
 export default function Header() {
   return (
-    <header className="grid grid-cols-3 h-auto bg-general-blue">
+    <header className="flex w-full bg-general-blue">
       <Image
-        className="justify-self-center col-start-2"
+        className="m-auto"
         src="/funko-logo.svg"
         alt="logo"
         width="110"

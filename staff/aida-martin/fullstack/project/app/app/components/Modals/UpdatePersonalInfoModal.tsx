@@ -45,9 +45,10 @@ export default function UpdatePersonalInfoModal({
 
   return (
     <>
-      <AccountContainer className="h-auto">
+      <div className="h-screen w-screen absolute bg-black opacity-25"></div>
+      <AccountContainer className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white w-[18rem] pt-5 px-5 flex flex-col m-auto rounded-xl shadow-xl">
         <button
-          className="text-general-blue flex items-center justify-center h-5 w-5 mb-7"
+          className="text-general-blue flex items-center justify-center h-5 w-5 mb-3"
           onClick={onCancel}
         >
           <IconArrowLeft size="24px"></IconArrowLeft>

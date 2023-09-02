@@ -123,66 +123,68 @@ export default function Account() {
   ]
 
   return (
-    <section className="p-8 bg-white">
-      <Image
-        className="mx-auto rounded-full w-[140px] h-[140px] mt-1 mb-7 object-cover p-1 shadow-2xl"
-        src={user.avatar}
-        alt="avatar"
-        width={140}
-        height={140}
-        onClick={() => {
-          imageRef.current!.click()
-        }}
-      />
-
-      {/* @ts-ignore */}
-      <IKContext
-        publicKey={publicKey}
-        urlEndpoint={urlEndpoint}
-        authenticationEndpoint={authenticationEndpoint}
-      >
-        {/* @ts-ignore */}
-        <IKUpload
-          inputRef={imageRef}
-          onError={onError}
-          onSuccess={onSuccessImage}
-          hidden
-        />
-      </IKContext>
-
-      <Tittle className="text-xl font-semibold mb-4" name="Personal Info" />
-      {personalInfo.map(({ label, value, field }) => (
-        <UserPersonalInfo
-          label={label}
-          value={value}
-          onEdit={() => {
-            handleOpenModal(field)
-          }}
-          key={label}
-        />
-      ))}
-
-      <Tittle className="text-xl font-semibold mt-7 mb-4" name="Settings" />
-      <div className="flex place-content-between items-center py-2 text-general-blue">
-        <p className="text-lg text-text-light font-medium">Password</p>
-        <Button
+    <>
+      <section className="relative p-8 bg-white">
+        <Image
+          className="mx-auto rounded-full w-[140px] h-[140px] mt-1 mb-7 object-cover p-1 shadow-2xl"
+          src={user.avatar}
+          alt="avatar"
+          width={140}
+          height={140}
           onClick={() => {
-            handleOpenModal(FIELD_PASSWORD)
+            imageRef.current!.click()
           }}
+        />
+
+        {/* @ts-ignore */}
+        <IKContext
+          publicKey={publicKey}
+          urlEndpoint={urlEndpoint}
+          authenticationEndpoint={authenticationEndpoint}
         >
-          <IconEdit size="24px" />
-        </Button>
-      </div>
+          {/* @ts-ignore */}
+          <IKUpload
+            inputRef={imageRef}
+            onError={onError}
+            onSuccess={onSuccessImage}
+            hidden
+          />
+        </IKContext>
 
-      <GeneralButton
-        className="w-full my-6"
-        tittle="Log out"
-        onClick={handleLogout}
-      />
-      <hr className="bg-text-light"></hr>
+        <Tittle className="text-xl font-semibold mb-4" name="Personal Info" />
+        {personalInfo.map(({ label, value, field }) => (
+          <UserPersonalInfo
+            label={label}
+            value={value}
+            onEdit={() => {
+              handleOpenModal(field)
+            }}
+            key={label}
+          />
+        ))}
 
-      <Tittle className="text-xl font-semibold mt-7" name="Your sale pops" />
-      <PopSales user={user} className="mt-2" />
+        <Tittle className="text-xl font-semibold mt-7 mb-4" name="Settings" />
+        <div className="flex place-content-between items-center py-2 text-general-blue">
+          <p className="text-lg text-text-light font-medium">Password</p>
+          <Button
+            onClick={() => {
+              handleOpenModal(FIELD_PASSWORD)
+            }}
+          >
+            <IconEdit size="24px" />
+          </Button>
+        </div>
+
+        <GeneralButton
+          className="w-full my-6"
+          tittle="Log out"
+          onClick={handleLogout}
+        />
+        <hr className="bg-text-light"></hr>
+
+        <Tittle className="text-xl font-semibold mt-7" name="Your sale pops" />
+        <PopSales user={user} className="mt-2" />
+      </section>
 
       {fieldToEdit && (
         <UpdatePersonalInfoModal
@@ -192,6 +194,6 @@ export default function Account() {
           user={user}
         />
       )}
-    </section>
+    </>
   )
 }

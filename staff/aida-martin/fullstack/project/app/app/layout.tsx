@@ -7,7 +7,7 @@ import { Suspense } from 'react'
 
 export const metadata: Metadata = {
   title: 'Funko App',
-  description: 'Funko catalog and trade App',
+  description: 'Funko POP! catalog and trade App',
 }
 
 export default function RootLayout({
