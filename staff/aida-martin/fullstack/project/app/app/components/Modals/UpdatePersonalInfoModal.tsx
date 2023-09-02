@@ -45,17 +45,18 @@ export default function UpdatePersonalInfoModal({
 
   return (
     <>
-      <div className="h-screen w-screen absolute bg-black opacity-25"></div>
-      <AccountContainer className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white w-[18rem] pt-5 px-5 flex flex-col m-auto rounded-xl shadow-xl">
-        <button
-          className="text-general-blue flex items-center justify-center h-5 w-5 mb-3"
-          onClick={onCancel}
-        >
-          <IconArrowLeft size="24px"></IconArrowLeft>
-        </button>
+      <div className="h-screen w-screen absolute bg-black bg-opacity-25 top-0">
+        <AccountContainer className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white w-[18rem] pt-5 px-5 flex flex-col m-auto rounded-xl shadow-xl">
+          <button
+            className="text-general-blue flex items-center justify-center h-5 w-5 mb-3"
+            onClick={onCancel}
+          >
+            <IconArrowLeft size="24px"></IconArrowLeft>
+          </button>
 
-        <DinamicComponent user={user} onUpdated={onUpdated} />
-      </AccountContainer>
+          <DinamicComponent user={user} onUpdated={onUpdated} />
+        </AccountContainer>
+      </div>
     </>
   )
 }
