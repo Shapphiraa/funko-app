@@ -78,29 +78,31 @@ export default function Register() {
   return (
     <>
       {isUserLogged === false && (
-        <AccountContainer>
-          <Tittle name="Create account"></Tittle>
+        <div className="flex h-[718px]">
+          <AccountContainer>
+            <Tittle name="Create account"></Tittle>
 
-          <Form onSubmit={handleRegister}>
-            <>
-              {inputs.map(({ type, name, placeholder }) => (
-                <Input
-                  key={name}
-                  type={type}
-                  name={name}
-                  placeholder={placeholder}
-                />
-              ))}
-            </>
-            <GeneralButton tittle="Sign up"></GeneralButton>
-          </Form>
+            <Form onSubmit={handleRegister}>
+              <>
+                {inputs.map(({ type, name, placeholder }) => (
+                  <Input
+                    key={name}
+                    type={type}
+                    name={name}
+                    placeholder={placeholder}
+                  />
+                ))}
+              </>
+              <GeneralButton tittle="Sign up"></GeneralButton>
+            </Form>
 
-          <AccountLink
-            text="Have already an account? "
-            textLink="Login here"
-            route="/account/login"
-          ></AccountLink>
-        </AccountContainer>
+            <AccountLink
+              text="Have already an account? "
+              textLink="Login here"
+              route="/account/login"
+            ></AccountLink>
+          </AccountContainer>
+        </div>
       )}
     </>
   )

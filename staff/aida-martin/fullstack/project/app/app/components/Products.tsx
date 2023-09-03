@@ -11,6 +11,7 @@ import { Pop } from '../logic/retrievePops'
 import Search from './Search'
 import Image from 'next/image'
 import useAppContext from '@/app/hooks/useAppContext'
+import Loader from './Loader'
 
 export default function Products({
   className,
@@ -25,26 +26,34 @@ export default function Products({
 }) {
   const { alert } = useAppContext()
 
-  const [pops, setPops] = useState<Pop[] | PopCollection[]>([])
+  const [pops, setPops] = useState<Pop[] | PopCollection[] | null>(null)
   const [searchValue, setSearchValue] = useState<string | undefined>(undefined)
+
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const getPops = async () => {
     try {
+      setIsLoading(true)
+
       let pops
 
-      if (searchValue === undefined) {
-        pops =
-          slug === 'collection'
-            ? await retrievePopCollection()
-            : slug === 'whislist'
-            ? await retrievePopWhislist()
-            : await retrievePops({ slug })
-      } else {
-        pops = await retrievePops({ slug, search: searchValue })
-      }
+      setTimeout(async () => {
+        if (searchValue === undefined) {
+          pops =
+            slug === 'collection'
+              ? await retrievePopCollection()
+              : slug === 'whislist'
+              ? await retrievePopWhislist()
+              : await retrievePops({ slug })
+        } else {
+          pops = await retrievePops({ slug, search: searchValue })
+        }
 
-      setPops(pops)
+        setPops(pops)
+        setIsLoading(false)
+      }, 500)
     } catch (error: any) {
+      setIsLoading(false)
       alert(error.message)
     }
   }
@@ -62,7 +71,9 @@ export default function Products({
         ></Search>
       )}
 
-      {pops.length > 0 && (
+      {isLoading && <Loader />}
+
+      {!isLoading && pops && pops.length > 0 && (
         <div
           className={`w-full max-w-6xl mx-auto grid grid-cols-[repeat(auto-fit,_minmax(136px,1fr))] gap-4 ${className}`}
         >
@@ -72,7 +83,7 @@ export default function Products({
         </div>
       )}
 
-      {pops.length < 1 && (
+      {!isLoading && pops && pops.length === 0 && (
         <div className="flex flex-col items-center justify-center">
           <Image
             src="/no-pop.svg"

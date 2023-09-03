@@ -64,29 +64,31 @@ export default function Login() {
   return (
     <>
       {isUserLogged === false && (
-        <AccountContainer>
-          <Tittle name="Welcome!"></Tittle>
+        <div className="flex h-[718px]">
+          <AccountContainer>
+            <Tittle name="Welcome!"></Tittle>
 
-          <Form onSubmit={handleLogin}>
-            <>
-              {inputs.map(({ type, name, placeholder }) => (
-                <Input
-                  key={name}
-                  type={type}
-                  name={name}
-                  placeholder={placeholder}
-                />
-              ))}
-            </>
-            <GeneralButton tittle="Log in"></GeneralButton>
-          </Form>
+            <Form onSubmit={handleLogin}>
+              <>
+                {inputs.map(({ type, name, placeholder }) => (
+                  <Input
+                    key={name}
+                    type={type}
+                    name={name}
+                    placeholder={placeholder}
+                  />
+                ))}
+              </>
+              <GeneralButton tittle="Log in"></GeneralButton>
+            </Form>
 
-          <AccountLink
-            text="Not a member? "
-            textLink="Sing up here"
-            route="/account/register"
-          ></AccountLink>
-        </AccountContainer>
+            <AccountLink
+              text="Not a member? "
+              textLink="Sing up here"
+              route="/account/register"
+            ></AccountLink>
+          </AccountContainer>
+        </div>
       )}
     </>
   )

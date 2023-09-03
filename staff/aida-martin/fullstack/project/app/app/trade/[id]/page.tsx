@@ -27,24 +27,33 @@ import ViewUserContactInfoButton from '@/app/components/ViewUserContactInfoButto
 import changeSalePopStatusToSold from '@/app/logic/changeSalePopStatusToSold'
 import useAppContext from '@/app/hooks/useAppContext'
 import Alert from '@/app/components/Alert'
+import Loader from '@/app/components/Loader'
 
 export default function Detail({ params }: { params: { id: string } }) {
   const { alert } = useAppContext()
 
-  const [salePop, setSalePop] = useState<PopForSale>()
+  const [salePop, setSalePop] = useState<PopForSale | null>(null)
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false)
   const [confirmAlert, setConfirmAlert] = useState<string | null>(null)
 
   const [isSold, setIsSold] = useState<boolean>(false)
 
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+
   const router = useRouter()
 
   const getPopForSale = async () => {
     try {
-      const salePop = await retrieveSalePop(params)
+      setIsLoading(true)
 
-      setSalePop(salePop)
+      setTimeout(async () => {
+        const salePop = await retrieveSalePop(params)
+
+        setSalePop(salePop)
+        setIsLoading(false)
+      }, 500)
     } catch (error: any) {
+      setIsLoading(false)
       alert(error.message)
     }
   }
@@ -267,6 +276,8 @@ export default function Detail({ params }: { params: { id: string } }) {
           )}
         </>
       )}
+
+      {isLoading && <Loader />}
     </>
   )
 }

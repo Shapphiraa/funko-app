@@ -18,23 +18,33 @@ import deletePop from '@/app/logic/deletePop'
 import { useRouter } from 'next/navigation'
 import useAppContext from '@/app/hooks/useAppContext'
 import Alert from '@/app/components/Alert'
+import { Spinner } from '@nextui-org/react'
+import Loader from '@/app/components/Loader'
 
 export default function Detail({ params }: { params: { id: string } }) {
   const { alert } = useAppContext()
 
-  const [pop, setPop] = useState<Pop>()
+  const [pop, setPop] = useState<Pop | null>(null)
   const [isAdmin, setIsAdmin] = useState<boolean>(false)
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false)
   const [isConfirmAlert, setIsConfirmAlert] = useState<boolean>(false)
+
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const router = useRouter()
 
   const getPop = async () => {
     try {
-      let pop = await retrievePop(params)
+      setIsLoading(true)
 
-      setPop(pop)
+      setTimeout(async () => {
+        let pop = await retrievePop(params)
+
+        setPop(pop)
+        setIsLoading(false)
+      }, 500)
     } catch (error: any) {
+      setIsLoading(false)
       alert(error.message)
     }
   }
@@ -173,6 +183,8 @@ export default function Detail({ params }: { params: { id: string } }) {
           onCancel={handleCloseAlert}
         ></Alert>
       )}
+
+      {isLoading && <Loader />}
     </>
   )
 }
