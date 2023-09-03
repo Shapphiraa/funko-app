@@ -4,7 +4,7 @@ import Image from 'next/image'
 import MenuHeader from '../../components/MenuHeader'
 import Products from '../../components/Products'
 import { useEffect, useState } from 'react'
-import CreatePopModal from '@/app/components/Modals/CreatePopModal'
+import PopModal from '@/app/components/Modals/PopModal'
 import retrieveUserRole from '@/app/logic/retrieveUserRole'
 import isUserLoggedIn from '@/app/logic/isUserLoggedIn'
 import useAppContext from '@/app/hooks/useAppContext'
@@ -72,9 +72,10 @@ export default function AllCatalogPage() {
 
           {adminModal && (
             <section className="p-4 bg-white">
-              <CreatePopModal
+              <PopModal
                 onSubmit={handleCloseModal}
                 onCancel={handleCloseModal}
+                onCreate={true}
               />
             </section>
           )}

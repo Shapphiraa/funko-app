@@ -32,11 +32,6 @@ export default function updateUserPhoneNumber({
           'Your new phone number matches the current one 😥'
         )
 
-      // await User.updateOne(
-      //   { _id: userId },
-      //   { $set: { phoneNumber: phoneNumber.replaceAll(' ', '') } }
-      // )
-
       user.phoneNumber = phoneNumber.replaceAll(' ', '')
 
       await user.save()

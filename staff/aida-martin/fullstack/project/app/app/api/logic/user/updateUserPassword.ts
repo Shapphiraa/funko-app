@@ -38,8 +38,6 @@ export default function updateUserPassword({
     if (user.password === newPassword)
       throw new ContentError('Your new password matches the current one 😥')
 
-    // await User.updateOne({ _id: userId }, { $set: { password: newPassword } })
-
     user.password = newPassword
 
     await user.save()

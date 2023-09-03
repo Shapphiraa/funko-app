@@ -13,13 +13,12 @@ import { useState, useEffect } from 'react'
 import isUserLoggedIn from '@/app/logic/isUserLoggedIn'
 import { IconEdit, IconDelete } from '@/app/components/Icons'
 import Button from '@/app/library/Button'
-import UpdatePopModal from '@/app/components/Modals/UpdatePopModal'
 import deletePop from '@/app/logic/deletePop'
 import { useRouter } from 'next/navigation'
 import useAppContext from '@/app/hooks/useAppContext'
 import Alert from '@/app/components/Alert'
-import { Spinner } from '@nextui-org/react'
 import Loader from '@/app/components/Loader'
+import PopModal from '@/app/components/Modals/PopModal'
 
 export default function Detail({ params }: { params: { id: string } }) {
   const { alert } = useAppContext()
@@ -35,14 +34,9 @@ export default function Detail({ params }: { params: { id: string } }) {
 
   const getPop = async () => {
     try {
-      setIsLoading(true)
+      let pop = await retrievePop(params)
 
-      setTimeout(async () => {
-        let pop = await retrievePop(params)
-
-        setPop(pop)
-        setIsLoading(false)
-      }, 500)
+      setPop(pop)
     } catch (error: any) {
       setIsLoading(false)
       alert(error.message)
@@ -69,6 +63,8 @@ export default function Detail({ params }: { params: { id: string } }) {
 
   const handleCloseModal = () => {
     setIsOpenModal(false)
+
+    getPop()
   }
 
   const handleCloseAlert = () => {
@@ -94,12 +90,17 @@ export default function Detail({ params }: { params: { id: string } }) {
   }, [])
 
   useEffect(() => {
-    getPop()
-  }, [isOpenModal])
+    setIsLoading(true)
+
+    setTimeout(async () => {
+      getPop()
+      setIsLoading(false)
+    }, 500)
+  }, [])
 
   return (
     <>
-      {pop && (
+      {!isLoading && pop && (
         <>
           {!isOpenModal && (
             <>
@@ -108,42 +109,29 @@ export default function Detail({ params }: { params: { id: string } }) {
               </div>
 
               <Container className="m-5 mt-0 p-5">
-                <>
-                  <Carousel>
-                    <div className="h-full w-full !flex justify-center">
-                      <ProductImage
-                        image={pop.images[0]}
-                        name={pop.name}
-                        size={250}
-                        className="w-[250px] h-[250px]"
-                      ></ProductImage>
-                    </div>
-                    <div className="h-full w-full !flex justify-center">
-                      <ProductImage
-                        image={pop.images[1]}
-                        name={pop.name}
-                        size={250}
-                        className="w-[250px] h-[250px]"
-                      ></ProductImage>
-                    </div>
-                  </Carousel>
-
-                  <h1 className="text-text-product-light text-3xl font-light mb-1 mt-10">
-                    {pop.variant}
-                  </h1>
-                  <h2 className="text-text-product-light text-2xl font-semibold">
-                    {pop.name}
-                  </h2>
-
-                  <AddToListsButtonsDetail pop={pop} onChange={getPop} />
-
-                  <CharacteristicsList pop={pop} />
-                </>
+                <Carousel>
+                  <div className="h-full w-full !flex justify-center">
+                    <ProductImage
+                      image={pop.images[0]}
+                      name={pop.name}
+                      size={250}
+                      className="w-[250px] h-[250px]"
+                    ></ProductImage>
+                  </div>
+                  <div className="h-full w-full !flex justify-center">
+                    <ProductImage
+                      image={pop.images[1]}
+                      name={pop.name}
+                      size={250}
+                      className="w-[250px] h-[250px]"
+                    ></ProductImage>
+                  </div>
+                </Carousel>
 
                 <>
                   {isAdmin && (
                     <>
-                      <div className="flex justify-center gap-1 mt-4 text-general-blue">
+                      <div className="flex justify-center gap-1 mt-7 text-general-blue">
                         <Button
                           className="bg-white rounded-2xl"
                           onClick={handleOpenModal}
@@ -160,17 +148,28 @@ export default function Detail({ params }: { params: { id: string } }) {
                     </>
                   )}
                 </>
+
+                <h1 className="text-text-product-light text-3xl font-light mb-1 mt-7">
+                  {pop.variant}
+                </h1>
+                <h2 className="text-text-product-light text-2xl font-semibold">
+                  {pop.name}
+                </h2>
+
+                <AddToListsButtonsDetail pop={pop} onChange={getPop} />
+
+                <CharacteristicsList pop={pop} />
               </Container>
             </>
           )}
 
           {isOpenModal && (
             <div className="p-4 bg-white">
-              <UpdatePopModal
+              <PopModal
                 pop={pop}
                 onSubmit={handleCloseModal}
                 onCancel={handleCloseModal}
-              ></UpdatePopModal>
+              ></PopModal>
             </div>
           )}
         </>

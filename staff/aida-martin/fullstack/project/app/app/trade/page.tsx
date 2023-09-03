@@ -1,10 +1,10 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import CreateSalePopModal from '../components/Modals/CreateSalePopModal'
 import PopSales from '../components/PopSales'
 import MenuHeader from '../components/MenuHeader'
 import isUserLoggedIn from '../logic/isUserLoggedIn'
+import SalePopModal from '../components/Modals/SalePopModal'
 
 export default function Trade() {
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false)
@@ -43,9 +43,10 @@ export default function Trade() {
 
       {isOpenModal && isLogged && (
         <section className="p-4 bg-white">
-          <CreateSalePopModal
+          <SalePopModal
             onSubmit={handleCloseModal}
             onCancel={handleCloseModal}
+            onCreate={true}
           />
         </section>
       )}

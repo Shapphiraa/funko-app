@@ -13,7 +13,7 @@ interface CreatePopProps {
   variant: string
   exclusivity: string
   name: string
-  number: number
+  number: string
   images: Array<string>
   category: string
   collect: string
@@ -37,7 +37,7 @@ export default function createPop({
   validateString(variant, 'Variant')
   validateString(exclusivity, 'Exclusivity')
   validateString(name, 'Name')
-  validateNumber(number, 'Number')
+  validateString(number, 'Number')
   validateString(images[0], 'First image')
   validateString(images[1], 'Second image')
   validateString(category, 'Category')

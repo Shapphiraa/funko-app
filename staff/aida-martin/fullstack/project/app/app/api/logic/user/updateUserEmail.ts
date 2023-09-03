@@ -30,8 +30,6 @@ export default function updateUserEmail({
       if (email === user.email)
         throw new ContentError('Your new email matches the current one 😥')
 
-      // await User.updateOne({ _id: userId }, { $set: { email: email } })
-
       user.email = email
 
       await user.save()

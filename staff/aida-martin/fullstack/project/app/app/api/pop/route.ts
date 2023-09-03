@@ -9,7 +9,7 @@ interface Body {
   variant: string
   exclusivity: string
   name: string
-  number: number
+  number: string
   images: Array<string>
   category: string
   collect: string

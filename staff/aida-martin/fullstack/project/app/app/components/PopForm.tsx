@@ -70,7 +70,7 @@ export default function PopForm({
       variant: { value: string }
       exclusivity: { value: string }
       name: { value: string }
-      number: { value: number }
+      number: { value: string }
       category: { value: string }
       collect: { value: string }
       release: { value: string }

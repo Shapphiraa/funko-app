@@ -11,7 +11,7 @@ export interface Pop {
     name: string
   }
   id: string
-  number: number
+  number: string
   collect: string
   release: string
   availability: string

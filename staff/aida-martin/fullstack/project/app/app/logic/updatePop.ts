@@ -6,7 +6,7 @@ interface UpdatePopProps {
   variant: string
   exclusivity: string
   name: string
-  number: number
+  number: string
   category: string
   images: Array<string>
   collect: string
@@ -30,7 +30,7 @@ export default function updatePop({
   validateString(variant, 'Variant')
   validateString(exclusivity, 'Exclusivity')
   validateString(name, 'Name')
-  validateNumber(number, 'Number')
+  validateString(number, 'Number')
   validateString(images[0], 'First image')
   validateString(images[1], 'Second image')
   validateString(category, 'Category')

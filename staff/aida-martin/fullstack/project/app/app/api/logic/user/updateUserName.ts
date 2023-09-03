@@ -16,8 +16,6 @@ export default function updateUserName({ userId, name }: UpdateUserNameProps) {
 
     if (!user) throw new ExistenceError('User not found! 😥')
 
-    // await User.updateOne({ _id: userId }, { $set: { name: name } })
-
     user.name = name
 
     await user.save()

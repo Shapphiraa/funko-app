@@ -173,7 +173,7 @@ const pop = new Schema({
     required: true,
   },
   number: {
-    type: Number,
+    type: String,
     required: true,
   },
   images: {

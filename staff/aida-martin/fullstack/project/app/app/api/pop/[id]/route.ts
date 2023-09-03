@@ -25,7 +25,7 @@ interface Body {
   variant: string
   exclusivity: string
   name: string
-  number: number
+  number: string
   category: string
   images: Array<string>
   collect: string

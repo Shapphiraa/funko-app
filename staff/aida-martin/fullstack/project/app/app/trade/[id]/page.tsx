@@ -19,7 +19,7 @@ import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import SalePopCharacteristicsList from '@/app/components/SalePopCharacteristicsList'
 import getUserId from '@/app/logic/getUserId'
-import UpdateSalePopModal from '@/app/components/Modals/UpdateSalePopModal'
+import UpdateSalePopModal from '@/app/components/Modals/SalePopModal'
 import GeneralButton from '@/app/components/GeneralButton'
 import ToggleSalePopStatusButton from '@/app/components/ToggleSalePopStatusButton'
 import deleteSalePop from '@/app/logic/deleteSalePop'
@@ -36,22 +36,15 @@ export default function Detail({ params }: { params: { id: string } }) {
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false)
   const [confirmAlert, setConfirmAlert] = useState<string | null>(null)
 
-  const [isSold, setIsSold] = useState<boolean>(false)
-
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const router = useRouter()
 
   const getPopForSale = async () => {
     try {
-      setIsLoading(true)
+      const salePop = await retrieveSalePop(params)
 
-      setTimeout(async () => {
-        const salePop = await retrieveSalePop(params)
-
-        setSalePop(salePop)
-        setIsLoading(false)
-      }, 500)
+      setSalePop(salePop)
     } catch (error: any) {
       setIsLoading(false)
       alert(error.message)
@@ -72,6 +65,8 @@ export default function Detail({ params }: { params: { id: string } }) {
 
   const handleCloseModal = () => {
     setIsOpenModal(false)
+
+    getPopForSale()
   }
 
   const handleCloseAlert = () => {
@@ -94,19 +89,24 @@ export default function Detail({ params }: { params: { id: string } }) {
 
       handleCloseAlert()
 
-      setIsSold(true)
+      getPopForSale()
     } catch (error: any) {
       alert(error.message)
     }
   }
 
   useEffect(() => {
-    getPopForSale()
-  }, [isOpenModal, isSold])
+    setIsLoading(true)
+
+    setTimeout(async () => {
+      getPopForSale()
+      setIsLoading(false)
+    }, 500)
+  }, [])
 
   return (
     <>
-      {salePop && (
+      {!isLoading && salePop && (
         <>
           {!isOpenModal && (
             <>
@@ -198,31 +198,6 @@ export default function Detail({ params }: { params: { id: string } }) {
                     )}
                 </>
 
-                <div className="flex flex-col gap-1 mt-7 text-text-product-light">
-                  <span className="text-3xl text-general-blue font-bold">{`${salePop.price}€`}</span>
-
-                  <h1 className="text-2xl font-light">{salePop.pop.variant}</h1>
-                  <h2 className="text-xl font-semibold">{salePop.pop.name}</h2>
-
-                  <p className="text-justify text-xl my-7">
-                    {salePop.description}
-                  </p>
-                </div>
-
-                <SalePopCharacteristicsList salePop={salePop} />
-
-                <>
-                  {isUserLoggedIn() &&
-                    salePop.author.id !== getUserId() &&
-                    salePop.status === 'Available' && (
-                      <>
-                        <ViewUserContactInfoButton
-                          salePop={salePop}
-                        ></ViewUserContactInfoButton>
-                      </>
-                    )}
-                </>
-
                 <>
                   {isUserLoggedIn() &&
                     salePop.author.id === getUserId() &&
@@ -242,6 +217,31 @@ export default function Detail({ params }: { params: { id: string } }) {
                             <IconDelete size="24px" />
                           </Button>
                         </div>
+                      </>
+                    )}
+                </>
+
+                <div className="flex flex-col gap-1 mt-7 text-text-product-light">
+                  <span className="text-3xl text-general-blue font-bold">{`${salePop.price}€`}</span>
+
+                  <h1 className="text-3xl font-light">{salePop.pop.variant}</h1>
+                  <h2 className="text-2xl font-semibold">{salePop.pop.name}</h2>
+
+                  <p className="text-justify text-xl my-7">
+                    {salePop.description}
+                  </p>
+                </div>
+
+                <SalePopCharacteristicsList salePop={salePop} />
+
+                <>
+                  {isUserLoggedIn() &&
+                    salePop.author.id !== getUserId() &&
+                    salePop.status === 'Available' && (
+                      <>
+                        <ViewUserContactInfoButton
+                          salePop={salePop}
+                        ></ViewUserContactInfoButton>
                       </>
                     )}
                 </>

@@ -19,8 +19,6 @@ export default function updateUserLocation({
 
     if (!user) throw new ExistenceError('User not found! 😥')
 
-    // await User.updateOne({ _id: userId }, { $set: { location: location } })
-
     user.location = location
 
     await user.save()
