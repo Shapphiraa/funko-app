@@ -6,7 +6,7 @@ import {
 } from '../../../helpers'
 
 import { User } from '../../data/models'
-// const bcrypt = require('bcryptjs')
+import bcrypt from 'bcryptjs'
 
 interface AuthenticateUserProps {
   email: string
@@ -26,6 +26,8 @@ export default function authenticateUser({
     if (!user) throw new ExistenceError('User not found! 😥')
 
     // const match = await bcrypt.compare(password, user.password)
+
+    // if (!match) throw new AuthError('Wrong credentials! 😥')
 
     if (password !== user.password) throw new AuthError('Wrong credentials! 😥')
 

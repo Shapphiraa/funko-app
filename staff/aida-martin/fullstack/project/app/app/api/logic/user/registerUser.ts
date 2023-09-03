@@ -8,7 +8,7 @@ import {
 } from '../../../helpers'
 
 import { User } from '../../data/models'
-// const bcrypt = require('bcryptjs')
+import bcrypt from 'bcryptjs'
 
 interface RegisterUserProps {
   name: string
@@ -34,10 +34,12 @@ export default function registerUser({
 
   return (async () => {
     try {
+      const hash = await bcrypt.hash(password, 10)
+
       await User.create({
         name,
         email,
-        password,
+        password: hash,
       })
     } catch (error: any) {
       if (error.message.includes('E11000'))
