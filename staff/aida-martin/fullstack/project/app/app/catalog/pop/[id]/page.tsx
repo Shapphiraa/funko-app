@@ -17,6 +17,7 @@ import UpdatePopModal from '@/app/components/Modals/UpdatePopModal'
 import deletePop from '@/app/logic/deletePop'
 import { useRouter } from 'next/navigation'
 import useAppContext from '@/app/hooks/useAppContext'
+import Alert from '@/app/components/Alert'
 
 export default function Detail({ params }: { params: { id: string } }) {
   const { alert } = useAppContext()
@@ -24,6 +25,7 @@ export default function Detail({ params }: { params: { id: string } }) {
   const [pop, setPop] = useState<Pop>()
   const [isAdmin, setIsAdmin] = useState<boolean>(false)
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false)
+  const [isConfirmAlert, setIsConfirmAlert] = useState<boolean>(false)
 
   const router = useRouter()
 
@@ -51,23 +53,23 @@ export default function Detail({ params }: { params: { id: string } }) {
     setIsOpenModal(true)
   }
 
+  const handleOpenDeleteAlert = () => {
+    setIsConfirmAlert(true)
+  }
+
   const handleCloseModal = () => {
     setIsOpenModal(false)
   }
 
+  const handleCloseAlert = () => {
+    setIsConfirmAlert(false)
+  }
+
   const handleDeletePop = async () => {
-    // Change to custom modal
-
     try {
-      if (
-        confirm(
-          'Are you sure you want to delete? All of sale pops will be deleted too'
-        )
-      ) {
-        await deletePop(params)
+      await deletePop(params)
 
-        router.back()
-      }
+      router.back()
     } catch (error: any) {
       alert(error.message)
     }
@@ -96,35 +98,37 @@ export default function Detail({ params }: { params: { id: string } }) {
               </div>
 
               <Container className="m-5 mt-0 p-5">
-                <Carousel>
-                  <div className="h-full w-full !flex justify-center">
-                    <ProductImage
-                      image={pop.images[0]}
-                      name={pop.name}
-                      size={250}
-                      className="w-[250px] h-[250px]"
-                    ></ProductImage>
-                  </div>
-                  <div className="h-full w-full !flex justify-center">
-                    <ProductImage
-                      image={pop.images[1]}
-                      name={pop.name}
-                      size={250}
-                      className="w-[250px] h-[250px]"
-                    ></ProductImage>
-                  </div>
-                </Carousel>
+                <>
+                  <Carousel>
+                    <div className="h-full w-full !flex justify-center">
+                      <ProductImage
+                        image={pop.images[0]}
+                        name={pop.name}
+                        size={250}
+                        className="w-[250px] h-[250px]"
+                      ></ProductImage>
+                    </div>
+                    <div className="h-full w-full !flex justify-center">
+                      <ProductImage
+                        image={pop.images[1]}
+                        name={pop.name}
+                        size={250}
+                        className="w-[250px] h-[250px]"
+                      ></ProductImage>
+                    </div>
+                  </Carousel>
 
-                <h1 className="text-text-product-light text-3xl font-light mb-1 mt-10">
-                  {pop.variant}
-                </h1>
-                <h2 className="text-text-product-light text-2xl font-semibold">
-                  {pop.name}
-                </h2>
+                  <h1 className="text-text-product-light text-3xl font-light mb-1 mt-10">
+                    {pop.variant}
+                  </h1>
+                  <h2 className="text-text-product-light text-2xl font-semibold">
+                    {pop.name}
+                  </h2>
 
-                <AddToListsButtonsDetail pop={pop} onChange={getPop} />
+                  <AddToListsButtonsDetail pop={pop} onChange={getPop} />
 
-                <CharacteristicsList pop={pop} />
+                  <CharacteristicsList pop={pop} />
+                </>
 
                 <>
                   {isAdmin && (
@@ -138,7 +142,7 @@ export default function Detail({ params }: { params: { id: string } }) {
                         </Button>
                         <Button
                           className="bg-white rounded-2xl"
-                          onClick={handleDeletePop}
+                          onClick={handleOpenDeleteAlert}
                         >
                           <IconDelete size="24px" />
                         </Button>
@@ -160,6 +164,14 @@ export default function Detail({ params }: { params: { id: string } }) {
             </div>
           )}
         </>
+      )}
+
+      {isConfirmAlert && (
+        <Alert
+          message="Are you sure you want to delete? All of sale pops will be deleted too"
+          onAccept={handleDeletePop}
+          onCancel={handleCloseAlert}
+        ></Alert>
       )}
     </>
   )

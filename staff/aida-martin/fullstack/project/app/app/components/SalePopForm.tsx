@@ -110,7 +110,7 @@ export default function SalePopForm({
 
       <Form onSubmit={handleSubmit}>
         <div className="flex m-auto gap-3 mt-3">
-          {firstImage === null ? (
+          {firstImage === '' ? (
             <>
               <button
                 type="button"
@@ -166,7 +166,7 @@ export default function SalePopForm({
             </>
           )}
 
-          {secondImage === null ? (
+          {secondImage === '' ? (
             <>
               <button
                 type="button"

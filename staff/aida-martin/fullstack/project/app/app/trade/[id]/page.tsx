@@ -26,12 +26,15 @@ import deleteSalePop from '@/app/logic/deleteSalePop'
 import ViewUserContactInfoButton from '@/app/components/ViewUserContactInfoButton'
 import changeSalePopStatusToSold from '@/app/logic/changeSalePopStatusToSold'
 import useAppContext from '@/app/hooks/useAppContext'
+import Alert from '@/app/components/Alert'
 
 export default function Detail({ params }: { params: { id: string } }) {
   const { alert } = useAppContext()
 
   const [salePop, setSalePop] = useState<PopForSale>()
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false)
+  const [confirmAlert, setConfirmAlert] = useState<string | null>(null)
+
   const [isSold, setIsSold] = useState<boolean>(false)
 
   const router = useRouter()
@@ -50,19 +53,27 @@ export default function Detail({ params }: { params: { id: string } }) {
     setIsOpenModal(true)
   }
 
+  const handleOpenDeleteAlert = () => {
+    setConfirmAlert('delete')
+  }
+
+  const handleOpenSoldAlert = () => {
+    setConfirmAlert('sold')
+  }
+
   const handleCloseModal = () => {
     setIsOpenModal(false)
   }
 
-  const handleDeletePop = async () => {
-    // Change to custom modal
+  const handleCloseAlert = () => {
+    setConfirmAlert(null)
+  }
 
+  const handleDeleteSalePop = async () => {
     try {
-      if (confirm('Are you sure you want to delete?')) {
-        await deleteSalePop(params)
+      await deleteSalePop(params)
 
-        router.back()
-      }
+      router.back()
     } catch (error: any) {
       alert(error.message)
     }
@@ -70,8 +81,9 @@ export default function Detail({ params }: { params: { id: string } }) {
 
   const handleSoldSalePop = async () => {
     try {
-      if (confirm('Are you sure you want to sold?'))
-        await changeSalePopStatusToSold({ id: salePop!.id })
+      await changeSalePopStatusToSold({ id: salePop!.id })
+
+      handleCloseAlert()
 
       setIsSold(true)
     } catch (error: any) {
@@ -170,7 +182,7 @@ export default function Detail({ params }: { params: { id: string } }) {
                           <GeneralButton
                             className="justify-self-center w-full bg-red-500"
                             tittle="Sold"
-                            onClick={handleSoldSalePop}
+                            onClick={handleOpenSoldAlert}
                           ></GeneralButton>
                         </div>
                       </>
@@ -216,7 +228,7 @@ export default function Detail({ params }: { params: { id: string } }) {
                           </Button>
                           <Button
                             className="bg-white rounded-2xl"
-                            onClick={handleDeletePop}
+                            onClick={handleOpenDeleteAlert}
                           >
                             <IconDelete size="24px" />
                           </Button>
@@ -236,6 +248,22 @@ export default function Detail({ params }: { params: { id: string } }) {
                 onCancel={handleCloseModal}
               ></UpdateSalePopModal>
             </div>
+          )}
+
+          {confirmAlert === 'delete' && (
+            <Alert
+              message="Are you sure you want to delete?"
+              onAccept={handleDeleteSalePop}
+              onCancel={handleCloseAlert}
+            ></Alert>
+          )}
+
+          {confirmAlert === 'sold' && (
+            <Alert
+              message="Are you sure you want to mark it as sold?"
+              onAccept={handleSoldSalePop}
+              onCancel={handleCloseAlert}
+            ></Alert>
           )}
         </>
       )}
