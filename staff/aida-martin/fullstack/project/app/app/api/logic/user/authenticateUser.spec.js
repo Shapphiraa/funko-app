@@ -71,4 +71,39 @@ describe('authenticateUser', () => {
       expect(error.message).to.equal('Wrong credentials! 😥')
     }
   })
+
+  // Some validators tests:
+
+  it('fails on non-string password', () =>
+    expect(() =>
+      authenticateUser(
+        {
+          email: user.email,
+          password: 23,
+        },
+        () => {}
+      )
+    ).to.throw(Error, 'Password is not a string 😥'))
+
+  it('fails on empty password', () =>
+    expect(() =>
+      authenticateUser(
+        {
+          email: user.email,
+          password: '',
+        },
+        () => {}
+      )
+    ).to.throw(Error, 'Password is empty 😥'))
+
+  it('fails on password does length lower than 8 characters', () =>
+    expect(() =>
+      authenticateUser(
+        {
+          email: user.email,
+          password: '1234567',
+        },
+        () => {}
+      )
+    ).to.throw(Error, 'Password does not have 8 characters 😥'))
 })

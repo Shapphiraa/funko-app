@@ -33,7 +33,7 @@ function respondError(error: any) {
   return NextResponse.json(
     {
       message: error.message,
-      type: error.constructor.name,
+      type: error.name,
     },
     { status }
   )

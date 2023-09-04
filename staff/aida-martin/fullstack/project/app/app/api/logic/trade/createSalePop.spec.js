@@ -102,4 +102,100 @@ describe('createSalePop', () => {
       expect(error.message).to.equal('User not found! 😥')
     }
   })
+
+  it('fails on non-string description', () => {
+    expect(() =>
+      createSalePop(
+        {
+          userId: '123123123123123123123123',
+          description: 23,
+          condition: salePop.condition,
+          pop: '123123123123123123123123',
+          images: salePop.images,
+          price: salePop.price,
+        },
+        () => {}
+      )
+    ).to.throw(Error, 'Description is not a string 😥')
+  })
+
+  it('fails on empty description', () => {
+    expect(() =>
+      createSalePop(
+        {
+          userId: '123123123123123123123123',
+          description: '',
+          condition: salePop.condition,
+          pop: '123123123123123123123123',
+          images: salePop.images,
+          price: salePop.price,
+        },
+        () => {}
+      )
+    ).to.throw(Error, 'Description is empty 😥')
+  })
+
+  it('fails on description length lower than 20 characters', () => {
+    expect(() =>
+      createSalePop(
+        {
+          userId: '123123123123123123123123',
+          description: '123',
+          condition: salePop.condition,
+          pop: '123123123123123123123123',
+          images: salePop.images,
+          price: salePop.price,
+        },
+        () => {}
+      )
+    ).to.throw(Error, 'Description does not have 20 characters 😥')
+  })
+
+  it('fails on user id is not a string', () => {
+    expect(() =>
+      createSalePop(
+        {
+          userId: 23,
+          description: salePop.description,
+          condition: salePop.condition,
+          pop: '123123123123123123123123',
+          images: salePop.images,
+          price: salePop.price,
+        },
+        () => {}
+      )
+    ).to.throw(Error, 'User ID is not a string 😥')
+  })
+
+  it('fails on user id does not have 24 characters', () => {
+    expect(() =>
+      createSalePop(
+        {
+          userId: '123',
+          description: salePop.description,
+          condition: salePop.condition,
+          pop: '123123123123123123123123',
+          images: salePop.images,
+          price: salePop.price,
+        },
+        () => {}
+      )
+    ).to.throw(Error, 'User ID does not have 24 characters 😥')
+  })
+
+  it('fails on user id not a hexadecimal', () => {
+    expect(() =>
+      createSalePop(
+        {
+          userId: '-$.-$.2a-$.2a-$.2a-$.2a-',
+          description: salePop.description,
+          condition: salePop.condition,
+          pop: '123123123123123123123123',
+          images: salePop.images,
+          price: salePop.price,
+        },
+        () => {}
+      )
+    ).to.throw(Error, 'User ID is not hexadecimal 😥')
+  })
 })

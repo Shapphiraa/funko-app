@@ -2,7 +2,6 @@ export {
   validateEmail,
   validatePassword,
   validateId,
-  validateToken,
   validateString,
   validateDescription,
   validateNumber,

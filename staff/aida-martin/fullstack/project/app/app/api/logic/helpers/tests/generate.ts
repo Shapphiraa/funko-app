@@ -1,6 +1,5 @@
 const generate = {
   user: () => ({
-    id: `user-${Math.random()}`,
     name: `name-${Math.random()}`,
     email: `email-${Math.random()}@mail.com`,
     password: `password-${Math.random()}`,
@@ -20,7 +19,6 @@ const generate = {
   }),
 
   pop: (categoryId: string) => ({
-    id: `pop-${Math.random()}`,
     variant: 'POP!',
     exclusivity: 'Regular',
     name: `name-${Math.random()}`,
@@ -33,7 +31,6 @@ const generate = {
   }),
 
   salePop: (popId: string, userId: string) => ({
-    id: `salePop-${Math.random()}`,
     author: userId,
     description: `description-description-description-${Math.random()}`,
     condition: 'Good condition',

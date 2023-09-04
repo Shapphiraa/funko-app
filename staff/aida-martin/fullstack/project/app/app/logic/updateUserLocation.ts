@@ -8,7 +8,7 @@ interface UpdateUserLocationProps {
 export default function updateUserPhoneNumber({
   location,
 }: UpdateUserLocationProps) {
-  validateString(location)
+  validateString(location, 'Location')
 
   return (async () => {
     const res = await fetch(`http://localhost:3000/api/user/location`, {

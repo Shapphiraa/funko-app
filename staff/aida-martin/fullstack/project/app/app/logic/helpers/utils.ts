@@ -1,4 +1,19 @@
-import { validateToken } from '../../helpers/validators'
+import { ContentError } from '@/app/helpers'
+
+/**
+ * Validates the token
+ *
+ * @param token The token to validate
+ * @param explain The word to specity the errors
+ *
+ */
+
+function validateToken(token: string, explain = 'Token') {
+  if (typeof token !== 'string')
+    throw new TypeError(`${explain} is not a string 😥`)
+  if (token.split('.').length !== 3)
+    throw new ContentError(`${explain} is not valid 😥`)
+}
 
 function extractPayloadFromToken(token: string) {
   return JSON.parse(atob(token.split('.')[1]))

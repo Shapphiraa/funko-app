@@ -48,7 +48,7 @@ export function validatePassword(password: string, explain = 'Password') {
  * @param explain The word to specity the errors
  */
 
-export function validateString(string: string, explain = 'String') {
+export function validateString(string: string, explain: string) {
   if (typeof string !== 'string') {
     throw new TypeError(`${explain} is not a string 😥`)
   }
@@ -101,21 +101,6 @@ export function validateId(id: string, explain = 'User ID') {
     if (!HEX_DICTIONARY.includes(char))
       throw new ContentError(`${explain} is not hexadecimal 😥`)
   }
-}
-
-/**
- * Validates the token
- *
- * @param token The token to validate
- * @param explain The word to specity the errors
- *
- */
-
-export function validateToken(token: string, explain = 'Token') {
-  if (typeof token !== 'string')
-    throw new TypeError(`${explain} is not a string 😥`)
-  if (token.split('.').length !== 3)
-    throw new ContentError(`${explain} is not valid 😥`)
 }
 
 /**

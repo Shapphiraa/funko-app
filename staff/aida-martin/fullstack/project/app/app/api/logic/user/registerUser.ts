@@ -4,6 +4,7 @@ import {
   validatePassword,
   DuplicityError,
   ContentError,
+  UnknownError,
 } from '../../../helpers'
 
 import { User } from '../../data/models'
@@ -58,6 +59,8 @@ export default function registerUser({
     } catch (error: any) {
       if (error.message.includes('E11000'))
         throw new DuplicityError('You are already registered! Please login! 😅')
+
+      throw new UnknownError(error.message)
     }
   })()
 }

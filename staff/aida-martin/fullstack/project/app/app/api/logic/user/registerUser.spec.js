@@ -99,7 +99,7 @@ describe('registerUser', () => {
         },
         () => {}
       )
-    ).to.throw(Error, 'Name is empty'))
+    ).to.throw(Error, 'Name is empty 😥'))
 
   it('fails on empty email', () =>
     expect(() =>
@@ -112,7 +112,20 @@ describe('registerUser', () => {
         },
         () => {}
       )
-    ).to.throw(Error, 'Email is empty'))
+    ).to.throw(Error, 'Email is empty 😥'))
+
+  it('fails on non-valid email', () =>
+    expect(() =>
+      registerUser(
+        {
+          name: user.name,
+          email: 'fakeEmail',
+          password: user.password,
+          repeatPassword: user.password,
+        },
+        () => {}
+      )
+    ).to.throw(Error, 'Email is not valid 😥'))
 
   it('fails on non-string name', () => {
     expect(() =>
@@ -137,7 +150,7 @@ describe('registerUser', () => {
         },
         () => {}
       )
-    ).to.throw(Error, 'Name is not a string')
+    ).to.throw(Error, 'Name is not a string 😥')
 
     expect(() =>
       registerUser(
@@ -149,7 +162,7 @@ describe('registerUser', () => {
         },
         () => {}
       )
-    ).to.throw(Error, 'Name is not a string')
+    ).to.throw(Error, 'Name is not a string 😥')
 
     expect(() =>
       registerUser(
@@ -161,7 +174,7 @@ describe('registerUser', () => {
         },
         () => {}
       )
-    ).to.throw(Error, 'Name is not a string')
+    ).to.throw(Error, 'Name is not a string 😥')
 
     expect(() =>
       registerUser(
@@ -173,7 +186,7 @@ describe('registerUser', () => {
         },
         () => {}
       )
-    ).to.throw(Error, 'Name is not a string')
+    ).to.throw(Error, 'Name is not a string 😥')
   })
 
   it('fails on non-string email', () => {
@@ -187,6 +200,6 @@ describe('registerUser', () => {
         },
         () => {}
       )
-    ).to.throw(Error, 'Email is not a string')
+    ).to.throw(Error, 'Email is not a string 😥')
   })
 })
