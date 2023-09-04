@@ -2,7 +2,7 @@
 
 import mongoose from 'mongoose'
 
-const MONGODB_URL = `${process.env.MONGODB_URL}${process.env.DATABASE_NAME}`
+const MONGODB_URL = `${process.env.MONGODB_URL}${process.env.DATABASE_DEV}`
 
 if (!MONGODB_URL) {
   throw new Error(

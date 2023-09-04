@@ -10,7 +10,7 @@ dotenv.config()
 describe('retrieveCategories', () => {
   before(async () => {
     await mongoose.connect(
-      `${process.env.MONGODB_URL}${process.env.DATABASE_NAME}`
+      `${process.env.MONGODB_URL}${process.env.DATABASE_TEST}`
     )
   })
 
