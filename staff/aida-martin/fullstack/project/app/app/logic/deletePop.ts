@@ -1,4 +1,4 @@
-import { validateId, validateString, validateNumber } from '../helpers'
+import { validateId } from '../helpers'
 import context from './context'
 
 export default function deletePop({ id }: { id: string }) {

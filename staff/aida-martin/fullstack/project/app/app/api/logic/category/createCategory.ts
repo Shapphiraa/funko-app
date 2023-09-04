@@ -24,6 +24,8 @@ export default function createCategory({
 }: CreateCategoryProps) {
   validateId(userId)
   validateString(name, 'Name')
+  validateString(imageList, 'ImageList')
+  validateString(imageDetail, 'ImageDetail')
 
   const slug = slugify(name, { lower: true, locale: 'en' })
 

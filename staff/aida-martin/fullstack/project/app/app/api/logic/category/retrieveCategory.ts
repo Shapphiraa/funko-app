@@ -1,18 +1,22 @@
-import { ExistenceError } from '../../../helpers'
+import { ExistenceError, validateString } from '../../../helpers'
 import { Category } from '../../data/models'
 
-export default async function retrieveCategory(filter: { slug: string }) {
-  const category = await Category.findOne(
-    { slug: filter.slug },
-    'name imageDetail'
-  )
+export default function retrieveCategory(filter: { slug: string }) {
+  validateString(filter.slug, 'Slug param')
 
-  if (!category) throw new ExistenceError('Category not found! 😥')
+  return (async () => {
+    const category = await Category.findOne(
+      { slug: filter.slug },
+      'name imageDetail'
+    )
 
-  if (category._id) {
-    category.id = category._id.toString()
-    delete category._id
-  }
+    if (!category) throw new ExistenceError('Category not found! 😥')
 
-  return category
+    if (category._id) {
+      category.id = category._id.toString()
+      delete category._id
+    }
+
+    return category
+  })()
 }

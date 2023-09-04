@@ -1,3 +1,4 @@
+import { validateString } from '../helpers'
 import context from './context'
 
 export interface Pop {
@@ -23,10 +24,12 @@ export default async function retrievePops({
   const params: { slug?: string; search?: string } = {}
 
   if (slug) {
+    validateString(slug, 'Slug param')
     params.slug = slug
   }
 
   if (search) {
+    validateString(search, 'Search param')
     params.search = search
   }
 

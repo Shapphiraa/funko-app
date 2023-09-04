@@ -15,7 +15,6 @@ export default function retrievePopCollectionPreview({
 
     const quantity = user.popCollect.length
 
-    // Arreglar any!!
     const pop: any = await Pop.findById(
       user.popCollect[user.popCollect.length - 1],
       'images'

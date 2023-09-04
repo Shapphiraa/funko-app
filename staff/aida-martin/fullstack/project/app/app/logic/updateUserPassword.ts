@@ -14,6 +14,7 @@ export default function updateUserPassword({
 }: UpdateUserPasswordProps) {
   validatePassword(password)
   validatePassword(newPassword, 'New password')
+  validatePassword(newPasswordConfirm, 'Confirm new password')
 
   return (async () => {
     const res = await fetch(`http://localhost:3000/api/user/password`, {

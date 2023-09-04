@@ -2,53 +2,58 @@ import { validateId, ExistenceError } from '../../../helpers'
 import { Pop, User, SalePop } from '../../data/models'
 import calculateTrendingValue from '../helpers/tests/calculateTrendingValue'
 
-export default async function retrievePop({
+export default function retrievePop({
   userId,
   popId,
 }: {
   userId?: string
   popId: string
 }) {
-  // TODO: validators
-  const pop: any = await Pop.findById(popId, '-__v -date')
-    .populate('category', 'name')
-    .lean()
+  if (userId) validateId(userId)
 
-  if (!pop) throw new ExistenceError('Pop not found! 😥')
+  validateId(popId, 'Pop ID')
 
-  pop.id = pop._id.toString()
-  delete pop._id
+  return (async () => {
+    const pop: any = await Pop.findById(popId, '-__v -date')
+      .populate('category', 'name')
+      .lean()
 
-  pop.category.id = pop.category._id.toString()
-  delete pop.category._id
+    if (!pop) throw new ExistenceError('Pop not found! 😥')
 
-  let user
+    pop.id = pop._id.toString()
+    delete pop._id
 
-  if (userId) {
-    user = await User.findById(userId)
+    pop.category.id = pop.category._id.toString()
+    delete pop.category._id
 
-    if (!user) throw new ExistenceError('User not found! 😥')
-  }
+    let user
 
-  pop.userCollect = user
-    ? user.popCollect.some((id: string) => id.toString() === pop.id)
-    : false
+    if (userId) {
+      user = await User.findById(userId)
 
-  pop.userWhislist = user
-    ? user.popWhislist.some((id: string) => id.toString() === pop.id)
-    : false
+      if (!user) throw new ExistenceError('User not found! 😥')
+    }
 
-  const salePops: any = await SalePop.find({
-    $and: [{ pop: pop.id }, { status: 'Sold' }],
-  })
+    pop.userCollect = user
+      ? user.popCollect.some((id: string) => id.toString() === pop.id)
+      : false
 
-  if (salePops.length > 1) {
-    const salePopPrices = salePops.map((salePop: any) => salePop.price)
+    pop.userWhislist = user
+      ? user.popWhislist.some((id: string) => id.toString() === pop.id)
+      : false
 
-    const trendingValue = calculateTrendingValue(salePopPrices)
+    const salePops: any = await SalePop.find({
+      $and: [{ pop: pop.id }, { status: 'Sold' }],
+    })
 
-    pop.trendingValue = trendingValue
-  }
+    if (salePops.length > 1) {
+      const salePopPrices = salePops.map((salePop: any) => salePop.price)
 
-  return pop
+      const trendingValue = calculateTrendingValue(salePopPrices)
+
+      pop.trendingValue = trendingValue
+
+      return pop
+    }
+  })()
 }

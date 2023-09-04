@@ -1,3 +1,5 @@
+import { validateId } from '../helpers'
+
 export interface PopForSale {
   description: string
   condition: string
@@ -31,6 +33,8 @@ export default async function retrieveSalePop({
 }: {
   id: string
 }): Promise<PopForSale> {
+  validateId(id, 'Sale Pop ID')
+
   let url = `http://localhost:3000/api/trade/${id}`
 
   const res = await fetch(url, {

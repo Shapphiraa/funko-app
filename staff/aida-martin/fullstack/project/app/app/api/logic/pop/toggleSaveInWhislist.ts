@@ -22,21 +22,11 @@ export default function toggleSaveIWhislist(
     )
 
     if (index < 0) {
-      // await User.updateOne(
-      //   { _id: userId },
-      //   { $push: { popWhislist: popId.id } }
-      // )
-
       user.popWhislist.push(popId.id)
 
       await user.save()
     } else {
       user.popWhislist.splice(index, 1)
-
-      //   await User.updateOne(
-      //     { _id: userId },
-      //     { $set: { popWhislist: user.popWhislist } }
-      //   )
 
       await user.save()
     }

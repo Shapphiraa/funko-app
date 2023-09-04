@@ -57,15 +57,25 @@ export function validateString(string: string, explain = 'String') {
   }
 }
 
-export function validateDescription(string: string, explain = 'Description') {
-  if (typeof string !== 'string') {
+/**
+ * Validates a description
+ *
+ * @param {string} description The description to validate
+ * @param {string} explain The word to specity the errors
+ */
+
+export function validateDescription(
+  description: string,
+  explain = 'Description'
+) {
+  if (typeof description !== 'string') {
     throw new TypeError(`${explain} is not a string 😥`)
   }
-  if (!string.trim().length) {
+  if (!description.trim().length) {
     throw new ContentError(`${explain} is empty 😥`)
   }
-  if (string.trim().length < 50) {
-    throw new RangeError(`${explain} does not have 30 characters 😥`)
+  if (description.trim().length < 50) {
+    throw new RangeError(`${explain} does not have 20 characters 😥`)
   }
 }
 
@@ -93,6 +103,14 @@ export function validateId(id: string, explain = 'User ID') {
   }
 }
 
+/**
+ * Validates the token
+ *
+ * @param {string} token The token to validate
+ * @param {string} explain The word to specity the errors
+ *
+ */
+
 export function validateToken(token: string, explain = 'Token') {
   if (typeof token !== 'string')
     throw new TypeError(`${explain} is not a string 😥`)
@@ -100,11 +118,27 @@ export function validateToken(token: string, explain = 'Token') {
     throw new ContentError(`${explain} is not valid 😥`)
 }
 
+/**
+ * Validates a number
+ *
+ * @param {number} number The number to validate
+ * @param {string} explain The word to specity the errors
+ *
+ */
+
 export function validateNumber(number: number, explain = 'Number') {
   if (isNaN(number)) throw new TypeError(`${explain} is not a number 😥`)
   if (!number.toString().trim().length)
     throw new ContentError(`${explain} is empty 😥`)
 }
+
+/**
+ * Validates the phone number
+ *
+ * @param {string} phoneNumber The phone number to validate
+ * @param {string} explain The word to specity the errors
+ *
+ */
 
 export function validatePhoneNumber(
   phoneNumber: string,

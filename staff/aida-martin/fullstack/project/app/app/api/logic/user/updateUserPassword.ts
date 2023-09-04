@@ -24,6 +24,7 @@ export default function updateUserPassword({
   validateId(userId, 'User ID')
   validatePassword(password)
   validatePassword(newPassword, 'New password')
+  validatePassword(newPasswordConfirm, 'Confirm new password')
 
   if (newPassword !== newPasswordConfirm)
     throw new ContentError('Passwords does not match 😥')

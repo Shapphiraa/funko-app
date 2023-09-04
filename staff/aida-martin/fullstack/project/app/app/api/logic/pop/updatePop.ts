@@ -1,7 +1,6 @@
 import {
   validateId,
   validateString,
-  validateNumber,
   ExistenceError,
   PermissionsError,
 } from '../../../helpers'

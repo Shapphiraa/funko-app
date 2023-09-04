@@ -1,9 +1,4 @@
-import {
-  validateId,
-  validateString,
-  ExistenceError,
-  PropertyError,
-} from '../../../helpers'
+import { validateId, ExistenceError, PropertyError } from '../../../helpers'
 
 import { User, SalePop } from '../../data/models'
 
