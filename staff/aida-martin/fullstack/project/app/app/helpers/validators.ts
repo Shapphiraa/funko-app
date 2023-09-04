@@ -6,7 +6,7 @@ const PHONE_NUMBER_REGEX = /(^\+?(6\d{2}|7[1-9]\d{1})\d{6}$)/
 /**
  * Validates the email
  *
- * @param {string} email The email to validate
+ * @param email The email to validate
  */
 
 export function validateEmail(email: string) {
@@ -25,8 +25,8 @@ export function validateEmail(email: string) {
 /**
  * Validates the password
  *
- * @param {string} password The password to validate
- * @param {string} explain The word to specity the errors
+ * @param password The password to validate
+ * @param explain The word to specity the errors
  */
 
 export function validatePassword(password: string, explain = 'Password') {
@@ -44,8 +44,8 @@ export function validatePassword(password: string, explain = 'Password') {
 /**
  * Validates a string
  *
- * @param {string} string The string to validate
- * @param {string} explain The word to specity the errors
+ * @param string The string to validate
+ * @param explain The word to specity the errors
  */
 
 export function validateString(string: string, explain = 'String') {
@@ -60,8 +60,8 @@ export function validateString(string: string, explain = 'String') {
 /**
  * Validates a description
  *
- * @param {string} description The description to validate
- * @param {string} explain The word to specity the errors
+ * @param description The description to validate
+ * @param explain The word to specity the errors
  */
 
 export function validateDescription(
@@ -82,8 +82,8 @@ export function validateDescription(
 /**
  * Validates the ID
  *
- * @param {string} id The ID to validate
- * @param {string} explain The word to specity the errors
+ * @param id The ID to validate
+ * @param explain The word to specity the errors
  *
  */
 
@@ -106,8 +106,8 @@ export function validateId(id: string, explain = 'User ID') {
 /**
  * Validates the token
  *
- * @param {string} token The token to validate
- * @param {string} explain The word to specity the errors
+ * @param token The token to validate
+ * @param explain The word to specity the errors
  *
  */
 
@@ -121,8 +121,8 @@ export function validateToken(token: string, explain = 'Token') {
 /**
  * Validates a number
  *
- * @param {number} number The number to validate
- * @param {string} explain The word to specity the errors
+ * @param number The number to validate
+ * @param explain The word to specity the errors
  *
  */
 
@@ -135,8 +135,8 @@ export function validateNumber(number: number, explain = 'Number') {
 /**
  * Validates the phone number
  *
- * @param {string} phoneNumber The phone number to validate
- * @param {string} explain The word to specity the errors
+ * @param phoneNumber The phone number to validate
+ * @param explain The word to specity the errors
  *
  */
 
