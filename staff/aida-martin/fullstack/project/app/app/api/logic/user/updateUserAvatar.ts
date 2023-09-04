@@ -7,7 +7,19 @@ interface UpdateUserAvatarProps {
   avatar: string
 }
 
-export default function updateUserName({
+/**
+ * Updates the user avatar
+ *
+ * @param userId The user id
+ * @param avatar The user avatar
+ * @returns Promise
+ *
+ * @throws {TypeError} On non-string user id or avatar
+ * @throws {ContentError} On user id does not have 24 characters or is not valid (hexadecimal). On empty avatar
+ * @throws {ExistenceError} On non-existing user
+ */
+
+export default function updateUserAvatar({
   userId,
   avatar,
 }: UpdateUserAvatarProps) {

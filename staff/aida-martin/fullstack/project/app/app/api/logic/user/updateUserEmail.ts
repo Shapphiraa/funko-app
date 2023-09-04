@@ -14,6 +14,18 @@ interface UpdateUserEmailProps {
   email: string
 }
 
+/**
+ * Updates the user email
+ *
+ * @param userId The user id
+ * @param email The user email
+ * @returns Promise
+ *
+ * @throws {TypeError} On non-string user id or email
+ * @throws {ContentError} On user id does not have 24 characters or is not valid (hexadecimal). On empty or non-valid email. On new email matches the current one
+ * @throws {ExistenceError} On non-existing user
+ */
+
 export default function updateUserEmail({
   userId,
   email,

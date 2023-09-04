@@ -53,4 +53,27 @@ describe('updateUserLocation', () => {
       expect(error.message).to.equal('User not found! 😥')
     }
   })
+
+  it('fails on new location matches the current one', async () => {
+    await User.create({
+      name: user.name,
+      email: user.email,
+      password: user.password,
+      location: user.location,
+    })
+
+    const userRegistered = await User.findOne({ email: user.email })
+
+    try {
+      await updateUserLocation({
+        userId: userRegistered.id,
+        location: user.location,
+      })
+    } catch (error) {
+      expect(error).to.be.instanceOf(Error)
+      expect(error.message).to.equal(
+        'Your new location matches the current one 😥'
+      )
+    }
+  })
 })

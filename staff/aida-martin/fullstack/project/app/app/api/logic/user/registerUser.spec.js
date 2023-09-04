@@ -4,6 +4,7 @@ import mongoose from 'mongoose'
 import { User } from '../../data/models'
 import registerUser from './registerUser'
 import { cleanUp, generate } from '../helpers/tests'
+import bcrypt from 'bcryptjs'
 
 dotenv.config()
 
@@ -36,10 +37,12 @@ describe('registerUser', () => {
 
     const userRegistered = await User.findOne({ email: user.email })
 
+    const match = await bcrypt.compare(user.password, userRegistered.password)
+
     expect(userRegistered).to.exist
     expect(userRegistered.name).to.equal(user.name)
     expect(userRegistered.email).to.equal(user.email)
-    expect(userRegistered.password).to.equal(user.password)
+    expect(match).to.be.true
     expect(userRegistered.avatar).to.equal('/default-avatar.png')
     expect(userRegistered.role).to.equal('user')
     expect(userRegistered.popCollect).to.have.lengthOf(0)

@@ -53,4 +53,24 @@ describe('updateUserName', () => {
       expect(error.message).to.equal('User not found! 😥')
     }
   })
+
+  it('fails on new name matches the current one', async () => {
+    await User.create({
+      name: user.name,
+      email: user.email,
+      password: user.password,
+    })
+
+    const userRegistered = await User.findOne({ email: user.email })
+
+    try {
+      await updateUserName({
+        userId: userRegistered.id,
+        name: user.name,
+      })
+    } catch (error) {
+      expect(error).to.be.instanceOf(Error)
+      expect(error.message).to.equal('Your new name matches the current one 😥')
+    }
+  })
 })

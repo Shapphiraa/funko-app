@@ -13,6 +13,20 @@ interface AuthenticateUserProps {
   password: string
 }
 
+/**
+ * Authenticates a user against his/her credentials
+ *
+ * @param email The user email
+ * @param password The user password
+ * @returns The user ID
+ *
+ * @throws {TypeError} On non-string email or password
+ * @throws {ContentError} On empty/ non-valid email or password
+ * @throws {RangeError} On password length lower than 8 characters
+ * @throws {ExistenceError} On non-existing user
+ * @throws {AuthError} On wrong password
+ */
+
 export default function authenticateUser({
   email,
   password,

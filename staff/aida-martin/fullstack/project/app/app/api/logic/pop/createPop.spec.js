@@ -68,7 +68,6 @@ describe('createPop', () => {
     expect(newPop.variant).to.equal(pop.variant)
     expect(newPop.exclusivity).to.equal(pop.exclusivity)
     expect(newPop.name).to.equal(pop.name)
-    expect(newPop.number).to.be.a('number')
     expect(newPop.number).to.equal(pop.number)
     expect(newPop.images).to.be.instanceOf(Array)
     expect(newPop.images).to.have.lengthOf(2)

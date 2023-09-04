@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
 
       await registerUser({ name, email, password, repeatPassword })
 
-      return NextResponse.json({ status: 201 })
+      return new Response(null, { status: 201 })
     })
   })
 }

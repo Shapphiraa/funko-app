@@ -14,6 +14,20 @@ interface UpdateUserPhoneNumberProps {
   phoneNumber: string
 }
 
+/**
+ * Updates the user phone number
+ *
+ * @param userId The user id
+ * @param phoneNumber The user phone number
+ * @returns Promise
+ *
+ * @throws {TypeError} On non-string user id or phone number
+ * @throws {ContentError} On user id does not have 24 characters or is not valid (hexadecimal). On empty phone number or is not valid. On new phone number matches the current one
+ * @throws {ExistenceError} On non-existing user
+ * @throws {DuplicityError} On phone number already belongs to another user
+ * @throws {UnknownError} On unknown error
+ */
+
 export default function updateUserPhoneNumber({
   userId,
   phoneNumber,
@@ -27,7 +41,7 @@ export default function updateUserPhoneNumber({
 
       if (!user) throw new ExistenceError('User not found! 😥')
 
-      if (phoneNumber === user.phoneNumber)
+      if (phoneNumber.replaceAll(' ', '') === user.phoneNumber)
         throw new ContentError(
           'Your new phone number matches the current one 😥'
         )

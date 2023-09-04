@@ -9,7 +9,9 @@ export default function retrievePop({
   userId?: string
   popId: string
 }) {
-  if (userId) validateId(userId)
+  if (userId) {
+    validateId(userId)
+  }
 
   validateId(popId, 'Pop ID')
 
@@ -52,8 +54,8 @@ export default function retrievePop({
       const trendingValue = calculateTrendingValue(salePopPrices)
 
       pop.trendingValue = trendingValue
-
-      return pop
     }
+
+    return pop
   })()
 }
