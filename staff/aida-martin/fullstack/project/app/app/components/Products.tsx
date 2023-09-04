@@ -75,7 +75,7 @@ export default function Products({
 
       {!isLoading && pops && pops.length > 0 && (
         <div
-          className={`w-full max-w-6xl mx-auto grid grid-cols-[repeat(auto-fit,_minmax(136px,1fr))] gap-4 ${className}`}
+          className={`w-full max-w-6xl mx-auto grid grid-cols-2 gap-4 ${className}`}
         >
           {pops.map((pop) => (
             <Product pop={pop} key={pop.id} onChange={getPops} />
