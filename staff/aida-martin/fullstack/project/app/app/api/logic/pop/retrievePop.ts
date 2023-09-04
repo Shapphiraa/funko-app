@@ -2,6 +2,18 @@ import { validateId, ExistenceError } from '../../../helpers'
 import { Pop, User, SalePop } from '../../data/models'
 import calculateTrendingValue from '../helpers/tests/calculateTrendingValue'
 
+/**
+ * Retrieves a pop
+ *
+ * @param userId The user id (optional)
+ * @param popId The pop id
+ * @returns The pop
+ *
+ * @throws {TypeError} On non-string user id or pop id
+ * @throws {ContentError} On user id or pop id does not have 24 characters or is not valid (hexadecimal)
+ * @throws {ExistenceError} On non-existing user or pop
+ */
+
 export default function retrievePop({
   userId,
   popId,

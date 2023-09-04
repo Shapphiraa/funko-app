@@ -1,6 +1,19 @@
 import { ExistenceError, validateId, validateString } from '../../../helpers'
 import { User, Pop, Category } from '../../data/models'
 
+/**
+ * Retrieves the pops
+ *
+ * @param userId The user id (optional)
+ * @param filter.slug The category's pop slug param (optional)
+ * @param filter.search The pop search param (optional)
+ * @returns The pops
+ *
+ * @throws {TypeError} On non-string user id, category's pop slug param or pop search param
+ * @throws {ContentError} On user id or pop id does not have 24 characters or is not valid (hexadecimal). On empty category's pop slug param or pop search param
+ * @throws {ExistenceError} On non-existing user or category
+ */
+
 export default function retrievePops({
   userId,
   filter,

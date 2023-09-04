@@ -1,6 +1,17 @@
 import { ExistenceError, validateId } from '../../../helpers'
 import { User, Pop } from '../../data/models'
 
+/**
+ * Retrieves a user pop collection
+ *
+ * @param userId The user id
+ * @returns The user pop collection
+ *
+ * @throws {TypeError} On non-string user id
+ * @throws {ContentError} On user id does not have 24 characters or is not valid (hexadecimal)
+ * @throws {ExistenceError} On non-existing user
+ */
+
 export default function retrievePopCollection({ userId }: { userId: string }) {
   validateId(userId)
 

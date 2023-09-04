@@ -20,6 +20,27 @@ interface CreatePopProps {
   availability: string
 }
 
+/**
+ * Creates new pop
+ *
+ * @param userId The user id
+ * @param variant The pop variant
+ * @param exclusivity The pop exclusivity
+ * @param name The pop name
+ * @param number The pop number
+ * @param images The pop images
+ * @param category The pop category
+ * @param collect The pop collect
+ * @param release The pop release
+ * @param availability The pop availability
+ * @returns Promise
+ *
+ * @throws {TypeError} On non-string user id, variant, exclusivity, name, number, images, category, collect, release or availability
+ * @throws {ContentError} On user id does not have 24 characters or is not valid (hexadecimal). On empty variant, exclusivity, name, number, images, category, collect, release or availability
+ * @throws {ExistenceError} On non-existing user
+ * @throws {PermissionsError} On user does not have permissions to perform this action
+ */
+
 export default function createPop({
   userId,
   variant,

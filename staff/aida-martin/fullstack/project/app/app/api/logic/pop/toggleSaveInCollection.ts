@@ -1,6 +1,18 @@
 import { validateId, ExistenceError } from '../../../helpers'
 import { User, Pop } from '../../data/models'
 
+/**
+ * Toggles save/remove pop in user collection
+ *
+ * @param userId The user id
+ * @param popId The pop id
+ * @returns Promise
+ *
+ * @throws {TypeError} On non-string user id or pop id
+ * @throws {ContentError} On user id or pop id does not have 24 characters or is not valid (hexadecimal)
+ * @throws {ExistenceError} On non-existing user or pop
+ */
+
 export default function toggleSaveInCollection(
   userId: string,
   popId: { id: string }
