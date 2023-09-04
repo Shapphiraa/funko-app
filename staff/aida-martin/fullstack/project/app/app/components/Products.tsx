@@ -33,25 +33,20 @@ export default function Products({
 
   const getPops = async () => {
     try {
-      setIsLoading(true)
-
       let pops
 
-      setTimeout(async () => {
-        if (searchValue === undefined) {
-          pops =
-            slug === 'collection'
-              ? await retrievePopCollection()
-              : slug === 'whislist'
-              ? await retrievePopWhislist()
-              : await retrievePops({ slug })
-        } else {
-          pops = await retrievePops({ slug, search: searchValue })
-        }
+      if (searchValue === undefined) {
+        pops =
+          slug === 'collection'
+            ? await retrievePopCollection()
+            : slug === 'whislist'
+            ? await retrievePopWhislist()
+            : await retrievePops({ slug })
+      } else {
+        pops = await retrievePops({ slug, search: searchValue })
+      }
 
-        setPops(pops)
-        setIsLoading(false)
-      }, 500)
+      setPops(pops)
     } catch (error: any) {
       setIsLoading(false)
       alert(error.message)
@@ -59,7 +54,12 @@ export default function Products({
   }
 
   useEffect(() => {
-    getPops()
+    setIsLoading(true)
+
+    setTimeout(async () => {
+      getPops()
+      setIsLoading(false)
+    }, 500)
   }, [searchValue])
 
   return (

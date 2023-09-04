@@ -32,16 +32,18 @@ export default function ListPreview({
 
   const getPreview = async () => {
     try {
-      setIsLoading(true)
-
       if (section) {
-        const preview =
-          section === 'collection'
-            ? await retrievePopCollectionPreview()
-            : await retrievePopWhislistPreview()
+        setIsLoading(true)
 
-        setIsLoading(false)
-        setPreview(preview)
+        setTimeout(async () => {
+          const preview =
+            section === 'collection'
+              ? await retrievePopCollectionPreview()
+              : await retrievePopWhislistPreview()
+
+          setPreview(preview)
+          setIsLoading(false)
+        }, 500)
       }
     } catch (error: any) {
       setIsLoading(false)
