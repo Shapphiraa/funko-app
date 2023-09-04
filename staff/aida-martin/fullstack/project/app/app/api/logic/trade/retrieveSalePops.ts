@@ -1,5 +1,12 @@
 import { SalePop } from '../../data/models'
 
+/**
+ * Retrieves the sale pops
+ *
+ * @returns The sale pops
+ *
+ */
+
 export default async function retrieveSalePops() {
   const salePops = await SalePop.find(
     {

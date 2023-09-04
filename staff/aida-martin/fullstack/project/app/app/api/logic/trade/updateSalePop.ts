@@ -18,6 +18,23 @@ interface UpdateSalePopProps {
   images: Array<string>
 }
 
+/**
+ * Updates a sale pop
+ *
+ * @param userId The user id
+ * @param salePopId The sale pop id
+ * @param description The sale pop description
+ * @param condition The sale pop condition
+ * @param price The sale pop price
+ * @param images The sale pop images
+ * @returns Promise
+ *
+ * @throws {TypeError} On non-string user id, sale pop id, description, condition, price, images
+ * @throws {ContentError} On user id or sale pop id does not have 24 characters or is not valid (hexadecimal). On empty description, condition, price, images
+ * @throws {ExistenceError} On non-existing user or sale pop
+ * @throws {PropertyError} On sale pop does not belong to user
+ */
+
 export default function UpdateSalePop({
   userId,
   salePopId,

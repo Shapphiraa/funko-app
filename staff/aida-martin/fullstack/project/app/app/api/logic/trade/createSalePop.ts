@@ -17,6 +17,23 @@ interface CreateSalePopProps {
   price: number
 }
 
+/**
+ * Creates new sale pop
+ *
+ * @param userId The user id
+ * @param description The sale pop description
+ * @param condition The sale pop condition
+ * @param pop The related sale pop
+ * @param images The sale pop images
+ * @param price The sale pop price
+ * @returns Promise
+ *
+ * @throws {TypeError} On non-string user id, description, condition, pop, images. On non-number price
+ * @throws {ContentError} On user id does not have 24 characters or is not valid (hexadecimal). On empty description, condition, pop, images, price
+ * @throws {RangeError} On description does not have 20 characters
+ * @throws {ExistenceError} On non-existing user
+ */
+
 export default function createSalePop({
   userId,
   description,

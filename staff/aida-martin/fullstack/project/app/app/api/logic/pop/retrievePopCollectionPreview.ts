@@ -5,7 +5,7 @@ import { User, Pop } from '../../data/models'
  * Retrieves a user pop collection preview
  *
  * @param userId The user id
- * @returns The user pop collection preview
+ * @returns The user pop collection preview or null
  *
  * @throws {TypeError} On non-string user id
  * @throws {ContentError} On user id does not have 24 characters or is not valid (hexadecimal)

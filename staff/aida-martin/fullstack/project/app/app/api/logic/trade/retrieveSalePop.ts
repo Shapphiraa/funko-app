@@ -1,6 +1,17 @@
 import { validateId, ExistenceError } from '../../../helpers'
 import { SalePop } from '../../data/models'
 
+/**
+ * Retrieves a sale pop
+ *
+ * @param salePopId The sale pop id
+ * @returns The sale pop
+ *
+ * @throws {TypeError} On non-string pop id
+ * @throws {ContentError} On pop id does not have 24 characters or is not valid (hexadecimal)
+ * @throws {ExistenceError} On non-existing sale pop
+ */
+
 export default function retrieveSalePop({ salePopId }: { salePopId: string }) {
   validateId(salePopId, 'Sale Pop ID')
 
