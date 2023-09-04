@@ -7,6 +7,8 @@ import { PopCollectionPreview } from '../logic/retrievePopCollectionPreview'
 import retrievePopWhislistPreview from '../logic/retrievePopWhislistPreview'
 import { useEffect, useState } from 'react'
 import useAppContext from '@/app/hooks/useAppContext'
+import Loader from './Loader'
+import { Spinner } from '@nextui-org/react'
 
 interface ListPreviewProps {
   icon: JSX.Element
@@ -26,18 +28,23 @@ export default function ListPreview({
   const { alert } = useAppContext()
 
   const [preview, setPreview] = useState<PopCollectionPreview>()
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const getPreview = async () => {
     try {
+      setIsLoading(true)
+
       if (section) {
         const preview =
           section === 'collection'
             ? await retrievePopCollectionPreview()
             : await retrievePopWhislistPreview()
 
+        setIsLoading(false)
         setPreview(preview)
       }
     } catch (error: any) {
+      setIsLoading(false)
       alert(error.message)
     }
   }
@@ -61,7 +68,13 @@ export default function ListPreview({
             {preview ? subtittle : 'No added pop'}
           </h3>
           <div>
-            {preview ? (
+            {isLoading && (
+              <div className="w-[130px] h-[130px] flex flex-col">
+                <Spinner className="m-auto" />
+              </div>
+            )}
+
+            {preview && !isLoading && (
               <Image
                 src={preview.lastAddedPopImage}
                 alt="Preview"
@@ -69,7 +82,9 @@ export default function ListPreview({
                 height="130"
                 quality="100"
               />
-            ) : (
+            )}
+
+            {!preview && !isLoading && (
               <Image
                 src="/no-pop.svg"
                 alt="Preview"
