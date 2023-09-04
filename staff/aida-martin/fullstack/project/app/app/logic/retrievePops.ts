@@ -20,16 +20,20 @@ export default async function retrievePops({
   let url = 'http://localhost:3000/api/pop'
   let res
 
+  const params: { slug?: string; search?: string } = {}
+
   if (slug) {
-    url += `?slug=${slug}`
+    params.slug = slug
   }
 
-  if (search && !slug) {
-    url += `?search=${search}`
+  if (search) {
+    params.search = search
   }
 
-  if (search && slug) {
-    url += `&search=${search}`
+  const urlParams = new URLSearchParams(params).toString()
+
+  if (urlParams.length > 0) {
+    url += `?${urlParams}`
   }
 
   if (context.token) {
