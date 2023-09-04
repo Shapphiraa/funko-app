@@ -16,6 +16,22 @@ interface CreateCategoryProps {
   imageDetail: string
 }
 
+/**
+ * Creates new category
+ *
+ * @param userId The user id
+ * @param name The category name
+ * @param imageList The category image list
+ * @param imageDetail The category image detail
+ * @returns Promise
+ *
+ * @throws {TypeError} On non-string user id, name, imageList or imageDetail
+ * @throws {ContentError} On user id does not have 24 characters or is not valid (hexadecimal). On empty name, imageList or imageDetail
+ * @throws {ExistenceError} On non-existing user
+ * @throws {PermissionsError} On user does not have permissions to perform this action
+ * @throws {DuplicityError} On category already created
+ */
+
 export default function createCategory({
   userId,
   name,
