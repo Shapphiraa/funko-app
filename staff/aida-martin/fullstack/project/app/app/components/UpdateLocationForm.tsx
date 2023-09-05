@@ -305,6 +305,7 @@ export default function UpdateLocationForm({
           name="location"
           options={locationsOptions}
           defaultValue={user.location ? user.location : ''}
+          size={3}
         />
 
         <GeneralButton tittle="Update" />

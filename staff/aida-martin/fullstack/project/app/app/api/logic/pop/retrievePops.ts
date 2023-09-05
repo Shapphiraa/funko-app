@@ -65,7 +65,6 @@ export default function retrievePops({
       'variant name images category userCollect userWhislist'
     )
       .populate('category', 'name slug imageList imageDetail')
-      .limit(20)
       .sort('-date')
       .lean()
 
