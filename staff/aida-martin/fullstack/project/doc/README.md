@@ -4,43 +4,54 @@
 
 You will be able to view the complete catalog of Funko Pop figures that exist on the market, add them to your collection list or wishlist.
 
-It will be possible to search by category, filter or order by other parameters.
+It will be possible to filter by category or search by pop name.
 
 Also, you will be able to know its characteristics (type of pop, year of release, status, trending value...)
 
-<img src='https://i.gifer.com/21Yc.gif' width='100%'> </img>
+![](https://github.com/Shapphiraa/isdi-parttime-202303/blob/feature/fullstack/staff/aida-martin/fullstack/project/doc/deadpool.gif)
 
 The 'trade' section will be a space for buying and selling second-hand where you can find figures to buy or sell your own.
 
-You will be able to see the ads and contact the seller or buyer through the chat to agree on the transaction that will be carried out outside the application.
+You will be able to see the ads and see the seller contact info to agree on the transaction that will be carried out outside the application.
 
 ## Funcional description
 
 ### Use cases
 
-#### Admin (exclusive)
+#### Login not required
+
+##### User
+
+- View latest pop releases
+- View complete catalog (search by name and filter by category)
+- View all sale pops in 'trade' section
+
+#### Required login
+
+##### Admin (exclusive)
 
 - Pops CRUD
-    - Create pop
-    - Edit pop
-    - Delete pop
+    - Create a new pop
+    - Edit an existing pop
+    - Delete an existing pop
 
-- Categories CRUD
-    - Create category
-    - Edit category
-    - Delete category
+##### User
 
-- All Sales Posts CRUD
+- View their profile and update their information and avatar
 
-#### User
+- Manage their lists (collection and whislist)
+    - View the amount of pops added
+    - View a preview of the latest pop added
+    - Add pop to list
+    - Remove pop from list
 
-- View latest releases
-- View complete catalog (search, filter for category)
-- Manage your collection list
-- Manage your whislist
-- View sales posts in 'trade' section (search, filter, order)
-- Contact the seller through the chat if you wish??
-- Manage your sales posts (CRUD)
+- View their available or reserved sale pops into profile
+- Manage their sale pops CRUD
+    - Create a new sale pop
+    - Change status to available, reserved or sold
+    - Edit existing sale pop characteristics
+    - Delete an existing sale pop
+- View seller contact info into available sale pop
 
 ### UI design
 
@@ -58,26 +69,18 @@ https://www.figma.com/file/HMkXmnAVyCGVC4F0D4sI4U/Final-Project?type=design&node
 - email (string)
 - password (encrypted string)
 - avatar (string)
-- location (string)
+- location (string) (spain provinces)
 - phoneNumber (string)
 - role (string)  ('admin' | 'user')
 - popCollect ([oid refers Pop])
 - popWhislist ([oid refers Pop])
-- sales ([oid refers salePop])
-
-#### Image
-- id (oid)
-- field/source (string)
-- description/alt (string)
-- width (number)
-- height (number)
 
 #### Category
 - id (oid)
 - name (string)
 - slug (string)
-- imageList (oid refers Image)
-- imageDetail (oid refers Image)
+- imageList (string)
+- imageDetail (string)
 
 #### Pop
 - id (oid)
@@ -94,8 +97,8 @@ https://www.figma.com/file/HMkXmnAVyCGVC4F0D4sI4U/Final-Project?type=design&node
       | 'POP! TRAIN')
 - exclusivity (string) ('Exclusive' | 'Regular')
 - name (string)
-- number (number)
-- images ([oids refers Image])
+- number (string)
+- images ([string])
 - category (oid refers Category)
 - collect (string)
 - release (string)
@@ -108,29 +111,33 @@ https://www.figma.com/file/HMkXmnAVyCGVC4F0D4sI4U/Final-Project?type=design&node
 
 #### Sale Pop
 - id (oid)
-- author:
-    - id (oid refers User)
-    - name (string)
-    - avatar (string)
-    - location (string)
-- tittle (string)
+- author: (oid refers User)
 - description (string)
-- number (number)
-- images ([oids refers Image])
-- variant (string)
-- category (string)
-- exclusivity (string)
+- condition (string) ('Never opened', 'Good condition', 'Figure with defects', 'Box with defects', 'Flawed')
+- pop (oid refers Pop)
+- images ([string])
 - date (date)
 - price (number)
-- status (string)
-- pop (oid refers Pop)
+- status (string) ('Available', 'Reserved', 'Sold')
+
 
 ### Test Coverage
 
-//Coverage link
+http://127.0.0.1:5500/aida-martin/fullstack/project/app/coverage/index.html
 
 ## Planning
 
 Notion:
 
 https://www.notion.so/57704f1b37cd4f87b74183273bbcdfab?v=4b458dbb9d7943f8a7b11928a4aaff87&pvs=4
+
+## Upcoming implementations
+
+Upcoming:
+- Categories CRUD
+    - Create a new category
+    - Edit an existing category
+    - Delete an existing category
+
+- All user's sale pops
+    - Delete if they violate any rule

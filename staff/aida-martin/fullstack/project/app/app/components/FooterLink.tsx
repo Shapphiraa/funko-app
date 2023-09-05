@@ -26,7 +26,11 @@ export default function FooterLink({
       : false
 
   return (
-    <Link href={route} className="font-light p-2 flex flex-col items-center">
+    <Link
+      href={route}
+      as={route}
+      className="font-light p-2 flex flex-col items-center"
+    >
       <span>{isInRoute ? iconFill : icon}</span>
       {name}
     </Link>

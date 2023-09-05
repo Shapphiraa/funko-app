@@ -105,26 +105,6 @@ const user = new Schema({
   },
 })
 
-// const image = new Schema({
-//   src: {
-//     type: String,
-//     required: true,
-// unique: true,
-//   },
-//   alt: {
-//     type: String,
-//     required: true,
-//   },
-//   width: {
-//     type: Number,
-//     required: true,
-//   },
-//   height: {
-//     type: Number,
-//     required: true,
-//   },
-// })
-
 const category = new Schema({
   name: {
     type: String,
@@ -177,7 +157,6 @@ const pop = new Schema({
     required: true,
   },
   images: {
-    // type: [image],
     type: [String],
     required: true,
   },
@@ -265,9 +244,8 @@ const salePop = new Schema({
   },
 })
 
-// Se hace así por Vercel, para que, si ya está montado el modelo, lo utilice y no lo vuelva a crear
+// This is done for Vercel, so that if the model is already assembled, you can use it and not recreate it
 const User = mongoose.models.User || mongoose.model('User', user)
-// const Image = mongoose.models.Image || model('Image', image)
 const Category = mongoose.models.Category || model('Category', category)
 const Pop = mongoose.models.Pop || model('Pop', pop)
 const SalePop = mongoose.models.SalePop || model('SalePop', salePop)

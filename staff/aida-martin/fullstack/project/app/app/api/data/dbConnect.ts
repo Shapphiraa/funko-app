@@ -1,4 +1,4 @@
-// Mantener conexión en caché con Vercel
+// Maintain cached connection with vercel
 
 import mongoose from 'mongoose'
 

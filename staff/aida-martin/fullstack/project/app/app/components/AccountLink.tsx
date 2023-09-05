@@ -18,6 +18,7 @@ export default function AccountLink({
         <Link
           className="font-semibold underline underline-offset-2"
           href={route}
+          as={route}
         >
           {textLink}
         </Link>

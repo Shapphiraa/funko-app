@@ -39,11 +39,9 @@ export default function authenticateUser({
 
     if (!user) throw new ExistenceError('User not found! 😥')
 
-    // const match = await bcrypt.compare(password, user.password)
+    const match = await bcrypt.compare(password, user.password)
 
-    // if (!match) throw new AuthError('Wrong credentials! 😥')
-
-    if (password !== user.password) throw new AuthError('Wrong credentials! 😥')
+    if (!match) throw new AuthError('Wrong credentials! 😥')
 
     return user.id
   })()

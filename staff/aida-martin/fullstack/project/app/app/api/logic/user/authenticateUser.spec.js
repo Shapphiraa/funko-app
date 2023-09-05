@@ -4,6 +4,7 @@ import mongoose from 'mongoose'
 import { User } from '../../data/models'
 import authenticateUser from './authenticateUser'
 import { cleanUp, generate } from '../helpers/tests'
+import bcrypt from 'bcryptjs'
 
 dotenv.config()
 
@@ -27,10 +28,12 @@ describe('authenticateUser', () => {
   })
 
   it('should succeed on authenticate user', async () => {
+    const hash = await bcrypt.hash(user.password, 10)
+
     await User.create({
       name: user.name,
       email: user.email,
-      password: user.password,
+      password: hash,
     })
 
     const userRegistered = await User.findOne({ email: user.email })

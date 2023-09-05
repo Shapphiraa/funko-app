@@ -7,7 +7,7 @@ import { Suspense } from 'react'
 import App from '@/App'
 
 export const metadata: Metadata = {
-  title: 'Funko App',
+  title: 'Funko',
   description: 'Funko POP! catalog and trade App',
 }
 

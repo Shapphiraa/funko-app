@@ -5,6 +5,7 @@ import Products from '../../components/Products'
 import retrieveCategory from '../../logic/retrieveCategory'
 import retrieveCategories from '../../logic/retrieveCategories'
 
+// Statically generate routes (at build once only when building)
 export async function generateStaticParams() {
   const categories = await retrieveCategories()
 

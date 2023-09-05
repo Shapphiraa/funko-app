@@ -10,6 +10,7 @@ export default function Header() {
         width="110"
         height="80"
         quality="100"
+        priority
       />
     </header>
   )
