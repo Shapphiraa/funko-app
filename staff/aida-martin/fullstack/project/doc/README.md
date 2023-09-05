@@ -144,7 +144,7 @@ https://www.notion.so/57704f1b37cd4f87b74183273bbcdfab?v=4b458dbb9d7943f8a7b1192
     - Edit an existing category
     - Delete an existing category
 
-- All user's sale pops
+- All user's sale pops and users
     - Delete if they violate any rule (implement rules)
 
 #### User
@@ -160,6 +160,8 @@ https://www.notion.so/57704f1b37cd4f87b74183273bbcdfab?v=4b458dbb9d7943f8a7b1192
 - Add more than two images to the sale pops
 - To be able to contact sellers through a chat and purchase transaction within the application
 - Sale pop shipping options
+- View other user's profile
+- Reviews
 
 - Switch to dark theme
 
