@@ -133,11 +133,36 @@ https://www.notion.so/57704f1b37cd4f87b74183273bbcdfab?v=4b458dbb9d7943f8a7b1192
 
 ## Upcoming implementations
 
-Upcoming:
+### Use cases
+
+#### Admin (exclusive)
+
+- Improve admin access and create a backoffice
+
 - Categories CRUD
     - Create a new category
     - Edit an existing category
     - Delete an existing category
 
 - All user's sale pops
-    - Delete if they violate any rule
+    - Delete if they violate any rule (implement rules)
+
+#### User
+
+- Filter pops by other parameters too
+
+- View general trending value of their lists
+- Create other custom lists
+
+- View all sale pops ordered by proximity, search and filter there
+- By changing the sale pop status to sold, provide the real selling price (to improve pop trending value)
+- View their sold sale pops in other section
+- Add more than two images to the sale pops
+- To be able to contact sellers through a chat and purchase transaction within the application
+- Sale pop shipping options
+
+- Switch to dark theme
+
+### Data model
+
+- Independent image model with id
