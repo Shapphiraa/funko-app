@@ -123,7 +123,7 @@ https://www.figma.com/file/HMkXmnAVyCGVC4F0D4sI4U/Final-Project?type=design&node
 
 ### Test Coverage
 
-http://127.0.0.1:5500/aida-martin/fullstack/project/app/coverage/index.html
+![](https://github.com/Shapphiraa/aida/funko-app/public/coverage.png)
 
 ## Planning
 
