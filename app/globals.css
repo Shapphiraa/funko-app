@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.slick-dots li button:before {
+    @apply !text-general-blue;
+}
+
+.slick-dots li.slick-active button:before {
+    @apply !text-general-blue;
+}
