@@ -21,7 +21,7 @@ export default function RootLayout({
       <body className="flex flex-col h-screen">
         <Header />
         <Suspense fallback={<Loading />}>
-          <main className="flex flex-col grow overflow-auto">
+          <main className="flex flex-col grow overflow-auto h-screen">
             <App>{children}</App>
           </main>
         </Suspense>

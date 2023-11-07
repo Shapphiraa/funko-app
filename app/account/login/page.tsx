@@ -64,7 +64,6 @@ export default function Login() {
   return (
     <>
       {isUserLogged === false && (
-        <div className="flex h-[718px]">
           <AccountContainer>
             <Tittle name="Welcome!"></Tittle>
 
@@ -88,7 +87,6 @@ export default function Login() {
               route="/account/register"
             ></AccountLink>
           </AccountContainer>
-        </div>
       )}
     </>
   )

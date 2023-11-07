@@ -5,7 +5,7 @@ interface AccountContainerProps {
 
 export default function AccountContainer({
   children,
-  className = 'bg-white w-[16rem] p-[2rem] flex flex-col m-auto rounded-xl shadow-xl',
+  className = 'bg-white w-[18rem] p-[2rem] flex flex-col m-auto rounded-2xl shadow-xl',
 }: AccountContainerProps) {
   return <div className={className}>{children}</div>
 }

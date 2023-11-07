@@ -78,7 +78,6 @@ export default function Register() {
   return (
     <>
       {isUserLogged === false && (
-        <div className="flex h-[718px]">
           <AccountContainer>
             <Tittle name="Create account"></Tittle>
 
@@ -102,7 +101,6 @@ export default function Register() {
               route="/account/login"
             ></AccountLink>
           </AccountContainer>
-        </div>
       )}
     </>
   )

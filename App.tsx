@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Alert from './app/components/Alert'
 import AppContext from './AppContext'
-import { NextUIProvider } from '@nextui-org/react'
+// import { NextUIProvider } from '@nextui-org/react'
 
 const { Provider } = AppContext
 
@@ -19,7 +19,6 @@ export default function App({ children }: { children: React.ReactNode }) {
   const alert = (message: string) => setFeedback({ message })
 
   return (
-    <NextUIProvider>
       <Provider
         value={{
           alert,
@@ -30,6 +29,5 @@ export default function App({ children }: { children: React.ReactNode }) {
           <Alert message={feedback.message} onAccept={handleAcceptAlert} />
         )}
       </Provider>
-    </NextUIProvider>
   )
 }
