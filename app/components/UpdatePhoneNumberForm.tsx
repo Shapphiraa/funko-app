@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react'
+import { FormEvent } from 'react'
 import Form from '../library/Form'
 import Input from '../library/Input'
 import Tittle from '../library/Tittle'
@@ -6,6 +6,7 @@ import GeneralButton from './GeneralButton'
 import updateUserPhoneNumber from '../logic/updateUserPhoneNumber'
 import { User } from '../logic/retrieveUser'
 import useAppContext from '../hooks/useAppContext'
+import { addEspace } from '../helpers/addSpace'
 
 export default function UpdatePhoneNumberForm({
   onUpdated,
@@ -15,13 +16,6 @@ export default function UpdatePhoneNumberForm({
   onUpdated: () => void
 }) {
   const { alert } = useAppContext()
-
-  const addEspace = (numbers: string) =>
-    Array.from(numbers).reduce((acc, t, i) => {
-      if (i > 0 && i % 3 == 0) acc += ' '
-      acc += t
-      return acc
-    })
 
   const handleUpdate = async (event: FormEvent) => {
     event.preventDefault()

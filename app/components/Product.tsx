@@ -33,9 +33,11 @@ export default function Product({
       <h1 className="text-text-product-light mt-1 mx-2 font-light">
         {pop.variant}
       </h1>
+      <Link href={`/catalog/pop/${pop.id}`}>
       <h2 className="text-text-product-light mx-2 text-[13px] font-semibold leading-none mb-3">
         {pop.name}
       </h2>
+      </Link>
       <AddToListsButtons pop={pop} onChange={onChange} />
     </Container>
   )
