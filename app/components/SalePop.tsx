@@ -23,6 +23,9 @@ export default function PopForSale({
   }
 }) {
   return (
+    <Link
+    href={`/trade/${salePop.id}`}
+  >
     <Container className="py-5 px-2">
       <div className="flex gap-1 items-center p-2 relative">
         <Image
@@ -36,10 +39,7 @@ export default function PopForSale({
           .toLowerCase()
           .replace(' ', '')}`}</p>
       </div>
-      <Link
-        className="flex flex-col items-center"
-        href={`/trade/${salePop.id}`}
-      >
+        <div className="flex flex-col items-center">
         <div className="relative">
           {salePop.status === 'Reserved' && (
             <div className="absolute text-general-blue top-[7px] right-[7px]">
@@ -56,7 +56,8 @@ export default function PopForSale({
             className="w-[130px] h-[130px]"
           />
         </div>
-      </Link>
+        </div>
+      
       <h1 className="textext-text-product-light mx-2 text-[13px] font-semibold leading-none mt-3 mb-1 truncate ...">
         {salePop.pop.name}
       </h1>
@@ -64,5 +65,6 @@ export default function PopForSale({
         {`${salePop.price}€`}
       </h2>
     </Container>
+    </Link>
   )
 }
