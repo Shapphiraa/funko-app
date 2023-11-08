@@ -79,14 +79,14 @@ export default function AddListsButtonsDetail({
             <IconBookmark size="25px" />
           )
         }
-        tittle={inCollection ? 'Added to Collection' : 'Add to Collection'}
+        title={inCollection ? 'Added to Collection' : 'Add to Collection'}
       ></GeneralButton>
       <GeneralButton
         onClick={handleAddToWhislist}
         icon={
           inWhislist ? <IconHeartFill size="25px" /> : <IconHeart size="25px" />
         }
-        tittle={inWhislist ? 'Added to Whislist' : 'Add to Whislist'}
+        title={inWhislist ? 'Added to Whislist' : 'Add to Whislist'}
       ></GeneralButton>
     </div>
   )

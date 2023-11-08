@@ -1,6 +1,6 @@
 import { FormEvent } from 'react'
 import Form from '../library/Form'
-import Tittle from '../library/Tittle'
+import Title from '../library/Title'
 import GeneralButton from './GeneralButton'
 import updateUserLocation from '../logic/updateUserLocation'
 import { User } from '../logic/retrieveUser'
@@ -297,7 +297,7 @@ export default function UpdateLocationForm({
 
   return (
     <>
-      <Tittle className="text-xl" name="Update location"></Tittle>
+      <Title className="text-xl" name="Update location"></Title>
 
       <Form onSubmit={handleUpdate}>
         <Select
@@ -308,7 +308,7 @@ export default function UpdateLocationForm({
           size={3}
         />
 
-        <GeneralButton tittle="Update" />
+        <GeneralButton title="Update" />
       </Form>
     </>
   )

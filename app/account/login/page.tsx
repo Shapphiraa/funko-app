@@ -1,7 +1,7 @@
 'use client'
 
 import AccountContainer from '../../components/AccountContainer'
-import Tittle from '../../library/Tittle'
+import Title from '../../library/Title'
 import GeneralButton from '../../components/GeneralButton'
 import AccountLink from '../../components/AccountLink'
 import Form from '../../library/Form'
@@ -65,7 +65,7 @@ export default function Login() {
     <>
       {isUserLogged === false && (
           <AccountContainer>
-            <Tittle name="Welcome!"></Tittle>
+            <Title name="Welcome!"></Title>
 
             <Form onSubmit={handleLogin}>
               <>
@@ -78,7 +78,7 @@ export default function Login() {
                   />
                 ))}
               </>
-              <GeneralButton tittle="Log in"></GeneralButton>
+              <GeneralButton title="Log in"></GeneralButton>
             </Form>
 
             <AccountLink

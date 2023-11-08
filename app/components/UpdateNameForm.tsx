@@ -1,7 +1,7 @@
 import { FormEvent } from 'react'
 import Form from '../library/Form'
 import Input from '../library/Input'
-import Tittle from '../library/Tittle'
+import Title from '../library/Title'
 import GeneralButton from './GeneralButton'
 import updateUserName from '../logic/updateUserName'
 import { User } from '../logic/retrieveUser'
@@ -37,12 +37,12 @@ export default function UpdateNameForm({
 
   return (
     <>
-      <Tittle className="text-xl" name="Update name"></Tittle>
+      <Title className="text-xl" name="Update name"></Title>
 
       <Form onSubmit={handleUpdate}>
         <Input type="text" name="name" defaultValue={user.name} />
 
-        <GeneralButton tittle="Update" />
+        <GeneralButton title="Update" />
       </Form>
     </>
   )

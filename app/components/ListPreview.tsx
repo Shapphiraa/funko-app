@@ -12,17 +12,17 @@ import { Spinner } from '@nextui-org/react'
 
 interface ListPreviewProps {
   icon: JSX.Element
-  tittle: string
+  title: string
   section?: string
-  subtittle: string
+  subtitle: string
   color: string
 }
 
 export default function ListPreview({
   icon,
-  tittle,
+  title,
   section,
-  subtittle,
+  subtitle,
   color,
 }: ListPreviewProps) {
   const { alert } = useAppContext()
@@ -57,7 +57,7 @@ export default function ListPreview({
 
   return (
     <Container className={`p-5 ${color}`}>
-      <h2 className="text-text-light text-xl font-semibold">{tittle}</h2>
+      <h2 className="text-text-light text-xl font-semibold">{title}</h2>
       <div className="grid grid-cols-2 place-items-center">
         <div className="flex flex-col items-center p-10">
           {icon}
@@ -67,7 +67,7 @@ export default function ListPreview({
         </div>
         <div className="flex flex-col items-center p-2">
           <h3 className="text-text-light text-lg font-normal">
-            {preview ? subtittle : 'No added pop'}
+            {preview ? subtitle : 'No added pop'}
           </h3>
           <div>
             {isLoading && (

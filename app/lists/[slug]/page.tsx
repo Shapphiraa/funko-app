@@ -20,7 +20,7 @@ export async function generateStaticParams() {
 export default function ListsPages({ params }: { params: { slug: string } }) {
   const [isUserLogged, setIsUserLogged] = useState<boolean | null>(null)
 
-  const tittle = params.slug === 'collection' ? 'My Collection' : 'My Whislist'
+  const title = params.slug === 'collection' ? 'My Collection' : 'My Whislist'
 
   useEffect(() => {
     if (!isUserLoggedIn()) {
@@ -34,7 +34,7 @@ export default function ListsPages({ params }: { params: { slug: string } }) {
     <>
       {isUserLogged && (
         <section className="pt-4 bg-white">
-          <MenuHeader name={tittle} route="/lists" />
+          <MenuHeader name={title} route="/lists" />
 
           <Products slug={params.slug} className="p-4" />
         </section>

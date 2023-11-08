@@ -5,7 +5,7 @@ import { IKContext, IKUpload } from 'imagekitio-react'
 
 import Form from '../library/Form'
 import Input from '../library/Input'
-import Tittle from '../library/Tittle'
+import Title from '../library/Title'
 import GeneralButton from './GeneralButton'
 import createPop from '../logic/createPop'
 import Select from './Select'
@@ -28,13 +28,13 @@ export default function PopForm({
   categories,
   onSubmit,
   pop,
-  tittle,
+  title,
   submitLabel,
 }: {
   categories: Category[]
   onSubmit: () => void
   pop?: Pop
-  tittle: string
+  title: string
   submitLabel: string
 }) {
   const { alert } = useAppContext()
@@ -120,7 +120,7 @@ export default function PopForm({
 
   return (
     <>
-      <Tittle className="text-2xl" name={tittle}></Tittle>
+      <Title className="text-2xl" name={title}></Title>
 
       <Form onSubmit={handleSubmit}>
         <div className="flex m-auto gap-3 mt-3">
@@ -287,7 +287,7 @@ export default function PopForm({
           defaultValue={pop?.availability ?? ''}
         />
 
-        <GeneralButton tittle={submitLabel} />
+        <GeneralButton title={submitLabel} />
       </Form>
     </>
   )

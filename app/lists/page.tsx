@@ -1,6 +1,6 @@
 'use client'
 
-import Tittle from '../library/Tittle'
+import Title from '../library/Title'
 import ListPreview from '../components/ListPreview'
 import ContainerLink from '../components/ContainerLink'
 import { IconBookmarkFill, IconHeartFill } from '../components/Icons'
@@ -14,14 +14,14 @@ export default function Lists() {
   const lists = [
     {
       route: 'lists/collection',
-      tittle: 'My collection',
+      title: 'My collection',
       _icon: IconBookmarkFill,
       section: 'collection',
       color: 'text-[#007cec]',
     },
     {
       route: 'lists/whislist',
-      tittle: 'My whislist',
+      title: 'My whislist',
       _icon: IconHeartFill,
       section: 'whislist',
       color: 'text-[#EC0063]',
@@ -40,15 +40,15 @@ export default function Lists() {
     <>
       {isUserLogged && (
         <section className="p-4 bg-white">
-          <Tittle name="Your lists" />
+          <Title name="Your lists" />
           <div className="flex flex-col gap-3">
-            {lists.map(({ route, tittle, _icon, section, color }) => (
+            {lists.map(({ route, title, _icon, section, color }) => (
               <ContainerLink route={route} key={section}>
                 <ListPreview
-                  tittle={tittle}
+                  title={title}
                   icon={<_icon size="60px" />}
                   section={section}
-                  subtittle="Last added"
+                  subtitle="Last added"
                   color={color}
                 />
               </ContainerLink>

@@ -2,7 +2,7 @@ import Button from '../library/Button'
 
 interface GeneralButtonProps {
   icon?: JSX.Element
-  tittle: string
+  title: string
   className?: string
   color?: string
   onClick?: () => void
@@ -10,19 +10,19 @@ interface GeneralButtonProps {
 
 export default function GeneralButton({
   icon,
-  tittle,
+  title,
   className,
   color,
   onClick,
 }: GeneralButtonProps) {
   const buttonClass = `bg-general-blue rounded-3xl text-center justify-center shadow-lg gap-2 ${className}`
-  const tittleClass = 'text-white text-lg'
+  const titleClass = 'text-white text-lg'
 
   if (icon) {
     return (
       <Button className={buttonClass} onClick={onClick}>
         {icon}
-        <span className={tittleClass}>{tittle}</span>
+        <span className={titleClass}>{title}</span>
       </Button>
     )
   }
@@ -33,14 +33,14 @@ export default function GeneralButton({
         className={`${color} rounded-3xl text-center justify-center shadow-lg gap-2 ${className}`}
         onClick={onClick}
       >
-        <span className={tittleClass}>{tittle}</span>
+        <span className={titleClass}>{title}</span>
       </Button>
     )
   }
 
   return (
     <Button className={buttonClass} onClick={onClick}>
-      <span className={tittleClass}>{tittle}</span>
+      <span className={titleClass}>{title}</span>
     </Button>
   )
 }

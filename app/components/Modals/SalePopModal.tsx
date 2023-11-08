@@ -54,7 +54,7 @@ export default function SalePopModal({
             pops={pops}
             salePop={salePop}
             onSubmit={onSubmit}
-            tittle={onCreate ? 'Create pop for sale' : 'Update pop for sale'}
+            title={onCreate ? 'Create pop for sale' : 'Update pop for sale'}
             submitLabel={onCreate ? 'Create' : 'Update'}
           />
         </AccountContainer>

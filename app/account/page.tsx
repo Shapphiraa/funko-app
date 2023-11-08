@@ -5,7 +5,7 @@ import { useState, useEffect, useRef } from 'react'
 import isUserLoggedIn from '../logic/isUserLoggedIn'
 import retrieveUser from '../logic/retrieveUser'
 import { User } from '../logic/retrieveUser'
-import Tittle from '../library/Tittle'
+import Title from '../library/Title'
 import Image from 'next/image'
 import UserPersonalInfo from '../components/UserPersonalInfo'
 import { IconEdit } from '../components/Icons'
@@ -150,7 +150,7 @@ export default function Account() {
           />
         </IKContext>
 
-        <Tittle className="text-xl font-semibold mb-4" name="Personal Info" />
+        <Title className="text-xl font-semibold mb-4" name="Personal Info" />
         {personalInfo.map(({ label, value, field }) => (
           <UserPersonalInfo
             label={label}
@@ -162,7 +162,7 @@ export default function Account() {
           />
         ))}
 
-        <Tittle className="text-xl font-semibold mt-7 mb-4" name="Settings" />
+        <Title className="text-xl font-semibold mt-7 mb-4" name="Settings" />
         <div className="flex place-content-between items-center py-2 text-general-blue">
           <p className="text-lg text-text-light font-medium">Password</p>
           <Button
@@ -176,12 +176,12 @@ export default function Account() {
 
         <GeneralButton
           className="w-full my-6"
-          tittle="Log out"
+          title="Log out"
           onClick={handleLogout}
         />
         <hr className="bg-text-light"></hr>
 
-        <Tittle className="text-xl font-semibold mt-7" name="Your sale pops" />
+        <Title className="text-xl font-semibold mt-7" name="Your sale pops" />
         <PopSales user={user} className="mt-2" />
       </section>
 

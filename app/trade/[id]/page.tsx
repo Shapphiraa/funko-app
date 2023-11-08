@@ -190,7 +190,7 @@ export default function Detail({ params }: { params: { id: string } }) {
 
                           <GeneralButton
                             className="justify-self-center w-full bg-red-500"
-                            tittle="Sold"
+                            title="Sold"
                             onClick={handleOpenSoldAlert}
                           ></GeneralButton>
                         </div>

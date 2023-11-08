@@ -18,7 +18,7 @@ export default function ViewUserContactInfoButton({
       {!isInfoVisible && (
         <GeneralButton
           className="justify-self-center w-full mt-6"
-          tittle="Show contact info"
+          title="Show contact info"
           onClick={() => setIsInfoVisible(true)}
         ></GeneralButton>
       )}

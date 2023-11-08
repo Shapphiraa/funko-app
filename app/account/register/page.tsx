@@ -1,7 +1,7 @@
 'use client'
 
 import AccountContainer from '../../components/AccountContainer'
-import Tittle from '../../library/Tittle'
+import Title from '../../library/Title'
 import GeneralButton from '../../components/GeneralButton'
 import AccountLink from '../../components/AccountLink'
 import Form from '../../library/Form'
@@ -79,7 +79,7 @@ export default function Register() {
     <>
       {isUserLogged === false && (
           <AccountContainer>
-            <Tittle name="Create account"></Tittle>
+            <Title name="Create account"></Title>
 
             <Form onSubmit={handleRegister}>
               <>
@@ -92,7 +92,7 @@ export default function Register() {
                   />
                 ))}
               </>
-              <GeneralButton tittle="Sign up"></GeneralButton>
+              <GeneralButton title="Sign up"></GeneralButton>
             </Form>
 
             <AccountLink

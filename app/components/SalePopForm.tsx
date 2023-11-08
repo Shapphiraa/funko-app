@@ -5,7 +5,7 @@ import { IKContext, IKUpload } from 'imagekitio-react'
 
 import Form from '../library/Form'
 import Input from '../library/Input'
-import Tittle from '../library/Tittle'
+import Title from '../library/Title'
 import GeneralButton from './GeneralButton'
 import createSalePop from '../logic/createSalePop'
 import Select from './Select'
@@ -27,13 +27,13 @@ export default function SalePopForm({
   pops,
   onSubmit,
   salePop,
-  tittle,
+  title,
   submitLabel,
 }: {
   pops: Pop[]
   onSubmit: () => void
   salePop?: PopForSale
-  tittle: string
+  title: string
   submitLabel: string
 }) {
   const { alert } = useAppContext()
@@ -106,7 +106,7 @@ export default function SalePopForm({
 
   return (
     <>
-      <Tittle className="text-2xl" name={tittle}></Tittle>
+      <Title className="text-2xl" name={title}></Title>
 
       <Form onSubmit={handleSubmit}>
         <div className="flex m-auto gap-3 mt-3">
@@ -273,7 +273,7 @@ export default function SalePopForm({
         {/* @ts-ignore */}
         <Input type="text" name="price" defaultValue={salePop?.price ?? ''} />
 
-        <GeneralButton tittle={submitLabel} />
+        <GeneralButton title={submitLabel} />
       </Form>
     </>
   )

@@ -36,7 +36,7 @@ export default function ToggleSalePopStatusButton({
       {salePop.status === 'Available' && (
         <GeneralButton
           className="justify-self-center w-full"
-          tittle="Reserved"
+          title="Reserved"
           onClick={handleToggleStatus}
         ></GeneralButton>
       )}
@@ -44,7 +44,7 @@ export default function ToggleSalePopStatusButton({
       {salePop.status === 'Reserved' && (
         <GeneralButton
           className="justify-self-center w-full"
-          tittle="Available"
+          title="Available"
           color="bg-blue-400"
           onClick={handleToggleStatus}
         ></GeneralButton>
