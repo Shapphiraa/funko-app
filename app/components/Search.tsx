@@ -25,9 +25,9 @@ export default function Search({
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className={`flex justify-center mt-4 text-text-light ${className}`}>
+      <div className={`flex justify-center mt-5 mb-4 text-text-light ${className}`}>
         <input
-          className="w-full border-0 bg-[#f0efef] rounded-2xl px-3 outline-none text-lg rounded-r-none autofill-none"
+          className="w-full border-0 bg-[#f0efef] rounded-2xl px-3 outline-none text-lg rounded-r-none autofill-none lg:w-[300px] lg:text-xl"
           type="text"
           name="search"
           placeholder="Search by name"
@@ -38,15 +38,23 @@ export default function Search({
             setSearch(event.target.value)
           }}
         ></input>
+        {!search.length && (
+                    <button
+                    type="button"
+                    className="bg-[#f0efef] w-[44px] h-[44px] rounded-2xl rounded-l-none rounded-r-none"
+                  >
+                    </button>
+        )}
         {search.length > 0 && (
           <button
             type="button"
-            className="bg-[#f0efef] p-2 rounded-2xl rounded-l-none rounded-r-none"
-            onClick={handleClear}
+            className="bg-[#f0efef] p-3 rounded-2xl rounded-l-none rounded-r-none"
           >
-            <IconClear size="20px"></IconClear>
-          </button>
+            
+            <IconClear size="20px" onClick={handleClear}></IconClear>
+            </button>
         )}
+
         <button
           type="submit"
           className="bg-[#f0efef] p-3 rounded-2xl rounded-l-none"
