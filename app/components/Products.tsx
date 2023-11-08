@@ -56,10 +56,8 @@ export default function Products({
   useEffect(() => {
     setIsLoading(true)
 
-    setTimeout(async () => {
       getPops()
       setIsLoading(false)
-    }, 500)
   }, [searchValue])
 
   return (
@@ -75,7 +73,7 @@ export default function Products({
 
       {!isLoading && pops && pops.length > 0 && (
         <div
-          className={`w-full max-w-6xl mx-auto grid grid-cols-2 gap-4 ${className}`}
+          className={`w-full max-w-6xl lg:max-w-4xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-4 ${className}`}
         >
           {pops.map((pop) => (
             <Product pop={pop} key={pop.id} onChange={getPops} />

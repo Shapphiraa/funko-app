@@ -26,15 +26,15 @@ export default function Product({
         <ProductImage
           image={pop.images[0]}
           name={pop.name}
-          size={130}
-          className="w-[130px] h-[130px]"
+          size={200}
+          className="w-[130px] h-[130px] lg:w-[200px] lg:h-[200px]"
         />
       </Link>
-      <h1 className="text-text-product-light mt-1 mx-2 font-light">
+      <h1 className="text-text-product-light mt-1 mx-2 font-light lg:text-xl">
         {pop.variant}
       </h1>
       <Link href={`/catalog/pop/${pop.id}`}>
-      <h2 className="text-text-product-light mx-2 text-[13px] font-semibold leading-none mb-3">
+      <h2 className="text-text-product-light mx-2 text-[13px] font-semibold leading-5 mb-3 lg:text-base">
         {pop.name}
       </h2>
       </Link>

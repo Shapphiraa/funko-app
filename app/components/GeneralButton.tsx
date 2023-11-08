@@ -16,7 +16,7 @@ export default function GeneralButton({
   onClick,
 }: GeneralButtonProps) {
   const buttonClass = `bg-general-blue rounded-3xl text-center justify-center shadow-lg gap-2 ${className}`
-  const titleClass = 'text-white text-lg'
+  const titleClass = 'text-white text-lg lg:text-xl'
 
   if (icon) {
     return (

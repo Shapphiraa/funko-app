@@ -108,30 +108,32 @@ export default function Detail({ params }: { params: { id: string } }) {
                 <BackArrow></BackArrow>
               </div>
 
-              <Container className="m-5 mt-0 p-5">
+              <Container className="m-5 mt-0 p-5 lg:w-[1000px] lg:self-center lg:grid lg:grid-cols-2 lg:gap-10">
+                <div>
                 <Carousel>
-                  <div className="h-full w-full !flex justify-center">
+                  <div className="h-full w-full !flex justify-center lg:m-auto">
                     <ProductImage
                       image={pop.images[0]}
                       name={pop.name}
-                      size={250}
-                      className="w-[250px] h-[250px]"
+                      size={500}
+                      className="w-[250px] h-[250px] lg:w-[500px] lg:h-[500px]"
                     ></ProductImage>
                   </div>
                   <div className="h-full w-full !flex justify-center">
                     <ProductImage
                       image={pop.images[1]}
                       name={pop.name}
-                      size={250}
-                      className="w-[250px] h-[250px]"
+                      size={500}
+                      className="w-[250px] h-[250px] lg:w-[500px] lg:h-[500px]"
                     ></ProductImage>
                   </div>
                 </Carousel>
-
-                <>
+                </div>
+                
+                <div>
                   {isAdmin && (
                     <>
-                      <div className="flex justify-center gap-1 mt-7 text-general-blue">
+                      <div className="flex justify-center lg:justify-end gap-1 mt-7 lg:mt-auto text-general-blue">
                         <Button
                           className="bg-white rounded-2xl"
                           onClick={handleOpenModal}
@@ -147,7 +149,6 @@ export default function Detail({ params }: { params: { id: string } }) {
                       </div>
                     </>
                   )}
-                </>
 
                 <h1 className="text-text-product-light text-3xl font-light mb-1 mt-7">
                   {pop.variant}
@@ -156,9 +157,10 @@ export default function Detail({ params }: { params: { id: string } }) {
                   {pop.name}
                 </h2>
 
-                <AddToListsButtonsDetail pop={pop} onChange={getPop} />
+                <AddToListsButtonsDetail pop={pop} onChange={getPop}/>
 
-                <CharacteristicsList pop={pop} />
+                <CharacteristicsList pop={pop}/>
+                </div>
               </Container>
             </>
           )}

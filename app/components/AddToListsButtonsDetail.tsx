@@ -69,7 +69,7 @@ export default function AddListsButtonsDetail({
   }
 
   return (
-    <div className="flex flex-col gap-3 py-10 text-white">
+    <div className="flex flex-col gap-3 py-10 lg:w-1/2 text-white">
       <GeneralButton
         onClick={handleAddToCollection}
         icon={
