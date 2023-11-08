@@ -1,4 +1,4 @@
-import Tittle from '../library/Tittle'
+import Title from '../library/Title'
 import Button from '../library/Button'
 import BackArrow from './BackArrow'
 import ContainerLink from './ContainerLink'
@@ -19,9 +19,9 @@ export default function MenuHeader({
   onClick?: () => void
 }) {
   return (
-    <div className="px-4 grid grid-cols-[40px_1fr_40px] mb-3">
+    <div className="px-4 grid grid-cols-[40px_1fr_40px] mb-3 lg:mb-5">
       {route && <BackArrow />}
-      <Tittle className="col-start-2" name={name} />
+      <Title className="col-start-2" name={name} />
 
       {text && direction && (
         <ContainerLink route={direction}>

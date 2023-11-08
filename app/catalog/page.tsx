@@ -17,11 +17,11 @@ export default async function Catalog() {
   const categories = await getData()
 
   return (
-    <section className="py-4 bg-white">
+    <section className="py-4 h-full bg-white">
       <MenuHeader name="Categories" text="All" direction="/catalog/all" />
 
       {categories && (
-        <div className="grid grid-cols-2 px-4 gap-3 mt-4 place-items-center">
+        <div className="grid grid-cols-2 lg:grid-cols-4 lg:gap-5 w-full mx-auto max-w-4xl px-4 gap-3 mt-4 place-items-center">
           {categories.map(({ name, imageList, slug }) => (
             <ContainerLink route={`/catalog/${slug}`}>
               <CategoryImage image={imageList} name={name} />

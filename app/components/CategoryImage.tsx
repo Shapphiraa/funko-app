@@ -9,7 +9,7 @@ export default function CategoryImage({
 }) {
   return (
     <Image
-      className="align-center shadow-lg"
+      className="align-center shadow-lg lg:w-full"
       src={image}
       alt={name}
       width="170"
