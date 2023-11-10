@@ -122,13 +122,13 @@ export default function PopForm({
     <>
       <Title className="text-2xl" name={title}></Title>
 
-      <Form onSubmit={handleSubmit}>
-        <div className="flex m-auto gap-3 mt-3">
+      <Form onSubmit={handleSubmit} className="lg:w-[1000px] lg:grid lg:grid-cols-3 lg:gap-10 lg:mx-auto lg:mt-7">
+        <div className="flex m-auto gap-3 mt-3 lg:flex-col justify-center">
           {image === '' ? (
             <>
               <button
                 type="button"
-                className="w-[150px] h-[150px] border-general-blue border-2 rounded-2xl text-general-blue"
+                className="w-[150px] h-[150px] lg:w-[250px] lg:h-[250px] border-general-blue border-2 rounded-2xl text-general-blue"
                 onClick={() => {
                   imageRef.current!.click()
                 }}
@@ -155,9 +155,9 @@ export default function PopForm({
               <Image
                 src={image}
                 alt="New image"
-                width={150}
-                height={150}
-                className="rounded-2xl  w-[150px] h-[150px]"
+                width={250}
+                height={250}
+                className="rounded-2xl w-[150px] h-[150px] lg:w-[250px] lg:h-[250px]"
                 onClick={() => {
                   imageRef.current!.click()
                 }}
@@ -184,7 +184,7 @@ export default function PopForm({
             <>
               <button
                 type="button"
-                className="w-[150px] h-[150px] border-general-blue border-2 rounded-2xl text-general-blue"
+                className="w-[150px] h-[150px] lg:w-[250px] lg:h-[250px] border-general-blue border-2 rounded-2xl text-general-blue"
                 onClick={() => {
                   boxImageRef.current!.click()
                 }}
@@ -211,9 +211,9 @@ export default function PopForm({
               <Image
                 src={boxImage}
                 alt="New Box Image"
-                width={150}
-                height={150}
-                className="rounded-2xl w-[150px] h-[150px]"
+                width={250}
+                height={250}
+                className="rounded-2xl w-[150px] h-[150px] lg:w-[250px] lg:h-[250px]"
                 onClick={() => {
                   boxImageRef.current!.click()
                 }}
@@ -237,7 +237,9 @@ export default function PopForm({
           )}
         </div>
 
-        <label className="text-text-light text-lg font-normal">Variant:</label>
+        <div className="lg:flex lg:gap-10 lg:items-center">
+        <div className="flex flex-col lg:gap-3">
+        <label className="text-text-light text-lg font-normal lg:font-semibold">Variant:</label>
         <Select
           id="variant-select"
           name="variant"
@@ -245,7 +247,7 @@ export default function PopForm({
           defaultValue={pop?.variant ?? ''}
         />
 
-        <label className="text-text-light text-lg font-normal">
+        <label className="text-text-light text-lg font-normal lg:font-semibold">
           Exclusivity:
         </label>
         <Select
@@ -255,14 +257,15 @@ export default function PopForm({
           defaultValue={pop?.exclusivity ?? ''}
         />
 
-        <label className="text-text-light text-lg font-normal">Name:</label>
+        <label className="text-text-light text-lg font-normal lg:font-semibold">Name:</label>
         <Input type="text" name="name" defaultValue={pop?.name ?? ''} />
-        <label className="text-text-light text-lg font-normal">Number:</label>
+        <label className="text-text-light text-lg font-normal lg:font-semibold">Number:</label>
 
         {/* @ts-ignore */}
         <Input type="number" name="number" defaultValue={pop?.number ?? ''} />
-
-        <label className="text-text-light text-lg font-normal">Category:</label>
+        </div>
+        <div className="flex flex-col lg:gap-3">
+        <label className="text-text-light text-lg font-normal lg:font-semibold">Category:</label>
         <Select
           id="category-select"
           name="category"
@@ -270,14 +273,14 @@ export default function PopForm({
           defaultValue={pop?.category.id ?? ''}
         />
 
-        <label className="text-text-light text-lg font-normal">
+        <label className="text-text-light text-lg font-normal lg:font-semibold">
           Collection:
         </label>
         <Input type="text" name="collect" defaultValue={pop?.collect ?? ''} />
-        <label className="text-text-light text-lg font-normal">Release:</label>
+        <label className="text-text-light text-lg font-normal lg:font-semibold">Release:</label>
         <Input type="text" name="release" defaultValue={pop?.release ?? ''} />
 
-        <label className="text-text-light text-lg font-normal">
+        <label className="text-text-light text-lg font-normal lg:font-semibold">
           Availability:
         </label>
         <Select
@@ -286,8 +289,11 @@ export default function PopForm({
           options={availabilities}
           defaultValue={pop?.availability ?? ''}
         />
-
-        <GeneralButton title={submitLabel} />
+        </div>
+        </div>
+        <div className="flex flex-col lg:justify-end">
+        <GeneralButton title={submitLabel} className="lg:col-start-2 lg:self-end lg:w-[150px]"/>
+        </div>
       </Form>
     </>
   )

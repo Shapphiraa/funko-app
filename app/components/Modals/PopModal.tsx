@@ -1,6 +1,6 @@
 'use client'
 
-import AccountContainer from '../AccountContainer'
+import Container from '../../library/Container'
 import { IconArrowLeft } from '../Icons'
 import { Pop } from '../../logic/retrievePop'
 import PopForm from '../PopForm'
@@ -42,14 +42,15 @@ export default function PopModal({
   return (
     <>
       {categories && (
-        <AccountContainer className="h-auto">
+        <>
           <button
-            className="text-general-blue flex items-center justify-center h-9 w-9 mb-5"
+            className="lg:hidden text-general-blue flex items-center justify-center h-9 w-9 mb-5 "
             onClick={onCancel}
           >
             <IconArrowLeft size="24px"></IconArrowLeft>
           </button>
 
+        <Container className="h-auto lg:w-[1200px] lg:m-auto lg:mt-5 p-5">
           <PopForm
             categories={categories}
             pop={pop}
@@ -57,7 +58,8 @@ export default function PopModal({
             title={onCreate ? 'Create pop' : 'Update pop'}
             submitLabel={onCreate ? 'Create' : 'Update'}
           />
-        </AccountContainer>
+        </Container>
+        </>
       )}
     </>
   )

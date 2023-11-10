@@ -7,7 +7,7 @@ export default function BackArrow() {
   const router = useRouter()
   return (
     <button
-      className="text-general-blue flex items-center justify-center h-9 w-9"
+      className="text-general-blue flex items-center justify-center h-9 w-9 lg:hidden"
       onClick={() => router.back()}
     >
       <IconArrowLeft size="24px"></IconArrowLeft>

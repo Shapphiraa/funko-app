@@ -24,7 +24,7 @@ export default function Select({
   return (
     <>
       <select
-        className="h[1.75rem] text-text-light border-0 bg-[#F6F6F6] rounded-xl p-2 outline-none text-lg"
+        className="h[1.75rem] lg:w-[300px] text-text-light border-0 bg-[#F6F6F6] rounded-xl p-2 outline-none text-lg"
         name={name}
         id={id}
         defaultValue={defaultValue}
