@@ -57,7 +57,7 @@ export default function AllCatalogPage() {
               />
 
               <Image
-                className="shadow-lg"
+                className="shadow-lg lg:hidden"
                 src="/categories/All-Catalog.svg"
                 alt="All-Catalog"
                 width={0}

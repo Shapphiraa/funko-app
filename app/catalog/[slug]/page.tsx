@@ -36,7 +36,7 @@ export default async function CatalogPages({
       <MenuHeader name={category.name} route="/catalog" />
 
       <Image
-        className="shadow-lg"
+        className="shadow-lg lg:hidden"
         src={category.imageDetail}
         alt={category.name}
         width={0}
