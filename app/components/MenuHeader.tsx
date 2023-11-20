@@ -19,7 +19,7 @@ export default function MenuHeader({
   onClick?: () => void
 }) {
   return (
-    <div className="px-4 grid grid-cols-[40px_1fr_40px] mb-3 lg:mb-5">
+    <div className="px-4 grid grid-cols-[40px_1fr_40px] lg:grid-cols-[60px_1fr_60px] mb-3 lg:mb-5">
       {route && <BackArrow />}
       <Title className="col-start-2" name={name} />
 
@@ -27,7 +27,7 @@ export default function MenuHeader({
         <ContainerLink route={direction}>
           <Button
             className={
-              'bg-general-blue self-center shadow-lg rounded-xl text-lg text-white'
+              'bg-general-blue self-center shadow-lg rounded-xl text-lg lg:text-xl lg:px-[20px] text-white'
             }
           >
             {text}
@@ -40,7 +40,7 @@ export default function MenuHeader({
           <Button
             onClick={onClick}
             className={
-              'bg-general-blue self-center shadow-lg rounded-xl text-lg text-white'
+              'bg-general-blue self-center shadow-lg rounded-xl text-lg lg:text-xl lg:px-[20px] text-white'
             }
           >
             {text!}

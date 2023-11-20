@@ -122,7 +122,7 @@ export default function PopForm({
     <>
       <Title className="text-2xl" name={title}></Title>
 
-      <Form onSubmit={handleSubmit} className="lg:w-[1000px] lg:grid lg:grid-cols-3 lg:gap-10 lg:mx-auto lg:mt-7">
+      <Form onSubmit={handleSubmit} className="lg:w-[1000px] lg:grid lg:grid-cols-3 lg:gap-10 lg:mx-auto">
         <div className="flex m-auto gap-3 mt-3 lg:flex-col justify-center">
           {image === '' ? (
             <>

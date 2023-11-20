@@ -56,17 +56,17 @@ export default function ListPreview({
   }, [])
 
   return (
-    <Container className={`p-5 ${color}`}>
-      <h2 className="text-text-light text-xl font-semibold">{title}</h2>
+    <Container className={`p-5 ${color} lg:h-[300px]`}>
+      <h2 className="text-text-light text-xl font-semibold lg:text-2xl">{title}</h2>
       <div className="grid grid-cols-2 place-items-center">
         <div className="flex flex-col items-center p-10">
           {icon}
-          <h3 className="text-text-light text-4xl font-bold">
+          <h3 className="text-text-light text-4xl lg:text-5xl font-bold">
             {preview ? preview.quantity : 0}
           </h3>
         </div>
         <div className="flex flex-col items-center p-2">
-          <h3 className="text-text-light text-lg font-normal">
+          <h3 className="text-text-light text-lg lg:text-2xl font-normal">
             {preview ? subtitle : 'No added pop'}
           </h3>
           <div>
@@ -80,9 +80,10 @@ export default function ListPreview({
               <Image
                 src={preview.lastAddedPopImage}
                 alt="Preview"
-                width="130"
-                height="130"
+                width="200"
+                height="200"
                 quality="100"
+                className="lg:w-[200px] lg:h-[200px]"
               />
             )}
 
@@ -90,9 +91,10 @@ export default function ListPreview({
               <Image
                 src="/no-pop.svg"
                 alt="Preview"
-                width="130"
-                height="130"
+                width="200"
+                height="200"
                 quality="100"
+                className="lg:w-[200px] lg:h-[200px]"
               />
             )}
           </div>

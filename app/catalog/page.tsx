@@ -21,7 +21,7 @@ export default async function Catalog() {
       <MenuHeader name="Categories" text="All" direction="/catalog/all" />
 
       {categories && (
-        <div className="grid grid-cols-2 lg:grid-cols-4 lg:gap-5 w-full mx-auto max-w-4xl px-4 gap-3 mt-4 place-items-center">
+        <div className="grid grid-cols-2 lg:grid-cols-4 lg:gap-5 w-full mx-auto max-w-5xl px-4 gap-3 mt-4 place-items-center pb-4">
           {categories.map(({ name, imageList, slug }) => (
             <ContainerLink route={`/catalog/${slug}`}>
               <CategoryImage image={imageList} name={name} />

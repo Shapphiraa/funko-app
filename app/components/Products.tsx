@@ -86,16 +86,17 @@ export default function Products({
           <Image
             src="/no-pop.svg"
             alt="Empty"
-            width={150}
-            height={150}
+            width={200}
+            height={200}
             quality="100"
+            className="lg:w-[200px]"
           />
 
           {(slug === 'whislist' || slug === 'collection') && (
-            <p className="text-text-light text-lg">Your list is empty 😭</p>
+            <p className="text-text-light text-lg lg:text-xl">Your list is empty 😭</p>
           )}
           {slug !== 'whislist' && slug !== 'collection' && (
-            <p className="text-text-light text-lg">No results 😭</p>
+            <p className="text-text-light text-lg lg:text-xl">No results 😭</p>
           )}
         </div>
       )}

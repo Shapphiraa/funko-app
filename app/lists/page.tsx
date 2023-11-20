@@ -41,7 +41,7 @@ export default function Lists() {
       {isUserLogged && (
         <section className="p-4 bg-white">
           <Title name="Your lists" />
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col lg:grid lg:grid-cols-2 gap-3 mt-5 lg:w-[1000px]  lg:mx-auto">
             {lists.map(({ route, title, _icon, section, color }) => (
               <ContainerLink route={route} key={section}>
                 <ListPreview
